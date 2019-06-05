@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import './App.css';
 
+import Api from './components/api'
+
 class App extends Component {
   render(){
     return (
@@ -11,6 +13,7 @@ class App extends Component {
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/about'>About</Link></li>
             <li><Link to='/friends'>Friends</Link></li>
+            <li><Link to='/api'>GET</Link></li>
           </ul>
 
           <hr />
@@ -18,6 +21,7 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/about' component={About} />
           <Route path='/friends' component={Friends} />
+          <Route path='/api' render={() => <Api />} />
         </div>
     </BrowserRouter>
     );
