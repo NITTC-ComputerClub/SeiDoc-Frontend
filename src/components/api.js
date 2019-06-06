@@ -5,36 +5,42 @@ class Api extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false
+            loading: false,
         };
+        this.handle_requests = this.handle_requests.bind(this)
     }
 
-    componentDidMount() {
+    handle_requests(){
         let headers = {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://salty-garden-55595.herokuapp.com/ping'
+            'Content-Type': 'application/json'
         }
         axios
-            .get('https://salty-garden-55595.herokuapp.com/ping',headers)
-            .then(results => {
-                console.log(results);
-            })
-            .catch(() => {
-                console.log('通信に失敗しました。');
-            });
+            .get('https://golang-with-dbserver.herokuapp.com/ping',headers)
+            .then(
+                (results) => {
+                    this.setState({
+                        loading: true,
+                        itmes: results.data
+                    })
+                    console.log(this.state.itmes)
+                },
+                (error) => {
+                    console.log(error)
+                })
     }
 
     render() {
         if (this.state.loading) {
             return (
                 <div className="App-header">
-                    <p>{this.state.data}</p>
+                    <p>{this.state.itmes.name}</p>
                 </div>
             );
         } else {
             return (
                 <div className="App-header">
                     <p>Loading...</p>
+                    <button onClick={this.handle_requests}>requests</button>
                 </div>
             );
         }
