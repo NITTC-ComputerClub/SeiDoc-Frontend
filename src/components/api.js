@@ -22,7 +22,7 @@ class Api extends Component {
                         loading: true,
                         itmes: results.data
                     })
-                    console.log(this.state.itmes.Target.targetAge)
+                    console.log(this.state.itmes)
                 },
                 (error) => {
                     console.log(error)
