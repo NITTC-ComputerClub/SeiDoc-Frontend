@@ -22,7 +22,7 @@ class Api extends Component {
                         loading: true,
                         itmes: results.data
                     })
-                    console.log(this.state.itmes)
+                    console.log(this.state.itmes.Target.targetAge)
                 },
                 (error) => {
                     console.log(error)
@@ -34,6 +34,9 @@ class Api extends Component {
             return (
                 <div className="App-header">
                     <p>{this.state.itmes.name}</p>
+                    <p>{this.state.itmes.departmentInCharge}</p>
+                    <p>{this.state.itmes.site}</p>
+                    <p>{this.state.itmes.detail}</p>
                 </div>
             );
         } else {
