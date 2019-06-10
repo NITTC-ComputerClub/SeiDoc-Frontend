@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom'
 import './App.css';
 
 import Api from './components/api'
+import Search from './components/search'
 
 class App extends Component {
   render(){
@@ -14,6 +15,7 @@ class App extends Component {
             <li><Link to='/about'>About</Link></li>
             <li><Link to='/friends'>Friends</Link></li>
             <li><Link to='/api'>GET</Link></li>
+            <li><Link to='/search'>検索画面</Link></li>
           </ul>
 
           <hr />
@@ -22,6 +24,7 @@ class App extends Component {
           <Route path='/about' component={About} />
           <Route path='/friends' component={Friends} />
           <Route path='/api' render={() => <Api />} />
+          <Route path='/search' render={() => <Search />} />
         </div>
     </BrowserRouter>
     );
