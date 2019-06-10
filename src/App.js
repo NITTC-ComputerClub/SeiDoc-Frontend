@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import './App.css';
 
 import Api from './components/api'
 import Search from './components/search'
+import Category from './components/category'
 
 class App extends Component {
-  render(){
+  render() {
     return (
       <BrowserRouter>
         <div>
@@ -16,6 +17,7 @@ class App extends Component {
             <li><Link to='/friends'>Friends</Link></li>
             <li><Link to='/api'>GET</Link></li>
             <li><Link to='/search'>検索画面</Link></li>
+            <li><Link to='/category'>カテゴリー検索画面</Link></li>
           </ul>
 
           <hr />
@@ -25,8 +27,9 @@ class App extends Component {
           <Route path='/friends' component={Friends} />
           <Route path='/api' render={() => <Api />} />
           <Route path='/search' render={() => <Search />} />
+          <Route path='/category' render={() => <Category />} />
         </div>
-    </BrowserRouter>
+      </BrowserRouter>
     );
   }
 }

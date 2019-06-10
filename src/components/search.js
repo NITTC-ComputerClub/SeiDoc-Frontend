@@ -15,12 +15,14 @@ class Search extends Component {
         this.handle_requests = this.handle_requests.bind(this)
     }
 
-    handle_requests = () => {
-        let headers = {
+    handle_requests = (text) => {
+        console.log(text)
+        const url = 'https://golang-with-dbserver.herokuapp.com/category?category='
+        const headers = {
             'Content-Type': 'application/json'
         }
         axios
-            .get('https://golang-with-dbserver.herokuapp.com/ping', headers)
+            .get(url+text, headers)
             .then(
                 (results) => {
                     this.setState({
@@ -55,17 +57,12 @@ class Search extends Component {
                 <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
                 <button onClick={this.send.bind(this)}>SEND</button>
                 <h1>カテゴリ</h1>
-                <ul>
-                    <li>
-                        <Link to='/api'>介護</Link>
-                    </li>
-                </ul>
                 <div>
                     <Collapsible trigger="介護">
                         <ul>
-                            <li><Link to='/api'>介護</Link></li>
-                            <li><Link to='/api'>介護</Link></li>
-                            <li><Link to='/api'>介護</Link></li>
+                            <li onClick={() => this.handle_requests('高専')}>介護</li>
+                            <li onClick={() => this.handle_requests('介護')}>介護</li>
+                            <li onClick={() => this.handle_requests('介護')}>介護</li>
                         </ul>
                     </Collapsible>
                     <Collapsible trigger="子育て">
