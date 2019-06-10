@@ -1,37 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom'
-import Collapsible from 'react-collapsible';
-import axios from "axios";
-import './desgin.css'
+import { Link } from 'react-router-dom'
 
 class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
             value: '',
-            message: ''
-        };
-        this.handle_requests = this.handle_requests.bind(this)
-    }
-
-    handle_requests = () => {
-        let headers = {
-            'Content-Type': 'application/json'
         }
-        axios
-            .get('https://golang-with-dbserver.herokuapp.com/ping', headers)
-            .then(
-                (results) => {
-                    this.setState({
-                        loading: true,
-                        itmes: results.data
-                    })
-                    console.log(this.state.itmes)
-                },
-                (error) => {
-                    console.log(error)
-                })
     }
 
     handleInput = ({ target: { value } }) => {
@@ -45,7 +20,6 @@ class Category extends Component {
         console.log(value)
         this.setState({
             value: '',
-            message: value
         });
     }
 
@@ -54,8 +28,10 @@ class Category extends Component {
         for (let i = 0; i < this.props.category.length; i++) {
             list.push(
                 <li key={this.props.category[i].name}>
-                    <p>{this.props.category[i].name}</p>
-                    <p>{this.props.category[i].detail}</p>
+                    <Link to='/detail'>
+                        <p>{this.props.category[i].name}</p>
+                        <p>{this.props.category[i].location}</p>
+                    </Link>
                 </li>
             )
         }
