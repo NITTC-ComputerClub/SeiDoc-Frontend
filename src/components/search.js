@@ -8,7 +8,6 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
             value: '',
             message: ''
         };
@@ -26,7 +25,6 @@ class Search extends Component {
             .then(
                 (results) => {
                     this.setState({
-                        loading: true,
                         itmes: results.data
                     })
                     console.log(this.state.itmes)
@@ -60,30 +58,30 @@ class Search extends Component {
                 <div>
                     <Collapsible trigger="介護">
                         <ul>
-                            <li onClick={() => this.handle_requests('高専')}>介護</li>
+                            <li onClick={() => this.handle_requests('高専')}>高専</li>
                             <li onClick={() => this.handle_requests('介護')}>介護</li>
                             <li onClick={() => this.handle_requests('介護')}>介護</li>
                         </ul>
                     </Collapsible>
                     <Collapsible trigger="子育て">
                         <ul>
-                            <li><Link to='/api'>出産</Link></li>
-                            <li><Link to='/api'>病気</Link></li>
-                            <li><Link to='/api'>育児</Link></li>
+                            <li onClick={() => this.handle_requests('出産')}>出産</li>
+                            <li onClick={() => this.handle_requests('病気')}>病気</li>
+                            <li onClick={() => this.handle_requests('育児')}>育児</li>
                         </ul>
                     </Collapsible>
                     <Collapsible trigger="建築">
                         <ul>
-                            <li><Link to='/api'>出産</Link></li>
-                            <li><Link to='/api'>病気</Link></li>
-                            <li><Link to='/api'>育児</Link></li>
+                            <li onClick={() => this.handle_requests('出産')}>出産</li>
+                            <li onClick={() => this.handle_requests('病気')}>病気</li>
+                            <li onClick={() => this.handle_requests('育児')}>育児</li>
                         </ul>
                     </Collapsible>
                     <Collapsible trigger="医療">
                         <ul>
-                            <li><Link to='/api'>出産</Link></li>
-                            <li><Link to='/api'>病気</Link></li>
-                            <li><Link to='/api'>育児</Link></li>
+                            <li onClick={() => this.handle_requests('出産')}>出産</li>
+                            <li onClick={() => this.handle_requests('病気')}>病気</li>
+                            <li onClick={() => this.handle_requests('育児')}>育児</li>
                         </ul>
                     </Collapsible>
                 </div>
