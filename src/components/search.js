@@ -9,7 +9,6 @@ class Search extends Component {
         super(props);
         this.state = {
             value: '',
-            message: ''
         };
         this.handle_requests = this.handle_requests.bind(this)
     }
@@ -44,7 +43,6 @@ class Search extends Component {
         console.log(value)
         this.setState({
             value: '',
-            message: value
         });
     }
 

@@ -4,7 +4,7 @@ import Collapsible from 'react-collapsible';
 import axios from "axios";
 import './desgin.css'
 
-class Category extends Component {
+class Detail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -76,4 +76,4 @@ class Category extends Component {
     }
 }
 
-export default Category;
+export default Detail;

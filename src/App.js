@@ -5,6 +5,7 @@ import './App.css';
 import Api from './components/api'
 import Search from './components/search'
 import Category from './components/category'
+import Detail from './components/detail'
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class App extends Component {
             <li><Link to='/api'>GET</Link></li>
             <li><Link to='/search'>検索画面</Link></li>
             <li><Link to='/category'>カテゴリー検索画面</Link></li>
+            <li><Link to='/category'>制度内容</Link></li>
           </ul>
 
           <hr />
@@ -42,6 +44,7 @@ class App extends Component {
           <Route path='/api' render={() => <Api />} />
           <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
           <Route path='/category' render={() => <Category category={this.state.category}/>} />
+          <Route path='/detail' render={() => <Detail />} />
         </div>
       </BrowserRouter>
     );
