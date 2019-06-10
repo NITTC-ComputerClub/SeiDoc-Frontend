@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import Collapsible from 'react-collapsible';
 import axios from "axios";
+import './desgin.css'
 
 class Search extends Component {
     constructor(props) {
@@ -60,9 +61,33 @@ class Search extends Component {
                     </li>
                 </ul>
                 <div>
-                    <Collapsible trigger="Start here">
-                        <p>This is the collapsible content. It can be any element or React component you like.</p>
-                        <p>It can even be another Collapsible component. Check out the next section!</p>
+                    <Collapsible trigger="介護">
+                        <ul>
+                            <li><Link to='/api'>介護</Link></li>
+                            <li><Link to='/api'>介護</Link></li>
+                            <li><Link to='/api'>介護</Link></li>
+                        </ul>
+                    </Collapsible>
+                    <Collapsible trigger="子育て">
+                        <ul>
+                            <li><Link to='/api'>出産</Link></li>
+                            <li><Link to='/api'>病気</Link></li>
+                            <li><Link to='/api'>育児</Link></li>
+                        </ul>
+                    </Collapsible>
+                    <Collapsible trigger="建築">
+                        <ul>
+                            <li><Link to='/api'>出産</Link></li>
+                            <li><Link to='/api'>病気</Link></li>
+                            <li><Link to='/api'>育児</Link></li>
+                        </ul>
+                    </Collapsible>
+                    <Collapsible trigger="医療">
+                        <ul>
+                            <li><Link to='/api'>出産</Link></li>
+                            <li><Link to='/api'>病気</Link></li>
+                            <li><Link to='/api'>育児</Link></li>
+                        </ul>
                     </Collapsible>
                 </div>
             </div>
