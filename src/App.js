@@ -7,6 +7,20 @@ import Search from './components/search'
 import Category from './components/category'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      category: {}
+    }
+  }
+
+  changeCategory = (value) => {
+    this.setState({
+      category: value
+    })
+    console.log(this.state.category)
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -26,8 +40,8 @@ class App extends Component {
           <Route path='/about' component={About} />
           <Route path='/friends' component={Friends} />
           <Route path='/api' render={() => <Api />} />
-          <Route path='/search' render={() => <Search />} />
-          <Route path='/category' render={() => <Category />} />
+          <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
+          <Route path='/category' render={() => <Category category={this.state.category}/>} />
         </div>
       </BrowserRouter>
     );

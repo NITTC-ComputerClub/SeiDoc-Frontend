@@ -52,6 +52,7 @@ class category extends Component {
     render() {
         return (
             <div>
+                {console.log(this.props.category)}
                 <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
                 <button onClick={this.send.bind(this)}>SEND</button>
                 <h3>--に対する検索結果</h3>

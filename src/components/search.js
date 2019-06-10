@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import Collapsible from 'react-collapsible';
 import axios from "axios";
 import './desgin.css'
@@ -24,10 +24,9 @@ class Search extends Component {
             .get(url+text, headers)
             .then(
                 (results) => {
-                    this.setState({
-                        itmes: results.data
-                    })
-                    console.log(this.state.itmes)
+                    console.log(results.data)
+                    this.props.changeCategory(results.data)
+                    this.props.history.push('/category')
                 },
                 (error) => {
                     console.log(error)
@@ -90,4 +89,4 @@ class Search extends Component {
     }
 }
 
-export default Search;
+export default withRouter(Search);
