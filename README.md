@@ -1,3 +1,9 @@
+##npm install ~~
+```
+npm install --save axios
+npm install --save react-collapsible
+``` 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
