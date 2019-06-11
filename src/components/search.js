@@ -20,12 +20,14 @@ class Search extends Component {
             'Content-Type': 'application/json'
         }
         axios
-            .get(url+text, headers)
+            .get(url + text, headers)
             .then(
                 (results) => {
                     console.log(results.data)
-                    this.props.changeCategory(results.data)
-                    this.props.history.push('/category')
+                    if (results.data != null) {
+                        this.props.changeCategory(results.data)
+                        this.props.history.push('/category')
+                    }
                 },
                 (error) => {
                     console.log(error)
@@ -41,6 +43,7 @@ class Search extends Component {
     send = () => {
         const { value } = this.state;
         console.log(value)
+        this.handle_requests(value)
         this.setState({
             value: '',
         });
