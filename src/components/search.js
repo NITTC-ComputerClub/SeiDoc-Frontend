@@ -9,7 +9,30 @@ class Search extends Component {
         super(props);
         this.state = {
             value: '',
-        };
+        }
+        this.category = [{
+            "categry": "介護",
+            "subCategry": [
+                "高専",
+                "介護",
+                "サンプル",
+            ],
+        },
+        {
+            "categry": "子育て",
+            "subCategry": [
+                "出産",
+                "病気",
+                "育児",
+            ],
+        },
+        {
+            "categry": "建築",
+            "subCategry": [
+                "テスト",
+                "ガン",
+            ],
+        }]
         this.handle_requests = this.handle_requests.bind(this)
     }
 
@@ -50,40 +73,21 @@ class Search extends Component {
     }
 
     render() {
+        const list = []
+        this.category.forEach(key => {
+            const sublist = []
+            key.subCategry.forEach(subCategry => {
+                sublist.push(<li key={subCategry} onClick={() => this.handle_requests(subCategry)}>{subCategry}</li>)
+            })
+            list.push(<Collapsible key={key.categry} trigger={key.categry}>{sublist}</Collapsible>)
+        })
         return (
             <div>
                 <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
                 <button onClick={this.send.bind(this)}>SEND</button>
                 <h1>カテゴリ</h1>
                 <div>
-                    <Collapsible trigger="介護">
-                        <ul>
-                            <li onClick={() => this.handle_requests('高専')}>高専</li>
-                            <li onClick={() => this.handle_requests('介護')}>介護</li>
-                            <li onClick={() => this.handle_requests('介護')}>介護</li>
-                        </ul>
-                    </Collapsible>
-                    <Collapsible trigger="子育て">
-                        <ul>
-                            <li onClick={() => this.handle_requests('出産')}>出産</li>
-                            <li onClick={() => this.handle_requests('病気')}>病気</li>
-                            <li onClick={() => this.handle_requests('育児')}>育児</li>
-                        </ul>
-                    </Collapsible>
-                    <Collapsible trigger="建築">
-                        <ul>
-                            <li onClick={() => this.handle_requests('出産')}>出産</li>
-                            <li onClick={() => this.handle_requests('病気')}>病気</li>
-                            <li onClick={() => this.handle_requests('育児')}>育児</li>
-                        </ul>
-                    </Collapsible>
-                    <Collapsible trigger="医療">
-                        <ul>
-                            <li onClick={() => this.handle_requests('出産')}>出産</li>
-                            <li onClick={() => this.handle_requests('病気')}>病気</li>
-                            <li onClick={() => this.handle_requests('育児')}>育児</li>
-                        </ul>
-                    </Collapsible>
+                    {list}
                 </div>
             </div>
         )
