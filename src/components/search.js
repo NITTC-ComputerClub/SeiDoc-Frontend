@@ -31,6 +31,7 @@ class Search extends Component {
             "subCategry": [
                 "テスト",
                 "ガン",
+                "サンプル"
             ],
         }]
         this.handle_requests = this.handle_requests.bind(this)
