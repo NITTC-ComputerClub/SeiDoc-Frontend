@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 class Category extends Component {
@@ -7,6 +8,10 @@ class Category extends Component {
         this.state = {
             value: '',
         }
+    }
+
+    send_detail = () => {
+        this.props.history.push('/detail')
     }
 
     handleInput = ({ target: { value } }) => {
@@ -27,11 +32,9 @@ class Category extends Component {
         let list = []
         for (let i = 0; i < this.props.category.length; i++) {
             list.push(
-                <li key={this.props.category[i].name}>
-                    <Link to='/detail'>
-                        <p>{this.props.category[i].name}</p>
-                        <p>{this.props.category[i].location}</p>
-                    </Link>
+                <li key={this.props.category[i].name} onClick={this.send_detail}>
+                    <p>{this.props.category[i].name}</p>
+                    <p>{this.props.category[i].location}</p>
                 </li>
             )
         }
@@ -52,4 +55,4 @@ class Category extends Component {
     }
 }
 
-export default Category;
+export default withRouter(Category);
