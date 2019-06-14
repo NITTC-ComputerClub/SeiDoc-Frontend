@@ -1,7 +1,8 @@
-## npm install ~~
+## npm list ~~
 ```
-npm install --save axios
-npm install --save react-collapsible
+ axios
+react-collapsible
+react-router-dom
 ``` 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
