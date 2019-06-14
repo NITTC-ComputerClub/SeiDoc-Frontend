@@ -8,16 +8,16 @@ class Api extends Component {
             loading: false,
         };
         this.handle_requests = this.handle_requests.bind(this)
-        const env = process.env.REACT_APP_VARIABLE
-        console.log(env)
     }
 
-    handle_requests(){
+    handle_requests() {
         let headers = {
             'Content-Type': 'application/json'
         }
+        const url = process.env.REACT_APP_URL
+        const params = '/ping'
         axios
-            .get('https://golang-with-dbserver.herokuapp.com/ping',headers)
+            .get(url + params, headers)
             .then(
                 (results) => {
                     this.setState({

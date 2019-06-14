@@ -22,7 +22,21 @@ class App extends Component {
     console.log(this.state.category)
   }
 
-  render() {
+  //本番
+  Production = () => {
+    return (
+      <BrowserRouter>
+        <div>
+          <Route exact path='/' render={() => <Search changeCategory={this.changeCategory} />} />
+          <Route path='/category' render={() => <Category category={this.state.category} />} />
+          <Route path='/detail' render={() => <Detail detail={this.state.category} />} />
+        </div>
+      </BrowserRouter>
+    )
+  }
+
+  //開発
+  Dev = () => {
     return (
       <BrowserRouter>
         <div>
@@ -39,11 +53,25 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/api' render={() => <Api />} />
           <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
-          <Route path='/category' render={() => <Category category={this.state.category}/>} />
-          <Route path='/detail' render={() => <Detail detail={this.state.category}/>} />
+          <Route path='/category' render={() => <Category category={this.state.category} />} />
+          <Route path='/detail' render={() => <Detail detail={this.state.category} />} />
         </div>
       </BrowserRouter>
-    );
+    )
+  }
+
+  render() {
+    const dev = process.env.REACT_APP_DEV
+    if (dev === 'true') {  //テスト環境
+      return (
+        <this.Dev />
+      )
+    }
+    else if (dev === 'false') {   //本番環境
+      return (
+        <this.Production />
+      )
+    }
   }
 }
 

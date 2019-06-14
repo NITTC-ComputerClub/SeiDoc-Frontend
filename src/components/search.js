@@ -39,12 +39,13 @@ class Search extends Component {
 
     handle_requests = (text) => {
         console.log(text)
-        const url = 'https://golang-with-dbserver.herokuapp.com/category?category='
+        const url = process.env.REACT_APP_URL
+        const params = '/category?category='
         const headers = {
             'Content-Type': 'application/json'
         }
         axios
-            .get(url + text, headers)
+            .get(url + params + text, headers)
             .then(
                 (results) => {
                     console.log(results.data)
