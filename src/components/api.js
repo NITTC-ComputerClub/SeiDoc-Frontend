@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import axios from "axios"
 
 class Api extends Component {
     constructor(props) {
@@ -10,12 +10,14 @@ class Api extends Component {
         this.handle_requests = this.handle_requests.bind(this)
     }
 
-    handle_requests(){
+    handle_requests() {
         let headers = {
             'Content-Type': 'application/json'
         }
+        const url = process.env.REACT_APP_URL
+        const params = '/ping'
         axios
-            .get('https://golang-with-dbserver.herokuapp.com/ping',headers)
+            .get(url + params, headers)
             .then(
                 (results) => {
                     this.setState({
