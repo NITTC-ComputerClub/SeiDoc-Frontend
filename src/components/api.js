@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import axios from "axios"
 
 class Api extends Component {
     constructor(props) {
@@ -8,6 +8,8 @@ class Api extends Component {
             loading: false,
         };
         this.handle_requests = this.handle_requests.bind(this)
+        const env = process.env.REACT_APP_VARIABLE
+        console.log(env)
     }
 
     handle_requests(){
