@@ -9,6 +9,7 @@ class Search extends Component {
         super(props);
         this.state = {
             value: '',
+            message: ''
         }
         this.category = [{
             "categry": "介護",
@@ -49,9 +50,15 @@ class Search extends Component {
             .then(
                 (results) => {
                     console.log(results.data)
-                    if (results.data != null) {
+                    if (results.data !== null) {
                         this.props.changeCategory(results.data)
                         this.props.history.push('/category')
+                    }
+                    else if(results.data === null){
+                        this.setState({
+                            value: '',
+                            message: '存在しないカテゴリーです'
+                        })
                     }
                 },
                 (error) => {
@@ -87,6 +94,7 @@ class Search extends Component {
             <div>
                 <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
                 <button onClick={this.send.bind(this)}>SEND</button>
+                <p>{this.state.message}</p>
                 <h1>カテゴリ</h1>
                 <div>
                     {list}
