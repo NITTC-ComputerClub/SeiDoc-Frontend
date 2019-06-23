@@ -32,19 +32,21 @@ class Category extends Component {
         for (let i = 0; i < this.props.category.length; i++) {
             list.push(
                 <li key={this.props.category[i].name} onClick={this.send_detail}>
-                    <p>{this.props.category[i].name}</p>
+                    <h4>{this.props.category[i].name}</h4>
                     <p>{this.props.category[i].location}</p>
                 </li>
             )
         }
         console.log(list)
         return (
-            <div>
-                <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
-                <button onClick={this.send.bind(this)}>SEND</button>
-                <h3>{this.props.category[0].category}に対する検索結果</h3>
+            <div className="fullscreen">
+                <div className="searchBox">
+                    <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
+                    <button onClick={this.send.bind(this)}>SEND</button>
+                </div>
+                <h3 id="resultTitle">「{this.props.category[0].category}」に関する検索結果</h3>
                 <div>
-                    <ul>
+                    <ul id="systemList">
                         {list}
                     </ul>
 
