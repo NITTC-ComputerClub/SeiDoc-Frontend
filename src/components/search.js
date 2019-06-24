@@ -14,9 +14,7 @@ class Search extends Component {
         this.category = [{
             "categry": "介護",
             "subCategry": [
-                "高専",
-                "介護",
-                "サンプル",
+                "サンプル"
             ],
         },
         {
@@ -30,8 +28,29 @@ class Search extends Component {
         {
             "categry": "建築",
             "subCategry": [
-                "テスト",
-                "ガン",
+                "サンプル"
+            ],
+        },{
+            "categry": "医療",
+            "subCategry": [
+                "サンプル"
+            ],
+        },
+        {
+            "categry": "融資",
+            "subCategry": [
+                "サンプル"
+            ],
+        },
+        {
+            "categry": "地域",
+            "subCategry": [
+                "サンプル"
+            ],
+        },
+        {
+            "categry": "高齢者",
+            "subCategry": [
                 "サンプル"
             ],
         }]
