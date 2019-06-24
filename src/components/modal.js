@@ -1,39 +1,8 @@
 import React, { Fragment } from 'react'
+import axios from "axios"
+
 import Hello from './Hello'
-
-class Collapsible extends React.Component {
-    ref = React.createRef()     //Helloをimport
-
-    componentDidMount() {
-        //Helloを非表示
-        this.ref.current.style.height = '0px'
-    }
-
-    toggleCollapse = () => {
-        if (this.ref.current.style.height !== '0px') {
-            this.ref.current.style.height = '0px'
-        } else {
-            this.ref.current.style.height = `${this.ref.current.scrollHeight}px`
-        }
-    }
-
-    render() {
-        return (
-            <Fragment>
-                <li>{this.props.category}<button onClick={this.toggleCollapse}>toggle</button></li>
-                <div
-                    ref={this.ref}
-                    style={{
-                        overflow: 'hidden',
-                        transition: 'height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-                    }}
-                >
-                    {this.props.children}
-                </div>
-            </Fragment>
-        )
-    }
-}
+import Collapsible from './collapsible'
 
 class Modal extends React.Component {
     constructor(props) {
@@ -51,6 +20,35 @@ class Modal extends React.Component {
                 "病気",
                 "育児",
             ],
+        },
+        {
+            "categry": "建築",
+            "subCategry": [
+                "サンプル"
+            ],
+        },{
+            "categry": "医療",
+            "subCategry": [
+                "サンプル"
+            ],
+        },
+        {
+            "categry": "融資",
+            "subCategry": [
+                "サンプル"
+            ],
+        },
+        {
+            "categry": "地域",
+            "subCategry": [
+                "サンプル"
+            ],
+        },
+        {
+            "categry": "高齢者",
+            "subCategry": [
+                "サンプル"
+            ],
         }]
     }
 
@@ -58,7 +56,7 @@ class Modal extends React.Component {
         const list = []
         this.category.forEach(key => {
             list.push(
-                <Collapsible key={key.categry} category={key.categry}>
+                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory}>
                     <Hello subCategry={key.subCategry}/>
                 </Collapsible>
             )

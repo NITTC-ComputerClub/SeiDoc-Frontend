@@ -57,7 +57,7 @@ class App extends Component {
           <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
           <Route path='/category' render={() => <Category category={this.state.category} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.category} />} />
-          <Route path='/modal' render={() => <Modal />} />
+          <Route path='/modal' render={() => <Modal changeCategory={this.changeCategory}/>} />
         </div>
       </BrowserRouter>
     )
