@@ -1,8 +1,29 @@
 import React, { Fragment } from 'react'
-import { render } from 'react-dom'
 import Hello from './Hello'
+import { fail } from 'assert';
 
 class Collapsible extends React.Component {
+    category = [{
+        "categry": "介護",
+        "subCategry": [
+            "サンプル"
+        ],
+    },
+    {
+        "categry": "子育て",
+        "subCategry": [
+            "出産",
+            "病気",
+            "育児",
+        ],
+    },
+    {
+        "categry": "建築",
+        "subCategry": [
+            "サンプル"
+        ],
+    }]
+
     ref = React.createRef()     //Helloをimport
 
     componentDidMount() {
@@ -19,20 +40,28 @@ class Collapsible extends React.Component {
     }
 
     render() {
+        const list = []
+        this.category.forEach(key => {
+            console.log(React.createRef())
+            list.push(
+                <Fragment>
+                    <li>{key.categry}<button onClick={this.toggleCollapse}>toggle</button></li>
+                    <div
+                        ref={this.ref}
+                        style={{
+                            overflow: 'hidden',
+                            transition: 'height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+                        }}
+                    >
+                        {this.props.children}
+                    </div>
+                </Fragment>
+            )
+        })
         return (
-            <Fragment>
-                <button onClick={this.toggleCollapse}>toggle</button>
-                <div
-                    ref={this.ref}
-                    style={{
-                        overflow: 'hidden',
-                        transition: 'height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-                    }}
-                    onClick={this.toggleCollapse}
-                >
-                    {this.props.children}
-                </div>
-            </Fragment>
+            <div>
+                {list}
+            </div>
         )
     }
 }
@@ -41,13 +70,8 @@ class Modal extends React.Component {
     render() {
         return (
             <div>
-                <Collapsible initiallyCollapsed>
-                    <Hello name="CodeSandbox" />
-                    <h2>Start editing to see some magic happen {'\u2728'}</h2>
-                </Collapsible>
                 <Collapsible>
-                    <Hello name="CodeSandbox" />
-                    <h2>Start editing to see some magic happen {'\u2728'}</h2>
+                    <Hello />
                 </Collapsible>
             </div>
         )
