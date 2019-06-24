@@ -6,6 +6,7 @@ import Api from './components/api'
 import Search from './components/search'
 import Category from './components/category'
 import Detail from './components/detail'
+import Modal from './components/modal'
 
 class App extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class App extends Component {
             <li><Link to='/search'>検索画面</Link></li>
             <li><Link to='/category'>カテゴリー検索画面</Link></li>
             <li><Link to='/detail'>制度内容</Link></li>
+            <li><Link to='/modal'>モーダル</Link></li>
           </ul>
 
           <hr />
@@ -55,6 +57,7 @@ class App extends Component {
           <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
           <Route path='/category' render={() => <Category category={this.state.category} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.category} />} />
+          <Route path='/modal' render={() => <Modal />} />
         </div>
       </BrowserRouter>
     )
