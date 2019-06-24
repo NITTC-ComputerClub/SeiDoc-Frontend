@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import axios from "axios"
 
 class Hello extends Component {
-    sample = () => {
-        console.log('OK')
-    }
 
     render() {
+        const list = []
+        this.props.subCategry.forEach(key => {
+            list.push(
+                <li key={key}>{key}</li>
+            )
+        })
         return (
             <div>
                 <ul>
-                    <li>一つ目</li>
-                    <li>二つ目</li>
-                    <li>三つ目</li>
+                    {list}
                 </ul>
-                <button onClick={this.sample}>あ</button>
             </div>
         );
     }
