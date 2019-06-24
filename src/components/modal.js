@@ -7,7 +7,7 @@ class Collapsible extends React.Component {
 
     componentDidMount() {
         //Helloを非表示
-        this.ref.current.style.height = `0px`
+        this.ref.current.style.height = '0px'
     }
 
     toggleCollapse = () => {
