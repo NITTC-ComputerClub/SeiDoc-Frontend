@@ -4,7 +4,7 @@ class Detail extends Component {
     render() {
         console.log(this.props.detail)
         return (
-            <div>
+            <div className="fullscreen" id="systemDetail">
                 <h1>{this.props.detail[0].name}</h1>
                 <h2>対象地区</h2>
                 <p>{this.props.detail[0].location}</p>
@@ -14,6 +14,7 @@ class Detail extends Component {
                 <p>{this.props.detail[0].targetAge}歳</p>
                 <h2>内容</h2>
                 <p>{this.props.detail[0].detail}</p>
+                <button>公式のページへ</button>
             </div>
         )
     }

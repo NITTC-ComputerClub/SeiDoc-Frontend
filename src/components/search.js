@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import Collapsible from 'react-collapsible';
 import axios from "axios";
-import './desgin.css'
+import './desgin.scss'
 
 class Search extends Component {
     constructor(props) {
@@ -86,17 +86,19 @@ class Search extends Component {
         this.category.forEach(key => {
             const sublist = []
             key.subCategry.forEach(subCategry => {
-                sublist.push(<li key={subCategry} onClick={() => this.handle_requests(subCategry)}>{subCategry}</li>)
+                sublist.push(<li className="subCategory" key={subCategry} onClick={() => this.handle_requests(subCategry)}>{subCategry}</li>)
             })
             list.push(<Collapsible key={key.categry} trigger={key.categry}>{sublist}</Collapsible>)
         })
         return (
-            <div>
-                <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
-                <button onClick={this.send.bind(this)}>SEND</button>
+            <div className="fullscreen">
+                <div className="searchBox">
+                    <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
+                    <button onClick={this.send.bind(this)}><img alt="虫眼鏡" src="search.png"></img></button>
+                </div>
                 <p>{this.state.message}</p>
                 <h1>カテゴリ</h1>
-                <div>
+                <div className="categoryList">
                     {list}
                 </div>
             </div>
