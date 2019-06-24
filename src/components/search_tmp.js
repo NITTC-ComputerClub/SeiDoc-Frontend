@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react'
-import axios from "axios"
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
+import Collapsible from 'react-collapsible';
+import axios from "axios";
+import './desgin.scss'
 
-import Hello from './Hello'
-import Collapsible from './collapsible'
-
-class Modal extends React.Component {
+class Search extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             value: '',
             message: ''
@@ -31,7 +30,7 @@ class Modal extends React.Component {
             "subCategry": [
                 "サンプル"
             ],
-        }, {
+        },{
             "categry": "医療",
             "subCategry": [
                 "サンプル"
@@ -55,6 +54,7 @@ class Modal extends React.Component {
                 "サンプル"
             ],
         }]
+        this.handle_requests = this.handle_requests.bind(this)
     }
 
     handle_requests = (text) => {
@@ -103,20 +103,21 @@ class Modal extends React.Component {
     render() {
         const list = []
         this.category.forEach(key => {
-            list.push(
-                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory}>
-                    <Hello subCategry={key.subCategry} />
-                </Collapsible>
-            )
+            const sublist = []
+            key.subCategry.forEach(subCategry => {
+                sublist.push(<li className="subCategory" key={subCategry} onClick={() => this.handle_requests(subCategry)}>{subCategry}</li>)
+            })
+            list.push(<Collapsible key={key.categry} trigger={key.categry}>{sublist}</Collapsible>)
         })
         return (
-            <div>
-                <div>
+            <div className="fullscreen">
+                <div className="searchBox">
                     <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
                     <button onClick={this.send.bind(this)}><img alt="虫眼鏡" src="search.png"></img></button>
                 </div>
                 <p>{this.state.message}</p>
-                <div>
+                <h1>カテゴリ</h1>
+                <div className="categoryList">
                     {list}
                 </div>
             </div>
@@ -124,4 +125,4 @@ class Modal extends React.Component {
     }
 }
 
-export default withRouter(Modal)
+export default withRouter(Search);

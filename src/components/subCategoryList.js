@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import axios from "axios"
 
-class Hello extends Component {
+class subCategoryList extends Component {
 
     render() {
         const list = []
@@ -19,4 +18,4 @@ class Hello extends Component {
         );
     }
 }
-export default Hello;
+export default subCategoryList;

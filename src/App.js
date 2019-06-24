@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Link } from 'react-router-dom'
 import './App.scss';
 
 import Api from './components/api'
-import Search from './components/search'
+import SearchTmp from './components/search_tmp'
 import Category from './components/category'
 import Detail from './components/detail'
-import Modal from './components/modal'
+import Search from './components/search'
 
 class App extends Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class App extends Component {
             <li><Link to='/search'>検索画面</Link></li>
             <li><Link to='/category'>カテゴリー検索画面</Link></li>
             <li><Link to='/detail'>制度内容</Link></li>
-            <li><Link to='/modal'>モーダル</Link></li>
+            <li><Link to='/searchtmp'>モーダル</Link></li>
           </ul>
 
           <hr />
@@ -57,7 +57,7 @@ class App extends Component {
           <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
           <Route path='/category' render={() => <Category category={this.state.category} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.category} />} />
-          <Route path='/modal' render={() => <Modal changeCategory={this.changeCategory}/>} />
+          <Route path='/searchtmp' render={() => <SearchTmp changeCategory={this.changeCategory}/>} />
         </div>
       </BrowserRouter>
     )
