@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios"
 
+//めも
 class Api extends Component {
     constructor(props) {
         super(props);
