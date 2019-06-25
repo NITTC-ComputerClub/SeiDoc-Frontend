@@ -110,13 +110,13 @@ class Search extends React.Component {
             )
         })
         return (
-            <div>
-                <div>
+            <div className="fullscreen">
+                <div className="searchBox">
                     <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
-                    <button onClick={this.send.bind(this)}><img alt="虫眼鏡" src="search.png"></img></button>
+                    <button onClick={this.send.bind(this)}>SEND</button>
                 </div>
                 <p>{this.state.message}</p>
-                <div>
+                <div id="categoryList">
                     {list}
                 </div>
             </div>

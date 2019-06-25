@@ -5,6 +5,13 @@ import axios from "axios"
 class Collapsible extends React.Component {
     ref = React.createRef()     //Helloをimport
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            buttonToggle: false
+        }
+    }
+
     componentDidMount() {
         //Helloを非表示
         this.ref.current.style.height = '0px'
@@ -12,9 +19,23 @@ class Collapsible extends React.Component {
 
     toggleCollapse = () => {
         if (this.ref.current.style.height !== '0px') {
+            this.setState({
+                buttonToggle: false
+            })
             this.ref.current.style.height = '0px'
         } else {
+            this.setState({
+                buttonToggle: true
+            })
             this.ref.current.style.height = `${this.ref.current.scrollHeight}px`
+        }
+    }
+
+    getButtonState() {
+        if (this.ref.current.style.height !== '0px') {
+            return "closeButton"
+        } else {
+            return "openButton"
         }
     }
 
@@ -49,8 +70,10 @@ class Collapsible extends React.Component {
     render() {
         return (
             <Fragment>
-                <li onClick={()=>this.handle_requests(this.props.category)}>{this.props.category}</li>
-                <button onClick={this.toggleCollapse}>toggle</button>
+                <div id="categoryBar">
+                    <li onClick={()=>this.handle_requests(this.props.category)}>{this.props.category}</li>
+                    <button className={this.state.buttonToggle ? "openButton" : "closeButton"} onClick={this.toggleCollapse}></button>
+                </div>
                 <div
                     ref={this.ref}
                     style={{
