@@ -105,7 +105,7 @@ class Search extends React.Component {
         this.category.forEach(key => {
             list.push(
                 <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory}>
-                    <SubCategoryList subCategry={key.subCategry} />
+                    <SubCategoryList subCategry={key.subCategry} changeCategory={this.props.changeCategory}/>
                 </Collapsible>
             )
         })
