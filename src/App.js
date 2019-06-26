@@ -37,8 +37,8 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path='/' render={() => <Search changeCategory={this.changeCategory} />} />
-          <Route path='/category' render={() => <Category category={this.state.category} />} />
-          <Route path='/detail' render={() => <Detail detail={this.state.category} />} />
+          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail}/>} />
+          <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
         </div>
       </BrowserRouter>
     )
