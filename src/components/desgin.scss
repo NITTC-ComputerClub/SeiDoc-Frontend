@@ -36,28 +36,43 @@ h1 {
     }
 }
 
-.subCategory {
-    color: $primary-text-color;
-    background-color: #B4DBCA;
-    list-style: none;
-    margin: 0;
-    padding: 8px 0 8px 24px;
-}
+#categoryList {
+    #categoryBar {
+        position: relative;
 
-.Collapsible {
-    width: 100vw;
-}
+        li {
+            color: $primary-text-color;
+            background-color: $primary-green;
+            list-style: none;
+            margin: 0;
+            padding: 8px 0 8px 24px;
+        }
 
-.Collapsible__trigger{
-    display: block;
-    font-size: 18px;
-    font-weight: 400;
-    text-decoration: none;
-    color: $primary-text-color;
-    position: relative;
-    border-bottom: 2px solid $primary-boder;
-    padding: 10px;
-    background: $primary-green;
+        button {
+            padding: 0;
+            border-top: 8px solid transparent;
+            border-right: 10px solid #33A777;
+            border-bottom: 8px solid transparent;
+            border-left: 0 solid transparent;
+            background-color: transparent;
+
+            position: absolute;
+            top: 20px;
+            right: 24px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .closeButton {
+            transform: translateY(-50%);
+        }
+
+        .openButton {
+            transform: translateY(-50%) rotate(-90deg);
+        }
+    }
 }
 
 #resultTitle {
