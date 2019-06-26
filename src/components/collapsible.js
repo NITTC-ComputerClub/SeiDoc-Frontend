@@ -31,14 +31,6 @@ class Collapsible extends React.Component {
         }
     }
 
-    getButtonState() {
-        if (this.ref.current.style.height !== '0px') {
-            return "closeButton"
-        } else {
-            return "openButton"
-        }
-    }
-
     handle_requests = (text) => {
         console.log(text)
         const url = process.env.REACT_APP_URL

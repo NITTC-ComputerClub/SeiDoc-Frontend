@@ -12,7 +12,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      category: {}
+      category: {},
+      detail: {}
     }
   }
 
@@ -21,6 +22,13 @@ class App extends Component {
       category: value
     })
     console.log(this.state.category)
+  }
+
+  changeDetail = (value) => {
+    this.setState({
+      detail: value
+    })
+    console.log(this.state.detail)
   }
 
   //本番
@@ -55,8 +63,8 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/api' render={() => <Api />} />
           <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
-          <Route path='/category' render={() => <Category category={this.state.category} />} />
-          <Route path='/detail' render={() => <Detail detail={this.state.category} />} />
+          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail}/>} />
+          <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
           <Route path='/searchtmp' render={() => <SearchTmp changeCategory={this.changeCategory}/>} />
         </div>
       </BrowserRouter>

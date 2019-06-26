@@ -9,7 +9,8 @@ class Category extends Component {
         }
     }
 
-    send_detail = () => {
+    send_detail = (data) => {
+        this.props.changeDetail(data)
         this.props.history.push('/detail')
     }
 
@@ -28,15 +29,16 @@ class Category extends Component {
     }
 
     render() {
-        let list = []
-        for (let i = 0; i < this.props.category.length; i++) {
+        const list = []
+        console.log(this.props.category)
+        this.props.category.forEach(key => {
             list.push(
-                <li key={this.props.category[i].name} onClick={this.send_detail}>
-                    <h4>{this.props.category[i].name}</h4>
-                    <p>{this.props.category[i].location}</p>
+                <li key={key.name} onClick={() => this.send_detail(key)}>
+                    <h4>{key.name}</h4>
+                    <p>{key.location}</p>
                 </li>
             )
-        }
+        })
         console.log(list)
         return (
             <div className="fullscreen">
