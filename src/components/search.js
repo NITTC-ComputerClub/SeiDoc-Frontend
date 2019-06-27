@@ -22,7 +22,7 @@ class Search extends React.Component {
             "categry": "子育て",
             "subCategry": [
                 "出産",
-                "病気",
+                "医療",
                 "育児",
             ],
         },
@@ -32,7 +32,7 @@ class Search extends React.Component {
                 "サンプル"
             ],
         }, {
-            "categry": "医療",
+            "categry": "病気",
             "subCategry": [
                 "サンプル"
             ],

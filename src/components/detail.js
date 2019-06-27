@@ -14,6 +14,7 @@ class Detail extends Component {
                 <p>{this.props.detail.targetAge}歳</p>
                 <h2>内容</h2>
                 <p>{this.props.detail.detail}</p>
+                <a target="_blank" href={this.props.detail.site}>公式のページへ</a>
                 <button>公式のページへ</button>
             </div>
         )
