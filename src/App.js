@@ -13,6 +13,7 @@ class App extends Component {
     super(props)
     this.state = {
       category: {},
+      title: '',
       detail: {}
     }
   }
@@ -31,13 +32,20 @@ class App extends Component {
     console.log(this.state.detail)
   }
 
+  changeTitle = (value) => {
+    this.setState({
+      title: value
+    })
+    console.log(this.state.title)
+  }
+
   //本番
   Production = () => {
     return (
       <BrowserRouter>
         <div>
           <Route exact path='/' render={() => <Search changeCategory={this.changeCategory} />} />
-          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail}/>} />
+          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
         </div>
       </BrowserRouter>
@@ -62,10 +70,10 @@ class App extends Component {
 
           <Route exact path='/' component={Home} />
           <Route path='/api' render={() => <Api />} />
-          <Route path='/search' render={() => <Search changeCategory={this.changeCategory} />} />
-          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail}/>} />
+          <Route path='/search' render={() => <Search changeCategory={this.changeCategory} changeTitle={this.changeTitle}/>} />
+          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} title={this.state.title}/>} />
           <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
-          <Route path='/searchtmp' render={() => <SearchTmp changeCategory={this.changeCategory}/>} />
+          <Route path='/searchtmp' render={() => <SearchTmp changeCategory={this.changeCategory} />} />
         </div>
       </BrowserRouter>
     )

@@ -46,7 +46,7 @@ class Category extends Component {
                     <input type="text" value={this.state.value} onChange={this.handleInput.bind(this)} />
                     <button onClick={this.send.bind(this)}>SEND</button>
                 </div>
-                <h3 id="resultTitle">「{this.props.category[0].category}」に関する検索結果</h3>
+                <h3 id="resultTitle">「{this.props.title}」に関する検索結果</h3>
                 <div>
                     <ul id="systemList">
                         {list}

@@ -71,6 +71,7 @@ class Search extends React.Component {
                     console.log(results.data)
                     if (results.data !== null) {
                         this.props.changeCategory(results.data)
+                        this.props.changeTitle(text)
                         this.props.history.push('/category')
                     }
                 },
@@ -98,8 +99,8 @@ class Search extends React.Component {
         const list = []
         this.category.forEach(key => {
             list.push(
-                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory}>
-                    <SubCategoryList subCategry={key.subCategry} changeCategory={this.props.changeCategory}/>
+                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle}>
+                    <SubCategoryList subCategry={key.subCategry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle}/>
                 </Collapsible>
             )
         })
