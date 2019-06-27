@@ -31,14 +31,6 @@ class Collapsible extends React.Component {
         }
     }
 
-    getButtonState() {
-        if (this.ref.current.style.height !== '0px') {
-            return "closeButton"
-        } else {
-            return "openButton"
-        }
-    }
-
     handle_requests = (text) => {
         console.log(text)
         const url = process.env.REACT_APP_URL
@@ -53,13 +45,8 @@ class Collapsible extends React.Component {
                     console.log(results.data)
                     if (results.data !== null) {
                         this.props.changeCategory(results.data)
+                        this.props.changeTitle(text)
                         this.props.history.push('/category')
-                    }
-                    else if(results.data === null){
-                        this.setState({
-                            value: '',
-                            message: '存在しないカテゴリーです'
-                        })
                     }
                 },
                 (error) => {

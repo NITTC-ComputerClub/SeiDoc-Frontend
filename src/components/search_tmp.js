@@ -73,12 +73,6 @@ class Search extends Component {
                         this.props.changeCategory(results.data)
                         this.props.history.push('/category')
                     }
-                    else if(results.data === null){
-                        this.setState({
-                            value: '',
-                            message: '存在しないカテゴリーです'
-                        })
-                    }
                 },
                 (error) => {
                     console.log(error)

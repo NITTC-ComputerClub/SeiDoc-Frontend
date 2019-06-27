@@ -22,7 +22,7 @@ class Search extends React.Component {
             "categry": "子育て",
             "subCategry": [
                 "出産",
-                "病気",
+                "医療",
                 "育児",
             ],
         },
@@ -32,7 +32,7 @@ class Search extends React.Component {
                 "サンプル"
             ],
         }, {
-            "categry": "医療",
+            "categry": "病気",
             "subCategry": [
                 "サンプル"
             ],
@@ -71,13 +71,8 @@ class Search extends React.Component {
                     console.log(results.data)
                     if (results.data !== null) {
                         this.props.changeCategory(results.data)
+                        this.props.changeTitle(text)
                         this.props.history.push('/category')
-                    }
-                    else if(results.data === null){
-                        this.setState({
-                            value: '',
-                            message: '存在しないカテゴリーです'
-                        })
                     }
                 },
                 (error) => {
@@ -104,8 +99,8 @@ class Search extends React.Component {
         const list = []
         this.category.forEach(key => {
             list.push(
-                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory}>
-                    <SubCategoryList subCategry={key.subCategry} />
+                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle}>
+                    <SubCategoryList subCategry={key.subCategry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle}/>
                 </Collapsible>
             )
         })
