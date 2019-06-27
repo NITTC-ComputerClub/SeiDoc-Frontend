@@ -44,8 +44,8 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Route exact path='/' render={() => <Search changeCategory={this.changeCategory} />} />
-          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} />} />
+          <Route exact path='/' render={() => <Search changeCategory={this.changeCategory} changeTitle={this.changeTitle} />} />
+          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} title={this.state.title} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
         </div>
       </BrowserRouter>
@@ -70,8 +70,8 @@ class App extends Component {
 
           <Route exact path='/' component={Home} />
           <Route path='/api' render={() => <Api />} />
-          <Route path='/search' render={() => <Search changeCategory={this.changeCategory} changeTitle={this.changeTitle}/>} />
-          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} title={this.state.title}/>} />
+          <Route path='/search' render={() => <Search changeCategory={this.changeCategory} changeTitle={this.changeTitle} />} />
+          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} title={this.state.title} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
           <Route path='/searchtmp' render={() => <SearchTmp changeCategory={this.changeCategory} />} />
         </div>
@@ -81,6 +81,10 @@ class App extends Component {
 
   render() {
     const dev = process.env.REACT_APP_DEV
+    return (
+      dev === 'true' ? <this.Dev /> : <this.Production />
+    )
+    /*
     if (dev === 'true') {  //テスト環境
       return (
         <this.Dev />
@@ -90,7 +94,7 @@ class App extends Component {
       return (
         <this.Production />
       )
-    }
+    }*/
   }
 }
 
