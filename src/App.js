@@ -84,17 +84,6 @@ class App extends Component {
     return (
       dev === 'true' ? <this.Dev /> : <this.Production />
     )
-    /*
-    if (dev === 'true') {  //テスト環境
-      return (
-        <this.Dev />
-      )
-    }
-    else if (dev === 'false') {   //本番環境
-      return (
-        <this.Production />
-      )
-    }*/
   }
 }
 
