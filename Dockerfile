@@ -12,6 +12,6 @@ RUN npm run build
 # production environment
 FROM nginx:1.16.0-alpine
 COPY --from=build /app/build /usr/share/nginx/html
-
-EXPOSE 80
+CMD sed -e "/ listen / s/80/$PORT/" -i /etc/nginx/conf.d/default.conf && \
+    nginx -g "daemon off;"
 CMD ["nginx", "-g", "daemon off;"]
