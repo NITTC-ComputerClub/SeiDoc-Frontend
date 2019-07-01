@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { BrowserRouter, Route, Link } from 'react-router-dom'
-import './App.scss';
+import './App.scss'
 
 import Api from './components/api'
 import SearchTmp from './components/search_tmp'
 import Category from './components/category'
 import Detail from './components/detail'
 import Search from './components/search'
+import Indicator from './components/indicator'
 
 class App extends Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class App extends Component {
             <li><Link to='/category'>カテゴリー検索画面</Link></li>
             <li><Link to='/detail'>制度内容</Link></li>
             <li><Link to='/searchtmp'>モーダル</Link></li>
+            <li><Link to='/indicator'>ロード画面</Link></li>
           </ul>
 
           <hr />
@@ -74,6 +76,7 @@ class App extends Component {
           <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} title={this.state.title} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
           <Route path='/searchtmp' render={() => <SearchTmp changeCategory={this.changeCategory} />} />
+          <Route path='/indicator' render={() => <Indicator />} />
         </div>
       </BrowserRouter>
     )
