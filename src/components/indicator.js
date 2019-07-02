@@ -5,7 +5,7 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 class Indicator extends React.Component {
     render() {
         return (
-            <div>
+            <div className="fullscreen">
                 <FontAwesomeIcon icon={faCircleNotch} spin size="6x" />
             </div>
         )
