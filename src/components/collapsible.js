@@ -49,7 +49,7 @@ class Collapsible extends React.Component {
                         this.props.changeTitle(text)
                         this.props.history.push('/category')
                     }
-                    else if(results.data == null) {
+                    else if (results.data == null) {
                         this.props.changeIndicator(false)
                     }
                 },
