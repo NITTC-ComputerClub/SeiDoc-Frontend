@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 class subCategoryList extends Component {
     handle_requests = (text) => {
         console.log(text)
+        this.props.changeIndicator(true)
         const url = process.env.REACT_APP_URL
         const params = '/category?category='
         const headers = {
@@ -19,6 +20,9 @@ class subCategoryList extends Component {
                         this.props.changeCategory(results.data)
                         this.props.changeTitle(text)
                         this.props.history.push('/category')
+                    }
+                    else if (results.data == null) {
+                        this.props.changeIndicator(false)
                     }
                 },
                 (error) => {

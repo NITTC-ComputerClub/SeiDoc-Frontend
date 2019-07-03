@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import axios from "axios"
 
 class Collapsible extends React.Component {
-    ref = React.createRef()     //Helloをimport
+    ref = React.createRef()     //subCategoryListをimport
 
     constructor(props) {
         super(props)
@@ -13,7 +13,7 @@ class Collapsible extends React.Component {
     }
 
     componentDidMount() {
-        //Helloを非表示
+        //非表示
         this.ref.current.style.height = '0px'
     }
 
@@ -33,6 +33,7 @@ class Collapsible extends React.Component {
 
     handle_requests = (text) => {
         console.log(text)
+        this.props.changeIndicator(true)
         const url = process.env.REACT_APP_URL
         const params = '/category?category='
         const headers = {
@@ -48,6 +49,9 @@ class Collapsible extends React.Component {
                         this.props.changeTitle(text)
                         this.props.history.push('/category')
                     }
+                    else if (results.data == null) {
+                        this.props.changeIndicator(false)
+                    }
                 },
                 (error) => {
                     console.log(error)
@@ -58,7 +62,7 @@ class Collapsible extends React.Component {
         return (
             <Fragment>
                 <div id="categoryBar">
-                    <li onClick={()=>this.handle_requests(this.props.category)}>{this.props.category}</li>
+                    <li onClick={() => this.handle_requests(this.props.category)}>{this.props.category}</li>
                     <button className={this.state.buttonToggle ? "openButton" : "closeButton"} onClick={this.toggleCollapse}></button>
                 </div>
                 <div
@@ -72,6 +76,7 @@ class Collapsible extends React.Component {
                 </div>
             </Fragment>
         )
+
     }
 }
 
