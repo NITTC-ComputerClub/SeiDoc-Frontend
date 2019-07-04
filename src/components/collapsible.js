@@ -35,7 +35,7 @@ class Collapsible extends React.Component {
         console.log(text)
         this.props.changeIndicator(true)
         const url = process.env.REACT_APP_URL
-        const params = '/category?category='
+        const params = '/institution?query='
         const headers = {
             'Content-Type': 'application/json'
         }
