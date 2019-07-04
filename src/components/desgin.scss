@@ -131,6 +131,10 @@ h1 {
         color: $primary-text-color;
     }
 
+    #systemDescription {
+        padding-bottom: 64px;
+    }
+
     button {
         position: fixed;
         bottom: 16px;
