@@ -19,6 +19,7 @@ class subCategoryList extends Component {
                     if (results.data !== null) {
                         this.props.changeCategory(results.data)
                         this.props.changeTitle(text)
+                        this.props.changeIndicator(false)
                         this.props.history.push('/category')
                     }
                     else if (results.data == null) {

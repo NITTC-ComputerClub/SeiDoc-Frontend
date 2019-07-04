@@ -10,8 +10,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: '',
-            indicator: false
+            value: ''
         }
         this.category = [{
             "categry": "介護",
@@ -58,10 +57,6 @@ class Search extends React.Component {
         }]
     }
 
-    changeIndicator = (value) => {
-        this.setState({ indicator: value })
-    }
-
     handle_requests = (text) => {
         console.log(text)
         const url = process.env.REACT_APP_URL
@@ -77,6 +72,7 @@ class Search extends React.Component {
                     if (results.data !== null) {
                         this.props.changeCategory(results.data)
                         this.props.changeTitle(text)
+                        this.props.changeIndicator(false)
                         this.props.history.push('/category')
                     }
                 },
@@ -94,9 +90,10 @@ class Search extends React.Component {
     send = () => {
         const { value } = this.state;
         console.log(value)
+        this.props.changeIndicator(true)
         this.handle_requests(value)
         this.setState({
-            value: '',
+            value: ''
         });
     }
 
@@ -104,12 +101,12 @@ class Search extends React.Component {
         const list = []
         this.category.forEach(key => {
             list.push(
-                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle} changeIndicator={this.changeIndicator}>
-                    <SubCategoryList subCategry={key.subCategry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle} changeIndicator={this.changeIndicator} />
+                <Collapsible key={key.categry} category={key.categry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle} changeIndicator={this.props.changeIndicator}>
+                    <SubCategoryList subCategry={key.subCategry} changeCategory={this.props.changeCategory} changeTitle={this.props.changeTitle} changeIndicator={this.props.changeIndicator} />
                 </Collapsible>
             )
         })
-        if (this.state.indicator) {
+        if (this.props.indicator) {
             return (
                 <Indicator />
             )
