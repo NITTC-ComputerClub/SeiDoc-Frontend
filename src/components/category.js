@@ -31,14 +31,19 @@ class Category extends Component {
     render() {
         const list = []
         console.log(this.props.category)
-        this.props.category.forEach(key => {
-            list.push(
-                <li key={key.name} onClick={() => this.send_detail(key)}>
-                    <h4>{key.name}</h4>
-                    <p>{key.location}</p>
-                </li>
-            )
-        })
+        if (this.props.category.length === 0) {
+            list.push(<p key="false">検索結果がありません</p>)
+        }
+        else {
+            this.props.category.forEach(key => {
+                list.push(
+                    <li key={key.name} onClick={() => this.send_detail(key)}>
+                        <h4>{key.name}</h4>
+                        <p>{key.location}</p>
+                    </li>
+                )
+            })
+        }
         console.log(list)
         return (
             <div className="fullscreen">
