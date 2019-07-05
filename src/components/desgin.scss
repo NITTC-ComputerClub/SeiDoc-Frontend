@@ -67,28 +67,32 @@ h1 {
         }
 
         button {
-            padding: 0;
-            border-top: 8px solid transparent;
-            border-right: 10px solid #33A777;
-            border-bottom: 8px solid transparent;
-            border-left: 0 solid transparent;
-            background-color: transparent;
+            padding: 12px 32px 12px 32px;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+
+            
 
             position: absolute;
             top: 28px;
-            right: 24px;
+            right: 0;
 
             &:focus {
                 outline: none;
             }
-        }
 
-        .closeButton {
-            transform: translateY(-50%);
+            .modalIcon {
+                border-top: 8px solid transparent;
+                border-right: 10px solid #33A777;
+                border-bottom: 8px solid transparent;
+                border-left: 0 solid transparent;
+                background-color: transparent;
+            }
         }
 
         .openButton {
-            transform: translateY(-50%) rotate(-90deg);
+            transform: rotate(-90deg);
         }
     }
 }
