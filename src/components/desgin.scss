@@ -15,23 +15,40 @@ h1 {
 }
 
 .searchBox {
-    width: 80vw;
-    height: 40px;
-    margin: 0 auto;
+    margin: 24px auto;
+    text-align: center;
 
     input {
-        padding: 0;
-        line-height: 36px;
+        border: 0; 
+        padding: 0 8px 0 8px;
+        height: 38px;
+        border-top: 1px solid $system-list-border;
+        border-left: 1px solid $system-list-border;
+        border-bottom: 1px solid $system-list-border;
+        border-radius: 4px 0 0 4px;
+
+        &:focus {
+            outline: none;
+        }
     }
 
     button {
-        background-color: $primary-green;
-        height: 100%;
-        width: 64px;
+        height: 40px;
         padding: 0;
+        border: 0;
+        width: 20%;
+        max-width: 64px;
+        background-color: $primary-green;
+        border-radius: 0 4px 4px 0;
+        position: relative;
+        vertical-align: middle;
 
         img {
-            height: 24px;
+            height: 32px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 }
