@@ -13,7 +13,7 @@ class Detail extends Component {
                 <h2>おまかな制度対象者</h2>
                 <p>{this.props.detail.targetAge}歳</p>
                 <h2>内容</h2>
-                <p>{this.props.detail.detail}</p>
+                <p id="systemDescription">{this.props.detail.detail}</p>
                 <a target="_blank" rel="noopener noreferrer" href={this.props.detail.site}>
                     <button>公式のページへ</button>
                 </a>
