@@ -64,7 +64,9 @@ class Collapsible extends React.Component {
             <Fragment>
                 <div id="categoryBar">
                     <li onClick={() => this.handle_requests(this.props.category)}>{this.props.category}</li>
-                    <button className={this.state.buttonToggle ? "openButton" : "closeButton"} onClick={this.toggleCollapse}></button>
+                    <button onClick={this.toggleCollapse}>
+                        <div className={this.state.buttonToggle ? "openButton modalIcon" : "closeButton modalIcon"}></div>
+                    </button>
                 </div>
                 <div
                     ref={this.ref}
