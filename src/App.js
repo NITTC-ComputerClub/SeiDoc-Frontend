@@ -15,8 +15,15 @@ class App extends Component {
     this.state = {
       category: {},
       title: '',
-      detail: {}
+      detail: {},
+      indicator: false
     }
+  }
+
+  changeIndicator = (value) => {
+    this.setState({
+      indicator: value
+    })
   }
 
   changeCategory = (value) => {
@@ -46,7 +53,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path='/' render={() => <Search changeCategory={this.changeCategory} changeTitle={this.changeTitle} />} />
-          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} title={this.state.title} />} />
+          <Route path='/category' render={() => <Category category={this.state.category} title={this.state.title} changeCategory={this.changeCategory} changeTitle={this.changeTitle} changeDetail={this.changeDetail} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
         </div>
       </BrowserRouter>
@@ -72,8 +79,8 @@ class App extends Component {
 
           <Route exact path='/' component={Home} />
           <Route path='/api' render={() => <Api />} />
-          <Route path='/search' render={() => <Search changeCategory={this.changeCategory} changeTitle={this.changeTitle} />} />
-          <Route path='/category' render={() => <Category category={this.state.category} changeDetail={this.changeDetail} title={this.state.title} />} />
+          <Route path='/search' render={() => <Search changeCategory={this.changeCategory} changeTitle={this.changeTitle} indicator={this.state.indicator} changeIndicator={this.changeIndicator} />} />
+          <Route path='/category' render={() => <Category category={this.state.category} title={this.state.title} indicator={this.state.indicator} changeCategory={this.changeCategory} changeTitle={this.changeTitle} changeDetail={this.changeDetail} changeIndicator={this.changeIndicator} />} />
           <Route path='/detail' render={() => <Detail detail={this.state.detail} />} />
           <Route path='/searchtmp' render={() => <SearchTmp changeCategory={this.changeCategory} />} />
           <Route path='/indicator' render={() => <Indicator />} />
