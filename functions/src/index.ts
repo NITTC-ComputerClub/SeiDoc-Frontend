@@ -43,9 +43,21 @@ exports.addNewSystemsByGAS = functions.https.onRequest(
         const URL = "https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec"
         axios.get(URL).then(res => {
             const systems: System[] = res.data;
-            console.log(systems)
+            systems.forEach(system => {
+                addNewData(system);
+            })
         }
         ).catch(err => console.error(err))
     }
 )
 
+
+const addNewData = (system: System) => {
+    admin.firestore().collection('systems')
+        .add(system)
+        .then(res => {
+            console.log('Add: ', system.Name);
+        }).catch(err => {
+            console.error('error: ',err)
+        })
+}
