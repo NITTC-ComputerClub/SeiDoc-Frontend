@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-redux": "^7.1.1"
+    "@types/react-redux": "^7.1.1",
+    "firebase-tools": "^7.1.0"
   }
 }
