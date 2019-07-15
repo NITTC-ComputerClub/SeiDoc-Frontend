@@ -1,21 +1,27 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { init, updateNum, setNum } from '../actions/action'
+import { systemActions, addCategory } from '../actions/action'
 
-export interface TestState {
-    num: number
+type System = {
+    Name: string,
+    Department: string,
+    Location: string,
+    Site: string,
+    Detail: string,
+    Target: string,
+    Method: Array<string>,
+    Category: Array<string>
 }
 
-const initialState: TestState = {
-    num: 0
+export interface SeiDocState {
+    //system: System
+    selectCategory: Array<String>
 }
 
-export const numReducer = reducerWithInitialState(initialState)
-    .case(updateNum, (state) => {
-        return { num: state.num + 1 }
-    })
-    .case(setNum, (state, payload) => {
-        return { num: payload }
-    })
-    .case(init, () => {
-        return { num: 0 }
+const initialState: SeiDocState = {
+    selectCategory: [""]
+}
+
+export const SeiDocReducer = reducerWithInitialState(initialState)
+    .case(addCategory, (state, payload) => {
+        return { selectCategory: payload }
     })
