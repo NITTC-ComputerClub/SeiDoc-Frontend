@@ -1,10 +1,10 @@
 import { createStore, combineReducers } from 'redux'
-import { SeiDocReducer, SeiDocState  } from './reducers/reducer'
+import { TagsReducer, TagsState  } from './reducers/tagsReducer'
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 export type AppState = {
-    state: SeiDocState
+    tags: TagsState
 }
 
 const persistConfig = {
@@ -14,9 +14,10 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig,
-    combineReducers<AppState>({ state: SeiDocReducer }))
+    combineReducers<AppState>({ tags: TagsReducer }))
 
 const store = createStore(persistedReducer)
 
 export const persistor = persistStore(store)
+persistor.purge()
 export default store

@@ -13,5 +13,5 @@ export const systemActions = {
     setCategory: actionCreator<Array<string>>('SET_CATEGORY')
 }
 
-export const addCategory=actionCreator<Array<string>>('ADD_CATEGORY')
-
+export const addTags = actionCreator<string>('ADD_TAGS')
+export const deleteTags = actionCreator<string>('DELETE_TAGS')

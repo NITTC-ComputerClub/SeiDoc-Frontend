@@ -1,6 +1,6 @@
 import * as React from 'react'
 import SearchBar from './components/searchBar'
-import Tags from './components/tags'
+import Tags from './containers/tagsContainer'
 import CategoryButton from './components/categoryButton'
 
 class App extends React.Component {
