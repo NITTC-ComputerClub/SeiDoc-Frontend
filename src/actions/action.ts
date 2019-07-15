@@ -2,7 +2,7 @@ import actionCreatorFactory from 'typescript-fsa'
 
 const actionCreator = actionCreatorFactory()
 
-export const systemActions = {
+export const systemFetch = {
     setName: actionCreator<string>('SET_NAME'),
     setDepartment: actionCreator<string>('SET_DEPARTMENT'),
     setLocation: actionCreator<string>('SET_LOCATION'),
