@@ -22,15 +22,25 @@ interface System {
     Category: string[]
 }
 
-exports.indexInstitutions = functions.firestore.document('test/{testId}').onCreate(
+exports.onSystemCreated = functions.firestore.document('systems/{testId}').onCreate(
     (snap, context) => {
-        const data = snap.data();
-        const objectID = snap.id;
-
-        return index.addObject({
-            objectID,
-            ...data
-        });
+        const data   = snap.data() as any;
+        index.addObject({
+            'Name': data.Name,
+            'Department': data.Department,
+            'Location' : data.Location,
+            'Site': data.Site,
+            'Detail': data.Detail,
+            'Target' : data.Target,
+            'Method': data.Method,
+            'Category': data.Category
+        },(err,res)=>{
+            if(err){
+                console.error(err);
+            }else{
+                console.log(res);
+            }
+        })
     }
 );
 
