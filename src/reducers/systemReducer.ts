@@ -24,6 +24,3 @@ const initialState: SystemState = {
 }
 
 export const SystemReducer = reducerWithInitialState(initialState)
-    .case(systemFetch.setName, (state) => {
-        
-    })
