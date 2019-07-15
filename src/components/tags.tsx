@@ -13,7 +13,7 @@ const Tags: React.SFC<tagsProps> = (props: tagsProps) => {
                 <button onClick={() => props.deleteTags('A')}>タグを削除</button>
             </div>
         </div>
-            )
-        }
-        
+    )
+}
+
 export default Tags

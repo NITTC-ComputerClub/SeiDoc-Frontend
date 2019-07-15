@@ -1,7 +1,7 @@
 import * as React from 'react'
 import SearchBar from './components/searchBar'
 import Tags from './containers/tagsContainer'
-import CategoryButton from './components/categoryButton'
+import SystemCH from './containers/systemContainer'
 
 class App extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class App extends React.Component {
       <div>
         <SearchBar />
         <Tags />
-        <CategoryButton />
+        <SystemCH />
       </div>
     )
   }
