@@ -15,6 +15,5 @@ export const TagsReducer = reducerWithInitialState(initialState)
         return { tags: state.tags.concat(payload) }
     })
     .case(deleteTags, (state, payload) => {
-        const index = state.tags.indexOf(payload)
-        return { tags: state.tags.splice(index, 1) }
+        return { tags: state.tags.filter(el=>el !== payload) }
     })
