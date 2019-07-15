@@ -1,5 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import axios from 'axios';
+
+
 admin.initializeApp();
 const env = functions.config();
 
@@ -7,6 +10,17 @@ import * as algoliaSearch from 'algoliasearch'
 
 const client = algoliaSearch(env.algolia.appid, env.algolia.apikey);
 const index = client.initIndex('test_firestore');
+
+interface System {
+    Name: string,
+    Department: string,
+    Location: string,
+    Site: string,
+    Detail: string,
+    Target: string,
+    Method: string,
+    Category: string[]
+}
 
 exports.indexInstitutions = functions.firestore.document('test/{testId}').onCreate(
     (snap, context) => {
@@ -19,4 +33,19 @@ exports.indexInstitutions = functions.firestore.document('test/{testId}').onCrea
         });
     }
 );
+
+exports.addNewSystemsByGAS = functions.https.onRequest(
+    (req, resp) => {
+        if (req.method !== 'GET'){
+            resp.status(405).send('Method Not Allowed');
+            return;
+        }   
+        const URL = "https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec"
+        axios.get(URL).then(res => {
+            const systems: System[] = res.data;
+            console.log(systems)
+        }
+        ).catch(err => console.error(err))
+    }
+)
 
