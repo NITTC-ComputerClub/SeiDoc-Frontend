@@ -11,7 +11,7 @@ import * as algoliaSearch from 'algoliasearch'
 const client = algoliaSearch(env.algolia.appid, env.algolia.apikey);
 const index = client.initIndex('test_firestore');
 
-interface System {
+type System = {
     Name: string,
     Department: string,
     Location: string,
@@ -24,17 +24,8 @@ interface System {
 
 exports.onSystemCreated = functions.firestore.document('systems/{testId}').onCreate(
     (snap, context) => {
-        const data   = snap.data() as any;
-        index.addObject({
-            'Name': data.Name,
-            'Department': data.Department,
-            'Location' : data.Location,
-            'Site': data.Site,
-            'Detail': data.Detail,
-            'Target' : data.Target,
-            'Method': data.Method,
-            'Category': data.Category
-        },(err,res)=>{
+        const data   = snap.data() as System;
+        index.addObject(data,(err,res)=>{
             if(err){
                 console.error(err);
             }else{
