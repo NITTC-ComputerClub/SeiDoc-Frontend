@@ -4,7 +4,7 @@ import { TagsActions } from '../containers/tagsContainer'
 
 type tagsProps = TagsState & TagsActions
 
-const Tags: React.SFC<tagsProps> = (props: tagsProps) => {
+const Tags: React.FC<tagsProps> = (props: tagsProps) => {
     return (
         <div>
             <div>

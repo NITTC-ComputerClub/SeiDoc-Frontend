@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const CategoryButton: React.SFC = () => {
+const CategoryButton: React.FC = () => {
     return (
         <div>
             <div>
