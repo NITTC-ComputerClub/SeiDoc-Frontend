@@ -4,10 +4,8 @@ import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
 import { TagsReducer, TagsState } from './reducers/tagsReducer'
-import { SystemReducer, State } from './reducers/systemReducer'
 
 export type AppState = {
-    system: State
     tags: TagsState
 }
 
@@ -19,7 +17,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig,
     combineReducers<AppState>({
-        system: SystemReducer,
         tags: TagsReducer
     }))
 
