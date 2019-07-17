@@ -5,7 +5,7 @@ import { AppState } from '../store'
 import { addTags, deleteTags } from '../actions/action'
 import Tags from '../components/tags'
 
-export interface TagsActions {
+export type TagsActions = {
     addTags: (value: string) => Action<string>
     deleteTags: (value: string) => Action<string>
 }

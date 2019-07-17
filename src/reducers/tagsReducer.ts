@@ -2,8 +2,8 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { addTags, deleteTags } from '../actions/action'
 
 
-export interface TagsState {
-    tags: Array<String>
+export type TagsState = {
+    tags: Array<string>
 }
 
 const initialState: TagsState = {
@@ -11,9 +11,13 @@ const initialState: TagsState = {
 }
 
 export const TagsReducer = reducerWithInitialState(initialState)
-    .case(addTags, (state, payload) => {
-        return { tags: state.tags.concat(payload) }
+    .case(addTags, (state, newTag) => {
+        return Object.assign({}, state, {
+            tags: state.tags.concat(newTag)
+        })
     })
     .case(deleteTags, (state, payload) => {
-        return { tags: state.tags.filter(el=>el !== payload) }
+        return Object.assign({},state,{
+            tags: state.tags.filter(el => el !== payload)
+        })
     })
