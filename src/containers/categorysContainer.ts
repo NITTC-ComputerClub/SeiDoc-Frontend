@@ -2,11 +2,12 @@ import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { AppState } from '../store'
-import { systemFetch, fetchSystem } from '../actions/action'
+import { fetchSystem, fetchSystemByCategory } from '../actions/action'
 import CategoryButton from '../components/categoryButton'
 
 export type CategorysActions = {
     fetchSystem: () => void
+    fetchSystemByCategory: (query: string) => void
 }
 
 function mapStateToProps(appState: AppState) {
@@ -15,7 +16,8 @@ function mapStateToProps(appState: AppState) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        fetchSystem: () => dispatch(fetchSystem())
+        fetchSystem: () => dispatch(fetchSystem()),
+        fetchSystemByCategory: (query: string) => dispatch(fetchSystemByCategory(query))
     }
 }
 
