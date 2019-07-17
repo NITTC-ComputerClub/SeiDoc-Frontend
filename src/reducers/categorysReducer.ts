@@ -1,16 +1,16 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { systemFetch } from '../actions/action'
 
-export type FetchData = {
-    data: any
+export type SystemsState = {
+    systems: firebase.firestore.DocumentData
 }
 
-const initialState: FetchData = {
-    data: []
+const initialState: SystemsState = {
+    systems: []
 }
 export const CategoryButtonReducer = reducerWithInitialState(initialState)
-    .case(systemFetch, (state,payload)=>{
-        console.log(state)
-        console.log(payload)
-        return state
+    .case(systemFetch, (state, fetchdata) => {
+        return Object.assign({}, state, {
+            systems: fetchdata
+        })
     })

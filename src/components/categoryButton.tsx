@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { FetchData } from '../reducers/categorysReducer'
+import { SystemsState } from '../reducers/categorysReducer'
 import { CategorysActions } from '../containers/categorysContainer'
 
-type categoryProps = FetchData & CategorysActions
+type categoryProps = SystemsState & CategorysActions
 
 const CategoryButton: React.FC<categoryProps> = (props: categoryProps) => {
     return (

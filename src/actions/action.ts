@@ -1,21 +1,19 @@
 import actionCreatorFactory from 'typescript-fsa'
 import { fireStore } from '../firebase/index'
+import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
-import { tsThisType } from '@babel/types';
 
 const actionCreator = actionCreatorFactory()
 
 export const systemFetch = actionCreator<firebase.firestore.DocumentData>('SYSTEM_FETCH')
 
-const systemRef = fireStore.collection('system')
-export const fetchSystem = () => (dispatch: Dispatch) => {
-    console.log('OK1')
+export const fetchSystem = () => (dispatch: Dispatch<Action<firebase.firestore.DocumentData>>) => {
+    console.log('start fetchSystem')
     const systems: firebase.firestore.DocumentData = []
     fireStore.collection('systems').get()
-        .then((snapshot: any) => {
-            snapshot.forEach((doc: any) => {
+        .then((snapshot) => {
+            snapshot.forEach((doc) => {
                 systems.push(doc.data())
-                console.log(doc.data())
             })
         })
         .then(() => {

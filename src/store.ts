@@ -3,12 +3,12 @@ import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
-import { TagsReducer, TagsState } from './reducers/tagsReducer'
-import { FetchData, CategoryButtonReducer} from './reducers/categorysReducer'
+import { TagsState, TagsReducer } from './reducers/tagsReducer'
+import { SystemsState, CategoryButtonReducer } from './reducers/categorysReducer'
 
 export type AppState = {
+    systems: SystemsState
     tags: TagsState
-    systems: FetchData
 }
 
 const persistConfig = {
@@ -19,8 +19,8 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig,
     combineReducers<AppState>({
-        tags: TagsReducer,
-        systems: CategoryButtonReducer
+        systems: CategoryButtonReducer,
+        tags: TagsReducer
     }))
 
 const store = createStore(persistedReducer, {}, applyMiddleware(thunk))
