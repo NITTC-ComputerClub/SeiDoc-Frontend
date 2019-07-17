@@ -7,6 +7,7 @@ import CategoryButton from '../components/categoryButton'
 export type CategorysActions = {
     addTags: (value: string) => Action<string>
     fetchSystemByCategory: (query: string) => void
+    fetchSystemByAlgoliaSearch: (query: string) => void
 }
 
 function mapStateToProps(appState: AppState) {
