@@ -1,15 +1,12 @@
 import * as React from 'react'
-import { TagsState } from '../reducers/tagsReducer'
-import Tags from '../containers/tagsContainer'
+import SearchBar from '../components/searchBar'
+import CategoryButton from '../components/categoryButton'
 
-type categoryProps = TagsState
-
-const Category: React.FC<categoryProps> = (props: categoryProps) => {
-    const list: Array<React.Component> = []
-    console.log(props)
+const Category: React.FC = () => {
     return (
         <div>
-            <Tags />
+            <SearchBar />
+            <CategoryButton />
         </div>
     )
 }

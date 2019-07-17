@@ -4,7 +4,7 @@ const CategoryButton: React.FC = () => {
     return (
         <div>
             <div>
-                <button>カテゴリー</button>
+                <button>子育て</button>
             </div>
         </div>
     )
