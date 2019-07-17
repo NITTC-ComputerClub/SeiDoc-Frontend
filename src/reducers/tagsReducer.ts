@@ -15,8 +15,8 @@ export const TagsReducer = reducerWithInitialState(initialState)
             tags: state.tags.concat(newTag)
         })
     })
-    .case(deleteTags, (state, payload) => {
+    .case(deleteTags, (state, targetTag) => {
         return Object.assign({}, state, {
-            tags: state.tags.filter(el => el !== payload)
+            tags: state.tags.filter(el => el !== targetTag)
         })
     })
