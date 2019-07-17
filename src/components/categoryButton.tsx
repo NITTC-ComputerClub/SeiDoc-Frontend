@@ -1,10 +1,15 @@
 import * as React from 'react'
+import { FetchData } from '../reducers/categorysReducer'
+import { CategorysActions } from '../containers/categorysContainer'
 
-const CategoryButton: React.FC = () => {
+type categoryProps = FetchData & CategorysActions
+
+const CategoryButton: React.FC<categoryProps> = (props: categoryProps) => {
     return (
         <div>
             <div>
-                <button>子育て</button>
+                {console.log(props)}
+                <button onClick={props.fetchSystem}>子育て</button>
             </div>
         </div>
     )

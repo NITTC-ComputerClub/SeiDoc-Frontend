@@ -1,6 +1,7 @@
 import actionCreatorFactory from 'typescript-fsa'
 import { fireStore } from '../firebase/index'
 import { Dispatch } from 'redux'
+import { tsThisType } from '@babel/types';
 
 const actionCreator = actionCreatorFactory()
 
@@ -8,15 +9,18 @@ export const systemFetch = actionCreator<firebase.firestore.DocumentData>('SYSTE
 
 const systemRef = fireStore.collection('system')
 export const fetchSystem = () => (dispatch: Dispatch) => {
-    console.log('OK')
+    console.log('OK1')
     const systems: firebase.firestore.DocumentData = []
-    systemRef.onSnapshot((snapshot) => {
-        snapshot.forEach((doc) => {
-            systems.push(doc.data())
+    fireStore.collection('systems').get()
+        .then((snapshot: any) => {
+            snapshot.forEach((doc: any) => {
+                systems.push(doc.data())
+                console.log(doc.data())
+            })
         })
-    })
-    console.log(systems)
-    dispatch(systemFetch(systems))
+        .then(() => {
+            dispatch(systemFetch(systems))
+        })
 }
 
 export const addTags = actionCreator<string>('ADD_TAGS')
