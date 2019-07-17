@@ -23,16 +23,17 @@ export const fetchSystem = () => (dispatch: Dispatch<Action<firebase.firestore.D
         })
 }
 export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Action<firebase.firestore.DocumentData>>) => {
+    console.log('start fetchSystem query:', query)
     const searchData: firebase.firestore.DocumentData = []
     fireStore.collection('systems').where('Category', 'array-contains', query).get()
-    .then(
-        (snapshot) => {
-            snapshot.forEach((doc) => {
-                searchData.push(doc.data())
-            })            
-        }).then(() => {
-            dispatch(fetchSystemByCategoryCreator(searchData))
-        })
+        .then(
+            (snapshot) => {
+                snapshot.forEach((doc) => {
+                    searchData.push(doc.data())
+                })
+            }).then(() => {
+                dispatch(fetchSystemByCategoryCreator(searchData))
+            })
 }
 
 export const addTags = actionCreator<string>('ADD_TAGS')
