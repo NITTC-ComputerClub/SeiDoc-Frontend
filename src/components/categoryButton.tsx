@@ -9,7 +9,8 @@ const CategoryButton: React.FC<categoryProps> = (props: categoryProps) => {
         <div>
             <div>
                 {console.log(props)}
-                <button onClick={props.fetchSystem}>子育て</button>
+                <button onClick={props.fetchSystem}>ぜんぶ</button>
+                <button onClick={() => props.fetchSystemByCategory("子育て")}>カテゴリ検索: 子育て</button>
             </div>
         </div>
     )
