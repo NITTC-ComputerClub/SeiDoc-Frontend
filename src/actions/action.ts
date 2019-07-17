@@ -1,6 +1,16 @@
 import actionCreatorFactory from 'typescript-fsa'
+import { fireStore } from '../firebase/index'
 
 const actionCreator = actionCreatorFactory()
+
+const systemRef = fireStore.collection('system')
+export const fetchSystem = () => {
+    systemRef.onSnapshot((snapshot) => {
+        snapshot.forEach((doc) => {
+            console.log(doc.data())
+        })
+    })
+}
 
 export const systemFetch = actionCreator.async('SYSTEM_FETCH')
 
