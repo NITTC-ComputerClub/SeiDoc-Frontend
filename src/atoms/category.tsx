@@ -6,6 +6,7 @@ const Category: React.FC = () => {
     return (
         <div>
             <SearchBar />
+            <h2>カテゴリー</h2>
             <CategoryButton />
         </div>
     )
