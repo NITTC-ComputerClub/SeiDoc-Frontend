@@ -48,7 +48,10 @@ exports.addNewSystemsByGAS = functions.https.onRequest(
                 addNewData(system);
             })
         }
-        ).catch(err => console.error(err))
+        ).then(res => {
+            return
+        }).catch(err => console.error(err))
+        
     }
 )
 
