@@ -11,6 +11,7 @@ const CategoryButton: React.FC<categoryProps> = (props: categoryProps) => {
                 {console.log(props)}
                 <button onClick={props.fetchSystem}>ぜんぶ</button>
                 <button onClick={() => props.fetchSystemByCategory("子育て")}>カテゴリ検索: 子育て</button>
+                <button onClick={() => props.fetchSystemByAlgoliaSearch("子育て")}>全文検索: 子育て</button>
             </div>
         </div>
     )
