@@ -14,7 +14,10 @@ const CategoryButton: React.FC<categoryProps> = (props: categoryProps) => {
                 {console.log(props)}
                 <div>
                     {categorys.map((category) => (
-                        <button key={category} onClick={() => props.fetchSystemByCategory(category)}>{category}</button>
+                        <button key={category} onClick={() => {
+                            props.fetchSystemByCategory(category)
+                            props.addTags(category)
+                        }}>{category}</button>
                     ))}
                 </div>
             </div>
