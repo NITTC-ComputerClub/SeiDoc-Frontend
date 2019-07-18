@@ -2,7 +2,6 @@ import actionCreatorFactory from 'typescript-fsa'
 import { fireStore } from '../firebase/index'
 import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
-import { DisplayProperty } from 'csstype';
 
 const actionCreator = actionCreatorFactory()
 
@@ -22,6 +21,7 @@ export const fetchSystem = () => (dispatch: Dispatch<Action<firebase.firestore.D
             dispatch(fetchSystemCreator(systems))
         })
 }
+
 export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Action<firebase.firestore.DocumentData>>) => {
     console.log('start fetchSystem query:', query)
     const searchData: firebase.firestore.DocumentData = []
