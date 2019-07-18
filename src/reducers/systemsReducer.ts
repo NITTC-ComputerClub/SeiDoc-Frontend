@@ -1,5 +1,5 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { fetchSystemCreator, fetchSystemByCategoryCreator, fetchSystemByAlgoliaSearchCreator } from '../actions/action'
+import { fetchSystemByCategoryCreator, fetchSystemByAlgoliaSearchCreator, deleteSystems } from '../actions/action'
 
 export type SystemsState = {
     systems: firebase.firestore.DocumentData
@@ -9,11 +9,7 @@ const initialState: SystemsState = {
     systems: []
 }
 export const CategoryButtonReducer = reducerWithInitialState(initialState)
-    .case(fetchSystemCreator, (state, fetchdata) => {
-        return Object.assign({}, state, {
-            systems: fetchdata
-        })
-    }).case(fetchSystemByCategoryCreator, (state,fetchData) => {
+    .case(fetchSystemByCategoryCreator, (state, fetchData) => {
         return Object.assign({}, state, {
             systems: fetchData
         })
@@ -21,4 +17,9 @@ export const CategoryButtonReducer = reducerWithInitialState(initialState)
         return Object.assign({}, state,{
             systems: fetchData
         })
-    })
+    }).case(deleteSystems, (state) => {
+        return Object.assign({}, state,{
+            systems: []
+        }
+    )
+})

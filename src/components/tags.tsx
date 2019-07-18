@@ -10,7 +10,10 @@ const Tags: React.FC<tagsProps> = (props: tagsProps) => {
             <div>
                 {console.log(props)}
                 {props.tags.map((tag) => (
-                    <button key={tag} onClick={() => props.deleteTags(tag)}>{tag}タグを削除</button>
+                    <button key={tag} onClick={() => {
+                        props.deleteTags(tag)
+                        props.deletSystems()
+                    }}>{tag}タグを削除</button>
                 ))}
             </div>
         </div>

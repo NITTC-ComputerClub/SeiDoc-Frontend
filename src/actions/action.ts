@@ -11,6 +11,7 @@ const actionCreator = actionCreatorFactory()
 export const fetchSystemCreator = actionCreator<firebase.firestore.DocumentData>('SYSTEM_FETCH')
 export const fetchSystemByCategoryCreator = actionCreator<firebase.firestore.DocumentData>('SYSTEM_FETCH_BY_CATEGORY')
 export const fetchSystemByAlgoliaSearchCreator = actionCreator<any[]>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
+export const deleteSystems = actionCreator('DELETE_SYSTEMS')
 
 export const fetchSystem = () => (dispatch: Dispatch<Action<firebase.firestore.DocumentData>>) => {
     console.log('start fetchSystem')
