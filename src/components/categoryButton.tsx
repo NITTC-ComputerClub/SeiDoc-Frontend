@@ -12,7 +12,7 @@ const CategoryButton: React.FC<categoryProps> = (props: categoryProps) => {
         <div>
             <div>
                 {console.log(props)}
-                <button onClick={() => props.fetchSystemByAlgoliaSearch("子育て")}>全文検索: 子育て</button>
+                <button onClick={() => props.fetchSystemByAlgoliaSearch("ひとり親",["子育て"])}>全文検索: 子育て</button>
                 <div>
                     {categorys.map((category) => (
                         <button key={category} onClick={() => {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import SearchBar from '../components/searchBar'
+import SearchBar from '../containers/searchBarContainer'
 import Tags from '../containers/tagsContainer'
 import SystemList from '../containers/systemListContainer'
 
