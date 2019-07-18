@@ -2,11 +2,10 @@ import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { AppState } from '../store'
-import { addTags, deleteTags } from '../actions/action'
+import { deleteTags } from '../actions/action'
 import Tags from '../components/tags'
 
 export type TagsActions = {
-    addTags: (value: string) => Action<string>
     deleteTags: (value: string) => Action<string>
 }
 
@@ -16,7 +15,6 @@ function mapStateToProps(appState: AppState) {
 
 function mapDispatchToProps(dispatch: Dispatch<Action<string>>) {
     return {
-        addTags: (value: string) => dispatch(addTags(value)),
         deleteTags: (value: string) => dispatch(deleteTags(value))
     }
 }
