@@ -7,7 +7,7 @@ import Tags from '../components/tags'
 
 export type TagsActions = {
     deleteTags: (value: string) => Action<string>
-    deletSystems: () => Action<void>
+    deleteSystems: () => Action<void>
 }
 
 function mapStateToProps(appState: AppState) {
@@ -17,7 +17,7 @@ function mapStateToProps(appState: AppState) {
 function mapDispatchToProps(dispatch: Dispatch<Action<void | string>>) {
     return {
         deleteTags: (value: string) => dispatch(deleteTags(value)),
-        deletSystems: () => dispatch(deleteSystems())
+        deleteSystems: () => dispatch(deleteSystems())
     }
 }
 
