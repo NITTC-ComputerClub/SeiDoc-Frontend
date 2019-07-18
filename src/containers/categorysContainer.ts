@@ -17,8 +17,8 @@ function mapStateToProps(appState: AppState) {
 function mapDispatchToProps(dispatch: any) {
     return {
         fetchSystemByCategory: (query: string) => dispatch(fetchSystemByCategory(query)),
-        fetchSystemByAlgoliaSearch: (query: string) => dispatch(fetchSystemByAlgoliaSearch(query))
-        addTags: (value: string) => dispatch(addTags(value)),
+        fetchSystemByAlgoliaSearch: (query: string) => dispatch(fetchSystemByAlgoliaSearch(query)),
+        addTags: (value: string) => dispatch(addTags(value))
     }
 }
 
