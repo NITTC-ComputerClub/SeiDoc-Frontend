@@ -1,5 +1,5 @@
 import * as React from 'react'
-import SearchBar from '../components/searchBar'
+import SearchBar from '../containers/searchBarContainer'
 import CategoryButton from '../containers/categorysContainer'
 
 const Category: React.FC = () => {
