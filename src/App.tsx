@@ -1,13 +1,13 @@
 import * as React from 'react'
-import Tags from './containers/tagsContainer'
 import Category from './atoms/category'
+import Result from './atoms/result'
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <Tags />
         <Category />
+        <Result />
       </div>
     )
   }

@@ -5,6 +5,7 @@ import { Dispatch } from 'redux'
 import { DisplayProperty } from 'csstype';
 import algoliasearch from 'algoliasearch';
 
+
 const actionCreator = actionCreatorFactory()
 
 
@@ -25,6 +26,7 @@ export const fetchSystem = () => (dispatch: Dispatch<Action<firebase.firestore.D
             dispatch(fetchSystemCreator(systems))
         })
 }
+
 export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Action<firebase.firestore.DocumentData>>) => {
     console.log('start fetchSystem query:', query)
     const searchData: firebase.firestore.DocumentData = []
