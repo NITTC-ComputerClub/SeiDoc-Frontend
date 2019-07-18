@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
 import { TagsState, TagsReducer } from './reducers/tagsReducer'
-import { SystemsState, CategoryButtonReducer } from './reducers/categorysReducer'
+import { SystemsState, CategoryButtonReducer } from './reducers/systemsReducer'
 
 export type AppState = {
     systems: SystemsState

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { SystemsState } from '../reducers/categorysReducer'
+import { SystemsState } from '../reducers/systemsReducer'
 import { CategorysActions } from '../containers/categorysContainer'
 
 type categoryProps = SystemsState & CategorysActions
