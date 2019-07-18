@@ -1,7 +1,7 @@
 import { Action } from 'typescript-fsa'
 import { connect } from 'react-redux'
 import { AppState } from '../store'
-import { fetchSystemByCategory, addTags } from '../actions/action'
+import { fetchSystemByCategory, fetchSystemByAlgoliaSearch,  addTags } from '../actions/action'
 import CategoryButton from '../components/categoryButton'
 
 export type CategorysActions = {
@@ -16,8 +16,9 @@ function mapStateToProps(appState: AppState) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
+        fetchSystemByCategory: (query: string) => dispatch(fetchSystemByCategory(query)),
+        fetchSystemByAlgoliaSearch: (query: string) => dispatch(fetchSystemByAlgoliaSearch(query))
         addTags: (value: string) => dispatch(addTags(value)),
-        fetchSystemByCategory: (query: string) => dispatch(fetchSystemByCategory(query))
     }
 }
 

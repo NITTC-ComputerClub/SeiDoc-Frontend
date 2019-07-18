@@ -2,6 +2,9 @@ import actionCreatorFactory from 'typescript-fsa'
 import { fireStore } from '../firebase/index'
 import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
+import { DisplayProperty } from 'csstype';
+import algoliasearch from 'algoliasearch';
+
 
 const actionCreator = actionCreatorFactory()
 
