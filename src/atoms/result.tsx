@@ -1,7 +1,7 @@
 import * as React from 'react'
-import SearchBar from '../containers/searchBarContainer'
-import Tags from '../containers/tagsContainer'
-import SystemList from '../containers/systemListContainer'
+import SearchBar from '../components/searchBar'
+import Tags from '../components/tags'
+import SystemList from '../components/systemList'
 
 const Result: React.FC = () => {
     return (

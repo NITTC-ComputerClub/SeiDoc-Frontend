@@ -1,6 +1,6 @@
 import * as React from 'react'
-import SearchBar from '../containers/searchBarContainer'
-import CategoryButton from '../containers/categorysContainer'
+import SearchBar from '../components/searchBar'
+import CategoryButton from '../components/categoryButton'
 
 const Category: React.FC = () => {
     return (
