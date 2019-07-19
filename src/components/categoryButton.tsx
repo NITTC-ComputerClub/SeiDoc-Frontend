@@ -1,23 +1,22 @@
 import * as React from 'react'
-import { SystemsState } from '../reducers/systemsReducer'
-import { CategorysActions } from '../containers/categorysContainer'
+import { useDispatch } from 'react-redux'
+import { fetchSystemByCategory, addTagsCreator } from '../actions/action'
 
-type categoryProps = SystemsState & CategorysActions
-
-const CategoryButton: React.FC<categoryProps> = (props: categoryProps) => {
-    const categorys: Array<string> = [
+const CategoryButton: React.FC = () => {
+    const dispatch = useDispatch()
+    const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
+    const addTags = (newTag: string) => dispatch(addTagsCreator(newTag))
+    const categoryList: Array<string> = [
         '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
     ]
     return (
         <div>
             <div>
-                {console.log(props)}
-                <button onClick={() => props.fetchSystemByAlgoliaSearch("ひとり親",["子育て"])}>全文検索: 子育て</button>
                 <div>
-                    {categorys.map((category) => (
+                    {categoryList.map((category) => (
                         <button key={category} onClick={() => {
-                            props.fetchSystemByCategory(category)
-                            props.addTags(category)
+                            categorySearch(category)
+                            addTags(category)
                         }}>{category}</button>
                     ))}
                 </div>
