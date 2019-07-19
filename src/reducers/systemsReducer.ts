@@ -24,13 +24,14 @@ export const CategoryButtonReducer = reducerWithInitialState(initialState)
         return Object.assign({}, state, {
             systems: fetchData
         })
-    }).case(fetchSystemByAlgoliaSearchCreator, (state,fetchData) => {
-        return Object.assign({}, state,{
+    })
+    .case(fetchSystemByAlgoliaSearchCreator, (state, fetchData) => {
+        return Object.assign({}, state, {
             systems: fetchData
         })
-    }).case(deleteSystemsCreator, (state) => {
-        return Object.assign({}, state,{
+    })
+    .case(deleteSystemsCreator, (state) => {
+        return Object.assign({}, state, {
             systems: []
-        }
-    )
-})
+        })
+    })
