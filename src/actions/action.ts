@@ -7,12 +7,10 @@ import { System } from '../reducers/systemsReducer'
 
 const actionCreator = actionCreatorFactory()
 
-
-
 export const fetchSystemCreator = actionCreator<Array<System>>('SYSTEM_FETCH')
 export const fetchSystemByCategoryCreator = actionCreator<Array<System>>('SYSTEM_FETCH_BY_CATEGORY')
 export const fetchSystemByAlgoliaSearchCreator = actionCreator<Array<System>>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
-export const deleteSystems = actionCreator('DELETE_SYSTEMS')
+export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
 
 export const fetchSystem = () => (dispatch: Dispatch<Action<Array<System>>>) => {
     console.log('start fetchSystem')
@@ -59,5 +57,5 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string[]) =>
     })
 }
 
-export const addTags = actionCreator<string>('ADD_TAGS')
-export const deleteTags = actionCreator<string>('DELETE_TAGS')
+export const addTagsCreator = actionCreator<string>('ADD_TAGS')
+export const deleteTagsCreator = actionCreator<string>('DELETE_TAGS')
