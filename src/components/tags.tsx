@@ -1,18 +1,21 @@
 import * as React from 'react'
-import { TagsState } from '../reducers/tagsReducer'
-import { TagsActions } from '../containers/tagsContainer'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from '../store'
+import { deleteTagsCreator, deleteSystemsCreator } from '../actions/action'
 
-type tagsProps = TagsState & TagsActions
-
-const Tags: React.FC<tagsProps> = (props: tagsProps) => {
+const Tags: React.FC = () => {
+    const tags = useSelector((state: AppState) => state.tags.tags)
+    const dispatch = useDispatch()
+    const deleteTags = (tag: string) => dispatch(deleteTagsCreator(tag))
+    const deleteSystems = () => dispatch(deleteSystemsCreator())
+    console.log(tags)
     return (
         <div>
             <div>
-                {console.log(props)}
-                {props.tags.map((tag) => (
+                {tags.map((tag) => (
                     <button key={tag} onClick={() => {
-                        props.deleteTags(tag)
-                        props.deleteSystems()
+                        deleteTags(tag)
+                        deleteSystems()
                     }}>{tag}タグを削除</button>
                 ))}
             </div>
