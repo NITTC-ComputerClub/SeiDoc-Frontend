@@ -1,16 +1,18 @@
 import * as React from 'react'
-import { TagsState } from '../reducers/tagsReducer'
-import { searchBarActions } from '../containers/searchBarContainer'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from '../store'
+import { fetchSystemByAlgoliaSearch } from '../actions/action'
 
-type searchBarProps = TagsState & searchBarActions;
-
-const SearchBar: React.FC<searchBarProps> = (props: searchBarProps) => {
-    let inputValue :string = ''
+const SearchBar: React.FC = () => {
+    const tags = useSelector((state: AppState) => state.tags.tags)
+    const dispatch = useDispatch()
+    const alogliaSearch = (query: string, category: Array<string>) => dispatch(fetchSystemByAlgoliaSearch(query, category))
+    let inputValue: string = ''
     return (
         <div>
             <div>
-                <input type="text" onChange={e=> {inputValue = e.target.value}}/> 
-                <button onClick={() => {props.fetchSystemByAlgoliaSearch(inputValue, props.tags)}}>クリック</button>
+                <input type="text" onChange={e => { inputValue = e.target.value }} />
+                <button onClick={() => { alogliaSearch(inputValue, tags) }}>クリック</button>
             </div>
         </div>
     )
