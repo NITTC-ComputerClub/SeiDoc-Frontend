@@ -2,7 +2,18 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { fetchSystemByCategoryCreator, fetchSystemByAlgoliaSearchCreator, deleteSystems } from '../actions/action'
 
 export type SystemsState = {
-    systems: firebase.firestore.DocumentData
+    systems: Array<System>
+}
+
+export type System = {
+    Name: string,
+    Department: string,
+    Location: string,
+    Site: string,
+    Detail: string,
+    Target: string,
+    Method: Array<string>,
+    Category: Array<string>
 }
 
 const initialState: SystemsState = {

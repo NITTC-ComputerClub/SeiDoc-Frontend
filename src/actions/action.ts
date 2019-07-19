@@ -3,38 +3,39 @@ import { fireStore } from '../firebase/index'
 import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
 import algoliasearch from 'algoliasearch';
-
+import { System } from '../reducers/systemsReducer'
 
 const actionCreator = actionCreatorFactory()
 
 
-export const fetchSystemCreator = actionCreator<firebase.firestore.DocumentData>('SYSTEM_FETCH')
-export const fetchSystemByCategoryCreator = actionCreator<firebase.firestore.DocumentData>('SYSTEM_FETCH_BY_CATEGORY')
-export const fetchSystemByAlgoliaSearchCreator = actionCreator<any[]>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
+
+export const fetchSystemCreator = actionCreator<Array<System>>('SYSTEM_FETCH')
+export const fetchSystemByCategoryCreator = actionCreator<Array<System>>('SYSTEM_FETCH_BY_CATEGORY')
+export const fetchSystemByAlgoliaSearchCreator = actionCreator<Array<System>>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
 export const deleteSystems = actionCreator('DELETE_SYSTEMS')
 
-export const fetchSystem = () => (dispatch: Dispatch<Action<firebase.firestore.DocumentData>>) => {
+export const fetchSystem = () => (dispatch: Dispatch<Action<Array<System>>>) => {
     console.log('start fetchSystem')
-    const systems: firebase.firestore.DocumentData = []
+    const searchData: Array<System> = []
     fireStore.collection('systems').get()
-        .then((snapshot) => {
-            snapshot.forEach((doc) => {
-                systems.push(doc.data())
+        .then((snapshot ) => {
+            snapshot.forEach((doc ) => {
+                searchData.push(doc.data() as System)
             })
         })
         .then(() => {
-            dispatch(fetchSystemCreator(systems))
+            dispatch(fetchSystemCreator(searchData))
         })
 }
 
-export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Action<firebase.firestore.DocumentData>>) => {
+export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Action<Array<System>>>) => {
     console.log('start fetchSystem query:', query)
-    const searchData: firebase.firestore.DocumentData = []
+    const searchData: Array<System> = []
     fireStore.collection('systems').where('Category', 'array-contains', query).get()
         .then(
             (snapshot) => {
                 snapshot.forEach((doc) => {
-                    searchData.push(doc.data())
+                searchData.push(doc.data() as System)
                 })
             }).then(() => {
                 dispatch(fetchSystemByCategoryCreator(searchData))
@@ -53,10 +54,9 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string[]) =>
             return
         }
         console.log(res)
-        dispatch(fetchSystemByAlgoliaSearchCreator(res.hits))
+        dispatch(fetchSystemByAlgoliaSearchCreator(res.hits as Array<System>))
 
     })
-
 }
 
 export const addTags = actionCreator<string>('ADD_TAGS')
