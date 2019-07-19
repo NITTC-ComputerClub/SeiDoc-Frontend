@@ -2,8 +2,11 @@ import * as React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
 import { fetchSystemByAlgoliaSearch } from '../actions/action'
+import { withRouter, RouteComponentProps } from 'react-router'
 
-const SearchBar: React.FC = () => {
+type historyProps = RouteComponentProps
+
+const SearchBar: React.FC<historyProps> = (props: historyProps) => {
     const tags = useSelector((state: AppState) => state.tags.tags)
     const dispatch = useDispatch()
     const alogliaSearch = (query: string, category: Array<string>) => dispatch(fetchSystemByAlgoliaSearch(query, category))
@@ -12,10 +15,13 @@ const SearchBar: React.FC = () => {
         <div>
             <div>
                 <input type="text" onChange={e => { inputValue = e.target.value }} />
-                <button onClick={() => { alogliaSearch(inputValue, tags) }}>クリック</button>
+                <button onClick={() => {
+                    alogliaSearch(inputValue, tags)
+                    props.history.push('/result')
+                }}>クリック</button>
             </div>
         </div>
     )
 }
 
-export default SearchBar
+export default withRouter<historyProps, React.FC<historyProps>>(SearchBar)

@@ -1,8 +1,11 @@
 import * as React from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchSystemByCategory, addTagsCreator } from '../actions/action'
+import { withRouter, RouteComponentProps } from 'react-router'
 
-const CategoryButton: React.FC = () => {
+type historyProps = RouteComponentProps
+
+const CategoryButton: React.FC<historyProps> = (props: historyProps) => {
     const dispatch = useDispatch()
     const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
     const addTags = (newTag: string) => dispatch(addTagsCreator(newTag))
@@ -17,6 +20,7 @@ const CategoryButton: React.FC = () => {
                         <button key={category} onClick={() => {
                             categorySearch(category)
                             addTags(category)
+                            props.history.push('/result')
                         }}>{category}</button>
                     ))}
                 </div>
@@ -25,4 +29,4 @@ const CategoryButton: React.FC = () => {
     )
 }
 
-export default CategoryButton
+export default withRouter<historyProps, React.FC<historyProps>>(CategoryButton)
