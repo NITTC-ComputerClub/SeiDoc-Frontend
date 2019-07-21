@@ -25,12 +25,12 @@ export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Acti
             })
 }
 
-export const fetchSystemByAlgoliaSearch = (query: string, category: string[]) => (dispatch: Dispatch) => {
+export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (dispatch: Dispatch) => {
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
     const index = client.initIndex('test_firestore')
     index.search({
         query: query,
-        facetFilters: category
+        facetFilters: [category]
     }, (err, res) => {
         if (err) {
             console.error(err)
@@ -43,4 +43,4 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string[]) =>
 }
 
 export const addTagsCreator = actionCreator<string>('ADD_TAGS')
-export const deleteTagsCreator = actionCreator<string>('DELETE_TAGS')
+export const deleteTagsCreator = actionCreator('DELETE_TAGS')
