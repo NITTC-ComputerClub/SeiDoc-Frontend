@@ -15,7 +15,9 @@ const Tags: React.FC<historyProps> = (props: historyProps) => {
     return (
         <div>
             <div>
-                {<button key={tags} onClick={() => {
+                {tags === '' ?
+                    <div></div> :
+                    <button key={tags} onClick={() => {
                         deleteTags()
                         deleteSystems()
                         props.history.push('/')
