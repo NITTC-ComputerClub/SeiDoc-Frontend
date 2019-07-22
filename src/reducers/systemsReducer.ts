@@ -1,10 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { fetchSystemByCategoryCreator, fetchSystemByAlgoliaSearchCreator, deleteSystemsCreator } from '../actions/action'
 
-export type SystemsState = {
-    systems: Array<System>
-}
-
 export type System = {
     Name: string,
     Department: string,
@@ -16,22 +12,43 @@ export type System = {
     Category: Array<string>
 }
 
+export type SystemsState = {
+    systems: Array<System>
+    loading: boolean
+}
+
 const initialState: SystemsState = {
-    systems: []
+    systems: [],
+    loading: false
 }
 export const CategoryButtonReducer = reducerWithInitialState(initialState)
-    .case(fetchSystemByCategoryCreator, (state, fetchData) => {
+    .case(fetchSystemByCategoryCreator.started, (state) => {
         return Object.assign({}, state, {
-            systems: fetchData
+            systems: [],
+            loading: true
         })
     })
-    .case(fetchSystemByAlgoliaSearchCreator, (state, fetchData) => {
+    .case(fetchSystemByCategoryCreator.done, (state, fetchData) => {
         return Object.assign({}, state, {
-            systems: fetchData
+            systems: fetchData.result,
+            loading: false
+        })
+    })
+    .case(fetchSystemByAlgoliaSearchCreator.started, (state) => {
+        return Object.assign({}, state, {
+            systems: [],
+            loading: true
+        })
+    })
+    .case(fetchSystemByAlgoliaSearchCreator.done, (state, fetchData) => {
+        return Object.assign({}, state, {
+            systems: fetchData.result,
+            loading: false
         })
     })
     .case(deleteSystemsCreator, (state) => {
         return Object.assign({}, state, {
-            systems: []
+            systems: [],
+            loading: false
         })
     })

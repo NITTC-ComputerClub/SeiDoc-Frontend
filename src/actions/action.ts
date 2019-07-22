@@ -7,13 +7,14 @@ import { System } from '../reducers/systemsReducer'
 
 const actionCreator = actionCreatorFactory()
 
-export const fetchSystemByCategoryCreator = actionCreator<Array<System>>('SYSTEM_FETCH_BY_CATEGORY')
-export const fetchSystemByAlgoliaSearchCreator = actionCreator<Array<System>>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
+export const fetchSystemByCategoryCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_CATEGORY')
+export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
 
-export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Action<Array<System>>>) => {
+export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => {
     console.log('start fetchSystem query:', query)
     const searchData: Array<System> = []
+    dispatch(fetchSystemByCategoryCreator.started())
     fireStore.collection('systems').where('Category', 'array-contains', query).get()
         .then(
             (snapshot) => {
@@ -21,13 +22,17 @@ export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch<Acti
                     searchData.push(doc.data() as System)
                 })
             }).then(() => {
-                dispatch(fetchSystemByCategoryCreator(searchData))
+                dispatch(fetchSystemByCategoryCreator.done({
+                    params: undefined,
+                    result: searchData
+                }))
             })
 }
 
 export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (dispatch: Dispatch) => {
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
     const index = client.initIndex('test_firestore')
+    dispatch(fetchSystemByAlgoliaSearchCreator.started())
     index.search({
         query: query,
         facetFilters: [category]
@@ -37,7 +42,10 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (
             return
         }
         console.log(res)
-        dispatch(fetchSystemByAlgoliaSearchCreator(res.hits as Array<System>))
+        dispatch(fetchSystemByAlgoliaSearchCreator.done({
+            params: undefined,
+            result: res.hits as Array<System>
+        }))
 
     })
 }
