@@ -1,6 +1,5 @@
 import actionCreatorFactory from 'typescript-fsa'
 import { fireStore } from '../firebase/index'
-import { Action } from 'typescript-fsa'
 import { Dispatch } from 'redux'
 import algoliasearch from 'algoliasearch';
 import { System } from '../reducers/systemsReducer'
