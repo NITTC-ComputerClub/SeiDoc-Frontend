@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useDispatch } from 'react-redux'
-import { fetchSystemByCategory, addTagsCreator } from '../actions/action'
+import { fetchSystemByCategory, addTagCreator } from '../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
 
 type historyProps = RouteComponentProps
@@ -8,7 +8,7 @@ type historyProps = RouteComponentProps
 const CategoryButton: React.FC<historyProps> = (props: historyProps) => {
     const dispatch = useDispatch()
     const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
-    const addTags = (newTag: string) => dispatch(addTagsCreator(newTag))
+    const addTag = (newTag: string) => dispatch(addTagCreator(newTag))
     const categoryList: Array<string> = [
         '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
     ]
@@ -19,7 +19,7 @@ const CategoryButton: React.FC<historyProps> = (props: historyProps) => {
                     {categoryList.map((category) => (
                         <button key={category} onClick={() => {
                             categorySearch(category)
-                            addTags(category)
+                            addTag(category)
                             props.history.push('/result')
                         }}>{category}</button>
                     ))}

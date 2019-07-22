@@ -1,30 +1,30 @@
 import * as React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
-import { deleteTagsCreator, deleteSystemsCreator } from '../actions/action'
+import { deleteTagCreator, deleteSystemsCreator } from '../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
 
 type historyProps = RouteComponentProps
 
-const Tags: React.FC<historyProps> = (props: historyProps) => {
-    const tags = useSelector((state: AppState) => state.tags.tags)
+const Tag: React.FC<historyProps> = (props: historyProps) => {
+    const tag = useSelector((state: AppState) => state.tagstate.tag)
     const dispatch = useDispatch()
-    const deleteTags = () => dispatch(deleteTagsCreator())
+    const deleteTag = () => dispatch(deleteTagCreator())
     const deleteSystems = () => dispatch(deleteSystemsCreator())
-    console.log(tags)
+    console.log(tag)
     return (
         <div>
             <div>
-                {tags === '' ?
+                {tag === '' ?
                     <div></div> :
-                    <button key={tags} onClick={() => {
-                        deleteTags()
+                    <button key={tag} onClick={() => {
+                        deleteTag()
                         deleteSystems()
                         props.history.push('/')
-                    }}>{tags}タグを削除</button>}
+                    }}>{tag}タグを削除</button>}
             </div>
         </div>
     )
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(Tags)
+export default withRouter<historyProps, React.FC<historyProps>>(Tag)

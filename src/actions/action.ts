@@ -42,5 +42,5 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (
     })
 }
 
-export const addTagsCreator = actionCreator<string>('ADD_TAGS')
-export const deleteTagsCreator = actionCreator('DELETE_TAGS')
+export const addTagCreator = actionCreator<string>('ADD_TAG')
+export const deleteTagCreator = actionCreator('DELETE_TAG')
