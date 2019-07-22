@@ -1,6 +1,6 @@
 import * as React from 'react'
 import SearchBar from '../components/searchBar'
-import Tags from '../components/tags'
+import Tag from '../components/tag'
 import SystemList from '../components/systemList'
 
 const Result: React.FC = () => {
@@ -8,7 +8,7 @@ const Result: React.FC = () => {
         <div>
             <SearchBar />
             <h3>検索結果</h3>
-            <Tags />
+            <Tag />
             <SystemList />
         </div>
     )
