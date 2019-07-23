@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { fireStore } from '../firebase/index'
-import axios from 'axios'
 
 type SendData = {
     Name: string
@@ -13,7 +12,6 @@ type SendData = {
     Category: Array<string>
 }
 
- 
 const Input: React.FC = () => {
     let name: string = ''
     let location: string = ''
@@ -21,10 +19,10 @@ const Input: React.FC = () => {
     let target: string = ''
     let site: string = ''
     let detail: string = ''
-    let method: Array<string> = []
+    let sysmethod: Array<string> = ['金銭補助']
     let category: Array<string> = []
     let systemData: SendData
-    
+
     const post = () => {
         systemData = {
             Name: name,
@@ -33,7 +31,7 @@ const Input: React.FC = () => {
             Target: target,
             Site: site,
             Detail: detail,
-            Method: method,
+            Method: sysmethod,
             Category: category
         }
         console.log(systemData)
@@ -41,13 +39,20 @@ const Input: React.FC = () => {
         systemCollection.add(systemData).then(
             ref => {
                 console.log('Added document with ID: ', ref.id)
-                axios.post('https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec',systemData)
+                const mode = "no-cors"
+                const method = 'POST'
+                const body = JSON.stringify(systemData)
+                const headers = {
+                    'Accept': 'application/json'
+                }
+                fetch('https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec',
+                    { mode, method, headers, body })
                     .then(res => console.log(res))
                     .catch(err => console.error(err))
             }
         ).catch(err => console.error(err))
 
-        
+
     }
 
     return (
@@ -62,7 +67,7 @@ const Input: React.FC = () => {
             <h5>助成対象者</h5>
             <input type='text' onChange={e => { target = e.target.value }} />
             <h5>援助方法(複数選択不可)</h5>
-            <select onChange={e => { method = [e.target.value] }}>
+            <select onChange={e => { sysmethod = [e.target.value] }}>
                 <option value='金銭補助' >金銭補助</option>
                 <option value='権利譲渡' >権利譲渡</option>
                 <option value='物品支給' >物品支給</option>
