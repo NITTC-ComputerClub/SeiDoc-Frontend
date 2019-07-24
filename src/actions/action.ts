@@ -27,6 +27,10 @@ export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => 
                 }))
             })
 }
+export const fetchSystemAll = () => (dispatch: Dispatch) => {}
+export const updateSystem = (uuid: string,newData: System) => {}
+export const deleteSystem = (uuid: string) => {}
+
 
 export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (dispatch: Dispatch) => {
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
