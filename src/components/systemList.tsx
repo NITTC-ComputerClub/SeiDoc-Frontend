@@ -9,8 +9,8 @@ const SystemList: React.FC = () => {
     const loading = useSelector((state: AppState) => state.systems.loading)
     return (
         <div>
-            {console.log(loading)}
-            {console.log(systems)}
+            {console.log('loading:', loading)}
+            {console.log('systems:', systems)}
             {loading ? <Indicator /> :
                 systems.length === 0 ?
                     <p>検索結果がありません</p>
