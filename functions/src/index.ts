@@ -35,29 +35,57 @@ exports.onSystemCreated = functions.firestore.document('systems/{testId}').onCre
     }
 );
 
+exports.addNewSystemsToAlgoliaSearch = functions.https.onRequest( (req, resp) => {
+    if (req.method !== 'GET'){
+        resp.status(405).send('Method Not Allowed');
+        return;
+    }
+    const indexName = req.query.index
+    if(indexName === undefined){
+        resp.status(405).send('Index is Required')
+        return;
+    }
+
+    const URL = "https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec"
+    axios.get(URL).then(async res => {
+        const systems: System[] = res.data;
+        index.addObjects(systems, (err, response) => {
+            if(err){
+                resp.status(400).end()
+            }
+            console.log(response)
+        })
+    }
+    ).then(res => {
+        resp.status(200).end()
+        return
+    }).catch(err => console.error(err))
+})
 exports.addNewSystemsByGAS = functions.https.onRequest(
     (req, resp) => {
         if (req.method !== 'GET'){
             resp.status(405).send('Method Not Allowed');
             return;
-        }   
+        }
+
         const URL = "https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec"
-        axios.get(URL).then(res => {
+        axios.get(URL).then(async res => {
             const systems: System[] = res.data;
-            systems.forEach(system => {
-                addNewData(system);
-            })
+            for(const system of systems) await addNewData(system,'systems')
         }
         ).then(res => {
+            resp.status(200).end()
             return
         }).catch(err => console.error(err))
+        
+     
         
     }
 )
 
 
-const addNewData = (system: System) => {
-    admin.firestore().collection('systems')
+const addNewData = async (system: System, indexName: string) => {
+    admin.firestore().collection(indexName)
         .add(system)
         .then(res => {
             console.log('Add: ', system.Name);
