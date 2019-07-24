@@ -7,10 +7,11 @@ import { withRouter, RouteComponentProps } from 'react-router'
 type historyProps = RouteComponentProps
 
 const SearchBar: React.FC<historyProps> = (props: historyProps) => {
-    const tag = useSelector((state: AppState) => state.tagstate.tag)
+    const tag = useSelector((state: AppState) => state.tagState.tag)
     const dispatch = useDispatch()
     const alogliaSearch = (query: string, category: string) => dispatch(fetchSystemByAlgoliaSearch(query, category))
     let inputValue: string = ''
+    console.log('tag:', tag)
     return (
         <div>
             <div>

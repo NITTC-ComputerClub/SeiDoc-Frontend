@@ -7,11 +7,10 @@ import { withRouter, RouteComponentProps } from 'react-router'
 type historyProps = RouteComponentProps
 
 const Tag: React.FC<historyProps> = (props: historyProps) => {
-    const tag = useSelector((state: AppState) => state.tagstate.tag)
+    const tag = useSelector((state: AppState) => state.tagState.tag)
     const dispatch = useDispatch()
     const deleteTag = () => dispatch(deleteTagCreator())
     const deleteSystems = () => dispatch(deleteSystemsCreator())
-    console.log(tag)
     return (
         <div>
             <div>
