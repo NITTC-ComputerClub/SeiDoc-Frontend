@@ -9,8 +9,8 @@ type systemData = {
 }
 
 const ViewAll: React.FC = () => {
-    const [searchData,setSearchData] = useState<systemData[]>([])
-    
+    const [searchData, setSearchData] = useState<systemData[]>([])
+
     const fetchSystemAll = () => {
         const dataList: systemData[] = [];
         fireStore.collection('systems').get()
@@ -18,33 +18,20 @@ const ViewAll: React.FC = () => {
                 (snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
-                        dataList.push({
-                            id: doc.id,
-                            data: data
-                        })
-                        /*
                         dataList.push(
-                            <tr key={doc.id}>
-                                <td>{data.Name}</td>
-                                <td>{data.Department}</td>
-                                <td>{data.Location}</td>
-                                <td>{data.Site}</td>
-                                <td>{data.Detail}</td>
-                                <td>{data.Target}</td>
-                                <td>{data.Method}</td>
-                                <td>{data.Category}</td>
-                            </tr>
-                        )
-                        */
-
+                            {
+                                id: doc.id,
+                                data: data
+                            })
                     })
                 }
             ).then(() => {
-                setSearchData(Object.assign(searchData, dataList))
-                console.log(searchData)
-            })
+                setSearchData(dataList)
+                console.log(dataList)
+            }
+            )
     }
-    
+
     const updateSystem = (uuid: string, newData: System) => { }
     const deleteSystem = (uuid: string) => { }
 
@@ -58,9 +45,6 @@ const ViewAll: React.FC = () => {
             <button onClick={fetchSystemAll}>取得</button>
             <button>追加</button>
             <button>削除</button>
-
-            <br/>
-
             <table>
                 <thead>
                     <tr>
@@ -74,18 +58,19 @@ const ViewAll: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {searchData.map(data => (
-                     <tr key={data.id}>
-                     <td>{data.data.Name}</td>
-                     <td>{data.data.Department}</td>
-                     <td>{data.data.Location}</td>
-                     <td>{data.data.Site}</td>
-                     <td>{data.data.Detail}</td>
-                     <td>{data.data.Target}</td>
-                     <td>{data.data.Method}</td>
-                     <td>{data.data.Category}</td>
-                 </tr>
-                )) }
+                    {searchData.map(data => (
+                        <tr key={data.id}>
+                            <td>{data.data.Name}</td>
+                            <td>{data.data.Department}</td>
+                            <td>{data.data.Location}</td>
+                            <td>{data.data.Site}</td>
+                            <td>{data.data.Detail}</td>
+                            <td>{data.data.Target}</td>
+                            <td>{data.data.Method}</td>
+                            <td>{data.data.Category}</td>
+                        </tr>
+                    )
+                )}
                 </tbody>
             </table>
         </div>
