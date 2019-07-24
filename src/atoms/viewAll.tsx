@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fireStore } from '../firebase/index'
 import { System } from '../reducers/systemsReducer'
-import systemList from '../components/systemList';
-import { faDivide } from '@fortawesome/free-solid-svg-icons';
+
 
 type systemData = {
     id: string,
@@ -14,7 +13,7 @@ type systemData = {
 
 const ViewAll: React.FC = () => {
     let [searchData, setSearchData] = useState<{ [key: string]: systemData }>({})
-    const [originalData, setOriginalData] = useState<{ [key: string]: systemData }>({})
+    const [, setOriginalData] = useState<{ [key: string]: systemData }>({})
     const [isFetched, setFetchFlag] = useState<Boolean>(false)
 
     const fetchSystemAll = () => {
@@ -35,9 +34,10 @@ const ViewAll: React.FC = () => {
             })
     }
 
+    /*
     const updateSystem = (uuid: string, newData: System) => { }
     const deleteSystem = (uuid: string) => { }
-
+    */
     useEffect(() => {
         console.log('現状は無視してください')
     }, [])
