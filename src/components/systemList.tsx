@@ -1,12 +1,18 @@
 import * as React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
 import { System } from '../reducers/systemsReducer'
+import { updateDetailCreator } from '../actions/action'
 import Indicator from './indicator'
+import { withRouter, RouteComponentProps } from 'react-router'
 
-const SystemList: React.FC = () => {
+type historyProps = RouteComponentProps
+
+const SystemList: React.FC<historyProps> = (props: historyProps) => {
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
+    const dispatch = useDispatch()
+    const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
     return (
         <div>
             {console.log('loading:', loading)}
@@ -17,7 +23,11 @@ const SystemList: React.FC = () => {
                     :
                     <ul>
                         {systems.map((system: System) => (
-                            <li key={system.Name}>
+                            <li key={system.Name} onClick={() => {
+                                updateDetail(system)
+                                props.history.push('/detail')
+                            }
+                            }>
                                 <h4>{system.Name}</h4>
                                 <p>{system.Location}</p>
                             </li>
@@ -27,4 +37,4 @@ const SystemList: React.FC = () => {
         </div>
     )
 }
-export default SystemList
+export default withRouter<historyProps, React.FC<historyProps>>(SystemList)
