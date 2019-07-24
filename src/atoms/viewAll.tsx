@@ -42,10 +42,12 @@ const ViewAll: React.FC = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>,key: string) => {
         
         let tmp = searchData; 
+        //とりあえずName決め打ち
         tmp[key].data.Name = e.target.value;
+        //あたらしいStateをset
         setSearchData(tmp);
         
-       console.log(tmp[key].data.Name,searchData[key].data.Name)
+        console.log(tmp[key].data.Name,searchData[key].data.Name)
     }
 
     return (
@@ -71,6 +73,7 @@ const ViewAll: React.FC = () => {
                         Object.keys(searchData).map(key => 
                         <tr key={key}>
                             <td><input type='checkbox' value={searchData[key].id}></input></td>
+                            {/* 名前のとこ変更したい */}
                             <td><input type='text' name='name' value={searchData[key].data.Name} onChange={e=>handleInputChange(e,key)}></input></td>
                             <td>{searchData[key].data.Department}</td>
                             <td>{searchData[key].data.Location}</td>
