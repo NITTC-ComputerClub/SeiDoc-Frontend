@@ -5,31 +5,31 @@ import systemList from '../components/systemList';
 
 type systemData = {
     id: string,
-    data: System
+    data: System,
+    willDelete: boolean,
 }
 
+
+
 const ViewAll: React.FC = () => {
-    const [searchData, setSearchData] = useState<systemData[]>([])
+    const [searchData, setSearchData] = useState<{[key: string]: systemData}>({})
+    const [originalData, setOriginalData] = useState<{[key: string]: systemData}>({})
 
     const fetchSystemAll = () => {
-        const dataList: systemData[] = [];
+        const dataList: {[key: string]: systemData} = {};
         fireStore.collection('systems').get()
             .then(
                 (snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
-                        dataList.push(
-                            {
-                                id: doc.id,
-                                data: data
-                            })
+                        dataList[doc.id] = {id: doc.id,data: data, willDelete: false}
                     })
                 }
             ).then(() => {
                 setSearchData(dataList)
+                setOriginalData(dataList)
                 console.log(dataList)
-            }
-            )
+            })
     }
 
     const updateSystem = (uuid: string, newData: System) => { }
@@ -38,6 +38,15 @@ const ViewAll: React.FC = () => {
     useEffect(() => {
         console.log('現状は無視してください')
     }, [])
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>,key: string) => {
+        
+        let tmp = searchData; 
+        tmp[key].data.Name = e.target.value;
+        setSearchData(tmp);
+        
+       console.log(tmp[key].data.Name,searchData[key].data.Name)
+    }
 
     return (
         <div>
@@ -58,19 +67,20 @@ const ViewAll: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {searchData.map(data => (
-                        <tr key={data.id}>
-                            <td>{data.data.Name}</td>
-                            <td>{data.data.Department}</td>
-                            <td>{data.data.Location}</td>
-                            <td>{data.data.Site}</td>
-                            <td>{data.data.Detail}</td>
-                            <td>{data.data.Target}</td>
-                            <td>{data.data.Method}</td>
-                            <td>{data.data.Category}</td>
-                        </tr>
-                    )
-                )}
+                    {
+                        Object.keys(searchData).map(key => 
+                        <tr key={key}>
+                            <td><input type='checkbox' value={searchData[key].id}></input></td>
+                            <td><input type='text' name='name' value={searchData[key].data.Name} onChange={e=>handleInputChange(e,key)}></input></td>
+                            <td>{searchData[key].data.Department}</td>
+                            <td>{searchData[key].data.Location}</td>
+                            <td>{searchData[key].data.Site}</td>
+                            <td>{searchData[key].data.Detail}</td>
+                            <td>{searchData[key].data.Target}</td>
+                            <td>{searchData[key].data.Method}</td>
+                            <td>{searchData[key].data.Category}</td>
+                        </tr>)
+                    }
                 </tbody>
             </table>
         </div>
