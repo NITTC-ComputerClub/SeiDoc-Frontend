@@ -2,23 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { fireStore } from '../firebase/index'
 import { System } from '../reducers/systemsReducer'
 
+const firebaseCollection : string = 'aaaaa'
 
 type systemData = {
     id: string,
     data: System,
     willDelete: boolean,
 }
-
-
-
 const ViewAll: React.FC = () => {
     let [searchData, setSearchData] = useState<{ [key: string]: systemData }>({})
-    const [, setOriginalData] = useState<{ [key: string]: systemData }>({})
+    const [originalData, setOriginalData] = useState<{ [key: string]: systemData }>({})
     const [isFetched, setFetchFlag] = useState<Boolean>(false)
 
     const fetchSystemAll = () => {
         const dataList: { [key: string]: systemData } = {};
-        fireStore.collection('systems').get()
+        fireStore.collection(firebaseCollection).get()
             .then(
                 (snapshot) => {
                     snapshot.forEach((doc) => {
@@ -28,16 +26,83 @@ const ViewAll: React.FC = () => {
                 }
             ).then(() => {
                 setSearchData(dataList)
-                setOriginalData(dataList)
+                setOriginalData(JSON.parse(JSON.stringify(dataList))) //参照渡しさせない
                 setFetchFlag(!isFetched)
-                console.log(dataList)
             })
     }
 
-    /*
-    const updateSystem = (uuid: string, newData: System) => { }
-    const deleteSystem = (uuid: string) => { }
-    */
+    
+    const updateSystem = (uuid: string, newData: System) => {
+        fireStore.collection(firebaseCollection)
+            .doc(uuid)
+            .update(newData)
+
+     }
+    const deleteSystem = (uuid: string) => {
+        fireStore.collection(firebaseCollection).doc(uuid).delete()
+    }
+    const checkDeleteSystems = () => {
+        const keys = Object.keys(searchData)
+        const deleteKeys : string[] = []
+        keys.forEach(key => {
+            if(searchData[key].willDelete)deleteKeys.push(key)
+        })
+        if(deleteKeys.length === 0){
+            console.log('チェックされていません')
+        }else{
+            console.log(deleteKeys)
+            deleteKeys.forEach(key => deleteSystem(key))
+            alert('削除しました。')
+            refresh()
+        }   
+
+        
+    }
+
+    
+    const checkSystems = () => {  
+        const keys = Object.keys(searchData)
+        let diff :string[] = [];
+        keys.forEach(key =>
+            {
+                if(JSON.stringify(objectSort(originalData[key])) !== JSON.stringify(objectSort(searchData[key]))){
+                    diff.push(key)
+                }
+             }
+        )
+        if(diff.length !== 0) {
+            console.log('差分発見:')
+            diff.forEach(key => updateSystem(key, searchData[key].data))
+            refresh()
+        }else{
+            console.log('差分はないよ')
+        }
+    }
+
+    const refresh = () => {
+        setSearchData({})
+        setFetchFlag(false)
+        fetchSystemAll()
+    }
+
+
+    const objectSort = (obj :any) => {
+        const keys = Object.keys(obj).sort()
+
+        let newMap :any = {};
+        keys.forEach(key => {
+            let val  = obj[key]
+
+            if(typeof val === "object"){
+                val = objectSort(val)
+            }
+
+            newMap[key] = val;
+        });
+
+        return newMap;
+    }
+
     useEffect(() => {
         console.log('現状は無視してください')
     }, [])
@@ -47,23 +112,19 @@ const ViewAll: React.FC = () => {
         searchData[key].data[tmp] = e.target.value;
         //あたらしいStateをset
         setSearchData(Object.assign({}, searchData)); 
-        console.log(key)
-        console.log(searchData[key].data.Name)
     }
 
     const handleDeleteCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>,key: string) => {
         searchData[key].willDelete = e.target.checked
         setSearchData(Object.assign({}, searchData));
-        console.log(e.target.checked)
-
     }
 
     return (
         <div>
             <h2>全データ</h2>
             <button onClick={fetchSystemAll}>取得</button>
-            <button>追加</button>
-            <button>削除</button>
+            <button onClick={e => checkSystems()}>追加</button>
+            <button onClick={e => {if(window.confirm('チェックが入っているデータを削除してよろしいですか?')) checkDeleteSystems()}}>削除</button>
             
             {isFetched?<table>
                 <thead>
