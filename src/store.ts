@@ -8,9 +8,9 @@ import { SystemsState, CategoryButtonReducer } from './reducers/systemsReducer'
 import { SelectSystemsState, SelectSystemReducer} from './reducers/selectsystemReducer'
 
 export type AppState = {
-    systems: SystemsState
+    systemsState: SystemsState
     tagState: TagState
-    selectsystemsstate: SelectSystemsState
+    selectsystemsState: SelectSystemsState
 }
 
 const persistConfig = {
@@ -21,9 +21,9 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig,
     combineReducers<AppState>({
-        systems: CategoryButtonReducer,
+        systemsState: CategoryButtonReducer,
         tagState: TagReducer,
-        selectsystemsstate: SelectSystemReducer
+        selectsystemsState: SelectSystemReducer
     }))
 
 const store = createStore(persistedReducer, {}, applyMiddleware(thunk))

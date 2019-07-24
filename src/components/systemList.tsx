@@ -5,8 +5,8 @@ import { System } from '../reducers/systemsReducer'
 import Indicator from './indicator'
 
 const SystemList: React.FC = () => {
-    const systems = useSelector((state: AppState) => state.systems.systems)
-    const loading = useSelector((state: AppState) => state.systems.loading)
+    const systems = useSelector((state: AppState) => state.systemsState.systems)
+    const loading = useSelector((state: AppState) => state.systemsState.loading)
     return (
         <div>
             {console.log('loading:', loading)}
