@@ -12,17 +12,17 @@ type systemData = {
 
 
 const ViewAll: React.FC = () => {
-    const [searchData, setSearchData] = useState<{[key: string]: systemData}>({})
-    const [originalData, setOriginalData] = useState<{[key: string]: systemData}>({})
+    let [searchData, setSearchData] = useState<{ [key: string]: systemData }>({})
+    const [originalData, setOriginalData] = useState<{ [key: string]: systemData }>({})
 
     const fetchSystemAll = () => {
-        const dataList: {[key: string]: systemData} = {};
+        const dataList: { [key: string]: systemData } = {};
         fireStore.collection('systems').get()
             .then(
                 (snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
-                        dataList[doc.id] = {id: doc.id,data: data, willDelete: false}
+                        dataList[doc.id] = { id: doc.id, data: data, willDelete: false }
                     })
                 }
             ).then(() => {
@@ -39,15 +39,18 @@ const ViewAll: React.FC = () => {
         console.log('現状は無視してください')
     }, [])
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>,key: string) => {
-        
-        let tmp = searchData; 
-        //とりあえずName決め打ち
-        tmp[key].data.Name = e.target.value;
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+        searchData[key].data.Name = e.target.value;
         //あたらしいStateをset
-        setSearchData(tmp);
-        
-        console.log(tmp[key].data.Name,searchData[key].data.Name)
+        setSearchData(Object.assign({}, searchData, {
+            key: {
+                data: {
+                    Name: e.target.value
+                }
+            }
+        }));
+        console.log(key)
+        console.log(searchData[key].data.Name)
     }
 
     return (
@@ -70,19 +73,19 @@ const ViewAll: React.FC = () => {
                 </thead>
                 <tbody>
                     {
-                        Object.keys(searchData).map(key => 
-                        <tr key={key}>
-                            <td><input type='checkbox' value={searchData[key].id}></input></td>
-                            {/* 名前のとこ変更したい */}
-                            <td><input type='text' name='name' value={searchData[key].data.Name} onChange={e=>handleInputChange(e,key)}></input></td>
-                            <td>{searchData[key].data.Department}</td>
-                            <td>{searchData[key].data.Location}</td>
-                            <td>{searchData[key].data.Site}</td>
-                            <td>{searchData[key].data.Detail}</td>
-                            <td>{searchData[key].data.Target}</td>
-                            <td>{searchData[key].data.Method}</td>
-                            <td>{searchData[key].data.Category}</td>
-                        </tr>)
+                        Object.keys(searchData).map(key =>
+                            <tr key={key}>
+                                <td><input type='checkbox' value={searchData[key].id}></input></td>
+                                {/* 名前のとこ変更したい */}
+                                <td><input type='text' name='name' value={searchData[key].data.Name} onChange={e => handleInputChange(e, key)}></input></td>
+                                <td>{searchData[key].data.Department}</td>
+                                <td>{searchData[key].data.Location}</td>
+                                <td>{searchData[key].data.Site}</td>
+                                <td>{searchData[key].data.Detail}</td>
+                                <td>{searchData[key].data.Target}</td>
+                                <td>{searchData[key].data.Method}</td>
+                                <td>{searchData[key].data.Category}</td>
+                            </tr>)
                     }
                 </tbody>
             </table>
