@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fireStore } from '../firebase/index'
 import { System } from '../reducers/systemsReducer'
-
 const firebaseCollection : string = 'aaaaa'
 
 type systemData = {
@@ -9,6 +8,7 @@ type systemData = {
     data: System,
     willDelete: boolean,
 }
+
 const ViewAll: React.FC = () => {
     let [searchData, setSearchData] = useState<{ [key: string]: systemData }>({})
     const [originalData, setOriginalData] = useState<{ [key: string]: systemData }>({})
@@ -31,13 +31,14 @@ const ViewAll: React.FC = () => {
             })
     }
 
-    
+    //TODO:このへんのエラー処理
     const updateSystem = (uuid: string, newData: System) => {
         fireStore.collection(firebaseCollection)
             .doc(uuid)
             .update(newData)
 
-     }
+    }
+    // TODO:このへんの エラー処理
     const deleteSystem = (uuid: string) => {
         fireStore.collection(firebaseCollection).doc(uuid).delete()
     }
@@ -65,6 +66,7 @@ const ViewAll: React.FC = () => {
         let diff :string[] = [];
         keys.forEach(key =>
             {
+                //めっちゃ厳密に比較
                 if(JSON.stringify(objectSort(originalData[key])) !== JSON.stringify(objectSort(searchData[key]))){
                     diff.push(key)
                 }
@@ -85,7 +87,6 @@ const ViewAll: React.FC = () => {
         fetchSystemAll()
     }
 
-
     const objectSort = (obj :any) => {
         const keys = Object.keys(obj).sort()
 
@@ -96,10 +97,8 @@ const ViewAll: React.FC = () => {
             if(typeof val === "object"){
                 val = objectSort(val)
             }
-
             newMap[key] = val;
         });
-
         return newMap;
     }
 
@@ -163,3 +162,4 @@ const ViewAll: React.FC = () => {
 }
 
 export default ViewAll
+
