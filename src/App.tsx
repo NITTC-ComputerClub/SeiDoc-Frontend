@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Category from './atoms/category'
 import Result from './atoms/result'
 import Input from './atoms/input'
-import Detail from './components/detail'
+import Detail from './atoms/detail'
 
 class App extends React.Component {
   render() {
