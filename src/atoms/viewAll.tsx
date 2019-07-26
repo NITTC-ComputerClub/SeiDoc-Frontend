@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fireStore } from '../firebase/firebase'
 import { System } from '../reducers/systemsReducer'
-import { array, object, string } from 'prop-types';
 const firebaseCollection : string = 'dateTest'
 
 type systemData = {
@@ -19,13 +18,13 @@ const ViewAll: React.FC = () => {
     const [originalData, setOriginalData] = useState<{ [key: string]: systemData }>({})
     const [showOrder, setShowOrder] = useState<showOrderType>({order: []})
     const [isFetched, setFetchFlag] = useState<Boolean>(false)
+    
 
     const fetchSystemAll = () => {
         const dataList: { [key: string]: systemData } = {};
         let currentOrder : showOrderType = {order: []}
         fireStore.collection(firebaseCollection).get()
-            .then(
-                (snapshot) => {
+            .then((snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
                         dataList[doc.id] = { id: doc.id, data: data, willDelete: false , isNewCreate: false }
@@ -34,7 +33,6 @@ const ViewAll: React.FC = () => {
                 }
             ).then(() => {
                 setSearchData(Object.assign({}, dataList))
-                console.log(currentOrder)
                 setShowOrder(Object.assign({},currentOrder))
                 setOriginalData(JSON.parse(JSON.stringify(dataList))) //参照渡しさせない
                 setFetchFlag(true)
@@ -118,7 +116,6 @@ const ViewAll: React.FC = () => {
                 //めっちゃ厳密に比較
                 if(originalData[key] == null){
                     diff.push(key)
-                    
                 } else if(JSON.stringify(objectSort(originalData[key])) !== JSON.stringify(objectSort(searchData[key]))){
                     diff.push(key)
                 }
@@ -137,12 +134,13 @@ const ViewAll: React.FC = () => {
                     updateSystem(key,searchData[key].data)
                 }
             })
-            refresh()
+            refresh() 
         } else {
             console.log('差分はないよ')
         }
     }
 
+    // これもどうにかする? 
     const refresh = () => {
         setFetchFlag(false)
         fetchSystemAll()
@@ -167,25 +165,26 @@ const ViewAll: React.FC = () => {
     }, [])
 
     //漢字のソートは無理があるのでやるならよみがなを登録する
-    
     const sortByCondition = (condition:  'CreatedAt' | 'UpdatedAt' | 'ExpireAt', order: 'desc' | 'asc') => {
         const keys = showOrder.order
         const sortKeys : any = []
         let sortedArray : string[] = []
         
+        type objectComparison = {uuid: string, data: number}
         // uuid: condition の配列を作る
         keys.forEach(key => {
             const data = searchData[key].data 
-            const obj = {uuid: key, data: data[condition]}
+            const obj : objectComparison = {uuid: key, data: data[condition]}
             sortKeys.push(obj)
         })
         
         let reverse = 1;
-        if(order == "desc") reverse = -1;
-        sortKeys.sort((a:{uuid:string, data:number},b:{uuid:string, data:number}) => {
+        if(order === "desc") reverse = -1;
+
+        sortKeys.sort((a:objectComparison, b:objectComparison) => {
             if(a.data < b.data){
                 return -1 * reverse
-            }else if(a.data == b.data){
+            }else if(a.data === b.data){
                 return 0
             }else{
                 return 1 * reverse
@@ -211,11 +210,13 @@ const ViewAll: React.FC = () => {
         setSearchData(Object.assign({}, searchData));
     }
 
+    /*
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>, key:string) => {
         let tmp  = e.target.name as 'ExpireAt' | 'UpdatedAt'//あんま良くないと思う
         searchData[key].data[tmp] = Date.parse(e.target.value);
         setSearchData(Object.assign({}, searchData));
     }
+    */
 
 
 
@@ -228,7 +229,6 @@ const ViewAll: React.FC = () => {
             <button onClick={e => addNewSystem()}>新規作成</button>
             <button onClick={e => sortByCondition('CreatedAt','desc')}>作成があたらしい順にソートする</button>
             <button onClick={e => sortByCondition('CreatedAt','asc')}>作成が古い順にソートする</button>
-
             {(isFetched && (showOrder.order.length !== 0))?<table>
                 <thead>
                     <tr>
