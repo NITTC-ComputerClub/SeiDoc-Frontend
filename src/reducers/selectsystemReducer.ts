@@ -15,9 +15,15 @@ const initialState: SelectSystemsState = {
         Detail: '',
         Target: '',
         Method: [],
-        Category: []
+        Category: [],
+        CreatedAt: 0,
+        UpdatedAt: 0,
+        isDeleted: false,
+        ExpireAt: 0
     }
 }
+
+
 export const SelectSystemReducer = reducerWithInitialState(initialState)
     .case(updateDetailCreator, (state, newSystem) => {
         return Object.assign({}, state, {

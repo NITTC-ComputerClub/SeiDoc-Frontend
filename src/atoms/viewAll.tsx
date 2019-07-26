@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fireStore } from '../firebase/firebase'
 import { System } from '../reducers/systemsReducer'
-const firebaseCollection : string = 'aaaaa'
+const firebaseCollection : string = 'dateTest'
 
 type systemData = {
     id: string,
@@ -9,24 +9,32 @@ type systemData = {
     willDelete: boolean,
     isNewCreate: boolean // True if it is a new system
 }
+type showOrderType = {
+    order: Array<string>
+}
 
 const ViewAll: React.FC = () => {
     let [searchData, setSearchData] = useState<{ [key: string]: systemData }>({})
     const [originalData, setOriginalData] = useState<{ [key: string]: systemData }>({})
+    const [showOrder, setShowOrder] = useState<showOrderType>({order: []})
     const [isFetched, setFetchFlag] = useState<Boolean>(false)
 
     const fetchSystemAll = () => {
         const dataList: { [key: string]: systemData } = {};
+        let currentOrder : showOrderType = {order: []}
         fireStore.collection(firebaseCollection).get()
             .then(
                 (snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
                         dataList[doc.id] = { id: doc.id, data: data, willDelete: false , isNewCreate: false }
+                        currentOrder.order.push(doc.id)
                     })
                 }
             ).then(() => {
                 setSearchData(Object.assign({}, dataList))
+                console.log(currentOrder)
+                setShowOrder(Object.assign({},currentOrder))
                 setOriginalData(JSON.parse(JSON.stringify(dataList))) //参照渡しさせない
                 setFetchFlag(true)
             })
@@ -48,6 +56,8 @@ const ViewAll: React.FC = () => {
     const deleteSystem = (uuid: string) => {
         fireStore.collection(firebaseCollection).doc(uuid).delete()
     }
+
+
     const checkDeleteSystems = () => {
         const keys = Object.keys(searchData)
         const deleteKeys : string[] = []
@@ -63,6 +73,8 @@ const ViewAll: React.FC = () => {
             setTimeout(() => refresh(), 1000); // wait for delete
         }   
     }
+
+
     const makeRandomID = () => {
         // 生成する文字列の長さ
         const l = 8;
@@ -85,7 +97,11 @@ const ViewAll: React.FC = () => {
             Detail: '',
             Target: '',
             Method: [''],
-            Category: ['']
+            Category: [''],
+            CreatedAt: Date.now(),
+            UpdatedAt: 2262025600000,
+            isDeleted: false,
+            ExpireAt: 2262025600000
         }
         const newID = makeRandomID()
         console.log(newID)
@@ -111,6 +127,7 @@ const ViewAll: React.FC = () => {
             console.log('差分発見!')
             
             diff.forEach(key => {
+                searchData[key].data.UpdatedAt = Date.now()
                 if(searchData[key].isNewCreate){
                     console.log('新規制度発見',searchData[key].data.Name)
                     addNewSystemToFirebase(key, searchData[key].data)
@@ -148,6 +165,24 @@ const ViewAll: React.FC = () => {
         console.log('現状は無視してください')
     }, [])
 
+    //漢字のソートは無理があるのでやるならよみがなを登録する
+    /*
+    const sortByCondition = (condition:  'CreatedAt' | 'UpdatedAt' | 'ExpireAt') => {
+        const keys = Object.keys(searchData)
+        const sortKeys : any = []
+        let sortedKeys = []
+        
+        // uuid: condition の配列を作る
+        keys.forEach(key => {
+            const uuid = key
+            sortKeys.push({uuid : searchData[key].data[condition]})
+        })
+        console.log(sortKeys)
+
+    }
+    */
+
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
         let tmp  = e.target.name as 'Name' | 'Site' //TODO: 黒魔術やめる
         searchData[key].data[tmp] = e.target.value;
@@ -160,6 +195,14 @@ const ViewAll: React.FC = () => {
         setSearchData(Object.assign({}, searchData));
     }
 
+    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>, key:string) => {
+        let tmp  = e.target.name as 'ExpireAt' | 'UpdatedAt'//あんま良くないと思う
+        searchData[key].data[tmp] = Date.parse(e.target.value);
+        setSearchData(Object.assign({}, searchData));
+    }
+
+
+
     return (
         <div>
             <h2>全データ</h2>
@@ -167,7 +210,8 @@ const ViewAll: React.FC = () => {
             <button onClick={e => checkSystems()}>更新</button>
             <button onClick={e => {if(window.confirm('チェックが入っているデータを削除してよろしいですか?')) checkDeleteSystems()}}>削除</button>
             <button onClick={e => addNewSystem()}>新規作成</button>
-            {isFetched?<table>
+            {/*<button onClick={e => sortByCondition('CreatedAt')}>作成順にソートする</button>*/}
+            {(isFetched && (showOrder.order.length !== 0))?<table>
                 <thead>
                     <tr>
                         <th>削除</th>
@@ -183,18 +227,19 @@ const ViewAll: React.FC = () => {
                 </thead>
                 <tbody>
                     {
-                        Object.keys(searchData).map(key =>
-                            <tr key={key}>
-                                <td><input type='checkbox' value={searchData[key].id} onChange={e => handleDeleteCheckboxChange(e,key)}></input></td>
-                                <td><input type='text' name='Name' value={searchData[key].data.Name} onChange={e => handleInputChange(e, key)}></input></td>
-                                <td><input type='text' name='Department' value={searchData[key].data.Department} onChange={e => handleInputChange(e, key)}></input></td>
-                                <td><input type='text' name='Location' value={searchData[key].data.Location} onChange={e => handleInputChange(e,key)}></input></td>
-                                <td><input type='text' name='Site' value={searchData[key].data.Site} onChange={e => handleInputChange(e,key)}></input></td>
-                                <td><input type="text" name="Detail" value={searchData[key].data.Detail} onChange={e => handleInputChange(e,key)}></input></td>
-                                <td><input type="text" name="Target" value={searchData[key].data.Target} onChange={e => handleInputChange(e,key)}></input></td>
-                                <td><input type="text" name="Method" value={searchData[key].data.Method} onChange={e => handleInputChange(e,key)}></input></td>
-                                <td><input type="text" name="Category" value={searchData[key].data.Category} onChange={e => handleInputChange(e,key)}></input></td>
-                            </tr>)
+                        showOrder.order.map(key => 
+                        <tr key={key}>
+                            <td><input type='checkbox' value={searchData[key].id} onChange={e => handleDeleteCheckboxChange(e,key)}></input></td>
+                            <td><input type='text' name='Name' value={searchData[key].data.Name} onChange={e => handleInputChange(e, key)}></input></td>
+                            <td><input type='text' name='Department' value={searchData[key].data.Department} onChange={e => handleInputChange(e, key)}></input></td>
+                            <td><input type='text' name='Location' value={searchData[key].data.Location} onChange={e => handleInputChange(e,key)}></input></td>
+                            <td><input type='text' name='Site' value={searchData[key].data.Site} onChange={e => handleInputChange(e,key)}></input></td>
+                            <td><input type="text" name="Detail" value={searchData[key].data.Detail} onChange={e => handleInputChange(e,key)}></input></td>
+                            <td><input type="text" name="Target" value={searchData[key].data.Target} onChange={e => handleInputChange(e,key)}></input></td>
+                            <td><input type="text" name="Method" value={searchData[key].data.Method} onChange={e => handleInputChange(e,key)}></input></td>
+                            <td><input type="text" name="Category" value={searchData[key].data.Category} onChange={e => handleInputChange(e,key)}></input></td>
+                        </tr>
+                        )
                     }
                 </tbody>
             </table>
