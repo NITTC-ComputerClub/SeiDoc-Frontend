@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fireStore } from '../firebase/firebase'
 import { System } from '../reducers/systemsReducer'
+import { array, object, string } from 'prop-types';
 const firebaseCollection : string = 'dateTest'
 
 type systemData = {
@@ -166,21 +167,36 @@ const ViewAll: React.FC = () => {
     }, [])
 
     //漢字のソートは無理があるのでやるならよみがなを登録する
-    /*
-    const sortByCondition = (condition:  'CreatedAt' | 'UpdatedAt' | 'ExpireAt') => {
-        const keys = Object.keys(searchData)
+    
+    const sortByCondition = (condition:  'CreatedAt' | 'UpdatedAt' | 'ExpireAt', order: 'desc' | 'asc') => {
+        const keys = showOrder.order
         const sortKeys : any = []
-        let sortedKeys = []
+        let sortedArray : string[] = []
         
         // uuid: condition の配列を作る
         keys.forEach(key => {
-            const uuid = key
-            sortKeys.push({uuid : searchData[key].data[condition]})
+            const data = searchData[key].data 
+            const obj = {uuid: key, data: data[condition]}
+            sortKeys.push(obj)
         })
-        console.log(sortKeys)
+        
+        let reverse = 1;
+        if(order == "desc") reverse = -1;
+        sortKeys.sort((a:{uuid:string, data:number},b:{uuid:string, data:number}) => {
+            if(a.data < b.data){
+                return -1 * reverse
+            }else if(a.data == b.data){
+                return 0
+            }else{
+                return 1 * reverse
+            }});
+        
+        sortKeys.forEach((d: { uuid: string; }) => sortedArray.push(d.uuid))
+        console.log('after', sortedArray)
+        setShowOrder(Object.assign({}, {order: sortedArray}))
 
     }
-    */
+    
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
@@ -210,7 +226,9 @@ const ViewAll: React.FC = () => {
             <button onClick={e => checkSystems()}>更新</button>
             <button onClick={e => {if(window.confirm('チェックが入っているデータを削除してよろしいですか?')) checkDeleteSystems()}}>削除</button>
             <button onClick={e => addNewSystem()}>新規作成</button>
-            {/*<button onClick={e => sortByCondition('CreatedAt')}>作成順にソートする</button>*/}
+            <button onClick={e => sortByCondition('CreatedAt','asc')}>作成があたらしい順にソートする</button>
+            <button onClick={e => sortByCondition('CreatedAt','desc')}>作成が古い順にソートする</button>
+
             {(isFetched && (showOrder.order.length !== 0))?<table>
                 <thead>
                     <tr>
