@@ -56,11 +56,11 @@ const ViewAll: React.FC = () => {
         })
         if(deleteKeys.length === 0){
             console.log('チェックされていません')
-        }else{
+        } else {
             console.log(deleteKeys)
             deleteKeys.forEach(key => deleteSystem(key))
             alert('削除しました。')
-            refresh()
+            setTimeout(() => refresh(), 1000); // wait for delete
         }   
     }
     const makeRandomID = () => {
@@ -119,7 +119,6 @@ const ViewAll: React.FC = () => {
                     updateSystem(key,searchData[key].data)
                 }
             })
-            //updateSystem(key, searchData[key].data))
             refresh()
         } else {
             console.log('差分はないよ')
@@ -127,7 +126,6 @@ const ViewAll: React.FC = () => {
     }
 
     const refresh = () => {
-        setSearchData(Object.assign({}))
         setFetchFlag(false)
         fetchSystemAll()
     }
@@ -138,7 +136,6 @@ const ViewAll: React.FC = () => {
 
         keys.forEach(key => {
             let val  = obj[key]
-
             if(typeof val === "object"){
                 val = objectSort(val)
             }
