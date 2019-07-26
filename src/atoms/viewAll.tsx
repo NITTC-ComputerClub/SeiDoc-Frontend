@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fireStore } from '../firebase/index'
+import { fireStore } from '../firebase/firebase'
 import { System } from '../reducers/systemsReducer'
 const firebaseCollection : string = 'aaaaa'
 
@@ -7,6 +7,7 @@ type systemData = {
     id: string,
     data: System,
     willDelete: boolean,
+    isNewCreate: boolean // True if it is a new system
 }
 
 const ViewAll: React.FC = () => {
@@ -21,13 +22,13 @@ const ViewAll: React.FC = () => {
                 (snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
-                        dataList[doc.id] = { id: doc.id, data: data, willDelete: false }
+                        dataList[doc.id] = { id: doc.id, data: data, willDelete: false , isNewCreate: false }
                     })
                 }
             ).then(() => {
-                setSearchData(dataList)
+                setSearchData(Object.assign({}, dataList))
                 setOriginalData(JSON.parse(JSON.stringify(dataList))) //参照渡しさせない
-                setFetchFlag(!isFetched)
+                setFetchFlag(true)
             })
     }
 
@@ -38,6 +39,11 @@ const ViewAll: React.FC = () => {
             .update(newData)
 
     }
+
+    const addNewSystemToFirebase = (uuid: string, newData: System) => {
+        fireStore.collection(firebaseCollection).add(newData)
+    }
+
     // TODO:このへんの エラー処理
     const deleteSystem = (uuid: string) => {
         fireStore.collection(firebaseCollection).doc(uuid).delete()
@@ -56,41 +62,80 @@ const ViewAll: React.FC = () => {
             alert('削除しました。')
             refresh()
         }   
-
-        
+    }
+    const makeRandomID = () => {
+        // 生成する文字列の長さ
+        const l = 8;
+        // 生成する文字列に含める文字セット
+        const charSet = "abcdefghijklmnopqrstuvwxyz0123456789";
+        const charLength = charSet.length;
+        let randomID = "";
+        for(var i=0; i<l; i++){
+            randomID += charSet[Math.floor(Math.random()*charLength)];
+        }
+        return randomID
     }
 
-    
+    const addNewSystem = () => {
+        const newSystem : System = {
+            Name: '',
+            Department: '',
+            Location: '',
+            Site: '',
+            Detail: '',
+            Target: '',
+            Method: [''],
+            Category: ['']
+        }
+        const newID = makeRandomID()
+        console.log(newID)
+        searchData[newID] = {id: newID, data: newSystem, willDelete: false , isNewCreate: true};
+        setSearchData(Object.assign({}, searchData)); //objectを変えないと再描画されないっぽい
+    }
+
     const checkSystems = () => {  
         const keys = Object.keys(searchData)
         let diff :string[] = [];
-        keys.forEach(key =>
-            {
+
+        keys.forEach(key => {
                 //めっちゃ厳密に比較
-                if(JSON.stringify(objectSort(originalData[key])) !== JSON.stringify(objectSort(searchData[key]))){
+                if(originalData[key] == null){
+                    diff.push(key)
+                    
+                } else if(JSON.stringify(objectSort(originalData[key])) !== JSON.stringify(objectSort(searchData[key]))){
                     diff.push(key)
                 }
-             }
-        )
+        });
+
         if(diff.length !== 0) {
-            console.log('差分発見:')
-            diff.forEach(key => updateSystem(key, searchData[key].data))
+            console.log('差分発見!')
+            
+            diff.forEach(key => {
+                if(searchData[key].isNewCreate){
+                    console.log('新規制度発見',searchData[key].data.Name)
+                    addNewSystemToFirebase(key, searchData[key].data)
+                }else{
+                    console.log('既存の制度を更新します。', searchData[key].data.Name)
+                    updateSystem(key,searchData[key].data)
+                }
+            })
+            //updateSystem(key, searchData[key].data))
             refresh()
-        }else{
+        } else {
             console.log('差分はないよ')
         }
     }
 
     const refresh = () => {
-        setSearchData({})
+        setSearchData(Object.assign({}))
         setFetchFlag(false)
         fetchSystemAll()
     }
 
     const objectSort = (obj :any) => {
         const keys = Object.keys(obj).sort()
-
         let newMap :any = {};
+
         keys.forEach(key => {
             let val  = obj[key]
 
@@ -122,9 +167,9 @@ const ViewAll: React.FC = () => {
         <div>
             <h2>全データ</h2>
             <button onClick={fetchSystemAll}>取得</button>
-            <button onClick={e => checkSystems()}>追加</button>
+            <button onClick={e => checkSystems()}>更新</button>
             <button onClick={e => {if(window.confirm('チェックが入っているデータを削除してよろしいですか?')) checkDeleteSystems()}}>削除</button>
-            
+            <button onClick={e => addNewSystem()}>新規作成</button>
             {isFetched?<table>
                 <thead>
                     <tr>
