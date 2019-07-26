@@ -226,8 +226,8 @@ const ViewAll: React.FC = () => {
             <button onClick={e => checkSystems()}>更新</button>
             <button onClick={e => {if(window.confirm('チェックが入っているデータを削除してよろしいですか?')) checkDeleteSystems()}}>削除</button>
             <button onClick={e => addNewSystem()}>新規作成</button>
-            <button onClick={e => sortByCondition('CreatedAt','asc')}>作成があたらしい順にソートする</button>
-            <button onClick={e => sortByCondition('CreatedAt','desc')}>作成が古い順にソートする</button>
+            <button onClick={e => sortByCondition('CreatedAt','desc')}>作成があたらしい順にソートする</button>
+            <button onClick={e => sortByCondition('CreatedAt','asc')}>作成が古い順にソートする</button>
 
             {(isFetched && (showOrder.order.length !== 0))?<table>
                 <thead>
