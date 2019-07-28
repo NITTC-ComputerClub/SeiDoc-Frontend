@@ -4,7 +4,7 @@ import Category from './atoms/category'
 import Result from './atoms/result'
 import Input from './atoms/input'
 import Detail from './atoms/detail'
-import './App.scss'
+import './scss/App.scss'
 
 class App extends React.Component {
   render() {

@@ -1,0 +1,28 @@
+@import "setting";
+
+.searchBar {
+    max-width: 352px;
+    height: 48px;
+    text-align: center;
+
+    input {
+        box-sizing:border-box;
+        height: 100%;
+
+        border-top: solid 2px $TextGray;
+        border-right: none;
+        border-bottom: solid 2px $TextGray;
+        border-left: solid 2px $TextGray;
+        border-radius: 4px 0 0 4px;
+    }
+
+    button {
+        box-sizing:border-box;
+        height: 100%;
+
+        border: none;
+        border-radius: 0 4px 4px 0px;
+
+        background-color: $ThemeGreen;
+    }
+}

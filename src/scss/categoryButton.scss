@@ -1,0 +1,29 @@
+@import "setting";
+
+.categoryButtonList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.categoryButton {
+    margin: 0 auto;
+    padding: 8px;
+
+    button {
+        padding: 0;
+        background-color: $White;
+
+        border-radius: 4px 4px 4px 4px;
+    }
+
+    img {
+        max-width: 144px;
+    }
+
+    .categoryName {
+        font-size: $H2;
+        font-weight: bold;
+
+        color: $TextBlack;
+    }
+}
