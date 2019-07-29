@@ -23,7 +23,7 @@ const ViewAll: React.FC = () => {
     const fetchSystemAll = () => {
         const dataList: { [key: string]: systemData } = {};
         let currentOrder : showOrderType = {order: []}
-        fireStore.collection(firebaseCollection).get()
+        fireStore.collection(firebaseCollection).orderBy("UpdatedAt", "asc").get()
             .then((snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
