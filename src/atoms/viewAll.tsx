@@ -106,6 +106,11 @@ const ViewAll: React.FC = () => {
         console.log(newID)
         searchData[newID] = {id: newID, data: newSystem, willDelete: false , isNewCreate: true};
         setSearchData(Object.assign({}, searchData)); //objectを変えないと再描画されないっぽい
+
+        const newOrder = showOrder.order
+        newOrder.push(newID)
+        setShowOrder(Object.assign({}, {order: newOrder}))//objectを変えないと再描画されないっぽい
+
     }
 
     const checkSystems = () => {  
