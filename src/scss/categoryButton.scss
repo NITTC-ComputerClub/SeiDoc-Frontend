@@ -14,6 +14,8 @@
         background-color: $White;
 
         border-radius: 4px 4px 4px 4px;
+        border: none;
+        box-shadow: 1px 1px 4px $TextGray;
     }
 
     img {
@@ -21,6 +23,8 @@
     }
 
     .categoryName {
+        padding: 4px 0;
+
         font-size: $H2;
         font-weight: bold;
 
