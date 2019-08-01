@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { useSelector } from 'react-redux'
 import { AppState } from '../store'
+import "../scss/detail.scss"
 
 
 const Detail: React.FC = () => {
     const detail = useSelector((state: AppState) => state.selectsystemState.selectSystem)
     console.log('detail', detail)
     return (
-        <div>
+        <div className="detail">
             <h1>{detail.Name}</h1>
             <h2>援助対象者</h2>
             <p>{detail.Target}</p>
