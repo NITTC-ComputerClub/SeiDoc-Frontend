@@ -5,6 +5,7 @@ import { System } from '../reducers/systemsReducer'
 import { updateDetailCreator } from '../actions/action'
 import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
+import "../scss/systemList.scss"
 
 type historyProps = RouteComponentProps
 
@@ -14,7 +15,7 @@ const SystemList: React.FC<historyProps> = (props: historyProps) => {
     const dispatch = useDispatch()
     const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
     return (
-        <div>
+        <div className="systemList">
             {console.log('loading:', loading)}
             {console.log('systems:', systems)}
             {loading ? <Indicator /> :

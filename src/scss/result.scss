@@ -1,0 +1,15 @@
+@import "setting";
+
+.result {
+    h3 {
+        margin-top: 8px;
+        margin-bottom: 0;
+        padding: 6px 8px 6px 8px; 
+
+        font-weight: normal;
+        font-size: 14px;
+
+        color: $TextBlack;
+        background-color: $ThemeGreen;
+    }
+}

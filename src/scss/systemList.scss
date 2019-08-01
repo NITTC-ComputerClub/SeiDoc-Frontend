@@ -1,0 +1,29 @@
+@import "setting";
+
+.systemList {
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            overflow: hidden;
+
+            list-style-type: none;
+            background-color: #E0E0E0;
+
+            border-bottom: solid 2px $TextBlack;
+
+            h4 {
+                margin: 8px 16px 0 16px;
+                font-size: $H2;
+                color: $TextBlack;
+            }
+
+            p {
+                margin: 4px 16px 8px 16px;
+                font-size: $P1;
+                color: $TextBlack;
+            }
+        }
+    }
+}
