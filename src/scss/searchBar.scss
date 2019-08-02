@@ -14,6 +14,10 @@
         border-bottom: solid 2px $TextGray;
         border-left: solid 2px $TextGray;
         border-radius: 4px 0 0 4px;
+
+        &:focus {
+            outline: none;
+        }
     }
 
     button {

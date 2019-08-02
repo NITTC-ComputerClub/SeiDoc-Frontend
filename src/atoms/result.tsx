@@ -7,7 +7,9 @@ import '../scss/result.scss'
 const Result: React.FC = () => {
     return (
         <div className="result">
-            <SearchBar />
+            <div className="container">
+                <SearchBar />
+            </div>
             <Tag />
             <h3>検索結果</h3>
             <SystemList />
