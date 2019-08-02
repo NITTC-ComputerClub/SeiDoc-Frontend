@@ -18,7 +18,23 @@ const SystemList: React.FC<historyProps> = (props: historyProps) => {
         <div className="systemList">
             {console.log('loading:', loading)}
             {console.log('systems:', systems)}
-            <Indicator />
+            {loading ? <Indicator /> :
+                systems.length === 0 ?
+                    <p>検索結果がありません</p>
+                    :
+                    <ul>
+                        {systems.map((system: System) => (
+                            <li key={system.Name} onClick={() => {
+                                updateDetail(system)
+                                props.history.push('/detail')
+                            }
+                            }>
+                                <h4>{system.Name}</h4>
+                                <p>{system.Location}</p>
+                            </li>
+                        ))}
+                    </ul>
+            }
         </div>
     )
 }
