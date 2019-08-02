@@ -12,7 +12,7 @@ const Category: React.FC = () => {
         deleteTag()
     }, [dispatch])
     return (
-        <div>
+        <div className="container">
             <SearchBar />
             <h2>カテゴリー</h2>
             <CategoryButton />
