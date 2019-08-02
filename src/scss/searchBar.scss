@@ -1,7 +1,7 @@
 @import "setting";
 
 .searchBar {
-    max-width: 352px;
+    max-width: 420px;
     height: 48px;
     text-align: center;
 
@@ -17,12 +17,20 @@
     }
 
     button {
+        vertical-align: middle;
+
         box-sizing:border-box;
         height: 100%;
+        width: 64px;
 
         border: none;
         border-radius: 0 4px 4px 0px;
 
         background-color: $ThemeGreen;
+
+        img {
+            height: 32px;
+            padding: 0;
+        }
     }
 }
