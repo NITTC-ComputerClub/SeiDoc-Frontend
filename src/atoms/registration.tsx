@@ -10,8 +10,8 @@ const Registration: React.FC = () => {
                     <input id="systemName" type="text" placeholder="制度名を入力"></input>
                     <label>
                         <h2>カテゴリ</h2>
-                        <select>
-                            <option value="" selected>なし</option>
+                        <select defaultValue="">
+                            <option value="">なし</option>
                             <option value="子育て">子育て</option>
                             <option value="介護">介護</option>
                             <option value="建設">建設</option>
