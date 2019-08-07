@@ -9,8 +9,13 @@ export type System = {
     Detail: string,
     Target: string,
     Method: Array<string>,
-    Category: Array<string>
+    Category: Array<string>,
+    CreatedAt: number,
+    UpdatedAt: number,
+    isDeleted: boolean,
+    ExpireAt: number
 }
+
 
 export type SystemsState = {
     systems: Array<System>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { fireStore } from '../firebase/index'
+import { fireStore } from '../firebase/firebase'
 
 type SendData = {
     Name: string
