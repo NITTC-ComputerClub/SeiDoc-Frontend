@@ -5,14 +5,14 @@ import { System } from '../reducers/systemsReducer'
 import '../scss/registration.scss'
 import { fireStore } from '../firebase/firebase';
 
-const firebaseCollection : string = 'dateTest'
+const firebaseCollection : string = 'testData'
 
 
 const Registration: React.FC = () => {
     const newSystem : System = {
         Name: '',
         Department: '',
-        Location: '',
+        Location: '愛知県名古屋市',
         Site: '',
         Detail: '',
         Target: '',
@@ -25,9 +25,14 @@ const Registration: React.FC = () => {
     }
     let [currentData, setCurrentData] = useState<System>(newSystem)
 
-    const addSystem = () => {
-        console.log(currentData)
-        fireStore.collection(firebaseCollection).add(currentData)
+    const addSystem = (e: React.MouseEvent) => {
+        e.preventDefault()
+        console.log("fired")
+        fireStore.collection(firebaseCollection).add(currentData).then(ref => {
+            console.log('Added document with ID: ', ref.id);
+            alert("登録が完了しました。");
+            setCurrentData(Object.assign({},newSystem))
+          }).catch(e => console.log(e))
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -86,7 +91,7 @@ const Registration: React.FC = () => {
                     </label>
                 </div>
                 <div id="button">
-                    <input type="submit" value="登録" onClick={e=>addSystem()}></input>
+                    <input type="submit" value="登録"  onClick={e=>addSystem(e)}></input>
                 </div>
             </form>
         </div>

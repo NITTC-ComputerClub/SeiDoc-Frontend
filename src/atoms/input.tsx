@@ -35,7 +35,7 @@ const Input: React.FC = () => {
             Category: category
         }
         console.log(systemData)
-        const systemCollection = fireStore.collection('postData')
+        const systemCollection = fireStore.collection('testData')
         systemCollection.add(systemData).then(
             ref => {
                 console.log('Added document with ID: ', ref.id)
