@@ -3,6 +3,7 @@ import SearchBar from '../components/searchBar'
 import CategoryButton from '../components/categoryButton'
 import { useDispatch } from 'react-redux'
 import { deleteTagCreator } from '../actions/action'
+import "../scss/category.scss"
 
 const Category: React.FC = () => {
     const dispatch = useDispatch()
