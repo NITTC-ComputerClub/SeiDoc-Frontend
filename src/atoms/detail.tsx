@@ -17,7 +17,7 @@ const Detail: React.FC = () => {
             <h2>担当部署</h2>
             <p>{detail.Department}</p>
             <h2>詳細</h2>
-            <p>{detail.Detail}</p>
+            <p id="detail">{detail.Detail}</p>
             <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
                 <button>公式のページへ</button>
             </a>
