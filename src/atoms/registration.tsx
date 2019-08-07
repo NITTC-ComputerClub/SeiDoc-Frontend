@@ -5,11 +5,11 @@ import { System } from '../reducers/systemsReducer'
 import '../scss/registration.scss'
 import { fireStore } from '../firebase/firebase';
 
-const firebaseCollection : string = 'testData'
+const firebaseCollection: string = 'testData'
 
 
 const Registration: React.FC = () => {
-    const newSystem : System = {
+    const newSystem: System = {
         Name: '',
         Department: '',
         Location: '愛知県名古屋市',
@@ -28,25 +28,38 @@ const Registration: React.FC = () => {
     const addSystem = (e: React.MouseEvent) => {
         e.preventDefault()
         console.log("fired")
-        fireStore.collection(firebaseCollection).add(currentData).then(ref => {
-            console.log('Added document with ID: ', ref.id);
-            alert("登録が完了しました。");
-            setCurrentData(Object.assign({},newSystem))
-          }).catch(e => console.log(e))
+        if (
+            currentData.Name === '' ||
+            currentData.Department === '' ||
+            currentData.Detail === '' ||
+            currentData.Site === '' ||
+            currentData.Target === '' ||
+            currentData.Method.toString() === '' ||
+            currentData.Category.toString() === ''
+        ) {
+            alert("入力していないデータがあります");
+        }
+        else {
+            fireStore.collection(firebaseCollection).add(currentData).then(ref => {
+                console.log('Added document with ID: ', ref.id);
+                alert("登録が完了しました。");
+                setCurrentData(Object.assign({}, newSystem))
+            }).catch(e => console.log(e))
+        }
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        console.log(e.target.value)
-        let tmp  = e.target.name as 'Name' | 'Site' //TODO: 黒魔術やめる
+        //console.log(e.target.value)
+        let tmp = e.target.name as 'Name' | 'Site' //TODO: 黒魔術やめる
         if (e.target.name === 'Category') {
-            currentData[e.target.name]= [e.target.value]
+            currentData[e.target.name] = [e.target.value]
         } else if (e.target.name === 'Method') {
-            currentData[e.target.name]= [e.target.value]
-        } else{
-            currentData[tmp]= e.target.value;
+            currentData[e.target.name] = [e.target.value]
+        } else {
+            currentData[tmp] = e.target.value;
         }
         //あたらしいStateをset
-        setCurrentData(Object.assign({}, currentData)); 
+        setCurrentData(Object.assign({}, currentData));
     }
 
 
@@ -58,7 +71,7 @@ const Registration: React.FC = () => {
                     <input id="systemName" type="text" name="Name" value={currentData.Name} placeholder="制度名を入力" onChange={e => handleInputChange(e)}></input>
                     <label>
                         <h2>カテゴリ</h2>
-                        <select defaultValue="" name="Category" onChange={e=>handleInputChange(e)}>
+                        <select defaultValue="" name="Category" onChange={e => handleInputChange(e)}>
                             <option value="">なし</option>
                             <option value="子育て">子育て</option>
                             <option value="介護">介護</option>
@@ -91,7 +104,7 @@ const Registration: React.FC = () => {
                     </label>
                 </div>
                 <div id="button">
-                    <input type="submit" value="登録"  onClick={e=>addSystem(e)}></input>
+                    <input type="submit" value="登録" onClick={e => addSystem(e)}></input>
                 </div>
             </form>
         </div>
