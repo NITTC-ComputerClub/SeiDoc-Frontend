@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fireStore } from '../firebase/firebase'
 import { System } from '../reducers/systemsReducer'
-const firebaseCollection : string = 'dateTest'
+const firebaseCollection : string = 'testData'
 
 type systemData = {
     id: string,

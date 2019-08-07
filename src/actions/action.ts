@@ -10,11 +10,12 @@ export const fetchSystemByCategoryCreator = actionCreator.async<undefined, Array
 export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
 
+const firebaseIndex = 'testData'
 export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => {
     console.log('start fetchSystem query:', query)
     const searchData: Array<System> = []
     dispatch(fetchSystemByCategoryCreator.started())
-    fireStore.collection('systems').where('Category', 'array-contains', query).get()
+    fireStore.collection(firebaseIndex).where('Category', 'array-contains', query).get()
         .then(
             (snapshot) => {
                 snapshot.forEach((doc) => {
@@ -30,7 +31,7 @@ export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => 
 
 export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (dispatch: Dispatch) => {
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
-    const index = client.initIndex('test_firestore')
+    const index = client.initIndex(firebaseIndex)
     dispatch(fetchSystemByAlgoliaSearchCreator.started())
     index.search({
         query: query,
