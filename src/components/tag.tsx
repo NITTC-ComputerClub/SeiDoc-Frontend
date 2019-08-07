@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
 import { deleteTagCreator, deleteSystemsCreator } from '../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
+import '../scss/tag.scss'
 
 type historyProps = RouteComponentProps
 
@@ -12,16 +13,14 @@ const Tag: React.FC<historyProps> = (props: historyProps) => {
     const deleteTag = () => dispatch(deleteTagCreator())
     const deleteSystems = () => dispatch(deleteSystemsCreator())
     return (
-        <div>
-            <div>
-                {tag === '' ?
-                    <div></div> :
-                    <button key={tag} onClick={() => {
-                        deleteTag()
-                        deleteSystems()
-                        props.history.push('/')
-                    }}>{tag}タグを削除</button>}
-            </div>
+        <div className="tag">
+            {tag === '' ?
+                <div></div> :
+                <button key={tag} onClick={() => {
+                    deleteTag()
+                    deleteSystems()
+                    props.history.push('/')
+                }}>{tag}<span>×</span></button>}
         </div>
     )
 }

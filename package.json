@@ -52,6 +52,7 @@
     "@types/algoliasearch": "^3.30.15",
     "@types/react-redux": "^7.1.1",
     "@types/react-router-dom": "^4.3.4",
-    "firebase-tools": "^7.1.0"
+    "firebase-tools": "^7.1.0",
+    "node-sass": "^4.12.0"
   }
 }
