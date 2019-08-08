@@ -5,6 +5,7 @@ import Result from './atoms/result'
 import Input from './atoms/input'
 import Detail from './atoms/detail'
 import ViewAll from './atoms/viewAll'
+import Login from './atoms/login'
 import './scss/App.scss'
 import Registration from './atoms/registration';
 
@@ -18,6 +19,7 @@ class App extends React.Component {
         <Route path='/detail' component={Detail} />
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
+        <Route path='/login' component={Login} />
       </BrowserRouter>
     )
   }
