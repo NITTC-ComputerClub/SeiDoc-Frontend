@@ -19,7 +19,8 @@ const initialState: SelectSystemsState = {
         CreatedAt: 0,
         UpdatedAt: 0,
         isDeleted: false,
-        ExpireAt: 0
+        ExpireAt: 0,
+        documentID: '-1',
     }
 }
 
