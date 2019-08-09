@@ -89,9 +89,6 @@ exports.addNewSystemsByGAS = functions.https.onRequest(
             resp.status(200).end()
             return
         }).catch(err => console.error(err))
-        
-     
-        
     }
 )
 

@@ -49,6 +49,10 @@ const ViewAll: React.FC = () => {
 
     const addNewSystemToFirebase = (uuid: string, newData: System) => {
         fireStore.collection(firebaseCollection).add(newData)
+
+        //fireStore.collection('cities').doc('LA').set(data);
+        
+
     }
 
     // TODO:このへんの エラー処理
