@@ -24,20 +24,28 @@ type System = {
     CreatedAt: number,
     UpdatedAt: number,
     isDeleted: boolean,
-    ExpireAt: number
+    ExpireAt: number,
+    documentID: string
 }
 
 
 exports.onSystemCreated = functions.firestore.document(fireStoreIndex + '/{testId}').onCreate(
     (snap, context) => {
+        
         const data   = snap.data() as System;
-        index.addObject(data,(err,res)=>{
-            if(err){
-                console.error(err);
-            }else{
-                console.log(res);
+        data.documentID = snap.id
+        admin.firestore().collection(fireStoreIndex).doc(snap.id).update(data).then(
+            () => {
+                index.addObject(data,(err,res)=>{
+                    if(err){
+                        console.error(err);
+                    }else{
+                        console.log(res);
+                    }
+                })
             }
-        })
+        ).catch(err => console.error(err))
+        
     }
 );
 

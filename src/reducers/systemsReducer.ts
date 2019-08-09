@@ -13,7 +13,8 @@ export type System = {
     CreatedAt: number,
     UpdatedAt: number,
     isDeleted: boolean,
-    ExpireAt: number
+    ExpireAt: number,
+    documentID: string
 }
 
 

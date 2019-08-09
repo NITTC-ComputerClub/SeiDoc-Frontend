@@ -21,7 +21,8 @@ const Registration: React.FC = () => {
         CreatedAt: Date.now(),
         UpdatedAt: 2262025600000,
         isDeleted: false,
-        ExpireAt: 2262025600000
+        ExpireAt: 2262025600000,
+        documentID: '-1',
     }
     let [currentData, setCurrentData] = useState<System>(newSystem)
 
