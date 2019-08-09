@@ -9,6 +9,9 @@ import Login from './atoms/login'
 import './scss/App.scss'
 import Registration from './atoms/registration';
 
+import SignIn from './components/Login/signIn'
+import SignUp from './components/Login/signUp'
+
 class App extends React.Component {
   render() {
     return (
@@ -20,6 +23,8 @@ class App extends React.Component {
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
         <Route path='/login' component={Login} />
+        <Route path='/siginin' component={SignIn} />
+        <Route path='/siginup' component={SignUp} />
       </BrowserRouter>
     )
   }
