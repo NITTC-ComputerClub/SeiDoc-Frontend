@@ -23,8 +23,8 @@ class App extends React.Component {
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
         <Route path='/login' component={Login} />
-        <Route path='/siginin' component={SignIn} />
-        <Route path='/siginup' component={SignUp} />
+        <Route path='/signin' component={SignIn} />
+        <Route path='/signup' component={SignUp} />
       </BrowserRouter>
     )
   }
