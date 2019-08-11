@@ -16,7 +16,6 @@ type loginData = {
 
 const SignUp: React.FC<historyProps> = (props: historyProps) => {
     let [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
-    // TODO:useSelectorである必要はあるのか
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
