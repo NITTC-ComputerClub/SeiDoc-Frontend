@@ -1,14 +1,14 @@
 import * as React from 'react'
-import LocalSearchButton from '../components/Top/localSearchButton'
+import SearchButton from '../components/Top/searchButton'
 import PopularSystemCard from '../components/Top/popularSystemCard'
 import Ranking from '../components/Top/ranking'
-import SystemSearchButton from '../components/Top/systemSearchButton'
 
 const Top: React.FC = () => {
     return (
         <div>
-            <SystemSearchButton />
-            <LocalSearchButton />
+            <SearchButton buttonName="制度名から調べる" nextLocation="/category"/>
+            {/* TODO: 地域から調べるページへ遷移 */}
+            <SearchButton buttonName="地域から調べる" nextLocation="/"/>
             <h2>みんなが見ている制度</h2>
             <PopularSystemCard />
             <h2>住みやすい街ランキング</h2>
