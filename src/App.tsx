@@ -1,31 +1,30 @@
 import * as React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
-import Category from './atoms/category'
-import Result from './atoms/result'
-import Input from './atoms/input'
-import Detail from './atoms/detail'
-import ViewAll from './atoms/viewAll'
+import { Route, Switch } from 'react-router-dom';
+import Category from './pages/category'
+import Result from './pages/result'
+import Input from './pages/input'
+import Detail from './pages/detail'
+import ViewAll from './pages/viewAll'
 import './scss/App.scss'
-import Registration from './atoms/registration';
+import Registration from './pages/registration';
 
 import SignIn from './components/Login/signIn'
 import SignUp from './components/Login/signUp'
 
-class App extends React.Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <Route exact path='/' component={Category} />
-        <Route path='/result' component={Result} />
-        <Route path='/input' component={Input} />
-        <Route path='/detail' component={Detail} />
-        <Route path='/view' component={ViewAll} />
-        <Route path='/registration' component={Registration} />
-        <Route path='/signin' component={SignIn} />
-        <Route path='/signup' component={SignUp} />
-      </BrowserRouter>
-    )
-  }
+const App: React.FC = () => {
+  return (
+    <Switch>
+      <Route exact path='/' component={Category} />
+      <Route path='/result' component={Result} />
+      <Route path='/input' component={Input} />
+      <Route path='/detail/:documentId' component={Detail} />
+      <Route path='/view' component={ViewAll} />
+      <Route path='/registration' component={Registration} />
+      <Route path='/signin' component={SignIn} />
+      <Route path='/signup' component={SignUp} />
+    </Switch>
+  )
 }
+
 
 export default App
