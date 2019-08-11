@@ -5,4 +5,4 @@ firebase.initializeApp(firebaseConfig)
 
 export const fireStore = firebase.firestore()
 export const auth = firebase.auth()
-
+export const systemIndex = 'testData'

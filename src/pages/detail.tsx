@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react';
 import DetailList from '../components/detailList'
 import { RouteComponentProps } from 'react-router'
 import "../scss/detail.scss"
