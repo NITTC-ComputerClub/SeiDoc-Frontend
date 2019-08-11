@@ -13,6 +13,7 @@ export const detailPageLogger = (documentID: string, user: UserState) => {
         user: user,
         createdAt: Date.now()
     }
+    console.log('Log: detailPage')
     fireStore.collection(detailPageLogIndex).add(logData)
         .catch((err) => console.error(err))
 }
