@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { fireStore } from '../firebase/firebase'
+import { fireStore, systemIndex } from '../firebase/firebase'
 
 type SendData = {
     Name: string
@@ -35,7 +35,7 @@ const Input: React.FC = () => {
             Category: category
         }
         console.log(systemData)
-        const systemCollection = fireStore.collection('testData')
+        const systemCollection = fireStore.collection(systemIndex)
         systemCollection.add(systemData).then(
             ref => {
                 console.log('Added document with ID: ', ref.id)
