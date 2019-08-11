@@ -3,6 +3,7 @@ import { fireStore } from '../firebase/firebase'
 import { Dispatch } from 'redux'
 import algoliasearch from 'algoliasearch';
 import { System } from '../reducers/systemsReducer'
+import { UserState } from '../reducers/loginReducer'
 
 const actionCreator = actionCreatorFactory()
 
@@ -54,3 +55,5 @@ export const addTagCreator = actionCreator<string>('ADD_TAG')
 export const deleteTagCreator = actionCreator('DELETE_TAG')
 
 export const updateDetailCreator = actionCreator<System>('CHANGE_SYSTEMLIST')
+
+export const loginCreator = actionCreator<UserState>('LOGIN')
