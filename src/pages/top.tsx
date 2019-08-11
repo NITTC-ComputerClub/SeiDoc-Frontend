@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import SearchButton from '../components/Top/searchButton'
 import PopularSystemCard from '../components/Top/popularSystemCard'
 import Ranking from '../components/Top/ranking'

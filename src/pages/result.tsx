@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import SearchBar from '../components/searchBar'
 import Tag from '../components/tag'
 import SystemList from '../components/systemList'
