@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fireStore } from '../firebase/firebase'
+import { fireStore, systemIndex } from '../firebase/firebase'
 import { System } from '../reducers/systemsReducer'
-const firebaseCollection : string = 'testData'
 
 type systemData = {
     id: string,
@@ -23,7 +22,7 @@ const ViewAll: React.FC = () => {
     const fetchSystemAll = () => {
         const dataList: { [key: string]: systemData } = {};
         let currentOrder : showOrderType = {order: []}
-        fireStore.collection(firebaseCollection).orderBy("UpdatedAt", "asc").get()
+        fireStore.collection(systemIndex).orderBy("UpdatedAt", "asc").get()
             .then((snapshot) => {
                     snapshot.forEach((doc) => {
                         const data = doc.data() as System
@@ -41,14 +40,14 @@ const ViewAll: React.FC = () => {
 
     //TODO:このへんのエラー処理
     const updateSystem = (uuid: string, newData: System) => {
-        fireStore.collection(firebaseCollection)
+        fireStore.collection(systemIndex)
             .doc(uuid)
             .update(newData)
 
     }
 
     const addNewSystemToFirebase = (uuid: string, newData: System) => {
-        fireStore.collection(firebaseCollection).add(newData)
+        fireStore.collection(systemIndex).add(newData)
 
         //fireStore.collection('cities').doc('LA').set(data);
         
@@ -57,7 +56,7 @@ const ViewAll: React.FC = () => {
 
     // TODO:このへんの エラー処理
     const deleteSystem = (uuid: string) => {
-        fireStore.collection(firebaseCollection).doc(uuid).delete()
+        fireStore.collection(systemIndex).doc(uuid).delete()
     }
 
 

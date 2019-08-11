@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
-//import { fireStore } from '../firebase/firebase'
 import { System } from '../reducers/systemsReducer'
-
+import { fireStore, systemIndex } from '../firebase/firebase';
 import '../scss/registration.scss'
-import { fireStore } from '../firebase/firebase';
-
-const firebaseCollection: string = 'testData'
 
 
 const Registration: React.FC = () => {
@@ -41,7 +37,7 @@ const Registration: React.FC = () => {
             alert("入力していないデータがあります");
         }
         else {
-            fireStore.collection(firebaseCollection).add(currentData).then(ref => {
+            fireStore.collection(systemIndex).add(currentData).then(ref => {
                 console.log('Added document with ID: ', ref.id);
                 alert("登録が完了しました。");
                 setCurrentData(Object.assign({}, newSystem))
