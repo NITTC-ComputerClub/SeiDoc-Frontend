@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
-import { auth } from '../../firebase/firebase'
+import { useSelector, useDispatch } from 'react-redux'
+import { loginCreator } from '../../actions/action'
+import { UserState } from '../../reducers/loginReducer'
+import { AppState } from '../../store'
+import { auth, fireStore } from '../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 
@@ -12,16 +16,35 @@ type loginData = {
 
 const SignIn: React.FC<historyProps> = (props: historyProps) => {
     let [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
-
+    // TODO:useSelectorである必要はあるのか
+    let userData = useSelector((state: AppState) => state.userState)
+    const dispatch = useDispatch()
+    const login = (data: UserState) => dispatch(loginCreator(data))
     const handleSignIn = () => {
         const email = loginData.email
         const password = loginData.password
         auth.signInWithEmailAndPassword(email, password).then(res => {
             const user = res.user as firebase.User
-            console.log(user.uid)
+            userData['userId'] = user.uid
         }).then(() => {
-            /* TODO:トップページに遷移 */
-            props.history.push('/')
+            fireStore.collection('user').doc(userData.userId).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        userData = Object.assign({}, userData, {
+                            userId: userData.userId
+                        }, doc.data())
+                        console.log('userData',userData)
+                        login(userData)
+                    }
+                    else {
+                        console.log("No such document!");
+                    }
+                }).then(() => {
+                    /* TODO:トップページに遷移 */
+                    props.history.push('/')
+                }).catch((error) => {
+                    console.log(error)
+                })
         }).catch((error) => {
             const errorCode = error.code
             const errorMessage = error.message;
