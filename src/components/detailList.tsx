@@ -5,14 +5,17 @@ import { AppState } from '../store'
 import Indicator from './indicator'
 import { fireStore, systemIndex } from '../firebase/firebase';
 import { System } from '../reducers/systemsReducer';
+import { detailPageLogger } from '../firebase/logger'
 import "../scss/detail.scss"
 
 
 const DetailList: React.FC<{ documentId: string }> = (props: { documentId: string }) => {
+    const user = useSelector((state: AppState) => state.userState)
     let detail = useSelector((state: AppState) => state.selectsystemState.selectSystem)
     const dispatch = useDispatch()
     const updateDetail = (data: System) => dispatch(updateDetailCreator(data))
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const isMounted = (detail.Name !== "")  //値があるときにTrue
 
     console.log('detail', detail)
     console.log('documentId:', props.documentId)
@@ -27,7 +30,8 @@ const DetailList: React.FC<{ documentId: string }> = (props: { documentId: strin
             }
         }).catch(err => console.error(err))
     }
-    if (!isLoading) {   //等しいときはfetchなし
+    if (!isLoading && isMounted) {   //等しいときはfetchなし
+        detailPageLogger(detail.documentID, user)
         return (
             <div className="detail">
                 <h1>{detail.Name}</h1>
