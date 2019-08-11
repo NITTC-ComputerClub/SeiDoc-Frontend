@@ -5,8 +5,9 @@ import Result from './pages/result'
 import Input from './pages/input'
 import Detail from './pages/detail'
 import ViewAll from './pages/viewAll'
-import './scss/App.scss'
+import Top from './pages/top'
 import Registration from './pages/registration';
+import './scss/App.scss'
 
 import SignIn from './components/Login/signIn'
 import SignUp from './components/Login/signUp'
@@ -14,7 +15,8 @@ import SignUp from './components/Login/signUp'
 const App: React.FC = () => {
   return (
     <Switch>
-      <Route exact path='/' component={Category} />
+      <Route exact path='/' component={Top} />
+      <Route path='/category' component={Category} />
       <Route path='/result' component={Result} />
       <Route path='/input' component={Input} />
       <Route path='/detail/:documentId' component={Detail} />
