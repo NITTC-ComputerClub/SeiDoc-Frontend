@@ -12,13 +12,21 @@ import "../scss/detail.scss"
 const DetailList: React.FC<{ documentId: string }> = (props: { documentId: string }) => {
     const user = useSelector((state: AppState) => state.userState)
     let detail = useSelector((state: AppState) => state.selectsystemState.selectSystem)
+
     const dispatch = useDispatch()
     const updateDetail = (data: System) => dispatch(updateDetailCreator(data))
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const isMounted = (detail.Name !== "")  //値があるときにTrue
+    //const isMounted = (detail.Name !== "")  //値があるときにTrue
 
-    console.log('detail', detail)
-    console.log('documentId:', props.documentId)
+    const isSystemLoaded = () => {
+        // Nameだけでよさそう
+        if ((detail.Name !== "") && (detail.Detail !== "") && (detail.Department !== "")){
+            return true
+        }else{
+            return false
+        }
+    }
+
     if (props.documentId !== detail.documentID) {
         setIsLoading(true);
         detail.documentID = props.documentId    //無限ループ防止
@@ -30,7 +38,8 @@ const DetailList: React.FC<{ documentId: string }> = (props: { documentId: strin
             }
         }).catch(err => console.error(err))
     }
-    if (!isLoading && isMounted) {   //等しいときはfetchなし
+    
+    if (!isLoading && isSystemLoaded()) {   //等しいときはfetchなし
         detailPageLogger(detail.documentID, user)
         return (
             <div className="detail">
@@ -48,8 +57,7 @@ const DetailList: React.FC<{ documentId: string }> = (props: { documentId: strin
                 </a>
             </div>
         )
-    }
-    else {  //等しくないときはprops優先でfetch
+    } else {  //等しくないときはprops優先でfetch
         return (
             <Indicator />
         )
