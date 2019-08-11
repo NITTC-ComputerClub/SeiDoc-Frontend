@@ -51,7 +51,7 @@ const SignUp: React.FC<historyProps> = (props: historyProps) => {
     }
 
     const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name as 'birthday' | 'address' | 'family'
+        const name = e.target.name as 'birthday' | 'address' | 'family' | 'nickName'
         userData[name] = e.target.value
         console.log('userData', userData)
     }
@@ -75,9 +75,11 @@ const SignUp: React.FC<historyProps> = (props: historyProps) => {
         <div>
             <div>新規登録</div>
             <p>メールアドレス</p>
-            <input type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}></input>
+            <input type="text" name="email" onChange={e => handleInputChange(e)}></input>
             <p>パスワード</p>
             <input type="text" name="password" onChange={e => handleInputChange(e)}></input>
+            <p>ニックネーム</p>
+            <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
             <p>生年月日</p>
             <input type="date" name="birthday" onChange={e => handleUserdataInputChange(e)}></input>
             <p>年収</p>
