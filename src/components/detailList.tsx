@@ -8,7 +8,7 @@ import { System } from '../reducers/systemsReducer';
 import "../scss/detail.scss"
 
 
-const DetailList: React.FC<{ documentId: string }> = (props: { documentId: string }) => {
+const DetailList: React.FC<{ documentId: string }> = (props) => {
     let detail = useSelector((state: AppState) => state.selectsystemState.selectSystem)
     const dispatch = useDispatch()
     const updateDetail = (data: System) => dispatch(updateDetailCreator(data))

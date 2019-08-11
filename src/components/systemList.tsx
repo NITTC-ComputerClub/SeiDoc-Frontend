@@ -9,7 +9,7 @@ import "../scss/systemList.scss"
 
 type historyProps = RouteComponentProps
 
-const SystemList: React.FC<historyProps> = (props: historyProps) => {
+const SystemList: React.FC<historyProps> = (props) => {
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()

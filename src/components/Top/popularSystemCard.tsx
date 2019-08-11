@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 
 type historyProps = RouteComponentProps
 
-const PopularSystemCard: React.FC<historyProps> = (props: historyProps) => {
+const PopularSystemCard: React.FC<historyProps> = (props) => {
     return (
         <div>
             <ul>
