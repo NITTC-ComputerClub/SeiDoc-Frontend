@@ -26,7 +26,7 @@ const SystemList: React.FC<historyProps> = (props: historyProps) => {
                         {systems.map((system: System) => (
                             <li key={system.Name} onClick={() => {
                                 updateDetail(system)
-                                props.history.push('/detail')
+                                props.history.push('/detail/' + system.documentID)
                             }
                             }>
                                 <h4>{system.Name}</h4>
