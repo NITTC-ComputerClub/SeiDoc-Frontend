@@ -67,7 +67,7 @@ const SignIn: React.FC<historyProps> = (props: historyProps) => {
             <p>メールアドレス</p>
             <input type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}></input>
             <p>パスワード</p>
-            <input type="text" name="password" value={loginData.password} onChange={e => handleInputChange(e)}></input>
+            <input type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}></input>
             <button onClick={() => handleSignIn()}>ログイン</button>
         </div>
     )

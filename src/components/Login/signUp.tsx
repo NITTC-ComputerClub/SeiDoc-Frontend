@@ -76,7 +76,7 @@ const SignUp: React.FC<historyProps> = (props: historyProps) => {
             <p>メールアドレス</p>
             <input type="text" name="email" onChange={e => handleInputChange(e)}></input>
             <p>パスワード</p>
-            <input type="text" name="password" onChange={e => handleInputChange(e)}></input>
+            <input type="password" name="password" onChange={e => handleInputChange(e)}></input>
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
             <p>生年月日</p>
