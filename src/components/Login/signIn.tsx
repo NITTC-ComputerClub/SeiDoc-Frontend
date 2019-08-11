@@ -14,7 +14,7 @@ type loginData = {
     password: string
 }
 
-const SignIn: React.FC<historyProps> = (props: historyProps) => {
+const SignIn: React.FC<historyProps> = (props) => {
     let [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
     let userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()

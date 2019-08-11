@@ -6,7 +6,7 @@ import '../scss/categoryButton.scss'
 
 type historyProps = RouteComponentProps
 
-const CategoryButton: React.FC<historyProps> = (props: historyProps) => {
+const CategoryButton: React.FC<historyProps> = (props) => {
     const dispatch = useDispatch()
     const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
     const addTag = (newTag: string) => dispatch(addTagCreator(newTag))

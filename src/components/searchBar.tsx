@@ -7,7 +7,7 @@ import '../scss/searchBar.scss'
 
 type historyProps = RouteComponentProps
 
-const SearchBar: React.FC<historyProps> = (props: historyProps) => {
+const SearchBar: React.FC<historyProps> = (props) => {
     const tag = useSelector((state: AppState) => state.tagState.tag)
     const dispatch = useDispatch()
     const alogliaSearch = (query: string, category: string) => dispatch(fetchSystemByAlgoliaSearch(query, category))
