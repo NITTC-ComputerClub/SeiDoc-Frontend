@@ -7,7 +7,9 @@ const LocalSearchButton: React.FC<historyProps> = (props: historyProps) => {
     return (
         <div>
             <button onClick={() => {
-                props.history.push('/')
+                /* TODO: 地域から調べるページへ遷移*/
+                //props.history.push('')
+                console.log('デザインまだ！？')
             }}>地域から調べる</button>
         </div>
     )

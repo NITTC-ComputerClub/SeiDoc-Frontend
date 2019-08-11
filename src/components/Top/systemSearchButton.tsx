@@ -7,7 +7,7 @@ const SystemSearchButton: React.FC<historyProps> = (props: historyProps) => {
     return (
         <div>
             <button onClick={() => {
-                props.history.push('/')
+                props.history.push('/category')
             }}>制度名から調べる</button>
         </div>
     )
