@@ -17,10 +17,12 @@ const Top: React.FC = () => {
                     <SearchButton buttonName="地域から調べる" nextLocation="/" buttonColor="#449DDD" />
                 </div>
             </div>
-            <h2>みんなが見ている制度</h2>
-            <PopularSystemCard />
-            <h2>住みやすい街ランキング</h2>
-            <Ranking />
+            <section className="container">
+                <h2>みんなが見ている制度</h2>
+                <PopularSystemCard />
+                <h2>住みやすい街ランキング</h2>
+                <Ranking />
+            </section>
         </div>
     )
 }
