@@ -3,6 +3,7 @@ import SearchButton from '../components/Top/searchButton'
 import PopularSystemCard from '../components/Top/popularSystemCard'
 import Ranking from '../components/Top/ranking'
 import '../scss/top.scss'
+import Header from '../components/header';
 
 const Top: React.FC = () => {
     return (
@@ -23,6 +24,7 @@ const Top: React.FC = () => {
                 <h2>住みやすい街ランキング</h2>
                 <Ranking />
             </section>
+            <Header />
         </div>
     )
 }
