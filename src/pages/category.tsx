@@ -4,6 +4,7 @@ import CategoryButton from '../components/categoryButton'
 import { useDispatch } from 'react-redux'
 import { deleteTagCreator } from '../actions/action'
 import "../scss/category.scss"
+import Header from '../components/header';
 
 const Category: React.FC = () => {
     const dispatch = useDispatch()
@@ -13,10 +14,13 @@ const Category: React.FC = () => {
         deleteTag()
     }, [dispatch])
     return (
-        <div className="container">
-            <SearchBar />
-            <h2>カテゴリー</h2>
-            <CategoryButton />
+        <div className="category">
+            <div className="categoryContainer">
+                <SearchBar />
+                <h2>カテゴリー</h2>
+                <CategoryButton />
+            </div>
+            <Header />
         </div>
     )
 }

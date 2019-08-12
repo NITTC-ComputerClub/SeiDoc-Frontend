@@ -3,6 +3,8 @@
 .categoryButtonList {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    max-width: 344px;
+    margin: 0 auto;
 }
 
 .categoryButton {
