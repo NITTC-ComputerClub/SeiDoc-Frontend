@@ -6,6 +6,7 @@ import { AppState } from '../../store'
 import { auth, fireStore } from '../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
+import { Link } from 'react-router-dom'
 
 type historyProps = RouteComponentProps
 
@@ -39,7 +40,6 @@ const SignIn: React.FC<historyProps> = (props) => {
                         console.log("No such document!");
                     }
                 }).then(() => {
-                    /* TODO:トップページに遷移 */
                     props.history.push('/')
                 }).catch((error) => {
                     console.log(error)
@@ -69,6 +69,7 @@ const SignIn: React.FC<historyProps> = (props) => {
             <p>パスワード</p>
             <input type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}></input>
             <button onClick={() => handleSignIn()}>ログイン</button>
+            <Link to='/signup'>新規登録はこちらから</Link>
         </div>
     )
 }
