@@ -1,0 +1,46 @@
+@import "setting";
+
+.ranking {
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            background-color: $White;
+            margin-bottom: 8px;
+            padding: 0 16px;
+            border-radius: 4px;
+
+            i {
+                display: inline-block;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 32px;
+                color: $White;
+                font-style: normal;
+                font-weight: bold;
+            }
+
+            p {
+                display: inline-block;
+                margin-left: 16px;
+                font-weight: bold;
+                font-size: $H2;
+            }
+
+            #yellow {
+                background-color: $Yellow;
+            }
+
+            #gray3 {
+                background-color: $Gray3;
+            }
+
+            #orange {
+                background-color: $Orange;
+            }
+        }
+    }
+}
