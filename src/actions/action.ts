@@ -57,3 +57,4 @@ export const deleteTagCreator = actionCreator('DELETE_TAG')
 export const updateDetailCreator = actionCreator<System>('CHANGE_SYSTEMLIST')
 
 export const loginCreator = actionCreator<UserState>('LOGIN')
+export const initLoginCreator = actionCreator('INITLOGIN')
