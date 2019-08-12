@@ -6,6 +6,7 @@ import Indicator from './indicator'
 import { fireStore, systemIndex } from '../firebase/firebase';
 import { System } from '../reducers/systemsReducer';
 import "../scss/detail.scss"
+import Header from './header';
 
 
 const DetailList: React.FC<{ documentId: string }> = (props) => {
@@ -38,10 +39,11 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
                 <h2>担当部署</h2>
                 <p>{detail.Department}</p>
                 <h2>詳細</h2>
-                <p id="detail">{detail.Detail}</p>
+                <p>{detail.Detail}</p>
                 <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
                     <button>公式のページへ</button>
                 </a>
+                <Header />
             </div>
         )
     }
