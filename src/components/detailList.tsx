@@ -40,7 +40,7 @@ const DetailList: React.FC<{ documentId: string }> = (props: { documentId: strin
     }
     
     if (!isLoading && isSystemLoaded()) {   //等しいときはfetchなし
-        detailPageLogger(detail.documentID, user)
+        detailPageLogger(detail.documentID, user, detail)
         return (
             <div className="detail">
                 <h1>{detail.Name}</h1>
