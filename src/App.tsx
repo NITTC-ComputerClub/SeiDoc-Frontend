@@ -25,8 +25,7 @@ const App: React.FC = () => {
       <Route path='/signin' component={SignIn} />
       <Route path='/signup' component={SignUp} />
     </Switch>
-  )
-}
+  );
+};
 
-
-export default App
+export default App;

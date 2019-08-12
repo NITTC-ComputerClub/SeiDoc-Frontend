@@ -27,6 +27,7 @@ const initialState: SystemsState = {
     systems: [],
     loading: false
 }
+
 export const CategoryButtonReducer = reducerWithInitialState(initialState)
     .case(fetchSystemByCategoryCreator.started, (state) => {
         return Object.assign({}, state, {
