@@ -7,7 +7,7 @@ import '../scss/tag.scss'
 
 type historyProps = RouteComponentProps
 
-const Tag: React.FC<historyProps> = (props: historyProps) => {
+const Tag: React.FC<historyProps> = (props) => {
     const tag = useSelector((state: AppState) => state.tagState.tag)
     const dispatch = useDispatch()
     const deleteTag = () => dispatch(deleteTagCreator())

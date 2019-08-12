@@ -8,8 +8,7 @@ import { System } from '../reducers/systemsReducer';
 import { detailPageLogger } from '../firebase/logger'
 import "../scss/detail.scss"
 
-
-const DetailList: React.FC<{ documentId: string }> = (props: { documentId: string }) => {
+const DetailList: React.FC<{ documentId: string }> = (props) => {
     const user = useSelector((state: AppState) => state.userState)
     let detail = useSelector((state: AppState) => state.selectsystemState.selectSystem)
 
