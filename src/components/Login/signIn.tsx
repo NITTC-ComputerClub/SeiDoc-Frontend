@@ -33,7 +33,7 @@ const SignIn: React.FC<historyProps> = (props) => {
                         userData = Object.assign({}, userData, {
                             userId: userData.userId
                         }, doc.data())
-                        console.log('userData',userData)
+                        console.log('userData', userData)
                         login(userData)
                     }
                     else {
