@@ -6,9 +6,9 @@ import "../scss/detail.scss"
 type historyProps = RouteComponentProps<{documentId: string}>
 
 const Detail: React.FC<historyProps> = (props: historyProps) => {
-    const parms = props.match.params.documentId
+    const documentId = props.match.params.documentId
     return (
-        <DetailList documentId={parms}/>
+        <DetailList documentId={documentId}/>
     )
 }
 
