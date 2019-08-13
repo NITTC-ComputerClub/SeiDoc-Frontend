@@ -1,5 +1,5 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { loginCreator } from '../actions/action'
+import { loginCreator, initLoginCreator } from '../actions/action'
 
 export type UserState = {
     userId: string,
@@ -29,5 +29,15 @@ export const LoginReducer = reducerWithInitialState(initialState)
             income: loginData.income,
             address: loginData.address,
             family: loginData.family
+        })
+    })
+    .case(initLoginCreator, (state) => {
+        return Object.assign({}, state, {
+            userId: '',
+            nickName: '',
+            birthday: '',
+            income: 0,
+            address: '',
+            family: ''
         })
     })

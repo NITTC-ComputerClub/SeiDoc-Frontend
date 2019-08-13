@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchSystemByCategory, addTagCreator } from '../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
@@ -16,7 +16,7 @@ const CategoryButton: React.FC<historyProps> = (props) => {
     return (
         <div className="categoryButtonList">
             {categoryList.map((category) => (
-                <div className="categoryButton">
+                <div key={category} className="categoryButton">
                     <button key={category} onClick={() => {
                         categorySearch(category)
                         addTag(category)

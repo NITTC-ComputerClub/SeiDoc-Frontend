@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
 import { deleteTagCreator, deleteSystemsCreator } from '../actions/action'
@@ -19,7 +19,7 @@ const Tag: React.FC<historyProps> = (props) => {
                 <button key={tag} onClick={() => {
                     deleteTag()
                     deleteSystems()
-                    props.history.push('/')
+                    props.history.push('/category')
                 }}>{tag}<span>×</span></button>}
         </div>
     )

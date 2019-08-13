@@ -5,17 +5,28 @@ import { AppState } from '../store'
 import Indicator from './indicator'
 import { fireStore, systemIndex } from '../firebase/firebase';
 import { System } from '../reducers/systemsReducer';
+import { detailPageLogger } from '../firebase/logger'
 import "../scss/detail.scss"
-
+import Header from './footer';
 
 const DetailList: React.FC<{ documentId: string }> = (props) => {
+    const user = useSelector((state: AppState) => state.userState)
     let detail = useSelector((state: AppState) => state.selectsystemState.selectSystem)
+
     const dispatch = useDispatch()
     const updateDetail = (data: System) => dispatch(updateDetailCreator(data))
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    //const isMounted = (detail.Name !== "")  //値があるときにTrue
 
-    console.log('detail', detail)
-    console.log('documentId:', props.documentId)
+    const isSystemLoaded = () => {
+        // Nameだけでよさそう
+        if ((detail.Name !== "") && (detail.Detail !== "") && (detail.Department !== "")){
+            return true
+        }else{
+            return false
+        }
+    }
+
     if (props.documentId !== detail.documentID) {
         setIsLoading(true);
         detail.documentID = props.documentId    //無限ループ防止
@@ -27,7 +38,9 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
             }
         }).catch(err => console.error(err))
     }
-    if (!isLoading) {   //等しいときはfetchなし
+    
+    if (!isLoading && isSystemLoaded()) {   //等しいときはfetchなし
+        detailPageLogger(detail.documentID, user, detail)
         return (
             <div className="detail">
                 <h1>{detail.Name}</h1>
@@ -38,14 +51,14 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
                 <h2>担当部署</h2>
                 <p>{detail.Department}</p>
                 <h2>詳細</h2>
-                <p id="detail">{detail.Detail}</p>
+                <p>{detail.Detail}</p>
                 <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
                     <button>公式のページへ</button>
                 </a>
+                <Header />
             </div>
         )
-    }
-    else {  //等しくないときはprops優先でfetch
+    } else {  //等しくないときはprops優先でfetch
         return (
             <Indicator />
         )

@@ -1,18 +1,30 @@
-import * as React from 'react'
+import React from 'react'
 import SearchButton from '../components/Top/searchButton'
 import PopularSystemList from '../components/Top/popularSystemList'
 import Ranking from '../components/Top/ranking'
+import '../scss/top.scss'
+import Footer from '../components/footer';
 
 const Top: React.FC = () => {
     return (
-        <div>
-            <SearchButton buttonName="制度名から調べる" nextLocation="/category"/>
-            {/* TODO: 地域から調べるページへ遷移 */}
-            <SearchButton buttonName="地域から調べる" nextLocation="/"/>
-            <h2>みんなが見ている制度</h2>
-            <PopularSystemList />
-            <h2>住みやすい街ランキング</h2>
-            <Ranking />
+        <div className="top">
+            <div className="title">
+                <div className="wrapper">
+                    <img src="img/logo.png" alt="SeiDocロゴ"></img>
+                </div>
+                <div className="buttons">
+                    <SearchButton buttonName="制度名から調べる" nextLocation="/category" buttonColor="#44DD9D" />
+                    {/* TODO: 地域から調べるページへ遷移 */}
+                    <SearchButton buttonName="地域から調べる" nextLocation="/" buttonColor="#449DDD" />
+                </div>
+            </div>
+            <section className="container">
+                <h2>みんなが見ている制度</h2>
+                <PopularSystemList />
+                <h2>住みやすい街ランキング</h2>
+                <Ranking />
+            </section>
+            <Footer />
         </div>
     )
 }

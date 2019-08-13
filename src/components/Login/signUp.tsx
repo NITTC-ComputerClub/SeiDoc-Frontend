@@ -6,6 +6,7 @@ import { AppState } from '../../store'
 import { fireStore, auth } from '../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
+import { Link } from 'react-router-dom'
 
 type historyProps = RouteComponentProps
 
@@ -35,8 +36,9 @@ const SignUp: React.FC<historyProps> = (props) => {
             const user = res.user as firebase.User
             userData['userId'] = user.uid
         }).then(() => {
-            handleSetUserdata()
             login(userData)
+            props.history.push('/')
+            handleSetUserdata()
         }).catch((error) => {
             const errorCode = error.code
             const errorMessage = error.message
@@ -88,6 +90,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             <p>家族構成</p>
             <input type="text" name="family" onChange={e => handleUserdataInputChange(e)}></input>
             <button onClick={() => handleSignUp()}>登録</button>
+            <Link to='/login'>ログインはこちらから</Link>
         </div>
     )
 }

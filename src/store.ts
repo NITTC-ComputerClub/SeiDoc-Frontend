@@ -16,8 +16,7 @@ export type AppState = {
 
 const persistConfig = {
     key: 'root',
-    storage,
-    whiteList: ['AppState']
+    storage
 }
 
 const persistedReducer = persistReducer(persistConfig,
@@ -31,5 +30,5 @@ const persistedReducer = persistReducer(persistConfig,
 const store = createStore(persistedReducer, {}, applyMiddleware(thunk))
 
 export const persistor = persistStore(store)
-persistor.purge()
+//persistor.purge()
 export default store
