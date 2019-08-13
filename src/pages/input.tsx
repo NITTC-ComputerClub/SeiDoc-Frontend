@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { fireStore, systemIndex } from '../firebase/firebase'
 
 type SendData = {
