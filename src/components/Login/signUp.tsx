@@ -51,7 +51,7 @@ const SignUp: React.FC<historyProps> = (props) => {
         })
     }
 
-    const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const name = e.target.name as 'birthday' | 'address' | 'family' | 'nickName'
         userData[name] = e.target.value
         console.log('userData', userData)
@@ -84,7 +84,16 @@ const SignUp: React.FC<historyProps> = (props) => {
             <p>生年月日</p>
             <input type="date" name="birthday" onChange={e => handleUserdataInputChange(e)}></input>
             <p>年収</p>
-            <input type="number" name="income" onChange={e => handleUserdataInputChange(e)}></input>
+            {/* <input type="number" name="income" onChange={e => handleUserdataInputChange(e)}></input> */}
+            <select name="income" onChange={e => handleUserdataInputChange(e)}>
+                <option value="">選択してください</option>
+                <option value="~200">200万円未満</option>
+                <option value="200~400">200~400万円</option>
+                <option value="400~600">400~600万円</option>
+                <option value="600~800">600~800万円</option>
+                <option value="800~1000">800~1000万円</option>
+                <option value="1000~">1000万円以上</option>
+            </select>
             <p>居住区</p>
             <input type="text" name="address" onChange={e => handleUserdataInputChange(e)}></input>
             <p>家族構成</p>
