@@ -19,7 +19,7 @@ const Tag: React.FC<historyProps> = (props) => {
                 <button key={tag} onClick={() => {
                     deleteTag()
                     deleteSystems()
-                    props.history.push('/')
+                    props.history.push('/category')
                 }}>{tag}<span>×</span></button>}
         </div>
     )
