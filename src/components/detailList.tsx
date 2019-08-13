@@ -7,7 +7,7 @@ import { fireStore, systemIndex } from '../firebase/firebase';
 import { System } from '../reducers/systemsReducer';
 import { detailPageLogger } from '../firebase/logger'
 import "../scss/detail.scss"
-import Header from './header';
+import Header from './footer';
 
 const DetailList: React.FC<{ documentId: string }> = (props) => {
     const user = useSelector((state: AppState) => state.userState)
