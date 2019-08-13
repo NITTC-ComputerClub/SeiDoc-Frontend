@@ -5,7 +5,8 @@ import { fireStore, popularPageIndex } from '../../firebase/firebase';
 type rankingData = {
     id: number,
     systemName: string,
-    systemLocation: string
+    systemLocation: string,
+    documentID: string
 }
 type rankings = {
     ranking: rankingData[]
@@ -27,7 +28,7 @@ const getToday = () => {
   }
 
 const PopularSystemList: React.FC = () => {
-    const [rankingData, setRankingData] = useState<rankingData[]>([{id:-1, systemName: '-1', systemLocation: 'none'}])
+    const [rankingData, setRankingData] = useState<rankingData[]>([{id:-1, systemName: '-1', systemLocation: 'none', documentID: 'XXX'}])
     
     const isLoaded = () => {
         if(rankingData[0].id !== -1){
