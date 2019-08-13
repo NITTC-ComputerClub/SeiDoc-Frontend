@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
 import { System } from '../reducers/systemsReducer'
-import { updateDetailCreator, fetchSystemByCategory } from '../actions/action'
+import { updateDetailCreator, fetchSystemByCategory, deleteSystemsCreator } from '../actions/action'
 import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
@@ -21,9 +21,12 @@ const SystemList: React.FC<historyProps> = (props) => {
     //データのfetch
     useEffect(() => {
         const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
-        /* TODO: タグなしの処理 */
+        const deleteSystems = () => dispatch(deleteSystemsCreator())
         if (tag !== undefined) {
             categorySearch(tag)
+        }
+        else {
+            deleteSystems()
         }
     }, [dispatch, tag])
 
