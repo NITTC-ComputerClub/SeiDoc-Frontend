@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import '../scss/header.scss'
+import '../scss/footer.scss'
 
-const Header: React.FC = () => {
+const Footer: React.FC = () => {
     return (
-        <header>
+        <footer>
             <div className="wrapper">
                 <Link to="/">
                     <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
@@ -15,8 +15,8 @@ const Header: React.FC = () => {
                 <p>GitHub</p>
                 <p>このサイトについて</p>
             </div>
-        </header>
+        </footer>
     )
 }
 
-export default Header
+export default Footer
