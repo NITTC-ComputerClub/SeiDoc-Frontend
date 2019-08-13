@@ -13,8 +13,6 @@ type historyProps = RouteComponentProps
 const SystemList: React.FC<historyProps> = (props) => {
     const tag = parse(props.location.search).tag as string
     const inputValue = parse(props.location.search).value as string
-    console.log(tag)
-    console.log(inputValue)
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()
@@ -27,12 +25,12 @@ const SystemList: React.FC<historyProps> = (props) => {
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const deleteSystems = () => dispatch(deleteSystemsCreator())
         if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ
-            console.log('アルゴリア')
+            console.log('algolia', 'input:', inputValue, 'tag:', tag)
             alogliaSearch(inputValue, tag)
             addTag(inputValue)
         }
         else if (tag !== undefined && inputValue === undefined) {   //カテゴリーオンリー
-            console.log('カテゴリーオンリー')
+            console.log('category', 'input:', inputValue, 'tag:', tag)
             categorySearch(tag)
             addTag(tag)
         }
