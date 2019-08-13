@@ -7,3 +7,4 @@ export const fireStore = firebase.firestore()
 export const auth = firebase.auth()
 export const systemIndex = 'testData'
 export const detailPageLogIndex = 'detailPageLog'
+export const popularPageIndex = 'popularSystem'
