@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchButton from '../components/Top/searchButton'
-import PopularSystemCard from '../components/Top/popularSystemCard'
+import PopularSystemList from '../components/Top/popularSystemList'
 import Ranking from '../components/Top/ranking'
 import '../scss/top.scss'
 import Footer from '../components/footer';
@@ -20,7 +20,7 @@ const Top: React.FC = () => {
             </div>
             <section className="container">
                 <h2>みんなが見ている制度</h2>
-                <PopularSystemCard />
+                <PopularSystemList />
                 <h2>住みやすい街ランキング</h2>
                 <Ranking />
             </section>
