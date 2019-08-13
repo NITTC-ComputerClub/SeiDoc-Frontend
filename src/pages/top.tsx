@@ -1,6 +1,6 @@
 import * as React from 'react'
 import SearchButton from '../components/Top/searchButton'
-import PopularSystemCard from '../components/Top/popularSystemCard'
+import PopularSystemList from '../components/Top/popularSystemList'
 import Ranking from '../components/Top/ranking'
 
 const Top: React.FC = () => {
@@ -10,7 +10,7 @@ const Top: React.FC = () => {
             {/* TODO: 地域から調べるページへ遷移 */}
             <SearchButton buttonName="地域から調べる" nextLocation="/"/>
             <h2>みんなが見ている制度</h2>
-            <PopularSystemCard />
+            <PopularSystemList />
             <h2>住みやすい街ランキング</h2>
             <Ranking />
         </div>
