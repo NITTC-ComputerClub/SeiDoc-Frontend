@@ -1,9 +1,14 @@
+@import "setting";
+
 body {
   margin: 0;
   font-family: 'Noto Sans JP', sans-serif;
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: $Background;
+  color: $TextBlack;
 }
 
 code {
