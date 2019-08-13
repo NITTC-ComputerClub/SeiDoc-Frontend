@@ -4,7 +4,7 @@
     h1 {
         font-size: $H2;
 
-        color: $TextBlack;
+        color: $White;
         background-color: $ThemeBlue;
 
         margin: 0;
@@ -19,31 +19,24 @@
         font-size: $H2;
 
         color: $TextBlack;
-        background-color: #E0E0E0;
+        background-color: $ThemeGreen;
     }
 
     p {
-        margin: 8px 16px;
+        margin: 0;
+        padding: 8px 16px;
         color: $TextBlack;
-    }
-
-    #detail {
-        margin-bottom: 92px;
+        background-color: $White;
     }
 
     a {
-        position: fixed;
-
-        height: 64px;
-        width: 80%;
-
-        bottom: 16px;
-        left: 50%;
-
-        transform: translateX(-50%);
+        display: block;
+        margin: 16px 0;
+        text-align: center;
 
         button {
-            width: 100%;
+            width: 80%;
+            max-width: 192px;
             padding: 16px 16px;
 
             color: $White;

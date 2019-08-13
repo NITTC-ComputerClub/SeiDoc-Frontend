@@ -1,6 +1,10 @@
 @import "setting";
 
 .result {
+    overflow: hidden;
+    margin-bottom: 8px;
+    background-color: $White;
+
     h3 {
         margin-top: 8px;
         margin-bottom: 0;

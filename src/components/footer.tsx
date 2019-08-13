@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
         <footer>
             <div className="wrapper">
                 <Link to="/">
-                    <img src="img/logo.png" alt="SeiDocのロゴ"></img>
+                    <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                 </Link>
             </div>
             {/* 今はリンクなし */}
