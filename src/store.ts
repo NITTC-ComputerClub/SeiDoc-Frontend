@@ -16,7 +16,9 @@ export type AppState = {
 
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
+    whitelist: ['userState'], 
+    blacklist: ['tagState']
 }
 
 const persistedReducer = persistReducer(persistConfig,
