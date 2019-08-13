@@ -25,7 +25,7 @@ export type SystemsState = {
 
 const initialState: SystemsState = {
     systems: [],
-    loading: false
+    loading: true
 }
 
 export const CategoryButtonReducer = reducerWithInitialState(initialState)

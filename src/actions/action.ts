@@ -13,9 +13,9 @@ export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<undefined, 
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
 
 export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => {
+    dispatch(fetchSystemByCategoryCreator.started())
     console.log('start fetchSystem query:', query)
     const searchData: Array<System> = []
-    dispatch(fetchSystemByCategoryCreator.started())
     fireStore.collection(systemIndex).where('Category', 'array-contains', query).get()
         .then(
             (snapshot) => {

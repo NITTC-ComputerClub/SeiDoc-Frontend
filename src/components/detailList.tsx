@@ -16,7 +16,6 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
     const dispatch = useDispatch()
     const updateDetail = (data: System) => dispatch(updateDetailCreator(data))
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    //const isMounted = (detail.Name !== "")  //値があるときにTrue
 
     const isSystemLoaded = () => {
         // Nameだけでよさそう

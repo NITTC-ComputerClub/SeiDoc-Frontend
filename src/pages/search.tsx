@@ -5,7 +5,7 @@ import SystemList from '../components/systemList'
 import '../scss/result.scss'
 import Header from '../components/footer';
 
-const Result: React.FC = () => {
+const Search: React.FC = () => {
     return (
         <div>
             <div className="result">
@@ -21,4 +21,4 @@ const Result: React.FC = () => {
     )
 }
 
-export default Result
+export default Search

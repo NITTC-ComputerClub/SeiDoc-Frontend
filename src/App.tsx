@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Category from './pages/category'
-import Result from './pages/result'
+import Search from './pages/search'
 import Input from './pages/input'
 import Detail from './pages/detail'
 import ViewAll from './pages/viewAll'
@@ -19,7 +19,7 @@ const App: React.FC = () => {
       <Switch>
         <Route exact path='/' component={Top} />
         <Route path='/category' component={Category} />
-        <Route path='/result' component={Result} />
+        <Route path='/search' component={Search} />} />
         <Route path='/input' component={Input} />
         <Route path='/detail/:documentId' component={Detail} />
         <Route path='/view' component={ViewAll} />
