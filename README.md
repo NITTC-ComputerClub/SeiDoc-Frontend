@@ -1,3 +1,9 @@
+# SeiDoc
+H30プロコン課題部門
+*SeiDoc*のリポジトリです。
+[![CircleCI](https://circleci.com/gh/NITTC-ComputerClub/SeiDoc/tree/master.svg?style=svg&circle-token=1ab7e100245b294fbfbcbb51f7da6c7953598f88)](https://circleci.com/gh/NITTC-ComputerClub/SeiDoc/tree/master)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
