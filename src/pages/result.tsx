@@ -3,7 +3,7 @@ import SearchBar from '../components/searchBar'
 import Tag from '../components/tag'
 import SystemList from '../components/systemList'
 import '../scss/result.scss'
-import Header from '../components/header';
+import Header from '../components/footer';
 
 const Result: React.FC = () => {
     return (
