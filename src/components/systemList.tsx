@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
 import { System } from '../reducers/systemsReducer'
-import { updateDetailCreator, fetchSystemByCategory, deleteSystemsCreator, addTagCreator } from '../actions/action'
+import { updateDetailCreator, fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../actions/action'
 import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
@@ -12,7 +12,9 @@ type historyProps = RouteComponentProps
 
 const SystemList: React.FC<historyProps> = (props) => {
     const tag = parse(props.location.search).tag as string
+    const inputValue = parse(props.location.search).value as string
     console.log(tag)
+    console.log(inputValue)
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()
@@ -21,16 +23,23 @@ const SystemList: React.FC<historyProps> = (props) => {
     //データのfetch
     useEffect(() => {
         const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
+        const alogliaSearch = (query: string, category: string) => dispatch(fetchSystemByAlgoliaSearch(query, category))
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const deleteSystems = () => dispatch(deleteSystemsCreator())
-        if (tag !== undefined) {
+        if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ
+            console.log('アルゴリア')
+            alogliaSearch(inputValue, tag)
+            addTag(inputValue)
+        }
+        else if (tag !== undefined && inputValue === undefined) {   //カテゴリーオンリー
+            console.log('カテゴリーオンリー')
             categorySearch(tag)
             addTag(tag)
         }
         else {
             deleteSystems()
         }
-    }, [dispatch, tag])
+    }, [dispatch, tag, inputValue])
 
     return (
         <div className="systemList">

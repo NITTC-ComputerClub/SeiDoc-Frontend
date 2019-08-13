@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
 import { fetchSystemByAlgoliaSearch, addTagCreator } from '../actions/action'
@@ -15,11 +15,13 @@ const SearchBar: React.FC<historyProps> = (props) => {
     let inputValue: string = ''
     return (
         <div className="searchBar">
-            <input type="text" onChange={e => { inputValue = e.target.value }} placeholder="「未熟児」などの単語を入力" />
+            <input type="text" onChange={e => {
+                inputValue = e.target.value
+            }} placeholder="「未熟児」などの単語を入力" />
             <button onClick={() => {
-                alogliaSearch(inputValue, tag)
-                addTag(inputValue)
-                props.history.push('/result')
+                //alogliaSearch(inputValue, tag)
+                //addTag(inputValue)
+                props.history.push('/search?tag=' + tag + '&value=' + inputValue)
             }}>
                 <img src="img/虫眼鏡.png" alt="虫眼鏡"></img>
             </button>
