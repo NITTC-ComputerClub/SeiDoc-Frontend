@@ -4,7 +4,7 @@ import CategoryButton from '../components/categoryButton'
 import { useDispatch } from 'react-redux'
 import { deleteTagCreator } from '../actions/action'
 import "../scss/category.scss"
-import Header from '../components/header';
+import Footer from '../components/footer';
 
 const Category: React.FC = () => {
     const dispatch = useDispatch()
@@ -20,7 +20,7 @@ const Category: React.FC = () => {
                 <h2>カテゴリー</h2>
                 <CategoryButton />
             </div>
-            <Header />
+            <Footer />
         </div>
     )
 }
