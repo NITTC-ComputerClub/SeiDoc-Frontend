@@ -1,18 +1,13 @@
 import React, { useState } from 'react'
 import PopularSystemCard from './popularSystemCard'
-import { fireStore, popularPageIndex } from '../../firebase/firebase';
+import { fireStore, popularPageIndex, rankingType } from '../../firebase/firebase';
 
-type rankingData = {
-    id: number,
-    systemName: string,
-    systemLocation: string,
-    documentID: string
-}
+
 type rankings = {
-    ranking: rankingData[]
+    ranking: rankingType[]
 }
-const compareASC = (a: rankingData,b: rankingData) => {
-    if(a.id < b.id){
+const compareASC = (a: rankingType,b: rankingType) => {
+    if(a.count < b.count){
         return -1
     }else{
         return 1
@@ -28,23 +23,23 @@ const getToday = () => {
   }
 
 const PopularSystemList: React.FC = () => {
-    const [rankingData, setRankingData] = useState<rankingData[]>([{id:-1, systemName: '-1', systemLocation: 'none', documentID: 'XXX'}])
+    const [rankingData, setRankingData] = useState<rankingType[]>([{count:-1, systemName: '-1', systemLocation: 'none', documentID: 'XXX'}])
     
     const isLoaded = () => {
-        if(rankingData[0].id !== -1){
+        if(rankingData[0].count !== -1){
             return true
         }else{
             return false
         }
     }
 
-    if(rankingData[0].id === -1){ //一度だけfetch
+    if(rankingData[0].count === -1){ //一度だけfetch
         fireStore.collection(popularPageIndex).doc(getToday()).get().then(
             doc => {
                 if(doc.exists){
                     const data = doc.data() as rankings
                     data.ranking.sort(compareASC)
-                    setRankingData(data.ranking)
+                    setRankingData(data.ranking.slice(0,3))
                 }
             }
         ).catch(err => console.error(err))
