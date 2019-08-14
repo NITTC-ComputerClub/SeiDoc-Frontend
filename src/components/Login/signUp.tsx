@@ -14,9 +14,11 @@ type loginData = {
     email: string,
     password: string
 }
+const cityData = require('../../datas/cityData.json')
 
 const SignUp: React.FC<historyProps> = (props) => {
-    let [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
+    const [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
+    const [city, setCity] = useState<Array<string>>([''])
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
@@ -72,9 +74,13 @@ const SignUp: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
+    const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const location = cityData[e.target.value] as Array<string>
+        setCity(location)
+    }
+
     return (
         <div>
-            <div>新規登録</div>
             <p>メールアドレス</p>
             <input type="text" name="email" onChange={e => handleInputChange(e)}></input>
             <p>パスワード</p>
@@ -82,20 +88,32 @@ const SignUp: React.FC<historyProps> = (props) => {
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
             <p>生年月日</p>
-            <input type="date" name="birthday" onChange={e => handleUserdataInputChange(e)}></input>
+            {/* <input type="date" name="birthday" onChange={e => handleUserdataInputChange(e)}></input> */}
             <p>年収</p>
             {/* <input type="number" name="income" onChange={e => handleUserdataInputChange(e)}></input> */}
             <select name="income" onChange={e => handleUserdataInputChange(e)}>
                 <option value="">選択してください</option>
-                <option value="~200">200万円未満</option>
-                <option value="200~400">200~400万円</option>
-                <option value="400~600">400~600万円</option>
-                <option value="600~800">600~800万円</option>
-                <option value="800~1000">800~1000万円</option>
-                <option value="1000~">1000万円以上</option>
+                <option value="200万円未満">200万円未満</option>
+                <option value="200~400万円">200~400万円</option>
+                <option value="400~600万円">400~600万円</option>
+                <option value="600~800万円">600~800万円</option>
+                <option value="800~1000万円">800~1000万円</option>
+                <option value="1000万円以上">1000万円以上</option>
             </select>
             <p>居住区</p>
-            <input type="text" name="address" onChange={e => handleUserdataInputChange(e)}></input>
+            {/* <input type="text" name="address" onChange={e => handleUserdataInputChange(e)}></input> */}
+            <select name="prefecturesAddress" onChange={e => handleAddressChange(e)}>
+                <option value="">選択してください</option>
+                <option value="愛知県">愛知県</option>
+                <option value="岐阜県">岐阜県</option>
+                <option value="三重県">三重県</option>
+            </select>
+            <select name="cityAddress">
+                <option value="">選択してください</option>
+                {city.map((cityName) => (
+                    <option key={cityName} value={cityName}>{cityName}</option>
+                ))}
+            </select>
             <p>家族構成</p>
             <input type="text" name="family" onChange={e => handleUserdataInputChange(e)}></input>
             <button onClick={() => handleSignUp()}>登録</button>
