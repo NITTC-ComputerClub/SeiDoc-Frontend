@@ -7,6 +7,7 @@ import { fireStore, auth } from '../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
+import '../../scss/signUp.scss'
 
 type historyProps = RouteComponentProps
 
@@ -73,8 +74,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     }
 
     return (
-        <div>
-            <div>新規登録</div>
+        <div className="signUp">
             <p>メールアドレス</p>
             <input type="text" name="email" onChange={e => handleInputChange(e)}></input>
             <p>パスワード</p>
@@ -89,8 +89,10 @@ const SignUp: React.FC<historyProps> = (props) => {
             <input type="text" name="address" onChange={e => handleUserdataInputChange(e)}></input>
             <p>家族構成</p>
             <input type="text" name="family" onChange={e => handleUserdataInputChange(e)}></input>
-            <button onClick={() => handleSignUp()}>登録</button>
-            <Link to='/login'>ログインはこちらから</Link>
+            <div className="lrContents">
+                <Link to='/login'>ログインはこちらから</Link>
+                <button onClick={() => handleSignUp()}>登録</button>
+            </div>
         </div>
     )
 }
