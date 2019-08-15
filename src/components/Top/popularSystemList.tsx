@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PopularSystemCard from './popularSystemCard'
 import { fireStore, rankingType, detailPageLogIndex, logType } from '../../firebase/firebase';
 import Indicator from '../indicator'
+import "../../scss/popularSystemList.scss"
 
 const PopularSystemList: React.FC = () => {
     const [rankingData, setRankingData] = useState<rankingType[]>([{count:-1, systemName: '-1', systemLocation: 'none', documentID: 'XXX'}])
@@ -45,7 +46,7 @@ const PopularSystemList: React.FC = () => {
     }
     return(
         isLoaded() ?
-        <div>
+        <div className="popularSystemList">
             <ul>
                 {rankingData.map(data => <PopularSystemCard key={data.systemName} systemName={data.systemName} systemLocation={data.systemLocation} />)}
             </ul>
