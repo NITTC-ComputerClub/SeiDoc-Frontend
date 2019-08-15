@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PopularSystemCard from './popularSystemCard'
 import { fireStore, rankingType, detailPageLogIndex, logType } from '../../firebase/firebase';
+import Indicator from '../indicator'
 
 const PopularSystemList: React.FC = () => {
     const [rankingData, setRankingData] = useState<rankingType[]>([{count:-1, systemName: '-1', systemLocation: 'none', documentID: 'XXX'}])
@@ -50,7 +51,7 @@ const PopularSystemList: React.FC = () => {
             </ul>
         </div>
         :
-        <div>Loading</div>
+        <Indicator />
     )
 }
 
