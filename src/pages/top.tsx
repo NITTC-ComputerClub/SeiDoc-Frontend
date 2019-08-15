@@ -4,40 +4,9 @@ import PopularSystemList from "../components/Top/popularSystemList";
 import Ranking from "../components/Top/ranking";
 import "../scss/top.scss";
 import Footer from "../components/footer";
-import { fireStore, detailPageLogIndex, logType, popularPageIndex, rankingType } from '../firebase/firebase';
-import { System } from "../reducers/systemsReducer";
-import { UserState } from "../reducers/loginReducer";
-import actionCreatorFactory from 'typescript-fsa';
 
 const Top: React.FC = () => {
 
-  const aggregate = () => {
-    let ranking: rankingType[] = [];
-    fireStore
-      .collection(detailPageLogIndex).where("createdAt", "<",Date.now())
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-            const data = doc.data() as logType
-            const target = ranking.find(logData => {return logData.documentID === data.documentID})
-            if(target === undefined){
-                const r: rankingType = {
-                    documentID : data.documentID,
-                    systemName: data.system.Name,
-                    systemLocation: data.system.Location,
-                    count: 1
-                }
-                ranking.push(r)
-            }else{
-                target.count++
-            }
-        });
-      })
-      .then(() => {
-          //fireStore.collection(popularPageIndex).doc('2019-08-14').set({ranking:ranking})
-      });
-  };
-  aggregate()
   return (
     <div className="top">
       <div className="title">
