@@ -21,8 +21,8 @@ const SignUp: React.FC<historyProps> = (props) => {
     console.log(cityData["愛知県"])
     console.log(municipalityData["豊田市"])
     const [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
-    const [city, setCity] = useState<Array<string>>([''])
-    const [municipality, setMunicipality] = useState<Array<string>>(['']) 
+    const [city, setCity] = useState<Array<string>>(['選択してください'])
+    const [municipality, setMunicipality] = useState<Array<string>>(['選択してください']) 
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
@@ -78,22 +78,22 @@ const SignUp: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
-    const handleCityAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handlePrefecturesAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const location = cityData[e.target.value] as Array<string>
         setCity(location)
     }
 
-    const handleMunicipalityAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleCityAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const location = municipalityData[e.target.value] as Array<string>
         if ( typeof location === 'undefined') {
-            setMunicipality([''])
+            setMunicipality(['選択してください'])
         } else {
             setMunicipality(location)
         }
     }
 
-    const handleFullAddressInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log('')
+    const handleMunicipalityAddressInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
     }
 
     return (
@@ -108,8 +108,8 @@ const SignUp: React.FC<historyProps> = (props) => {
             {/* <input type="date" name="birthday" onChange={e => handleUserdataInputChange(e)}></input> */}
             <p>年収</p>
             {/* <input type="number" name="income" onChange={e => handleUserdataInputChange(e)}></input> */}
-            <select name="income" value="" onChange={e => handleUserdataInputChange(e)}>
-                <option value="">選択してください</option>
+            <select name="income" value="選択してください" onChange={e => handleUserdataInputChange(e)}>
+                <option value="選択してください">選択してください</option>
                 <option value="200万円未満">200万円未満</option>
                 <option value="200~400万円">200~400万円</option>
                 <option value="400~600万円">400~600万円</option>
@@ -119,20 +119,18 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             <p>居住区</p>
             {/* <input type="text" name="address" onChange={e => handleUserdataInputChange(e)}></input> */}
-            <select name="prefecturesAddress" value="" onChange={e => handleCityAddressChange(e)}>
-                <option value="">選択してください</option>
+            <select name="prefecturesAddress" value="選択してください" onChange={e => handlePrefecturesAddressChange(e)}>
+                <option value="選択してください">選択してください</option>
                 <option value="愛知県">愛知県</option>
                 <option value="岐阜県">岐阜県</option>
                 <option value="三重県">三重県</option>
             </select>
-            <select name="cityAddress" value="" onChange={e => handleMunicipalityAddressChange(e)}>
-                <option value="">選択してください</option>
+            <select name="cityAddress" value="" onChange={e => handleCityAddressChange(e)}>
                 {city.map((cityName) => (
                     <option key={cityName} value={cityName}>{cityName}</option>
                 ))}
             </select>
-            <select name="municipalityAddress" value="" onChange={e => handleFullAddressInputChange(e)}>
-                <option value="">選択してください</option>
+            <select name="municipalityAddress" value="" onChange={e => handleMunicipalityAddressInputChange(e)}>
                 {municipality.map((municipalityName) => (
                     <option key={municipalityName} value={municipalityName}>{municipalityName}</option>
                 ))}
