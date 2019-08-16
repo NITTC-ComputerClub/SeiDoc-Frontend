@@ -108,7 +108,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             {/* <input type="date" name="birthday" onChange={e => handleUserdataInputChange(e)}></input> */}
             <p>年収</p>
             {/* <input type="number" name="income" onChange={e => handleUserdataInputChange(e)}></input> */}
-            <select name="income" value="選択してください" onChange={e => handleUserdataInputChange(e)}>
+            <select name="income" onChange={e => handleUserdataInputChange(e)}>
                 <option value="選択してください">選択してください</option>
                 <option value="200万円未満">200万円未満</option>
                 <option value="200~400万円">200~400万円</option>
@@ -119,18 +119,18 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             <p>居住区</p>
             {/* <input type="text" name="address" onChange={e => handleUserdataInputChange(e)}></input> */}
-            <select name="prefecturesAddress" value="選択してください" onChange={e => handlePrefecturesAddressChange(e)}>
+            <select name="prefecturesAddress" onChange={e => handlePrefecturesAddressChange(e)}>
                 <option value="選択してください">選択してください</option>
                 <option value="愛知県">愛知県</option>
                 <option value="岐阜県">岐阜県</option>
                 <option value="三重県">三重県</option>
             </select>
-            <select name="cityAddress" value="" onChange={e => handleCityAddressChange(e)}>
+            <select name="cityAddress" onChange={e => handleCityAddressChange(e)}>
                 {city.map((cityName) => (
                     <option key={cityName} value={cityName}>{cityName}</option>
                 ))}
             </select>
-            <select name="municipalityAddress" value="" onChange={e => handleMunicipalityAddressInputChange(e)}>
+            <select name="municipalityAddress" onChange={e => handleMunicipalityAddressInputChange(e)}>
                 {municipality.map((municipalityName) => (
                     <option key={municipalityName} value={municipalityName}>{municipalityName}</option>
                 ))}
