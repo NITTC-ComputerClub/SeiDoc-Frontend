@@ -14,24 +14,40 @@ type loginData = {
     email: string,
     password: string
 }
+type locationData = {
+    prefecture: string,
+    city: string,
+    municipality: string
+}
+type birthdayData = {
+    year: string,
+    month: string,
+    date: string
+}
+type selectArray = {
+    cityArray: Array<string>,
+    municipalityArray: Array<string>
+}
 const cityData = require('../../datas/cityData.json')
 const municipalityData = require('../../datas/municipalityData.json')
 
 const SignUp: React.FC<historyProps> = (props) => {
     const [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
-    const [city, setCity] = useState<Array<string>>(['選択してください'])
-    const [municipality, setMunicipality] = useState<Array<string>>(['選択してください']) 
+    const [cityArray, setCityArray] = useState<Array<string>>(['選択してください'])
+    const [municipalityArray, setMunicipalityArray] = useState<Array<string>>(['選択してください'])
+    const [locationData, setLocationData] = useState<locationData>({ prefecture: '', city: '', municipality: '' })
+    const [birthdayData, setBirthdayData] = useState<birthdayData>({ year: '', month: '', date: '' })
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
-    const today = new Date()
-    console.log(today)
 
     const handleSignUp = () => {
         const email = loginData.email
         const password = loginData.password
         console.log(email)
         console.log(password)
+        const birthday = ('000' + birthdayData.year).slice(-4) + ('0' + birthdayData.month).slice(-2) + ('0' + birthdayData.date).slice(-2)
+        userData['birthday'] = birthday
 
         if (password.length < 8) {
             alert('Please enter a password')
@@ -78,27 +94,37 @@ const SignUp: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
+    const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.name as 'prefecture' | 'city' | 'municipality'
+        locationData[name] = e.target.value
+        console.log(locationData)
+        setLocationData(Object.assign({}, locationData))
+    }
+
+    const handleBirthdayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.name as 'year' | 'month' | 'date'
+        birthdayData[name] = e.target.value
+        console.log(birthdayData)
+        setBirthdayData(Object.assign({}, birthdayData))
+    }
+
     const handlePrefecturesAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        
         const location = cityData[e.target.value] as Array<string>
-        setCity(location)
+        setCityArray(location)
     }
 
     const handleCityAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const location = municipalityData[e.target.value] as Array<string>
-        if ( typeof location === 'undefined') {
-            setMunicipality(['選択してください'])
+        if (typeof location === 'undefined') {
+            setMunicipalityArray(['選択してください'])
         } else {
-            setMunicipality(location)
+            setMunicipalityArray(location)
         }
-    }
-
-    const handleMunicipalityAddressInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
     }
 
     const birthdayInputLoop = (start: number, end: number) => {
         const items = []
+        items.push(<option value="">選択してください</option>)
         for (let i = start; i < end; i++) {
             items.push(<option value={i}>{i}</option>)
         }
@@ -114,14 +140,13 @@ const SignUp: React.FC<historyProps> = (props) => {
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
             <p>生年月日</p>
-            {/* <input type="date" name="birthday" onChange={e => handleUserdataInputChange(e)}></input> */}
-            <select name="birthdayYear">
-                {birthdayInputLoop(1950, today.getFullYear())}
+            <select name="year" onChange={e => handleBirthdayChange(e)}>
+                {birthdayInputLoop(1950, 2019)}
             </select>
-            <select name="birthdayMonth">
+            <select name="month" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1, 12)}
             </select>
-            <select name="birthdayDate">
+            <select name="date" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1, 31)}
             </select>
             <p>年収</p>
@@ -135,19 +160,19 @@ const SignUp: React.FC<historyProps> = (props) => {
                 <option value="1000万円以上">1000万円以上</option>
             </select>
             <p>居住区</p>
-            <select name="prefecturesAddress" onChange={e => handlePrefecturesAddressChange(e)}>
+            <select name="prefecture" onChange={e => handleAddressChange(e)}>
                 <option value="選択してください">選択してください</option>
                 <option value="愛知県">愛知県</option>
                 <option value="岐阜県">岐阜県</option>
                 <option value="三重県">三重県</option>
             </select>
-            <select name="cityAddress" onChange={e => handleCityAddressChange(e)}>
-                {city.map((cityName) => (
+            <select name="city" onChange={e => handleCityAddressChange(e)}>
+                {cityArray.map((cityName) => (
                     <option key={cityName} value={cityName}>{cityName}</option>
                 ))}
             </select>
-            <select name="municipalityAddress" onChange={e => handleMunicipalityAddressInputChange(e)}>
-                {municipality.map((municipalityName) => (
+            <select name="municipality" onChange={e => handleAddressChange(e)}>
+                {municipalityArray.map((municipalityName) => (
                     <option key={municipalityName} value={municipalityName}>{municipalityName}</option>
                 ))}
             </select>
