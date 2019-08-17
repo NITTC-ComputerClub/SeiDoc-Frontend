@@ -5,13 +5,14 @@ import "../../scss/popularSystemCard.scss"
 type historyProps = RouteComponentProps
 type params = {
     systemName: string,
-    systemLocation: string
+    systemLocation: string,
+    documentId: string
 }
 type propsType = historyProps & params
 
 const PopularSystemCard: React.FC<propsType> = (props) => {
     return (
-        <li className="popularSystemCard">
+        <li className="popularSystemCard" onClick={() => props.history.push('/detail/' + props.documentId)}>
             <h4>{props.systemName}</h4>
             <p>{props.systemLocation}</p>
         </li>

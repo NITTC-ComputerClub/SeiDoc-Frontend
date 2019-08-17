@@ -48,7 +48,7 @@ const PopularSystemList: React.FC = () => {
         isLoaded() ?
         <div className="popularSystemList">
             <ul>
-                {rankingData.map(data => <PopularSystemCard key={data.systemName} systemName={data.systemName} systemLocation={data.systemLocation} />)}
+                {rankingData.map(data => <PopularSystemCard key={data.systemName} systemName={data.systemName} systemLocation={data.systemLocation} documentId={data.documentID}/>)}
             </ul>
         </div>
         :
