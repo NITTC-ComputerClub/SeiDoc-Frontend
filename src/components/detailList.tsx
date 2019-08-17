@@ -11,8 +11,8 @@ import Header from './footer';
 
 const DetailList: React.FC<{ documentId: string }> = (props) => {
     const user = useSelector((state: AppState) => state.userState)
-    let detail = useSelector((state: AppState) => state.selectsystemState.selectSystem)
-
+    let detail = useSelector((state: AppState) => state.detailState.detail)
+    
     const dispatch = useDispatch()
     const updateDetail = (data: System) => dispatch(updateDetailCreator(data))
     const [isLoading, setIsLoading] = useState<boolean>(false)

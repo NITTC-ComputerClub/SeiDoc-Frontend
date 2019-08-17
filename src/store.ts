@@ -5,12 +5,12 @@ import thunk from 'redux-thunk'
 
 import { TagState, TagReducer } from './reducers/tagReducer'
 import { SystemsState, CategoryButtonReducer } from './reducers/systemsReducer'
-import { SelectSystemsState, SelectSystemReducer } from './reducers/selectsystemReducer'
+import { DetailState, DetailReducer } from './reducers/detailReducer'
 import { UserState, LoginReducer } from './reducers/loginReducer'
 export type AppState = {
     systemsState: SystemsState
     tagState: TagState
-    selectsystemState: SelectSystemsState
+    detailState: DetailState
     userState: UserState
 }
 
@@ -25,7 +25,7 @@ const persistedReducer = persistReducer(persistConfig,
     combineReducers<AppState>({
         systemsState: CategoryButtonReducer,
         tagState: TagReducer,
-        selectsystemState: SelectSystemReducer,
+        detailState: DetailReducer,
         userState: LoginReducer
     }))
 

@@ -2,12 +2,12 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { updateDetailCreator } from '../actions/action'
 import { System } from './systemsReducer'
 
-export type SelectSystemsState = {
-    selectSystem: System
+export type DetailState = {
+    detail: System
 }
 
-const initialState: SelectSystemsState = {
-    selectSystem: {
+const initialState: DetailState = {
+    detail: {
         Name: '',
         Department: '',
         Location: '',
@@ -25,9 +25,9 @@ const initialState: SelectSystemsState = {
 }
 
 
-export const SelectSystemReducer = reducerWithInitialState(initialState)
+export const DetailReducer = reducerWithInitialState(initialState)
     .case(updateDetailCreator, (state, newSystem) => {
         return Object.assign({}, state, {
-            selectSystem: newSystem
+            detail: newSystem
         })
     })
