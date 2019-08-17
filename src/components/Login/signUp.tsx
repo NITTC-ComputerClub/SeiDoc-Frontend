@@ -7,6 +7,7 @@ import { fireStore, auth } from '../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
+import '../../scss/signUp.scss'
 
 type historyProps = RouteComponentProps
 
@@ -125,7 +126,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     }
 
     return (
-        <div>
+        <div className="signUp">
             <p>メールアドレス</p>
             <input type="text" name="email" onChange={e => handleLoginDataInputChange(e)}></input>
             <p>パスワード</p>
@@ -170,7 +171,6 @@ const SignUp: React.FC<historyProps> = (props) => {
                 ))}
             </select>
             <p>家族構成</p>
-            {/* <input type="text" name="family" onChange={e => handleUserdataInputChange(e)}></input> */}
             <select name="family" onChange={e => handleUserdataInputChange(e)}>
                 <option value="">選択してください</option>
                 <option value="ひとり親家庭">ひとり親家庭</option>
@@ -178,8 +178,10 @@ const SignUp: React.FC<historyProps> = (props) => {
                 <option value="選択肢2">選択肢2</option>
                 <option value="選択肢3">選択肢3</option>
             </select>
-            <button onClick={() => handleSignUp()}>登録</button>
-            <Link to='/login'>ログインはこちらから</Link>
+            <div className="lrContents">
+                <Link to='/login'>ログインはこちらから</Link>
+                <button onClick={() => handleSignUp()}>登録</button>
+            </div>
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { initLoginCreator } from '../actions/action'
 import { AppState } from '../store'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { auth } from '../firebase/firebase'
+import "../scss/header.scss"
 
 type historyProps = RouteComponentProps
 
@@ -19,17 +20,17 @@ const Header: React.FC<historyProps> = (props) => {
     }
     if (user.userId === '') {    //ログインしてない場合
         return (
-            <div>
+            <header>
                 <button onClick={() => { props.history.push('/login') }}>ログイン/新規登録</button>
-            </div>
+            </header>
         )
     }
     else {
         return (
-            <div>
+            <header>
                 <p>ようこそ{user.nickName}さん</p>
                 <button onClick={() => handleSignOut()}>サインアウト</button>
-            </div>
+            </header>
             )
         }
     }
