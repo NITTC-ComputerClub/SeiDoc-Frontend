@@ -24,10 +24,7 @@ type birthdayData = {
     month: string,
     date: string
 }
-type selectArray = {
-    cityArray: Array<string>,
-    municipalityArray: Array<string>
-}
+
 const cityData = require('../../datas/cityData.json')
 const municipalityData = require('../../datas/municipalityData.json')
 
@@ -44,10 +41,10 @@ const SignUp: React.FC<historyProps> = (props) => {
     const handleSignUp = () => {
         const email = loginData.email
         const password = loginData.password
-        console.log(email)
-        console.log(password)
-        const birthday = ('000' + birthdayData.year).slice(-4) + ('0' + birthdayData.month).slice(-2) + ('0' + birthdayData.date).slice(-2)
+        const birthday = ('000' + birthdayData.year).slice(-4) + '-' + ('0' + birthdayData.month).slice(-2) + '-' + ('0' + birthdayData.date).slice(-2)
+        const address = locationData.prefecture + locationData.city + locationData.municipality
         userData['birthday'] = birthday
+        userData['address'] = address
 
         if (password.length < 8) {
             alert('Please enter a password')
@@ -58,9 +55,10 @@ const SignUp: React.FC<historyProps> = (props) => {
             const user = res.user as firebase.User
             userData['userId'] = user.uid
         }).then(() => {
+            console.log('userData:', userData)
             login(userData)
             props.history.push('/')
-            handleSetUserdata()
+            handleFirebaseSetUserdata()
         }).catch((error) => {
             const errorCode = error.code
             const errorMessage = error.message
@@ -73,13 +71,51 @@ const SignUp: React.FC<historyProps> = (props) => {
         })
     }
 
-    const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-        const name = e.target.name as 'birthday' | 'address' | 'family' | 'nickName'
-        userData[name] = e.target.value
-        console.log('userData', userData)
+
+    const handleLoginDataInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.name as 'email' | 'password'
+        loginData[name] = e.target.value
+        setLoginData(Object.assign({}, loginData))
     }
 
-    const handleSetUserdata = () => {
+    const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.name as 'family' | 'nickName' | 'income'
+        userData[name] = e.target.value
+    }
+
+    const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.name as 'prefecture' | 'city' | 'municipality'
+        locationData[name] = e.target.value
+        setLocationData(Object.assign({}, locationData))
+        if (name === 'prefecture') {
+            const location = cityData[e.target.value] as Array<string>
+            setCityArray(location)
+        } else if (name === 'city') {
+            const location = municipalityData[e.target.value] as Array<string>
+            if (typeof location === 'undefined') {
+                setMunicipalityArray(['選択してください'])
+            } else {
+                setMunicipalityArray(location)
+            }
+        }
+    }
+
+    const handleBirthdayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const name = e.target.name as 'year' | 'month' | 'date'
+        birthdayData[name] = e.target.value
+        setBirthdayData(Object.assign({}, birthdayData))
+    }
+
+    const birthdayInputLoop = (start: number, end: number) => {
+        const items = []
+        items.push(<option key="" value="">選択してください</option>)
+        for (let i = start; i < end; i++) {
+            items.push(<option key={i} value={i}>{i}</option>)
+        }
+        return items
+    }
+
+    const handleFirebaseSetUserdata = () => {
         const uid = userData.userId
         const sendData = userData
         delete sendData.userId
@@ -88,55 +124,12 @@ const SignUp: React.FC<historyProps> = (props) => {
         })
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name as 'email' | 'password'
-        loginData[name] = e.target.value
-        setLoginData(Object.assign({}, loginData))
-    }
-
-    const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const name = e.target.name as 'prefecture' | 'city' | 'municipality'
-        locationData[name] = e.target.value
-        console.log(locationData)
-        setLocationData(Object.assign({}, locationData))
-    }
-
-    const handleBirthdayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const name = e.target.name as 'year' | 'month' | 'date'
-        birthdayData[name] = e.target.value
-        console.log(birthdayData)
-        setBirthdayData(Object.assign({}, birthdayData))
-    }
-
-    const handlePrefecturesAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const location = cityData[e.target.value] as Array<string>
-        setCityArray(location)
-    }
-
-    const handleCityAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const location = municipalityData[e.target.value] as Array<string>
-        if (typeof location === 'undefined') {
-            setMunicipalityArray(['選択してください'])
-        } else {
-            setMunicipalityArray(location)
-        }
-    }
-
-    const birthdayInputLoop = (start: number, end: number) => {
-        const items = []
-        items.push(<option value="">選択してください</option>)
-        for (let i = start; i < end; i++) {
-            items.push(<option value={i}>{i}</option>)
-        }
-        return items
-    }
-
     return (
         <div>
             <p>メールアドレス</p>
-            <input type="text" name="email" onChange={e => handleInputChange(e)}></input>
+            <input type="text" name="email" onChange={e => handleLoginDataInputChange(e)}></input>
             <p>パスワード</p>
-            <input type="password" name="password" onChange={e => handleInputChange(e)}></input>
+            <input type="password" name="password" onChange={e => handleLoginDataInputChange(e)}></input>
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
             <p>生年月日</p>
@@ -151,7 +144,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             <p>年収</p>
             <select name="income" onChange={e => handleUserdataInputChange(e)}>
-                <option value="選択してください">選択してください</option>
+                <option value="">選択してください</option>
                 <option value="200万円未満">200万円未満</option>
                 <option value="200~400万円">200~400万円</option>
                 <option value="400~600万円">400~600万円</option>
@@ -161,12 +154,12 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             <p>居住区</p>
             <select name="prefecture" onChange={e => handleAddressChange(e)}>
-                <option value="選択してください">選択してください</option>
+                <option value="">選択してください</option>
                 <option value="愛知県">愛知県</option>
                 <option value="岐阜県">岐阜県</option>
                 <option value="三重県">三重県</option>
             </select>
-            <select name="city" onChange={e => handleCityAddressChange(e)}>
+            <select name="city" onChange={e => handleAddressChange(e)}>
                 {cityArray.map((cityName) => (
                     <option key={cityName} value={cityName}>{cityName}</option>
                 ))}
@@ -177,7 +170,14 @@ const SignUp: React.FC<historyProps> = (props) => {
                 ))}
             </select>
             <p>家族構成</p>
-            <input type="text" name="family" onChange={e => handleUserdataInputChange(e)}></input>
+            {/* <input type="text" name="family" onChange={e => handleUserdataInputChange(e)}></input> */}
+            <select name="family" onChange={e => handleUserdataInputChange(e)}>
+                <option value="">選択してください</option>
+                <option value="ひとり親家庭">ひとり親家庭</option>
+                <option value="選択肢1">選択肢1</option>
+                <option value="選択肢2">選択肢2</option>
+                <option value="選択肢3">選択肢3</option>
+            </select>
             <button onClick={() => handleSignUp()}>登録</button>
             <Link to='/login'>ログインはこちらから</Link>
         </div>
