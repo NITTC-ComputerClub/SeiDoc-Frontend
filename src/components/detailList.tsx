@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { updateDetailCreator } from '../actions/action'
 import { AppState } from '../store'
@@ -12,32 +12,32 @@ import Header from './footer';
 const DetailList: React.FC<{ documentId: string }> = (props) => {
     const user = useSelector((state: AppState) => state.userState)
     let detail = useSelector((state: AppState) => state.detailState.detail)
-    
+
     const dispatch = useDispatch()
     const updateDetail = (data: System) => dispatch(updateDetailCreator(data))
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    let isLoading: boolean = false
 
     const isSystemLoaded = () => {
         // Nameだけでよさそう
-        if ((detail.Name !== "") && (detail.Detail !== "") && (detail.Department !== "")){
+        if ((detail.Name !== "") && (detail.Detail !== "") && (detail.Department !== "")) {
             return true
-        }else{
+        } else {
             return false
         }
     }
 
     if (props.documentId !== detail.documentID) {
-        setIsLoading(true);
+        isLoading = true
         detail.documentID = props.documentId    //無限ループ防止
         fireStore.collection(systemIndex).doc(props.documentId).get().then(res => {
             if (res.exists) {
                 const detailData = res.data() as System
                 updateDetail(detailData)
-                setIsLoading(false)
+                isLoading = false
             }
         }).catch(err => console.error(err))
     }
-    
+
     if (!isLoading && isSystemLoaded()) {   //等しいときはfetchなし
         detailPageLogger(detail.documentID, user, detail)
         return (
