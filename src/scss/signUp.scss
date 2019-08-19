@@ -17,6 +17,31 @@
         border-radius: 4px;
     }
 
+    select {
+        padding: 8px;
+        margin-bottom: 8px;
+
+        background-color: $White;
+
+        font-size: $P1;
+        color: $TextBlack;
+
+        border: solid 1px $TextBlack;
+        border-radius: 4px;
+    }
+
+    .year, .month, .date {
+        width: calc(100% - 32px);
+    }
+
+    .fullWidth {
+        width: 100%;
+    }
+
+    span {
+        padding: 0 8px;
+    }
+
     .lrContents {
         display: flex;
 

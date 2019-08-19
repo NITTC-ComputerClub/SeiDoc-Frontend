@@ -134,17 +134,20 @@ const SignUp: React.FC<historyProps> = (props) => {
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
             <p>生年月日</p>
-            <select name="year" onChange={e => handleBirthdayChange(e)}>
+            <select className="year" name="year" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1950, 2019)}
             </select>
-            <select name="month" onChange={e => handleBirthdayChange(e)}>
+            <span>年</span>
+            <select className="month" name="month" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1, 12)}
             </select>
-            <select name="date" onChange={e => handleBirthdayChange(e)}>
+            <span>月</span>
+            <select className="date" name="date" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1, 31)}
             </select>
+            <span>日</span>
             <p>年収</p>
-            <select name="income" onChange={e => handleUserdataInputChange(e)}>
+            <select className="fullWidth" name="income" onChange={e => handleUserdataInputChange(e)}>
                 <option value="">選択してください</option>
                 <option value="200万円未満">200万円未満</option>
                 <option value="200~400万円">200~400万円</option>
@@ -154,24 +157,24 @@ const SignUp: React.FC<historyProps> = (props) => {
                 <option value="1000万円以上">1000万円以上</option>
             </select>
             <p>居住区</p>
-            <select name="prefecture" onChange={e => handleAddressChange(e)}>
+            <select className="fullWidth" name="prefecture" onChange={e => handleAddressChange(e)}>
                 <option value="">選択してください</option>
                 <option value="愛知県">愛知県</option>
                 <option value="岐阜県">岐阜県</option>
                 <option value="三重県">三重県</option>
             </select>
-            <select name="city" onChange={e => handleAddressChange(e)}>
+            <select className="fullWidth" name="city" onChange={e => handleAddressChange(e)}>
                 {cityArray.map((cityName) => (
                     <option key={cityName} value={cityName}>{cityName}</option>
                 ))}
             </select>
-            <select name="municipality" onChange={e => handleAddressChange(e)}>
+            <select className="fullWidth" name="municipality" onChange={e => handleAddressChange(e)}>
                 {municipalityArray.map((municipalityName) => (
                     <option key={municipalityName} value={municipalityName}>{municipalityName}</option>
                 ))}
             </select>
             <p>家族構成</p>
-            <select name="family" onChange={e => handleUserdataInputChange(e)}>
+            <select className="fullWidth" name="family" onChange={e => handleUserdataInputChange(e)}>
                 <option value="">選択してください</option>
                 <option value="ひとり親家庭">ひとり親家庭</option>
                 <option value="選択肢1">選択肢1</option>
