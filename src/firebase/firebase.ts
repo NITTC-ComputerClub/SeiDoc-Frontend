@@ -20,7 +20,6 @@ export type logType = {
 
 export type rankingType = {
   documentID: string,
-  systemName: string,
-  systemLocation: string,
+  system: System,
   count: number
 }
