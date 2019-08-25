@@ -5,7 +5,7 @@ export type UserState = {
     userId: string,
     nickName: string,
     birthday: string,
-    income: number,
+    income: string,
     address: string,
     family: string
 }
@@ -14,7 +14,7 @@ const initialState: UserState = {
     userId: '',
     nickName: '',
     birthday: '',
-    income: 0,
+    income: '',
     address: '',
     family: ''
 }
@@ -36,7 +36,7 @@ export const LoginReducer = reducerWithInitialState(initialState)
             userId: '',
             nickName: '',
             birthday: '',
-            income: 0,
+            income: '',
             address: '',
             family: ''
         })
