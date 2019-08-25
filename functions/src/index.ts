@@ -59,7 +59,8 @@ const getNowYMD = () => {
   const result = y + "-" + m + "-" + d;
   return result;
 };
-exports.aggregate = functions.https.onRequest((req, resp) => {
+//exports.aggregate = functions.https.onRequest((req, resp) => {
+exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/Tokyo').onRun(context => {
   //const today = Date.now();
   //const aWeekAgo = today - 604800;
   const ranking: rankingType[] = [];
