@@ -1,27 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { fetchSystemByCategoryCreator, fetchSystemByAlgoliaSearchCreator, deleteSystemsCreator } from '../actions/action'
-
-export type System = {
-    Name: string,
-    Department: string,
-    Location: string,
-    Site: string,
-    Detail: string,
-    Target: string,
-    Method: Array<string>,
-    Category: Array<string>,
-    CreatedAt: number,
-    UpdatedAt: number,
-    isDeleted: boolean,
-    ExpireAt: number,
-    documentID: string
-}
-
-
-export type SystemsState = {
-    systems: Array<System>
-    loading: boolean
-}
+import { SystemsState } from '../types/type';
 
 const initialState: SystemsState = {
     systems: [],
