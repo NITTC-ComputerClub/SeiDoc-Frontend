@@ -99,10 +99,10 @@ exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/T
         .set({ranking:ranking})
         .then(res => console.log(res))
         .catch(err => console.error(err));
-        return
     })
-    .catch(err => console.error(err));
-  return;
+    .catch(err => {
+        console.error(err)
+    });
 });
 
 exports.onSystemCreated = functions.firestore
