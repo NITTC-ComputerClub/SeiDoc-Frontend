@@ -1,9 +1,7 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { addTagCreator, deleteTagCreator } from '../actions/action'
+import { TagState } from '../types/type';
 
-export interface TagState {
-    tag: string
-}
 
 const initialState: TagState = {
     tag: ''

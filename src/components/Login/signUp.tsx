@@ -1,30 +1,15 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loginCreator } from '../../actions/action'
-import { UserState } from '../../reducers/loginReducer'
 import { AppState } from '../../store'
 import { fireStore, auth } from '../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../scss/signUp.scss'
+import { loginData, locationData, birthdayData, UserState } from '../../types/type';
 
 type historyProps = RouteComponentProps
-
-type loginData = {
-    email: string,
-    password: string
-}
-type locationData = {
-    prefecture: string,
-    city: string,
-    municipality: string
-}
-type birthdayData = {
-    year: string,
-    month: string,
-    date: string
-}
 
 const cityData = require('../../datas/cityData.json')
 const municipalityData = require('../../datas/municipalityData.json')

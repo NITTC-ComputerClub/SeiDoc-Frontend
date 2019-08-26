@@ -1,14 +1,15 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { updateDetailCreator } from '../../actions/action'
-import { System } from '../../reducers/systemsReducer';
 import { withRouter, RouteComponentProps } from 'react-router'
 import "../../scss/popularSystemCard.scss"
+import { System } from '../../types/type';
 
-type historyProps = RouteComponentProps
-type params = {
+export type params = {
     system: System
 }
+
+type historyProps = RouteComponentProps
 type propsType = historyProps & params
 
 const PopularSystemCard: React.FC<propsType> = (props) => {

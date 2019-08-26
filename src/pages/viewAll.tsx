@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fireStore, systemIndex } from '../firebase/firebase'
-import { System } from '../reducers/systemsReducer'
-
-type systemData = {
-    id: string,
-    data: System,
-    willDelete: boolean,
-    isNewCreate: boolean // True if it is a new system
-}
-type showOrderType = {
-    order: Array<string>
-}
+import { System, systemData, showOrderType } from '../types/type';
 
 const ViewAll: React.FC = () => {
     let [searchData, setSearchData] = useState<{ [key: string]: systemData }>({})

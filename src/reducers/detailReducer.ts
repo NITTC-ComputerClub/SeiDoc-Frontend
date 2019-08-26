@@ -1,10 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { updateDetailCreator } from '../actions/action'
-import { System } from './systemsReducer'
-
-export type DetailState = {
-    detail: System
-}
+import { DetailState } from '../types/type';
 
 const initialState: DetailState = {
     detail: {

@@ -4,10 +4,10 @@ import { updateDetailCreator } from '../actions/action'
 import { AppState } from '../store'
 import Indicator from './indicator'
 import { fireStore, systemIndex } from '../firebase/firebase';
-import { System } from '../reducers/systemsReducer';
 import { detailPageLogger } from '../firebase/logger'
 import "../scss/detail.scss"
 import Header from './footer';
+import { System } from '../types/type';
 
 const DetailList: React.FC<{ documentId: string }> = (props) => {
     const user = useSelector((state: AppState) => state.userState)
