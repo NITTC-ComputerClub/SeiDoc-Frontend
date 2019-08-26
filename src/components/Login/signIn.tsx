@@ -6,14 +6,14 @@ import { auth, fireStore } from '../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
-import { loginData, UserState } from '../../types/type';
+import { loginDataType, UserState } from '../../types/type';
 import "../../scss/signIn.scss"
 
 type historyProps = RouteComponentProps
 
 
 const SignIn: React.FC<historyProps> = (props) => {
-    let [loginData, setLoginData] = useState<loginData>({ email: '', password: '' })
+    let [loginData, setLoginData] = useState<loginDataType>({ email: '', password: '' })
     let userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))

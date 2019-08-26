@@ -1,15 +1,15 @@
-export type loginData = {
+export type loginDataType = {
   email: string;
   password: string;
 };
 
-export type locationData = {
+export type locationDataType = {
   prefecture: string;
   city: string;
   municipality: string;
 };
 
-export type birthdayData = {
+export type birthdayDataType = {
   year: string;
   month: string;
   date: string;
