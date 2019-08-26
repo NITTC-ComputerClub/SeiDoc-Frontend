@@ -7,7 +7,6 @@ import Detail from './pages/detail'
 import ViewAll from './pages/viewAll'
 import Top from './pages/top'
 import Registration from './pages/registration';
-import Header from './pages/header'
 import Login from './pages/login'
 import SignUp from './pages/userRegistration'
 import './scss/App.scss'
@@ -15,17 +14,19 @@ import './scss/App.scss'
 const App: React.FC = () => {
   return (
     <div>
-      <Header />
       <Switch>
         <Route exact path='/' component={Top} />
         <Route path='/category' component={Category} />
         <Route path='/search' component={Search} />} />
-        <Route path='/input' component={Input} />
         <Route path='/detail/:documentId' component={Detail} />
-        <Route path='/view' component={ViewAll} />
-        <Route path='/registration' component={Registration} />
         <Route path='/login' component={Login} />
         <Route path='/signup' component={SignUp} />
+
+        {/* MVP4で使えそう？ (inputとregistrationは機能被ってる)*/}
+        <Route path='/input' component={Input} />
+        <Route path='/view' component={ViewAll} />
+        <Route path='/registration' component={Registration} />
+
       </Switch>
     </div>
   )

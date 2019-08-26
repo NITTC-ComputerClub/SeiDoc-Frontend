@@ -3,8 +3,10 @@ import SearchBar from '../components/searchBar'
 import CategoryButton from '../components/categoryButton'
 import { useDispatch } from 'react-redux'
 import { deleteTagCreator } from '../actions/action'
-import "../scss/category.scss"
 import Footer from '../components/footer';
+import Header from '../pages/header'
+import "../scss/category.scss"
+
 
 const Category: React.FC = () => {
     const dispatch = useDispatch()
@@ -15,6 +17,7 @@ const Category: React.FC = () => {
     }, [dispatch])
     return (
         <div className="category">
+            <Header />
             <div className="categoryContainer">
                 <SearchBar />
                 <h2>カテゴリー</h2>

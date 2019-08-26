@@ -2,13 +2,15 @@ import React from "react";
 import SearchButton from "../components/Top/searchButton";
 import PopularSystemList from "../components/Top/popularSystemList";
 import Ranking from "../components/Top/ranking";
-import "../scss/top.scss";
 import Footer from "../components/footer";
+import Header from '../pages/header'
+import "../scss/top.scss";
 
 const Top: React.FC = () => {
 
   return (
     <div className="top">
+      <Header />
       <div className="title">
         <div className="wrapper">
           <img src="img/logo.png" alt="SeiDocロゴ" />
