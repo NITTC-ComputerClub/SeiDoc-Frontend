@@ -34,8 +34,6 @@ export type rankingType = {
   count: number;
 };
 
-
-
 type System = {
   Name: string;
   Department: string;
@@ -53,6 +51,7 @@ type System = {
 };
 const getNowYMD = () => {
   const dt = new Date();
+  dt.setTime(dt.getTime() + 1000*60*60*15)
   const y = dt.getFullYear();
   const m = ("00" + (dt.getMonth() + 1)).slice(-2);
   const d = ("00" + (dt.getDate())).slice(-2);
