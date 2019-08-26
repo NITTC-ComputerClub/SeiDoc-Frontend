@@ -64,7 +64,7 @@ exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/T
   //const today = Date.now();
   //const aWeekAgo = today - 604800;
   const ranking: rankingType[] = [];
-  admin
+  return admin
     .firestore()
     .collection(detailPageLogIndex)
     //.where("createdAt", "<", today)
@@ -73,7 +73,6 @@ exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/T
     .then(snapshot => {
       console.log(snapshot);
       snapshot.forEach(doc => {
-        console.log(doc);
         const data = doc.data() as logType;
         const target = ranking.find(logData => {
           return logData.documentID === data.documentID;
@@ -92,6 +91,7 @@ exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/T
     })
     .then(() => {
       console.log(ranking);
+      console.log('Write at: ' + getNowYMD())
       admin
         .firestore()
         .collection(popularPageIndex)
