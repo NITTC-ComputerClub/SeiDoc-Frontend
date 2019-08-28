@@ -2,10 +2,8 @@ import actionCreatorFactory from 'typescript-fsa'
 import algoliasearch from 'algoliasearch';
 import { fireStore } from '../firebase/firebase'
 import { Dispatch } from 'redux'
-import { System } from '../reducers/systemsReducer'
-import { UserState } from '../reducers/loginReducer'
 import { systemIndex } from '../firebase/firebase'
-
+import { System, UserState } from '../types/type';
 const actionCreator = actionCreatorFactory()
 
 export const fetchSystemByCategoryCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_CATEGORY')

@@ -3,10 +3,12 @@ import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
-import { TagState, TagReducer } from './reducers/tagReducer'
-import { SystemsState, CategoryButtonReducer } from './reducers/systemsReducer'
-import { DetailState, DetailReducer } from './reducers/detailReducer'
-import { UserState, LoginReducer } from './reducers/loginReducer'
+import {  TagReducer } from './reducers/tagReducer';
+import {  CategoryButtonReducer } from './reducers/systemsReducer'
+import {  DetailReducer } from './reducers/detailReducer'
+import { LoginReducer } from './reducers/loginReducer'
+import { SystemsState, DetailState, UserState, TagState } from './types/type';
+
 export type AppState = {
     systemsState: SystemsState
     tagState: TagState

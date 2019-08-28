@@ -1,14 +1,5 @@
 import { fireStore, detailPageLogIndex } from './firebase'
-import { UserState } from '../reducers/loginReducer'
-import { System } from '../reducers/systemsReducer';
-
-type detailPageLogData = {
-    documentID: string,
-    system: System
-    user: UserState
-    createdAt: number
-}
-
+import { detailPageLogData, UserState, System } from '../types/type';
 export const detailPageLogger = (documentID: string, user: UserState, system: System) => {
     const logData: detailPageLogData = {
         documentID: documentID,

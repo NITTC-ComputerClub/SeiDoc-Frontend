@@ -1,20 +1,14 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { loginCreator, initLoginCreator } from '../actions/action'
+import { UserState } from '../types/type';
 
-export type UserState = {
-    userId: string,
-    nickName: string,
-    birthday: string,
-    income: number,
-    address: string,
-    family: string
-}
+
 
 const initialState: UserState = {
     userId: '',
     nickName: '',
     birthday: '',
-    income: 0,
+    income: '',
     address: '',
     family: ''
 }
@@ -36,7 +30,7 @@ export const LoginReducer = reducerWithInitialState(initialState)
             userId: '',
             nickName: '',
             birthday: '',
-            income: 0,
+            income: '',
             address: '',
             family: ''
         })
