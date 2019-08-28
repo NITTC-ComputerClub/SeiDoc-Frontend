@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PopularSystemCard from './popularSystemCard'
-import { fireStore,  detailPageLogIndex } from '../../firebase/firebase';
-import { logType, rankingType } from '../../types/type'
+import { fireStore, popularPageIndex } from '../../firebase/firebase';
+import { rankingType } from '../../types/type'
 import Indicator from '../indicator'
 import "../../scss/popularSystemList.scss"
 
