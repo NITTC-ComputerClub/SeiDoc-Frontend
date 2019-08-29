@@ -11,6 +11,8 @@ import Login from './pages/login'
 import SignUp from './pages/userRegistration'
 import './scss/App.scss'
 
+import ML from './pages/machineLearning'
+
 const App: React.FC = () => {
   return (
     <div>
@@ -26,6 +28,9 @@ const App: React.FC = () => {
         <Route path='/input' component={Input} />
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
+
+        {/* MVP5 */}
+        <Route path='/ml' component={ML} />
 
       </Switch>
     </div>
