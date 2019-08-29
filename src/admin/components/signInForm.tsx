@@ -4,7 +4,7 @@ import { adminLoginType } from '../../types/type';
 
 type historyProps = RouteComponentProps
 const SignInForm: React.FC<historyProps> = (props) => {
-    let [adminUserData, setadminUser] = useState<adminLoginType>({cities:'',department:'',email:'',password:''})
+    let [adminUserData] = useState<adminLoginType>({cities:'',department:'',email:'',password:''})
     return (
         <div className="signIn">
             <p>ID</p>
