@@ -29,17 +29,21 @@ const MachineLearning: React.FC = () => {
             })
     }
 
-    const imageDraw = (image: File) => {
+    const imageDraw = (file: File) => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
+        const reader = new FileReader()
 
-        const img = new Image()
-        img.src = image.name
-        img.onload = () => {
-            context.drawImage(img, 0, 0, 600, 400)
+        reader.onload = () => {
+            const img = new Image()
+            img.src = reader.result as string
+            img.onload = () => {
+                context.drawImage(img, 0, 0, 600, 400)
+            }
         }
+        reader.readAsDataURL(file)
 
-        console.log(canvas, context, img)
+        console.log(canvas, context)
     }
     return (
         <div>
