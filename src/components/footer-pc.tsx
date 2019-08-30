@@ -1,23 +1,54 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import '../scss/footer-pc.scss'
+import styled from 'styled-components'
+import setting from './setting'
+
+const StyledFooter = styled.footer`
+    padding: 24px 0;
+    background-color: ${setting.White};
+`
+
+const Contents = styled.div`
+    text-align: center;
+`
+
+const Wrapper = styled.div`
+    display: inline-block;
+    img {
+        height: 32px;
+    }
+`
+
+const StyledLink = styled.div`
+    display: inline-block;
+
+    padding: 0 32px;
+    position: relative;
+    top: -8px;
+
+    p {
+        display: inline-block;
+        margin: 0 8px;
+        font-size: $P3;
+    }
+`
 
 const Footer: React.FC = () => {
     return (
-        <footer>
-            <div className="contents">
-                <div className="wrapper">
+        <StyledFooter>
+            <Contents>
+                <Wrapper>
                     <Link to="/">
                         <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                     </Link>
-                </div>
+                </Wrapper>
                 {/* 今はリンクなし */}
-                <div className="link">
+                <StyledLink>
                     <p>GitHub</p>
                     <p>このサイトについて</p>
-                </div>
-            </div>
-        </footer>
+                </StyledLink>
+            </Contents>
+        </StyledFooter>
     )
 }
 
