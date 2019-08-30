@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { machineLearningType } from '../types/type'
 
 const MachineLearning: React.FC = () => {
     const machineLearning = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,15 +22,16 @@ const MachineLearning: React.FC = () => {
                 }
             })
             .then((result) => {
-                console.log(result.data)
-                imageDraw(image)
+                const data: Array<machineLearningType> = result.data.images[0].faces
+                console.log(data)
+                imageDraw(image, data)
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
-    const imageDraw = (file: File) => {
+    const imageDraw = (file: File, data: Array<machineLearningType>) => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
         const reader = new FileReader()
@@ -39,11 +41,18 @@ const MachineLearning: React.FC = () => {
             img.src = reader.result as string
             img.onload = () => {
                 context.drawImage(img, 0, 0, 600, 400)
+                data.forEach((value) => {
+                    let heigh = value.face_location.height
+                    let left = value.face_location.left
+                    let top = value.face_location.top
+                    let width = value.face_location.width
+
+                    context.strokeRect(left, left, top, width)
+                })
+                context.strokeRect(100, 100, 100, 100)
             }
         }
         reader.readAsDataURL(file)
-
-        console.log(canvas, context)
     }
     return (
         <div>
