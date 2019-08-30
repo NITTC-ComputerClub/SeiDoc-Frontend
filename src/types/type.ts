@@ -74,12 +74,31 @@ export type TagState = {
 };
 
 export type systemData = {
-    id: string,
-    data: System,
-    willDelete: boolean,
-    isNewCreate: boolean // True if it is a new system
+  id: string,
+  data: System,
+  willDelete: boolean,
+  isNewCreate: boolean // True if it is a new system
 };
 
 export type showOrderType = {
-    order: Array<string>
+  order: Array<string>
 };
+
+export type machineLearningType = {
+  age: {
+    min: number,
+    max: number,
+    score: number
+  },
+  face_location: {
+    height: number,
+    left: number,
+    top: number,
+    width: number
+  },
+  gender: {
+    gender: string,
+    gender_label: string,
+    score: number
+  }
+}
