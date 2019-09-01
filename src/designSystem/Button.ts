@@ -4,7 +4,8 @@ import styled from 'styled-components';
 export type ButtonProps = {
     big?: boolean,
     blue?: boolean,
-    green?: boolean
+    green?: boolean,
+    link?: boolean,
     maxwidth?: string
 }
 
@@ -28,8 +29,11 @@ const getMaxWidth = (props: ButtonProps) => {
 const getFont = (props: ButtonProps) => {
     if (props.big)
         return `font-size: ${setting.H1}; font-weight: bold;`
+    
+    if (props.link)
+        return `font-size: ${setting.P3};`
 
-    return `font-size: ${setting.P2}; font-weight: normal`
+    return `font-size: ${setting.P2};`
 }
 
 const getTextAlign = (props: ButtonProps) => {
@@ -42,6 +46,9 @@ const getTextAlign = (props: ButtonProps) => {
 const getPadding = (props: ButtonProps) => {
     if (props.big)
         return `padding: 16px;`
+    
+    if (props.link)
+        return
 
     return `padding: 8px 16px;`
 }
@@ -59,6 +66,9 @@ const getBackgroundColor = (props: ButtonProps) => {
 
     if (props.green)
         return `background-color: ${setting.ThemeGreen};`
+
+    if (props.link)
+        return `background-color: transparent;`
 
     return `background-color: ${setting.White};`
 }

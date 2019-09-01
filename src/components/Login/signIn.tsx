@@ -8,6 +8,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import { loginDataType, UserState } from '../../types/type';
 import "../../scss/signIn.scss"
+import Button from '../../designSystem/Button';
 
 type historyProps = RouteComponentProps
 
@@ -67,7 +68,9 @@ const SignIn: React.FC<historyProps> = (props) => {
             <input type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}></input>
             <div className="lrContents">
                 <Link to='/signup'>登録はこちらから</Link>
-                <button onClick={() => handleSignIn()}>ログイン</button>
+                <Button blue onClick={() => handleSignIn()}>
+                    ログイン
+                </Button>
             </div>
         </div>
     )
