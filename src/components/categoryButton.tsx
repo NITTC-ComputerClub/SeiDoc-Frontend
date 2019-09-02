@@ -15,7 +15,7 @@ const CategoryButton: React.FC<historyProps> = (props) => {
                     <button key={category} onClick={() => {
                         props.history.push('/search?tag=' + category)
                     }}>
-                        <img src={"./img/" + category + ".png"} alt={category + "の写真"}></img>
+                        <img src={"/img/" + category + ".png"} alt={category + "の写真"}></img>
                         <div className="categoryName">
                             {category}
                         </div>
