@@ -3,7 +3,6 @@ import { RouteComponentProps, withRouter } from 'react-router';
 
 import Header from '../components/header'
 import Footer from '../../components/footer-pc'
-import Tag from '../../components/tag'
 import CategoryButton from '../../components/categoryButton'
 type historyProps = RouteComponentProps;
 
@@ -13,7 +12,7 @@ const Search: React.FC<historyProps> = props => {
             <Header />
             <div>
                 <h2>カテゴリ</h2>
-                <CategoryButton />
+                <CategoryButton pushTo="/admin/search"/>
             </div>
             <Footer />
         </div>
