@@ -49,6 +49,14 @@ const MachineLearning: React.FC = () => {
                 const shrinkH = 400 / img.height
                 context.drawImage(img, 0, 0, 600, 400)  //写真描画
 
+                /* 前回のテキストボックスを削除 */
+                const node = document.querySelectorAll('input.info')
+                if(node.length !== 0){
+                    node.forEach((child) => {
+                        document.body.removeChild(child)
+                    })
+                }
+
                 data.forEach((value) => {
                     let heigh = value.face_location.height * shrinkH
                     let left = value.face_location.left * shrinkW
@@ -62,16 +70,15 @@ const MachineLearning: React.FC = () => {
                     /* テキストボックスを生成 */
                     const textarea = document.createElement('input')
                     textarea.className = 'info' // これでCSS当てられる？
-                    let age = (value.age.max + value.age.min) / 2
+                    const age = (value.age.max + value.age.min) / 2
 
                     textarea.value = age.toString()
-                    textarea.name = age.toString()
                     textarea.onchange = (e) => handleInputChange(e)
                     textarea.style.position = 'absolute'
                     textarea.style.top = top - 30 + 'px'
                     textarea.style.left = left + 'px'
 
-                    document.body.appendChild(textarea)
+                    document.body.appendChild(textarea) //bodyの子ノードリストの末尾にノードを追加
                 })
             }
         }
