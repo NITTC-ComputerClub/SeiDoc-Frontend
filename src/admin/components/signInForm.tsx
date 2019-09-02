@@ -42,7 +42,7 @@ const SignInForm: React.FC<historyProps> = (props) => {
                     }
                 }
             ).catch(err => {
-                console.error(err)
+                console.error('user情報の取得に失敗しました', err)
             })
         }).catch(err => {
             const errorCode = err.code
