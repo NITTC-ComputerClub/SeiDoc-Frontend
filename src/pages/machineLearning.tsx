@@ -51,13 +51,13 @@ const MachineLearning: React.FC = () => {
 
                 /* 前回のテキストボックスを削除 */
                 const node = document.querySelectorAll('input.info')
-                if(node.length !== 0){
+                if (node.length !== 0) {
                     node.forEach((child) => {
                         document.body.removeChild(child)
                     })
                 }
 
-                data.forEach((value) => {
+                data.map((value) => {
                     let heigh = value.face_location.height * shrinkH
                     let left = value.face_location.left * shrinkW
                     let top = value.face_location.top * shrinkH
@@ -67,34 +67,40 @@ const MachineLearning: React.FC = () => {
                     context.strokeRect(left, top, width, heigh)
 
 
-                    /* テキストボックスを生成 */
-                    const textarea = document.createElement('input')
-                    textarea.className = 'info' // これでCSS当てられる？
+                    /* 年齢のテキストボックスを生成 */
+                    const inputAge = document.createElement('input')
+                    inputAge.className = 'info' // これでCSS当てられる？
                     const age = (value.age.max + value.age.min) / 2
 
-                    textarea.value = age.toString()
-                    textarea.onchange = (e) => handleInputChange(e)
-                    textarea.style.position = 'absolute'
-                    textarea.style.top = top - 30 + 'px'
-                    textarea.style.left = left + 'px'
-
-                    document.body.appendChild(textarea) //bodyの子ノードリストの末尾にノードを追加
+                    inputAge.value = age.toString()
+                    inputAge.style.position = 'absolute'
+                    inputAge.style.top = top - 30 + 'px'
+                    inputAge.style.left = left + 'px'
+                    inputAge.style.width = width/2 + 'px'
+                    /* TODO：将来的に使うかもだから消さないで
+                    inputAge.addEventListener('inputAge', () => addInput(inputAge.value))
+                    inputAge.addEventListener('change', () => addOnChange(inputAge.value))
+                    */
+                    document.body.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
                 })
             }
         }
         reader.readAsDataURL(file)
     }
 
-    const handleInputChange = (e: Event) => {
-        const value = e.target as EventTarget
-        console.log(value)
-        console.log(e)
+    const handleGetAge = () => {
+        const inputAge = document.querySelectorAll('input.info')
+        inputAge.forEach((node) => {
+            const el = node as HTMLInputElement
+            console.log(el.value)
+        })
     }
 
     return (
         <div>
             <canvas id='cvs' width='600' height='400'></canvas>
             <input accept='image/*' multiple type='file' onChange={e => machineLearning(e)} />
+            <button onClick={handleGetAge}>確定</button>
         </div>
     )
 }
