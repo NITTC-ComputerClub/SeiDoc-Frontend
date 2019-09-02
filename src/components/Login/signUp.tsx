@@ -28,10 +28,14 @@ const SignUp: React.FC<historyProps> = (props) => {
     const handleSignUp = () => {
         const email = loginData.email
         const password = loginData.password
+        
         const birthday = ('000' + birthdayData.year).slice(-4) + '-' + ('0' + birthdayData.month).slice(-2) + '-' + ('0' + birthdayData.date).slice(-2)
         const address = locationData.prefecture + locationData.city + locationData.municipality
         userData['birthday'] = birthday
         userData['address'] = address
+        userData.isAdmin = false;
+        userData.city = '';
+        userData.department = '';
 
         if (password.length < 8) {
             alert('Please enter a password')
