@@ -2,19 +2,9 @@ import React from 'react'
 import { fireStore, systemIndex } from '../firebase/firebase'
 import { AppState } from '../store';
 import { useSelector } from 'react-redux';
-import { statement } from '@babel/template';
-import { UserState } from '../types/type';
+import { sendData } from '../types/type';
 
-type SendData = {
-    Name: string
-    Location: string
-    Department: string
-    Target: string
-    Site: string
-    Detail: string
-    Method: Array<string>
-    Category: Array<string>
-}
+
 
 const Input: React.FC = () => {
     let name: string = ''
@@ -25,7 +15,7 @@ const Input: React.FC = () => {
     let detail: string = ''
     let sysmethod: Array<string> = ['金銭補助']
     let category: Array<string> = []
-    let systemData: SendData
+    let systemData: sendData
 
     const user = useSelector((state: AppState) => state.userState)
     console.log(user)
@@ -62,7 +52,7 @@ const Input: React.FC = () => {
 
     return (
         <div>
-            <h3>制度を登録</h3>
+            <h3>制度登録</h3>
             <input type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力"/>
             <h5>対象地区</h5>
             <input type='text' defaultValue={user.city} />
@@ -80,7 +70,7 @@ const Input: React.FC = () => {
             </select>
             <h5>援助対象者</h5>
             <input type='text' onChange={e => { target = e.target.value }} />
-            <h5>援助方法(複数選択不可)</h5>
+            <h5>援助方法</h5>
             <select onChange={e => { sysmethod = [e.target.value] }}>
                 <option value='金銭補助' >金銭補助</option>
                 <option value='権利譲渡' >権利譲渡</option>

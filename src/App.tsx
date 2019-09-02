@@ -24,10 +24,10 @@ const App: React.FC = () => {
         <Route path='/signup' component={SignUp} />
 
         {/* MVP4で使えそう？ (inputとregistrationは機能被ってる)*/}
-        <Route path='/admin/input' component={Input} />
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
         <Route path='/admin/login' component={AdminSignIn} />
+        <Route path='/admin/newSystem' component={Input} />
       </Switch>
     </div>
   )
