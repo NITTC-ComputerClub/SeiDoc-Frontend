@@ -3,7 +3,7 @@ import { fireStore, systemIndex } from '../firebase/firebase'
 import { AppState } from '../store';
 import { useSelector } from 'react-redux';
 import { sendData } from '../types/type';
-import Header from './header';
+import Header from '../admin/components/header';
 import Footer from '../components/footer';
 
 
