@@ -27,8 +27,6 @@ const SignIn: React.FC<historyProps> = (props) => {
             fireStore.collection('user').doc(userData.userId).get()
                 .then((doc) => {
                     if (doc.exists) {
-                        const tmp = doc.data() as UserState
-                        console.log(tmp.isAdmin)
                         userData = Object.assign({}, userData, {
                             userId: userData.userId
                         }, doc.data())
