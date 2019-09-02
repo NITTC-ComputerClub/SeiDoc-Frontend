@@ -28,13 +28,12 @@ const SignInForm: React.FC<historyProps> = (props) => {
                         }, doc.data());
                         console.log('userData', userData);
                         login(userData);
-                        if(tmpUserState.isAdmin === false || undefined){
-                            console.log("this user is not admin");
-                            props.history.push('/'); // TODO: 職員用アカウントではないことを表示し、普通の画面に遷移？
-                        }else{
+                        if(tmpUserState.isAdmin === true){
                             console.log("Welcome, Admin");   
                             props.history.push('/'); // TODO: 職員用のtopに飛ばす
-
+                        }else{
+                            console.log("this user is not admin");
+                            props.history.push('/'); // TODO: 職員用アカウントではないことを表示し、普通の画面に遷移？
                         }
                     }else{
                         console.log("No such Document!");
