@@ -5,7 +5,9 @@ import { deleteTagCreator, deleteSystemsCreator } from '../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
 import '../scss/tag.scss'
 
-type historyProps = RouteComponentProps
+interface historyProps extends RouteComponentProps {
+    pushTo: string
+}
 
 const Tag: React.FC<historyProps> = (props) => {
     const tag = useSelector((state: AppState) => state.tagState.tag)
@@ -19,7 +21,7 @@ const Tag: React.FC<historyProps> = (props) => {
                 <button key={tag} onClick={() => {
                     deleteTag()
                     deleteSystems()
-                    props.history.push('/category')
+                    props.history.push(props.pushTo)
                 }}>{tag}<span>×</span></button>}
         </div>
     )
