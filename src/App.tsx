@@ -9,6 +9,7 @@ import Top from './pages/top'
 import Registration from './pages/registration';
 import Login from './pages/login'
 import SignUp from './pages/userRegistration'
+import AdminSignIn from './admin/pages/signIn'
 import './scss/App.scss'
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         <Route path='/input' component={Input} />
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
+        <Route path='/admin/login' component={AdminSignIn} />
       </Switch>
     </div>
   )
