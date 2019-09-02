@@ -23,18 +23,25 @@ const SignInForm: React.FC<historyProps> = (props) => {
                 doc => {
                     if(doc.exists){
                         const tmpUserState = doc.data() as UserState
+                        userData = Object.assign({}, userData, {
+                            userId: userData.userId
+                        }, doc.data());
+                        console.log('userData', userData);
+                        login(userData);
                         if(tmpUserState.isAdmin === undefined){
                             console.log("this user is not admin");
+                            props.history.push('/'); // TODO: 職員用アカウントではないことを表示し、普通の画面に遷移？
                         }else{
-                            console.log("Welcome, Admin");
+                            console.log("Welcome, Admin");   
+                            props.history.push('/'); // TODO: 職員用のtopに飛ばす
+
                         }
                     }else{
                         console.log("No such Document!");
+                        console.log("エラーが発生しました。管理者にお尋ねください。") //登録されてるけどユーザー情報がないとき
                     }
                 }
-            ).then(()=>{
-                props.history.push('/'); // TODO: どこに飛ばす?
-            }).catch(err => {
+            ).catch(err => {
                 console.error(err)
             })
         }).catch(err => {
