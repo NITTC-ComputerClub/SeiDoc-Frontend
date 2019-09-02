@@ -102,3 +102,8 @@ export type machineLearningType = {
     score: number
   }
 }
+
+export type userProfile = {
+  age: string,
+  gender: string
+}

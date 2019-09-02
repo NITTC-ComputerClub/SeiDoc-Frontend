@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import axios from 'axios'
-import { machineLearningType } from '../types/type'
+import { machineLearningType, userProfile } from '../types/type'
 
 const MachineLearning: React.FC = () => {
-    const [cvsWidth, setCvsWidth] = useState<number>(0)
-    const [cvsHeight, setCvsHeight] = useState<number>(0)
-    const ageText: Array<string> = ['']
-
     const machineLearning = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files as FileList
         const image: File = file[0]
@@ -63,7 +59,7 @@ const MachineLearning: React.FC = () => {
                     })
                 }
 
-                data.map((value) => {
+                data.forEach((value) => {
                     const heigh = value.face_location.height * shrinkH
                     const left = value.face_location.left * shrinkW
                     const top = value.face_location.top * shrinkH
@@ -95,6 +91,12 @@ const MachineLearning: React.FC = () => {
                     selectGender.add(new Option('男性', '男性'))
                     selectGender.add(new Option('女性', '女性'))
                     selectGender.add(new Option('選択しない', '選択しない'))
+                    for (let i = 0; i < selectGender.length; i++) {
+                        if (selectGender.options[i].value === value.gender.gender_label) {
+                            selectGender.selectedIndex = i
+                            break
+                        }
+                    }
                     selectGender.style.position = 'absolute'
                     selectGender.style.top = top - 30 + 'px'
                     selectGender.style.left = left + width / 2 + 'px'
@@ -107,16 +109,17 @@ const MachineLearning: React.FC = () => {
     }
 
     const handleGetAge = () => {
-        const inputAge = document.querySelectorAll('input.info')
-        inputAge.forEach((node) => {
-            const el = node as HTMLInputElement
-            console.log('Age:', el.value)
-        })
-        const selectGender = document.querySelectorAll('select.info')
-        selectGender.forEach((node) => {
-            const el = node as HTMLInputElement
-            console.log('Gender:', el.value)
-        })
+        const inputAge = document.querySelectorAll('input.info') as NodeListOf<HTMLInputElement>
+        const selectGender = document.querySelectorAll('select.info') as NodeListOf<HTMLInputElement>
+        const profile: Array<userProfile> = [{ age: '', gender: '' }]
+        for (let i = 0; i < inputAge.length; i++) {
+            profile.splice(i, 1, {
+                age: inputAge[i].value,
+                gender: selectGender[i].value
+            })
+        }
+        //profile.shift()
+        console.log('userProfile', profile)
     }
 
     return (
