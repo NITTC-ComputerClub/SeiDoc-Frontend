@@ -72,7 +72,7 @@ const MachineLearning: React.FC = () => {
                     /* 年齢のテキストボックスを生成 */
                     const inputAge = document.createElement('input')
                     inputAge.className = 'info' // これでCSS当てられる？
-                    const age = (value.age.max + value.age.min) / 2
+                    const age = Math.round((value.age.max + value.age.min) / 2)
 
                     inputAge.value = age.toString()
                     inputAge.style.position = 'absolute'
@@ -85,7 +85,7 @@ const MachineLearning: React.FC = () => {
                     */
                     document.body.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
 
-                    /* 性別のテキストボックスを作成 */
+                    /* 性別のセレクトボックスを作成 */
                     const selectGender = document.createElement('select')
                     selectGender.className = 'info'
                     selectGender.add(new Option('男性', '男性'))
@@ -100,7 +100,6 @@ const MachineLearning: React.FC = () => {
                     selectGender.style.position = 'absolute'
                     selectGender.style.top = top - 30 + 'px'
                     selectGender.style.left = left + width / 2 + 'px'
-                    //selectGender.style.width = width / 2 + 'px'
                     document.body.appendChild(selectGender)
                 })
             }
@@ -118,7 +117,6 @@ const MachineLearning: React.FC = () => {
                 gender: selectGender[i].value
             })
         }
-        //profile.shift()
         console.log('userProfile', profile)
     }
 
