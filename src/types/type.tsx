@@ -3,6 +3,13 @@ export type loginDataType = {
   password: string;
 };
 
+export type adminLoginType = {
+  cities: string;
+  department: string;
+  email: string;
+  password: string;
+}
+
 export type locationDataType = {
   prefecture: string;
   city: string;
@@ -42,6 +49,9 @@ export type UserState = {
   income: string;
   address: string;
   family: string;
+  isAdmin: boolean; //
+  city: string; 
+  department: string;
 };
 
 export type DetailState = {
