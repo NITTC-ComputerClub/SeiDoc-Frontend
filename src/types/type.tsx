@@ -49,6 +49,9 @@ export type UserState = {
   income: string;
   address: string;
   family: string;
+  isAdmin: boolean; //
+  city: string; 
+  department: string;
 };
 
 export type DetailState = {

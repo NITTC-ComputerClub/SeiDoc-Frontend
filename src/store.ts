@@ -28,7 +28,7 @@ const persistedReducer = persistReducer(persistConfig,
         systemsState: CategoryButtonReducer,
         tagState: TagReducer,
         detailState: DetailReducer,
-        userState: LoginReducer
+        userState: LoginReducer,
     }))
 
 const store = createStore(persistedReducer, {}, applyMiddleware(thunk))
