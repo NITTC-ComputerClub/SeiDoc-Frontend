@@ -10,7 +10,7 @@ import Registration from './pages/registration';
 import Login from './pages/login'
 import SignUp from './pages/userRegistration'
 import AdminSignIn from './admin/pages/signIn'
-import AdminSearch from './admin/pages/search'
+import AdminCategory from './admin/pages/category'
 import './scss/App.scss'
 
 const App: React.FC = () => {
@@ -29,7 +29,7 @@ const App: React.FC = () => {
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
         <Route path='/admin/login' component={AdminSignIn} />
-        <Route path='/admin/search' component={AdminSearch}/>
+        <Route path='/admin/category' component={AdminCategory}/>
       </Switch>
     </div>
   )
