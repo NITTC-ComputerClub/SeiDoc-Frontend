@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../store';
 import { loginCreator } from '../../actions/action';
 import { auth, fireStore } from '../../firebase/firebase';
+import Button from '../../designSystem/Button';
+import TextField, { TextFieldProps } from '../../designSystem/TextField';
 
 type historyProps = RouteComponentProps
 const SignInForm: React.FC<historyProps> = (props) => {
@@ -63,11 +65,11 @@ const SignInForm: React.FC<historyProps> = (props) => {
     return (
         <div className="signIn">
             <p>ID</p>
-            <input type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
+            <TextField width="100%" type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
             <p>パスワード</p>
-            <input type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}/>
+            <TextField width="100%" type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}/>
             <div className="lrContents">
-                <button onClick={() => handleSignIn()}>ログイン</button>
+                <Button blue onClick={() => handleSignIn()}>ログイン</Button>
             </div>
         </div>
     )

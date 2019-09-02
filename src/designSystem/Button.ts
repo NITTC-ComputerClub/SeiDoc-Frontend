@@ -13,7 +13,7 @@ const Button = styled.button`
     border: none;
     border-radius: 4px;
 
-    ${(props: ButtonProps) => getMaxWidth(props)}
+    ${(props: ButtonProps) => getWidth(props)}
     ${(props: ButtonProps) => getPadding(props)}
     ${(props: ButtonProps) => getTextAlign(props)}
     ${(props: ButtonProps) => getFont(props)}
@@ -21,7 +21,7 @@ const Button = styled.button`
     ${(props: ButtonProps) => getBackgroundColor(props)}
 `
 
-const getMaxWidth = (props: ButtonProps) => {
+const getWidth = (props: ButtonProps) => {
     if (props.maxwidth)
         return `max-width: ${props.maxwidth};`
 }
