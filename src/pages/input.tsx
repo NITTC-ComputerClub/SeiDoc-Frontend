@@ -10,7 +10,6 @@ import Footer from '../components/footer';
 
 const Input: React.FC = () => {
     let name: string = ''
-    let location: string = ''
     let department: string = ''
     let target: string = ''
     let site: string = ''
@@ -25,7 +24,7 @@ const Input: React.FC = () => {
     const post = () => {
         systemData = {
             Name: name,
-            Location: location,
+            Location: user.city,
             Department: department,
             Target: target,
             Site: site,
