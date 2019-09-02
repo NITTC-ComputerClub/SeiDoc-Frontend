@@ -1,16 +1,16 @@
 import setting from './setting'
 import styled from 'styled-components';
 
-export type TextFieldProps = {
+export type InputFieldProps = {
     width?: string,
 }
 
-const getMaxWidth = (props: TextFieldProps) => {
+const getMaxWidth = (props: InputFieldProps) => {
     if (props.width)
         return `width: ${props.width};`
 }
 
-const TextField = styled.input`
+const InputField = styled.input`
     box-sizing: border-box;
     padding: 12px 8px;
 
@@ -19,7 +19,7 @@ const TextField = styled.input`
 
     font-size: ${setting.P1};
 
-    ${(props: TextFieldProps) => getMaxWidth(props)}
+    ${(props: InputFieldProps) => getMaxWidth(props)}
 `
 
-export default TextField
+export default InputField

@@ -6,7 +6,8 @@ import { AppState } from '../../store';
 import { loginCreator } from '../../actions/action';
 import { auth, fireStore } from '../../firebase/firebase';
 import Button from '../../designSystem/Button';
-import TextField, { TextFieldProps } from '../../designSystem/TextField';
+import TextField from '../../components/TextField';
+import styled from 'styled-components';
 
 type historyProps = RouteComponentProps
 const SignInForm: React.FC<historyProps> = (props) => {
@@ -62,15 +63,31 @@ const SignInForm: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
+    const StyledDiv = styled.div`
+        margin-top: 32px;
+    `
+
     return (
         <div className="signIn">
-            <p>ID</p>
-            <TextField width="100%" type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
-            <p>パスワード</p>
-            <TextField width="100%" type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}/>
-            <div className="lrContents">
+            <TextField
+                label="ID"
+                width="100%"
+                type="text"
+                name="email"
+                value={loginData.email}
+                onChange={e => handleInputChange(e)}
+            />
+            <TextField
+                label="パスワード"
+                width="100%"
+                type="password"
+                name="password"
+                value={loginData.password}
+                onChange={e => handleInputChange(e)}
+            />
+            <StyledDiv className="lrContents">
                 <Button blue onClick={() => handleSignIn()}>ログイン</Button>
-            </div>
+            </StyledDiv>
         </div>
     )
 }
