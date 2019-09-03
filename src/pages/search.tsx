@@ -14,7 +14,7 @@ const Search: React.FC = () => {
                 <div className="container">
                     <SearchBar pushTo="/search"/>
                 </div>
-                <Tag />
+                <Tag pushTo="/category"/>
                 <h3>検索結果</h3>
                 <SystemList />
             </div>

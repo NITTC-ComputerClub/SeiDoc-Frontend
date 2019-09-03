@@ -10,6 +10,7 @@ import Registration from './pages/registration';
 import Login from './pages/login'
 import SignUp from './pages/userRegistration'
 import AdminSignIn from './admin/pages/signIn'
+import AdminCategory from './admin/pages/category'
 import './scss/App.scss'
 
 const App: React.FC = () => {
@@ -29,6 +30,7 @@ const App: React.FC = () => {
 
         
         <Route path='/admin/login' component={AdminSignIn} />
+        <Route path='/admin/category' component={AdminCategory}/>
         <Route path='/admin/newSystem' component={AdminInput} />
       </Switch>
     </div>

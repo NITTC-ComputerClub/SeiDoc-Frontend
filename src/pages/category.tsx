@@ -21,7 +21,7 @@ const Category: React.FC = () => {
             <div className="categoryContainer">
                 <SearchBar pushTo="/search"/>
                 <h2>カテゴリー</h2>
-                <CategoryButton />
+                <CategoryButton pushTo="/search"/>
             </div>
             <Footer />
         </div>
