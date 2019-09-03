@@ -54,6 +54,8 @@ export type UserState = {
   department: string;
 };
 
+
+
 export type DetailState = {
   detail: System;
 };
@@ -92,4 +94,15 @@ export type systemData = {
 
 export type showOrderType = {
     order: Array<string>
+};
+
+export type sendData = {
+  Name: string
+  Location: string
+  Department: string
+  Target: string
+  Site: string
+  Detail: string
+  Method: Array<string>
+  Category: Array<string>
 };
