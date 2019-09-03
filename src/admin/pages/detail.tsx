@@ -13,6 +13,7 @@ const Detail: React.FC<historyProps> = (props: historyProps) => {
             <Header />
             <DetailList documentId={documentId}/>
             <ViewingStatus documentId={documentId} />
+            
             <Footer />
         </div>
     )
