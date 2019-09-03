@@ -7,6 +7,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
 import "../scss/systemList.scss"
 import { System } from '../types/type';
+import SystemCard from './Top/SystemCard';
 
 type historyProps = RouteComponentProps
 
@@ -45,16 +46,15 @@ const SystemList: React.FC<historyProps> = (props) => {
             {console.log('systems:', systems)}
             {loading ? <Indicator /> :
                 <ul>
-                    {systems.map((system: System) => (
-                        <li key={system.Name} onClick={() => {
-                            updateDetail(system)    //リロードなしでページを遷移させるのに必要
-                            props.history.push('/detail/' + system.documentID)
-                        }
-                        }>
-                            <h4>{system.Name}</h4>
-                            <p>{system.Location}</p>
-                        </li>
-                    ))}
+                    {
+                        systems.map((system: System) => (
+                            <SystemCard
+                                wide
+                                key={system.Name}
+                                system={system}
+                            />       
+                        ))
+                    }
                 </ul>
             }
         </div>

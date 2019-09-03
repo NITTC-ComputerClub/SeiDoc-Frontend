@@ -63,12 +63,21 @@ const SignInForm: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
+    const SignIn = styled.div`
+        padding: 0 32px;
+    `
+
     const StyledDiv = styled.div`
         margin-top: 32px;
+
+        display: flex;
+        button {
+            margin: 0 0 0 auto;
+        }
     `
 
     return (
-        <div className="signIn">
+        <SignIn>
             <TextField
                 label="ID"
                 width="100%"
@@ -85,10 +94,10 @@ const SignInForm: React.FC<historyProps> = (props) => {
                 value={loginData.password}
                 onChange={e => handleInputChange(e)}
             />
-            <StyledDiv className="lrContents">
+            <StyledDiv>
                 <Button blue onClick={() => handleSignIn()}>ログイン</Button>
             </StyledDiv>
-        </div>
+        </SignIn>
     )
 }
 
