@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
-import { updateDetailCreator, fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../actions/action'
+import { fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../actions/action'
 import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
@@ -17,7 +17,6 @@ const SystemList: React.FC<historyProps> = (props) => {
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()
-    const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
 
     //データのfetch
     useEffect(() => {
