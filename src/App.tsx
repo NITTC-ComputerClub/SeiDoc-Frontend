@@ -10,6 +10,7 @@ import Registration from './pages/registration';
 import Login from './pages/login'
 import SignUp from './pages/userRegistration'
 import AdminSignIn from './admin/pages/signIn'
+import AdminDetail from './admin/pages/detail'
 import AdminCategory from './admin/pages/category'
 import './scss/App.scss'
 
@@ -27,9 +28,9 @@ const App: React.FC = () => {
         {/* MVP4で使えそう？ (inputとregistrationは機能被ってる)*/}
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
-
         
         <Route path='/admin/login' component={AdminSignIn} />
+        <Route path='/admin/detail/:documentId' component={AdminDetail} />
         <Route path='/admin/category' component={AdminCategory}/>
         <Route path='/admin/newSystem' component={AdminInput} />
       </Switch>
