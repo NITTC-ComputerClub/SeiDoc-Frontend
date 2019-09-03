@@ -30,23 +30,27 @@
     }
 
     a {
-        display: block;
+        display: inline-block;
         margin: 16px 0;
         text-align: center;
 
-        button {
-            width: 80%;
-            max-width: 192px;
-            padding: 16px 16px;
+        width: 80%;
+        max-width: 192px;
+        padding: 16px 16px;
 
-            color: $White;
-            background-color: $ThemeBlue;
-            
-            font-size: $H2;
-            font-weight: bold;
+        color: $White;
+        background-color: $ThemeBlue;
+        
+        font-size: $H2;
+        font-weight: bold;
 
-            border: none;
-            border-radius: 32px;
-        }
+        border: none;
+        border-radius: 32px;
+
+        text-decoration: none;
+    }
+
+    .linkButton {
+        text-align: center;
     }
 }
