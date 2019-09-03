@@ -7,8 +7,9 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import { loginDataType, UserState } from '../../types/type';
-import "../../scss/signIn.scss"
 import Button from '../../designSystem/Button';
+import TextField from '../TextField';
+import styled from 'styled-components';
 
 type historyProps = RouteComponentProps
 
@@ -60,19 +61,30 @@ const SignIn: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
+    const SignIn = styled.div`
+        padding: 0 32px;
+    `
+
+    const StyledDiv = styled.div`
+        margin-top: 32px;
+
+        display: flex;
+        button {
+            margin: 0 0 0 auto;
+        }
+    `
+
     return (
-        <div className="signIn">
-            <p>メールアドレス</p>
-            <input type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}></input>
-            <p>パスワード</p>
-            <input type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}></input>
-            <div className="lrContents">
-                <Link to='/signup'>登録はこちらから</Link>
+        <SignIn>
+            <TextField label="メールアドレス" width="100%" type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
+            <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}/>
+            <StyledDiv className="lrContents">
+                <Link to='signup'><Button link>登録はこちらから</Button></Link>
                 <Button blue onClick={() => handleSignIn()}>
                     ログイン
                 </Button>
-            </div>
-        </div>
+            </StyledDiv>
+        </SignIn>
     )
 }
 
