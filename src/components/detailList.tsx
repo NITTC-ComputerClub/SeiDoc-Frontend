@@ -6,8 +6,6 @@ import Indicator from './indicator'
 import { fireStore, systemIndex } from '../firebase/firebase';
 import { detailPageLogger } from '../firebase/logger'
 import { System } from '../types/type';
-import Footer from './footer';
-import Header from '../pages/header'
 import "../scss/detail.scss"
 
 
@@ -45,7 +43,6 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
         detailPageLogger(detail.documentID, user, detail)
         return (
             <div className="detail">
-                <Header />
                 <h1>{detail.Name}</h1>
                 <h2>援助対象者</h2>
                 <p>{detail.Target}</p>
@@ -58,7 +55,6 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
                 <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
                     <button>公式のページへ</button>
                 </a>
-                <Footer />
             </div>
         )
     } else {  //等しくないときはprops優先でfetch
