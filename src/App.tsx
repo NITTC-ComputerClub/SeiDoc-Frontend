@@ -20,7 +20,7 @@ const App: React.FC = () => {
       <Switch>
         <Route exact path='/' component={Top} />
         <Route path='/category' component={Category} />
-        <Route path='/search' component={Search} />} />
+        <Route path='/search' component={Search} />
         <Route path='/detail/:documentId' component={Detail} />
         <Route path='/login' component={Login} />
         <Route path='/signup' component={SignUp} />
@@ -33,6 +33,7 @@ const App: React.FC = () => {
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
         <Route path='/admin/category' component={AdminCategory}/>
         <Route path='/admin/newSystem' component={AdminInput} />
+        <Route path='/admin/search' component={Search} />
       </Switch>
     </div>
   )
