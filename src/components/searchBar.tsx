@@ -20,7 +20,7 @@ const SearchBar: React.FC<historyProps> = (props) => {
             <button onClick={() => {
                 props.history.push( props.pushTo + '?tag=' + tag + '&value=' + inputValue)
             }}>
-                <img src="img/虫眼鏡.png" alt="虫眼鏡"></img>
+                <img src="/img/虫眼鏡.png" alt="虫眼鏡"></img>
             </button>
         </div>
     )
