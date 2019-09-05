@@ -64,105 +64,6 @@ const getNowYMD = () => {
   return result;
 };
 
-exports.backup = functions.https.onRequest((req, resp) => {
-  return admin
-    .firestore()
-    .collection(productionSystemIndex)
-    .get()
-    .then(querysnapshot => {
-      querysnapshot.forEach(doc => {
-        const data = doc.data() as System;
-        console.log("processing: ", data.documentID);
-        data.totalView = 0;
-        data.weeklyView = [0, 0, 0, 0, 0, 0, 0];
-        admin
-          .firestore()
-          .collection("testData2")
-          .doc(data.documentID)
-          .set(data)
-          .catch(err => console.error(err));
-      });
-    });
-});
-/*
-exports.aggregate = functions.https.onRequest((req, resp) => {
-  console.log('fired')
-  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
-
-    const day = date[0]
-    const tmp = new Date(day);
-    const today = tmp.getTime(); 
-    console.log("processing at: ", day)
-    daily_aggregate(today).catch(err=>console.error(err));
-
-});
-exports.aggregate1 = functions.https.onRequest((req, resp) => {
-  console.log('fired')
-  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
-
-    const day = date[1]
-    const tmp = new Date(day);
-    const today = tmp.getTime(); 
-    console.log("processing at: ", day)
-    daily_aggregate(today).catch(err=>console.error(err));
-
-});
-exports.aggregate2 = functions.https.onRequest((req, resp) => {
-  console.log('fired')
-  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
-
-    const day = date[2]
-    const tmp = new Date(day);
-    const today = tmp.getTime(); 
-    console.log("processing at: ", day)
-    daily_aggregate(today).catch(err=>console.error(err));
-
-});
-exports.aggregate3 = functions.https.onRequest((req, resp) => {
-  console.log('fired')
-  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
-
-    const day = date[3]
-    const tmp = new Date(day);
-    const today = tmp.getTime(); 
-    console.log("processing at: ", day)
-    daily_aggregate(today).catch(err=>console.error(err));
-
-});
-exports.aggregate4 = functions.https.onRequest((req, resp) => {
-  console.log('fired')
-  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
-
-    const day = date[4]
-    const tmp = new Date(day);
-    const today = tmp.getTime(); 
-    console.log("processing at: ", day)
-    daily_aggregate(today).catch(err=>console.error(err));
-
-});
-exports.aggregate5 = functions.https.onRequest((req, resp) => {
-  console.log('fired')
-  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
-
-    const day = date[5]
-    const tmp = new Date(day);
-    const today = tmp.getTime(); 
-    console.log("processing at: ", day)
-    daily_aggregate(today).catch(err=>console.error(err));
-
-});
-exports.aggregate6 = functions.https.onRequest((req, resp) => {
-  console.log('fired')
-  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
-
-    const day = date[6]
-    const tmp = new Date(day);
-    const today = tmp.getTime(); 
-    console.log("processing at: ", day)
-    return daily_aggregate(today).catch(err=>console.error(err));
-
-});
-*/
 exports.aggregate_Cron = functions.pubsub
   .schedule("5 0 * * *")
   .timeZone("Asia/Tokyo")
@@ -196,7 +97,7 @@ exports.aggregate_Cron = functions.pubsub
         }
       });
     }).then(() => {
-      console.log("Write at: " + getNowYMD());
+      console.log("Log write at: " + getNowYMD());
       admin
         .firestore()
         .collection(popularPageIndex)
@@ -206,7 +107,7 @@ exports.aggregate_Cron = functions.pubsub
         .catch(err => console.error(err));
     })
     .then(() => {
-      console.log("dailyRanking: ", dailyRanking.length);
+      console.log("Update each systems")
       admin
         .firestore()
         .collection(systemIndex)
