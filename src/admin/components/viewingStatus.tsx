@@ -26,9 +26,9 @@ const ViewingStatus: React.FC<{documentId: string}> = props => {
                       <td>総閲覧数</td>
                   </thead>
                   <tbody>
-                      <td>124</td>
-                      <td>498</td>
-                      <td>1590</td>
+                      <td>{detail.weeklyView.reduce((previous,current) => previous=+current)}</td>
+                      <td>{detail.monthlyView}</td>
+                      <td>{detail.totalView}</td>
                   </tbody>
               </table>
               <table>
