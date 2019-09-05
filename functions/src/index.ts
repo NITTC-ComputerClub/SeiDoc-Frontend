@@ -10,10 +10,11 @@ import * as algoliaSearch from "algoliasearch";
 const client = algoliaSearch(env.algolia.appid, env.algolia.apikey);
 const index = client.initIndex("testData");
 const fireStoreIndex = "testData";
+
 export const detailPageLogIndex = "detailPageLog";
 export const popularPageIndex = "popularSystem";
-export const systemIndex = "systems"
-
+export const systemIndex = "testData2";
+export const productionSystemIndex = "testData";
 export type UserState = {
   userId: string;
   nickName: string;
@@ -51,6 +52,7 @@ type System = {
   documentID: string;
   totalView: number;
   weeklyView: number[];
+  dailyView: number;
 };
 const getNowYMD = () => {
   const dt = new Date();
@@ -62,17 +64,108 @@ const getNowYMD = () => {
   return result;
 };
 
-exports.daily_aggregate = functions.https.onRequest((req, resp) => {
-  const ranking: rankingType[] = [];
+exports.backup = functions.https.onRequest((req,resp) => {
+  return admin.firestore().collection(productionSystemIndex).get().then(
+    querysnapshot => {
+      querysnapshot.forEach(doc => {
+        const data = doc.data() as System
+        console.log('processing: ',data.documentID)
+        data.totalView = 0;
+        data.weeklyView = [0,0,0,0,0,0,0];
+        admin.firestore().collection('testData2').doc(data.documentID).set(data).catch(err => console.error(err))
+      })
+    }
+  )
+
+})
+/*
+exports.aggregate = functions.https.onRequest((req, resp) => {
+  console.log('fired')
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
+
+    const day = date[0]
+    const tmp = new Date(day);
+    const today = tmp.getTime(); 
+    console.log("processing at: ", day)
+    daily_aggregate(today).catch(err=>console.error(err));
+
+});
+exports.aggregate1 = functions.https.onRequest((req, resp) => {
+  console.log('fired')
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
+
+    const day = date[1]
+    const tmp = new Date(day);
+    const today = tmp.getTime(); 
+    console.log("processing at: ", day)
+    daily_aggregate(today).catch(err=>console.error(err));
+
+});
+exports.aggregate2 = functions.https.onRequest((req, resp) => {
+  console.log('fired')
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
+
+    const day = date[2]
+    const tmp = new Date(day);
+    const today = tmp.getTime(); 
+    console.log("processing at: ", day)
+    daily_aggregate(today).catch(err=>console.error(err));
+
+});
+exports.aggregate3 = functions.https.onRequest((req, resp) => {
+  console.log('fired')
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
+
+    const day = date[3]
+    const tmp = new Date(day);
+    const today = tmp.getTime(); 
+    console.log("processing at: ", day)
+    daily_aggregate(today).catch(err=>console.error(err));
+
+});
+exports.aggregate4 = functions.https.onRequest((req, resp) => {
+  console.log('fired')
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
+
+    const day = date[4]
+    const tmp = new Date(day);
+    const today = tmp.getTime(); 
+    console.log("processing at: ", day)
+    daily_aggregate(today).catch(err=>console.error(err));
+
+});
+exports.aggregate5 = functions.https.onRequest((req, resp) => {
+  console.log('fired')
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
+
+    const day = date[5]
+    const tmp = new Date(day);
+    const today = tmp.getTime(); 
+    console.log("processing at: ", day)
+    daily_aggregate(today).catch(err=>console.error(err));
+
+});
+exports.aggregate6 = functions.https.onRequest((req, resp) => {
+  console.log('fired')
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"];
+
+    const day = date[6]
+    const tmp = new Date(day);
+    const today = tmp.getTime(); 
+    console.log("processing at: ", day)
+    return daily_aggregate(today).catch(err=>console.error(err));
+
+});
+*/
+const daily_aggregate = (today: number) => {
   const dailyRanking: rankingType[] = [];
-  const tmp = new Date(getNowYMD());
-  const today = tmp.getTime(); 
   const yesterday = today - 86400000; // 86400000 = 一日
-  const aWeekAgo = today - 604800*1000;
+  //const aWeekAgo = today - 604800*1000;
 
    //Create WeeklyRanking
 
-  return admin.firestore().collection(detailPageLogIndex)
+   /*
+   admin.firestore().collection(detailPageLogIndex)
     .where("createdAt", "<", today)
     .where("createdAt", ">", aWeekAgo)
     .get().then( 
@@ -95,11 +188,13 @@ exports.daily_aggregate = functions.https.onRequest((req, resp) => {
         )}
       ).then(() => {
         //Create DailyRanking
-        admin.firestore().collection(detailPageLogIndex)
+  */
+  return admin.firestore().collection(detailPageLogIndex)
           .where("createdAt","<",today)
           .where("createdAt",">",yesterday)
           .get().then(
             snapshot => {
+              console.log("create DailyRanking")
               snapshot.forEach(doc => {
                 const data = doc.data() as logType;
                 const target = dailyRanking.find(logData => {
@@ -116,35 +211,76 @@ exports.daily_aggregate = functions.https.onRequest((req, resp) => {
                   target.count++;
                 }}
               )}
-          ).then(() => {
-            ranking.forEach(doc => {
+              ).then(() => {
+                console.log("dailyRanking: ", dailyRanking.length)
+                admin.firestore().collection(systemIndex)
+                  .get().then(snapshot => {
+                    snapshot.forEach(doc => {
+                      const data = doc.data() as System
+                      const target = dailyRanking.find(logData => {
+                        return logData.documentID === data.documentID;
+                      });
+                      
+                      data.weeklyView.shift()
+                      if (target === undefined){
+                        data.dailyView = 0
+                        data.weeklyView.push(0);
+                      }else{
+                        data.dailyView = target.count
+                        data.weeklyView.push(target.count)
+                      }
+                      data.totalView += data.dailyView
+
+          
+                      //console.log(data.totalView, data.weeklyView.length)
+                      admin.firestore().collection(systemIndex).doc(data.documentID).update(data).catch(err => console.error(err))
+                    })
+                  }).then(() => console.log("だん")).catch(err => console.error(err))
+                  .catch(err => console.error(err))})    
+        };
+        /*
+            dailyRanking.forEach(doc => {
               admin.firestore()
                 .collection(systemIndex)
                 .doc(doc.documentID)
                 .get().then((docData) => {
                   const data = docData.data() as System
+                  if(data.weeklyView === undefined){
+                    data.weeklyView = [];
+                  }
+                  if(data.totalView === undefined){
+                    data.totalView = 0;
+                  }
                   data.totalView = data.totalView + data.weeklyView.shift()
-                  const target = dailyRanking.find(system => {return system.documentID === doc.documentID})
-                  data.weeklyView.push(target.count)
+                  data.weeklyView.push(doc.count);
                   console.log(data.Name,"totalView: ",data.totalView, "weekly")
                   admin.firestore().collection(systemIndex).doc(doc.documentID).update(data).then(res => console.log(res)).catch(err => console.error(err))
               }).catch(err => console.error(err))
             })
           })
           .catch(err => console.error(err));
-      })
-      .catch(err => console.error(err))
-    });
-
+      
+    };
+    /*
+    let yesterday_data = logData.map(log => {
+      if (log.createdAt > yesterday){
+        return log
+      }else{
+        return undefined
+      }
+    })
+    yesterday_data = yesterday_data.filter(Boolean)
+    */
+//exports.aggregate = functions.https.onRequest((req, resp) => {
 exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/Tokyo').onRun(context => {
-  //const today = Date.now();
-  //const aWeekAgo = today - 604800;
+  const today = Date.now();
+  const aWeekAgo = today - 604800*1000;
   const ranking: rankingType[] = [];
   return admin
     .firestore()
     .collection(detailPageLogIndex)
     //.where("createdAt", "<", today)
-    //.where("createdAt", ">", aWeekAgo)
+    .where("createdAt", ">", aWeekAgo)
     .get()
     .then(snapshot => {
       console.log(snapshot);
