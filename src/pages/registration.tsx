@@ -18,6 +18,9 @@ const Registration: React.FC = () => {
         isDeleted: false,
         ExpireAt: 2262025600000,
         documentID: '-1',
+        totalView: 0,
+        dailyView: 0,
+        weeklyView: [0,0,0,0,0,0,0]
     }
     let [currentData, setCurrentData] = useState<System>(newSystem)
 
