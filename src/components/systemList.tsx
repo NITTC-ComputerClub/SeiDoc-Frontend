@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store'
-import { updateDetailCreator, fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../actions/action'
+import { fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../actions/action'
 import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
 import "../scss/systemList.scss"
 import { System } from '../types/type';
+import SystemCard from './Top/SystemCard';
 
 type historyProps = RouteComponentProps
 
@@ -16,7 +17,6 @@ const SystemList: React.FC<historyProps> = (props) => {
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()
-    const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
 
     //データのfetch
     useEffect(() => {
@@ -45,16 +45,15 @@ const SystemList: React.FC<historyProps> = (props) => {
             {console.log('systems:', systems)}
             {loading ? <Indicator /> :
                 <ul>
-                    {systems.map((system: System) => (
-                        <li key={system.Name} onClick={() => {
-                            updateDetail(system)    //リロードなしでページを遷移させるのに必要
-                            props.history.push('/detail/' + system.documentID)
-                        }
-                        }>
-                            <h4>{system.Name}</h4>
-                            <p>{system.Location}</p>
-                        </li>
-                    ))}
+                    {
+                        systems.map((system: System) => (
+                            <SystemCard
+                                wide
+                                key={system.Name}
+                                system={system}
+                            />       
+                        ))
+                    }
                 </ul>
             }
         </div>

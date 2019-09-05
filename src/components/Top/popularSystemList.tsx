@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PopularSystemCard from './popularSystemCard'
+import SystemCard from './SystemCard'
 import { fireStore, popularPageIndex } from '../../firebase/firebase';
 import { rankingType } from '../../types/type'
 import Indicator from '../indicator'
@@ -81,7 +81,7 @@ const PopularSystemList: React.FC = () => {
     <div className="popularSystemList">
       <ul>
         {rankingData.map(data => (
-          <PopularSystemCard key={data.system.Name} system={data.system} />
+          <SystemCard key={data.system.Name} system={data.system} />
         ))}
       </ul>
     </div>

@@ -4,10 +4,11 @@ import PopularSystemList from "../components/Top/popularSystemList";
 import Ranking from "../components/Top/ranking";
 import Footer from "../components/footer";
 import Header from '../pages/header'
+import { Link } from 'react-router-dom'
+
 import "../scss/top.scss";
 
 const Top: React.FC = () => {
-
   return (
     <div className="top">
       <Header />
@@ -17,16 +18,14 @@ const Top: React.FC = () => {
         </div>
         <div className="buttons">
           <SearchButton
-            buttonName="制度名から調べる"
+            green
             nextLocation="/category"
-            buttonColor="#44DD9D"
-          />
+          >制度名から調べる</SearchButton>
           {/* TODO: 地域から調べるページへ遷移 */}
           <SearchButton
-            buttonName="地域から調べる"
+            blue
             nextLocation="/"
-            buttonColor="#449DDD"
-          />
+          >地域から調べる</SearchButton>
         </div>
       </div>
       <section className="container">
@@ -36,6 +35,7 @@ const Top: React.FC = () => {
         <Ranking />
       </section>
       <Footer />
+      <Link to="/admin/input">admin</Link> 
     </div>
   );
 };

@@ -2,7 +2,9 @@ import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import '../scss/categoryButton.scss'
 
-type historyProps = RouteComponentProps
+interface historyProps extends RouteComponentProps {
+    pushTo: string
+}
 
 const CategoryButton: React.FC<historyProps> = (props) => {
     const categoryList: Array<string> = [
@@ -13,9 +15,9 @@ const CategoryButton: React.FC<historyProps> = (props) => {
             {categoryList.map((category) => (
                 <div key={category} className="categoryButton">
                     <button key={category} onClick={() => {
-                        props.history.push('/search?tag=' + category)
+                        props.history.push(props.pushTo + '?tag=' + category)
                     }}>
-                        <img src={"./img/" + category + ".png"} alt={category + "の写真"}></img>
+                        <img src={"/img/" + category + ".png"} alt={category + "の写真"}></img>
                         <div className="categoryName">
                             {category}
                         </div>

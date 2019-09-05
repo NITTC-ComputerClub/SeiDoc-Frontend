@@ -4,7 +4,10 @@ import { AppState } from '../store'
 import { withRouter, RouteComponentProps } from 'react-router'
 import '../scss/searchBar.scss'
 
-type historyProps = RouteComponentProps
+interface historyProps extends RouteComponentProps {
+    pushTo:string
+}
+
 
 const SearchBar: React.FC<historyProps> = (props) => {
     const tag = useSelector((state: AppState) => state.tagState.tag)
@@ -15,9 +18,9 @@ const SearchBar: React.FC<historyProps> = (props) => {
                 inputValue = e.target.value
             }} placeholder="「未熟児」などの単語を入力" />
             <button onClick={() => {
-                props.history.push('/search?tag=' + tag + '&value=' + inputValue)
+                props.history.push( props.pushTo + '?tag=' + tag + '&value=' + inputValue)
             }}>
-                <img src="img/虫眼鏡.png" alt="虫眼鏡"></img>
+                <img src="/img/虫眼鏡.png" alt="虫眼鏡"></img>
             </button>
         </div>
     )

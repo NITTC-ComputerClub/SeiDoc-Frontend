@@ -8,6 +8,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../scss/signUp.scss'
 import { loginDataType, locationDataType, birthdayDataType, UserState } from '../../types/type';
+import Button from '../../designSystem/Button';
 
 type historyProps = RouteComponentProps
 
@@ -27,10 +28,14 @@ const SignUp: React.FC<historyProps> = (props) => {
     const handleSignUp = () => {
         const email = loginData.email
         const password = loginData.password
+        
         const birthday = ('000' + birthdayData.year).slice(-4) + '-' + ('0' + birthdayData.month).slice(-2) + '-' + ('0' + birthdayData.date).slice(-2)
         const address = locationData.prefecture + locationData.city + locationData.municipality
         userData['birthday'] = birthday
         userData['address'] = address
+        userData.isAdmin = false;
+        userData.city = '';
+        userData.department = '';
 
         if (password.length < 8) {
             alert('Please enter a password')
@@ -172,7 +177,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <button onClick={() => handleSignUp()}>登録</button>
+                <Button blue onClick={() => handleSignUp()}>登録</Button>
             </div>
         </div>
     )
