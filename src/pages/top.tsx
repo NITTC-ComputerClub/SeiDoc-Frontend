@@ -4,10 +4,11 @@ import PopularSystemList from "../components/Top/popularSystemList";
 import Ranking from "../components/Top/ranking";
 import Footer from "../components/footer";
 import Header from '../pages/header'
+import { Link } from 'react-router-dom'
+
 import "../scss/top.scss";
 
 const Top: React.FC = () => {
-
   return (
     <div className="top">
       <Header />
@@ -34,6 +35,7 @@ const Top: React.FC = () => {
         <Ranking />
       </section>
       <Footer />
+      <Link to="/admin/input">admin</Link> 
     </div>
   );
 };

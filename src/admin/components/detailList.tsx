@@ -1,13 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { updateDetailCreator } from '../actions/action'
-import { AppState } from '../store'
-import Indicator from './indicator'
-import { fireStore, systemIndex } from '../firebase/firebase';
-import { detailPageLogger } from '../firebase/logger'
-import { System } from '../types/type';
-import "../scss/detail.scss"
-
+import { updateDetailCreator } from '../../actions/action'
+import { AppState } from '../../store'
+import { fireStore, systemIndex } from '../../firebase/firebase';
+import "../../scss/detail.scss"
+import Indicator from '../../components/indicator';
+import { System } from '../../types/type';
+import { detailPageLogger } from '../../firebase/logger';
 
 
 const DetailList: React.FC<{ documentId: string }> = (props) => {
@@ -43,24 +42,25 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
         detailPageLogger(detail.documentID, user, detail)
         return (
             <div>
-                <div className="detail">
-                    <Header />
-                    <h1>{detail.Name}</h1>
-                    <h2>援助対象者</h2>
-                    <p className="detailParagraph">{detail.Target}</p>
-                    <h2>援助方法</h2>
-                    <p className="detailParagraph">{detail.Method}</p>
-                    <h2>担当部署</h2>
-                    <p className="detailParagraph">{detail.Department}</p>
-                    <h2>詳細</h2>
-                    <p className="detailParagraph">{detail.Detail}</p>
-                    <div className="linkButton">
-                        <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
-                            公式のページへ
-                        </a>
-                    </div>
+                <div>
+                    {detail.Name}
                 </div>
-                <Footer />
+                <div>
+                    <h2>公開内容</h2>
+                    <button>編集</button>
+                </div>
+                <div className="detail">
+                    <h2>援助対象者</h2>
+                    <p>{detail.Target}</p>
+                    <h2>援助方法</h2>
+                    <p>{detail.Method}</p>
+                    <h2>担当部署</h2>
+                    <p>{detail.Department}</p>
+                    <h2>詳細</h2>
+                    <p>{detail.Detail}</p>
+                    <h2>公式サイト</h2>
+                    <a href={detail.Site}>{detail.Site}</a>
+                </div>
             </div>
         )
     } else {  //等しくないときはprops優先でfetch
