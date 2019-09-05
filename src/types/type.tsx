@@ -75,8 +75,9 @@ export type System = {
   ExpireAt: number;
   documentID: string;
   totalView: number;
-  dailyView: number;
   weeklyView: number[];
+  monthlyView: number;
+  dailyView: number;
 };
 
 export type SystemsState = {

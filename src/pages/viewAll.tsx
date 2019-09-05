@@ -97,7 +97,8 @@ const ViewAll: React.FC = () => {
             documentID: '-1',
             totalView: 0,
             dailyView: 0,
-            weeklyView: [0,0,0,0,0,0,0]
+            weeklyView: [0,0,0,0,0,0,0],
+            monthlyView: 0
         }
         const newID = makeRandomID()
         console.log(newID)
