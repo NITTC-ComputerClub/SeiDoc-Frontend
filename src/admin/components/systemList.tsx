@@ -51,6 +51,7 @@ const SystemList: React.FC<historyProps> = (props) => {
                         }
                         }>
                             <h4>{system.Name}</h4>
+                            <h6>1129</h6>
                             <p>{system.Location}</p>
                         </li>
                     ))}
