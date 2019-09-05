@@ -16,7 +16,7 @@ const AdminHeader: React.FC<historyProps> = props => {
                 <Link to="/">
                     新制度登録
                 </Link>
-                <Link to="/">
+                <Link to="/admin/viewingStatus">
                     制度閲覧状況
                 </Link>
             </div>
