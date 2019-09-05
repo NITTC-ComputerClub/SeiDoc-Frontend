@@ -52,6 +52,7 @@ type System = {
   documentID: string;
   totalView: number;
   weeklyView: number[];
+  monthlyView: number;
   dailyView: number;
 };
 const getNowYMD = () => {
@@ -59,17 +60,94 @@ const getNowYMD = () => {
   dt.setTime(dt.getTime() + 1000 * 60 * 60 * 15);
   const y = dt.getFullYear();
   const m = ("00" + (dt.getMonth() + 1)).slice(-2);
-  const d = ("00" + dt.getDate()).slice(-2);
+  const d = ("00" + dt.getDate() ).slice(-2);
   const result = y + "-" + m + "-" + d;
   return result;
 };
 
+exports.backup = functions.https.onRequest(() => {
+  return admin.firestore().collection(productionSystemIndex).get().then(
+    snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data() as System
+        data.totalView = 0;
+        data.dailyView = 0;
+        data.weeklyView = Array(7).fill(0);
+        data.monthlyView = 0;
+        admin.firestore().collection(systemIndex).doc(data.documentID).set(data).catch(err => console.error(err))
+      })
+    }
+  ).then(() => console.log("ばっくあっぷ だん"))
+})
+
+exports.aggregate0 = functions.https.onRequest(() => {
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
+  aggregate(date[0]).catch(err=>console.error(err))
+})
+exports.aggregate1 = functions.https.onRequest(() => {
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
+  aggregate(date[1]).catch(err=>console.error(err))
+})
+exports.aggregate2 = functions.https.onRequest(() => {
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
+  aggregate(date[2]).catch(err=>console.error(err))
+})
+exports.aggregate3 = functions.https.onRequest(() => {
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
+  aggregate(date[3]).catch(err=>console.error(err))
+})
+exports.aggregate4 = functions.https.onRequest(() => {
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
+  aggregate(date[4]).catch(err=>console.error(err))
+})
+exports.aggregate5 = functions.https.onRequest(() => {
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
+  aggregate(date[5]).catch(err=>console.error(err))
+})
+exports.aggregate6 = functions.https.onRequest(() => {
+  const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
+  aggregate(date[6]).catch(err=>console.error(err))
+})
+
 exports.aggregate_Cron = functions.pubsub
   .schedule("5 0 * * *")
   .timeZone("Asia/Tokyo")
-  .onRun(context => {
+  .onRun(() => {
+    aggregate(getNowYMD()).catch(err=>console.error(err));
+});
+
+exports.resetWeeklyView = functions.pubsub
+  .schedule("10 0 * * 1")
+  .timeZone("Asia/Tokyo")
+  .onRun(() => {
+    return admin.firestore().collection(systemIndex).get().then(
+      snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data() as System;
+          data.weeklyView = [data.weeklyView[6],0,0,0,0,0,0];
+          admin.firestore().collection(systemIndex).doc(data.documentID).update(data).catch(err=>console.error(err));
+        })
+      }
+    )
+  })
+exports.resetMonthlyView = functions.pubsub
+  .schedule("15 0 1 * *")
+  .timeZone("Asia/Tokyo")
+  .onRun(() => {
+    return admin.firestore().collection(systemIndex).get().then(
+      snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data() as System;
+          data.monthlyView = 0;
+          admin.firestore().collection(systemIndex).doc(data.documentID).update(data).catch(err=>console.error(err));
+        })
+      }
+    );
+  });
+
+const aggregate = (day: string) => {
   const dailyRanking: rankingType[] = [];
-  const tmp = new Date(getNowYMD());
+  const tmp = new Date(day);
   const today = tmp.getTime(); 
   const yesterday = today - 86400000; // 86400000 = 一日
   return admin
@@ -97,7 +175,7 @@ exports.aggregate_Cron = functions.pubsub
         }
       });
     }).then(() => {
-      console.log("Log write at: " + getNowYMD());
+      console.log("Log write at: " + day);
       admin
         .firestore()
         .collection(popularPageIndex)
@@ -127,6 +205,7 @@ exports.aggregate_Cron = functions.pubsub
               data.dailyView = target.count;
               data.weeklyView.push(target.count);
             }
+            data.monthlyView += data.dailyView;
             data.totalView += data.dailyView;
             admin
               .firestore()
@@ -140,7 +219,7 @@ exports.aggregate_Cron = functions.pubsub
           .catch(err => console.error(err))
       .catch(err => console.error(err));
     });
-});
+}
 
 exports.onSystemCreated = functions.firestore
   .document(fireStoreIndex + "/{testId}")
