@@ -12,6 +12,7 @@ const index = client.initIndex("testData");
 const fireStoreIndex = "testData";
 export const detailPageLogIndex = "detailPageLog";
 export const popularPageIndex = "popularSystem";
+export const systemIndex = "systems"
 
 export type UserState = {
   userId: string;
@@ -48,6 +49,8 @@ type System = {
   isDeleted: boolean;
   ExpireAt: number;
   documentID: string;
+  totalView: number;
+  weeklyView: number[];
 };
 const getNowYMD = () => {
   const dt = new Date();
@@ -58,7 +61,81 @@ const getNowYMD = () => {
   const result = y + "-" + m + "-" + d;
   return result;
 };
-//exports.aggregate = functions.https.onRequest((req, resp) => {
+
+exports.daily_aggregate = functions.https.onRequest((req, resp) => {
+  const ranking: rankingType[] = [];
+  const dailyRanking: rankingType[] = [];
+  const tmp = new Date(getNowYMD());
+  const today = tmp.getTime(); 
+  const yesterday = today - 86400000; // 86400000 = 一日
+  const aWeekAgo = today - 604800*1000;
+
+   //Create WeeklyRanking
+
+  return admin.firestore().collection(detailPageLogIndex)
+    .where("createdAt", "<", today)
+    .where("createdAt", ">", aWeekAgo)
+    .get().then( 
+      snapshot => { 
+        snapshot.forEach(doc => {
+          const data = doc.data() as logType;
+          const target = ranking.find(logData => {
+            return logData.documentID === data.documentID;
+          });
+          if (target === undefined) {
+            const r: rankingType = {
+              documentID: data.documentID,
+              system: data.system,
+              count: 1
+            };
+            ranking.push(r);
+          } else {
+            target.count++;
+          }}
+        )}
+      ).then(() => {
+        //Create DailyRanking
+        admin.firestore().collection(detailPageLogIndex)
+          .where("createdAt","<",today)
+          .where("createdAt",">",yesterday)
+          .get().then(
+            snapshot => {
+              snapshot.forEach(doc => {
+                const data = doc.data() as logType;
+                const target = dailyRanking.find(logData => {
+                  return logData.documentID === data.documentID;
+                });
+                if (target === undefined) {
+                  const r: rankingType = {
+                    documentID: data.documentID,
+                    system: data.system,
+                    count: 1
+                  };
+                  dailyRanking.push(r);
+                } else {
+                  target.count++;
+                }}
+              )}
+          ).then(() => {
+            ranking.forEach(doc => {
+              admin.firestore()
+                .collection(systemIndex)
+                .doc(doc.documentID)
+                .get().then((docData) => {
+                  const data = docData.data() as System
+                  data.totalView = data.totalView + data.weeklyView.shift()
+                  const target = dailyRanking.find(system => {return system.documentID === doc.documentID})
+                  data.weeklyView.push(target.count)
+                  console.log(data.Name,"totalView: ",data.totalView, "weekly")
+                  admin.firestore().collection(systemIndex).doc(doc.documentID).update(data).then(res => console.log(res)).catch(err => console.error(err))
+              }).catch(err => console.error(err))
+            })
+          })
+          .catch(err => console.error(err));
+      })
+      .catch(err => console.error(err))
+    });
+
 exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/Tokyo').onRun(context => {
   //const today = Date.now();
   //const aWeekAgo = today - 604800;
