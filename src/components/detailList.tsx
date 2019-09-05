@@ -49,13 +49,13 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
                     <Header />
                     <h1>{detail.Name}</h1>
                     <h2>援助対象者</h2>
-                    <p>{detail.Target}</p>
+                    <p className="detailParagraph">{detail.Target}</p>
                     <h2>援助方法</h2>
-                    <p>{detail.Method}</p>
+                    <p className="detailParagraph">{detail.Method}</p>
                     <h2>担当部署</h2>
-                    <p>{detail.Department}</p>
+                    <p className="detailParagraph">{detail.Department}</p>
                     <h2>詳細</h2>
-                    <p>{detail.Detail}</p>
+                    <p className="detailParagraph">{detail.Detail}</p>
                     <div className="linkButton">
                         <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
                             公式のページへ
