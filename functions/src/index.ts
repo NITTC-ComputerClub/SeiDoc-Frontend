@@ -56,28 +56,34 @@ type System = {
 };
 const getNowYMD = () => {
   const dt = new Date();
-  dt.setTime(dt.getTime() + 1000*60*60*15)
+  dt.setTime(dt.getTime() + 1000 * 60 * 60 * 15);
   const y = dt.getFullYear();
   const m = ("00" + (dt.getMonth() + 1)).slice(-2);
-  const d = ("00" + (dt.getDate())).slice(-2);
+  const d = ("00" + dt.getDate()).slice(-2);
   const result = y + "-" + m + "-" + d;
   return result;
 };
 
-exports.backup = functions.https.onRequest((req,resp) => {
-  return admin.firestore().collection(productionSystemIndex).get().then(
-    querysnapshot => {
+exports.backup = functions.https.onRequest((req, resp) => {
+  return admin
+    .firestore()
+    .collection(productionSystemIndex)
+    .get()
+    .then(querysnapshot => {
       querysnapshot.forEach(doc => {
-        const data = doc.data() as System
-        console.log('processing: ',data.documentID)
+        const data = doc.data() as System;
+        console.log("processing: ", data.documentID);
         data.totalView = 0;
-        data.weeklyView = [0,0,0,0,0,0,0];
-        admin.firestore().collection('testData2').doc(data.documentID).set(data).catch(err => console.error(err))
-      })
-    }
-  )
-
-})
+        data.weeklyView = [0, 0, 0, 0, 0, 0, 0];
+        admin
+          .firestore()
+          .collection("testData2")
+          .doc(data.documentID)
+          .set(data)
+          .catch(err => console.error(err));
+      });
+    });
+});
 /*
 exports.aggregate = functions.https.onRequest((req, resp) => {
   console.log('fired')
@@ -157,136 +163,25 @@ exports.aggregate6 = functions.https.onRequest((req, resp) => {
 
 });
 */
-const daily_aggregate = (today: number) => {
+exports.aggregate_Cron = functions.pubsub
+  .schedule("5 0 * * *")
+  .timeZone("Asia/Tokyo")
+  .onRun(context => {
   const dailyRanking: rankingType[] = [];
+  const tmp = new Date(getNowYMD());
+  const today = tmp.getTime(); 
   const yesterday = today - 86400000; // 86400000 = 一日
-  //const aWeekAgo = today - 604800*1000;
-
-   //Create WeeklyRanking
-
-   /*
-   admin.firestore().collection(detailPageLogIndex)
-    .where("createdAt", "<", today)
-    .where("createdAt", ">", aWeekAgo)
-    .get().then( 
-      snapshot => { 
-        snapshot.forEach(doc => {
-          const data = doc.data() as logType;
-          const target = ranking.find(logData => {
-            return logData.documentID === data.documentID;
-          });
-          if (target === undefined) {
-            const r: rankingType = {
-              documentID: data.documentID,
-              system: data.system,
-              count: 1
-            };
-            ranking.push(r);
-          } else {
-            target.count++;
-          }}
-        )}
-      ).then(() => {
-        //Create DailyRanking
-  */
-  return admin.firestore().collection(detailPageLogIndex)
-          .where("createdAt","<",today)
-          .where("createdAt",">",yesterday)
-          .get().then(
-            snapshot => {
-              console.log("create DailyRanking")
-              snapshot.forEach(doc => {
-                const data = doc.data() as logType;
-                const target = dailyRanking.find(logData => {
-                  return logData.documentID === data.documentID;
-                });
-                if (target === undefined) {
-                  const r: rankingType = {
-                    documentID: data.documentID,
-                    system: data.system,
-                    count: 1
-                  };
-                  dailyRanking.push(r);
-                } else {
-                  target.count++;
-                }}
-              )}
-              ).then(() => {
-                console.log("dailyRanking: ", dailyRanking.length)
-                admin.firestore().collection(systemIndex)
-                  .get().then(snapshot => {
-                    snapshot.forEach(doc => {
-                      const data = doc.data() as System
-                      const target = dailyRanking.find(logData => {
-                        return logData.documentID === data.documentID;
-                      });
-                      
-                      data.weeklyView.shift()
-                      if (target === undefined){
-                        data.dailyView = 0
-                        data.weeklyView.push(0);
-                      }else{
-                        data.dailyView = target.count
-                        data.weeklyView.push(target.count)
-                      }
-                      data.totalView += data.dailyView
-
-          
-                      //console.log(data.totalView, data.weeklyView.length)
-                      admin.firestore().collection(systemIndex).doc(data.documentID).update(data).catch(err => console.error(err))
-                    })
-                  }).then(() => console.log("だん")).catch(err => console.error(err))
-                  .catch(err => console.error(err))})    
-        };
-        /*
-            dailyRanking.forEach(doc => {
-              admin.firestore()
-                .collection(systemIndex)
-                .doc(doc.documentID)
-                .get().then((docData) => {
-                  const data = docData.data() as System
-                  if(data.weeklyView === undefined){
-                    data.weeklyView = [];
-                  }
-                  if(data.totalView === undefined){
-                    data.totalView = 0;
-                  }
-                  data.totalView = data.totalView + data.weeklyView.shift()
-                  data.weeklyView.push(doc.count);
-                  console.log(data.Name,"totalView: ",data.totalView, "weekly")
-                  admin.firestore().collection(systemIndex).doc(doc.documentID).update(data).then(res => console.log(res)).catch(err => console.error(err))
-              }).catch(err => console.error(err))
-            })
-          })
-          .catch(err => console.error(err));
-      
-    };
-    /*
-    let yesterday_data = logData.map(log => {
-      if (log.createdAt > yesterday){
-        return log
-      }else{
-        return undefined
-      }
-    })
-    yesterday_data = yesterday_data.filter(Boolean)
-    */
-//exports.aggregate = functions.https.onRequest((req, resp) => {
-exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/Tokyo').onRun(context => {
-  const today = Date.now();
-  const aWeekAgo = today - 604800*1000;
-  const ranking: rankingType[] = [];
   return admin
     .firestore()
     .collection(detailPageLogIndex)
-    //.where("createdAt", "<", today)
-    .where("createdAt", ">", aWeekAgo)
+    .where("createdAt", "<", today)
+    .where("createdAt", ">", yesterday)
     .get()
     .then(snapshot => {
-      console.log(snapshot);
+      console.log("create DailyRanking");
       snapshot.forEach(doc => {
         const data = doc.data() as logType;
-        const target = ranking.find(logData => {
+        const target = dailyRanking.find(logData => {
           return logData.documentID === data.documentID;
         });
         if (target === undefined) {
@@ -295,25 +190,54 @@ exports.aggregate_Cron = functions.pubsub.schedule('5 0 * * *').timeZone('Asia/T
             system: data.system,
             count: 1
           };
-          ranking.push(r);
+          dailyRanking.push(r);
         } else {
           target.count++;
         }
       });
-    })
-    .then(() => {
-      console.log(ranking);
-      console.log('Write at: ' + getNowYMD())
+    }).then(() => {
+      console.log("Write at: " + getNowYMD());
       admin
         .firestore()
         .collection(popularPageIndex)
         .doc(getNowYMD())
-        .set({ranking:ranking})
+        .set({ ranking: dailyRanking })
         .then(res => console.log(res))
         .catch(err => console.error(err));
     })
-    .catch(err => {
-        console.error(err)
+    .then(() => {
+      console.log("dailyRanking: ", dailyRanking.length);
+      admin
+        .firestore()
+        .collection(systemIndex)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            const data = doc.data() as System;
+            const target = dailyRanking.find(logData => {
+              return logData.documentID === data.documentID;
+            });
+
+            data.weeklyView.shift();
+            if (target === undefined) {
+              data.dailyView = 0;
+              data.weeklyView.push(0);
+            } else {
+              data.dailyView = target.count;
+              data.weeklyView.push(target.count);
+            }
+            data.totalView += data.dailyView;
+            admin
+              .firestore()
+              .collection(systemIndex)
+              .doc(data.documentID)
+              .update(data)
+              .catch(err => console.error(err));
+          });
+        })
+          .then(() => console.log("だん"))
+          .catch(err => console.error(err))
+      .catch(err => console.error(err));
     });
 });
 
