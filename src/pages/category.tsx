@@ -19,7 +19,7 @@ const Category: React.FC = () => {
         <div className="category">
             <Header />
             <div className="categoryContainer">
-                <SearchBar pushTo="/search"/>
+                <SearchBar pushTo="/search" center/>
                 <h2>カテゴリー</h2>
                 <CategoryButton pushTo="/search"/>
             </div>

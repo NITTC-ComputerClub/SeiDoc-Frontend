@@ -2,28 +2,48 @@ import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import SearchBar from '../../components/searchBar';
+import styled from 'styled-components';
+import setting from '../../designSystem/setting'
 
 
 type historyProps = RouteComponentProps
 
+const StyledHeader = styled.header`
+    background-color: ${setting.White};
+`
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: ${setting.TextGray};
+    font-weight: bold;
+    font-size: ${setting.H2};
+    margin-right: 16px;
+    line-height: 48px;
+`
+
+const StyledNav = styled.nav`
+    display: flex;
+`
+
 const AdminHeader: React.FC<historyProps> = props => {
     return(
-        <header>
-            <div>
-                <Link to="/">
+        <StyledHeader>
+            <StyledNav>
+                <StyledLink to="/">
                     制度一覧
-                </Link>
-                <Link to="/">
+                </StyledLink>
+                <StyledLink to="/">
                     新制度登録
-                </Link>
-                <Link to="/">
+                </StyledLink>
+                <StyledLink to="/">
                     制度閲覧状況
-                </Link>
-            </div>
-            <div className="searchBar" >
-                <SearchBar pushTo="/admin/search" />
-            </div>
-        </header>
+                </StyledLink>
+            </StyledNav>
+            <SearchBar
+                pushTo="/admin/search"
+                right
+            />
+        </StyledHeader>
     )
 }
 
