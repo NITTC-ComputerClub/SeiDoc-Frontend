@@ -7,6 +7,8 @@ import { fireStore, systemIndex } from '../firebase/firebase';
 import { detailPageLogger } from '../firebase/logger'
 import { System } from '../types/type';
 import "../scss/detail.scss"
+import Header from '../pages/header'
+import Footer from './footer';
 
 
 
@@ -42,19 +44,25 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
     if (!isLoading && isSystemLoaded()) {   //等しいときはfetchなし
         detailPageLogger(detail.documentID, user, detail)
         return (
-            <div className="detail">
-                <h1>{detail.Name}</h1>
-                <h2>援助対象者</h2>
-                <p>{detail.Target}</p>
-                <h2>援助方法</h2>
-                <p>{detail.Method}</p>
-                <h2>担当部署</h2>
-                <p>{detail.Department}</p>
-                <h2>詳細</h2>
-                <p>{detail.Detail}</p>
-                <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
-                    <button>公式のページへ</button>
-                </a>
+            <div>
+                <div className="detail">
+                    <Header />
+                    <h1>{detail.Name}</h1>
+                    <h2>援助対象者</h2>
+                    <p className="detailParagraph">{detail.Target}</p>
+                    <h2>援助方法</h2>
+                    <p className="detailParagraph">{detail.Method}</p>
+                    <h2>担当部署</h2>
+                    <p className="detailParagraph">{detail.Department}</p>
+                    <h2>詳細</h2>
+                    <p className="detailParagraph">{detail.Detail}</p>
+                    <div className="linkButton">
+                        <a target="_blank" rel="noopener noreferrer" href={detail.Site}>
+                            公式のページへ
+                        </a>
+                    </div>
+                </div>
+                <Footer />
             </div>
         )
     } else {  //等しくないときはprops優先でfetch

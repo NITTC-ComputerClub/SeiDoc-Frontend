@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../store';
 import { loginCreator } from '../../actions/action';
 import { auth, fireStore } from '../../firebase/firebase';
+import Button from '../../designSystem/Button';
+import TextField from '../../components/TextField';
+import styled from 'styled-components';
 
 type historyProps = RouteComponentProps
 const SignInForm: React.FC<historyProps> = (props) => {
@@ -60,16 +63,41 @@ const SignInForm: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
+    const SignIn = styled.div`
+        padding: 0 32px;
+    `
+
+    const StyledDiv = styled.div`
+        margin-top: 32px;
+
+        display: flex;
+        button {
+            margin: 0 0 0 auto;
+        }
+    `
+
     return (
-        <div className="signIn">
-            <p>ID</p>
-            <input type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
-            <p>パスワード</p>
-            <input type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}/>
-            <div className="lrContents">
-                <button onClick={() => handleSignIn()}>ログイン</button>
-            </div>
-        </div>
+        <SignIn>
+            <TextField
+                label="ID"
+                width="100%"
+                type="text"
+                name="email"
+                value={loginData.email}
+                onChange={e => handleInputChange(e)}
+            />
+            <TextField
+                label="パスワード"
+                width="100%"
+                type="password"
+                name="password"
+                value={loginData.password}
+                onChange={e => handleInputChange(e)}
+            />
+            <StyledDiv>
+                <Button blue onClick={() => handleSignIn()}>ログイン</Button>
+            </StyledDiv>
+        </SignIn>
     )
 }
 
