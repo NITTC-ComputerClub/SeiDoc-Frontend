@@ -7,6 +7,8 @@ import { fireStore, systemIndex } from '../firebase/firebase';
 import { detailPageLogger } from '../firebase/logger'
 import { System } from '../types/type';
 import "../scss/detail.scss"
+import Header from '../pages/header'
+import Footer from './footer';
 
 
 
