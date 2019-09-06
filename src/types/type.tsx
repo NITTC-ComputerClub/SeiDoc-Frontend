@@ -75,6 +75,10 @@ export type System = {
   isDeleted: boolean;
   ExpireAt: number;
   documentID: string;
+  totalView: number;
+  weeklyView: number[];
+  monthlyView: number;
+  dailyView: number;
 };
 
 export type SystemsState = {
