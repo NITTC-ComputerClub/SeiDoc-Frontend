@@ -14,6 +14,8 @@ import AdminDetail from './admin/pages/detail'
 import AdminCategory from './admin/pages/category'
 import './scss/App.scss'
 
+import ML from './pages/machineLearning'
+
 const App: React.FC = () => {
   return (
     <div>
@@ -28,6 +30,9 @@ const App: React.FC = () => {
         {/* MVP4で使えそう？ (inputとregistrationは機能被ってる)*/}
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
+
+        {/* MVP5 */}
+        <Route path='/ml' component={ML} />
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
