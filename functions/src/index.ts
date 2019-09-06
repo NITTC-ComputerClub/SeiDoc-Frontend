@@ -3,6 +3,7 @@ import * as admin from "firebase-admin";
 import axios from "axios";
 
 admin.initializeApp();
+
 const env = functions.config();
 
 import * as algoliaSearch from "algoliasearch";
@@ -35,6 +36,7 @@ export type rankingType = {
   documentID: string;
   system: System;
   count: number;
+  ageGroup: ageGroup[];
 };
 
 type System = {
@@ -52,10 +54,17 @@ type System = {
   ExpireAt: number;
   documentID: string;
   totalView: number;
-  weeklyView: number[];
+  weeklyView: number[]; //[0,0,0,0,0,0,0]
   monthlyView: number;
   dailyView: number;
+  ageGroup: ageGroup[]
 };
+
+type ageGroup = {
+  count: number;
+  age: '0' | '10' | '20' | '30' | '40' | '50' | '60' | '70'
+}
+
 const getNowYMD = () => {
   const dt = new Date();
   dt.setTime(dt.getTime() + 1000 * 60 * 60 * 15);
@@ -65,7 +74,7 @@ const getNowYMD = () => {
   const result = y + "-" + m + "-" + d;
   return result;
 };
-/*
+
 const calcAge = function(birthday: string){
   const d = new Date();
   const today = ''+d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
@@ -73,7 +82,39 @@ const calcAge = function(birthday: string){
   const b_day = ''+b.getFullYear()+('0'+(b.getMonth()+1)).slice(-2)+('0'+b.getDate()).slice(-2);
   return Math.floor((parseInt(today)-parseInt(b_day))/10000);
 };
-*/
+
+const getAgeGroup = (age: number) => {
+  if(0 < age && age <= 10){
+    return '0'
+  }else if(10 < age && age <= 20){
+    return '10'
+  }else if(20 < age && age <= 30){
+    return '20'
+  }else if(30 < age && age <= 40){
+    return '30'
+  }else if(40 < age && age <= 50){
+    return '40'
+  }else if(50< age && age <= 60){
+    return '50'
+  }else if(60 < age && age <= 70){
+    return '60'
+  }else {
+    return '70'
+  }
+}
+
+exports.test = functions.https.onRequest(() => {
+  return admin.firestore().collection(detailPageLogIndex).get().then(
+    snapshot => {
+      snapshot.forEach(d => {
+        const data = d.data() as logType;
+        if(data.system.documentID === "0er615WNs8UDvJ0Fuj4S"){
+          console.log(data.user.birthday)
+        }
+      })
+    }
+  ).catch(err => console.error(err))
+});
 
 exports.backup = functions.https.onRequest(() => {
   return admin.firestore().collection(productionSystemIndex).get().then(
@@ -84,6 +125,7 @@ exports.backup = functions.https.onRequest(() => {
         data.dailyView = 0;
         data.weeklyView = Array(7).fill(0);
         data.monthlyView = 0;
+        data.ageGroup = [];
         admin.firestore().collection(systemIndex).doc(data.documentID).set(data).catch(err => console.error(err))
       })
     }
@@ -139,7 +181,8 @@ exports.resetWeeklyView = functions.pubsub
         })
       }
     )
-  })
+  });
+
 exports.resetMonthlyView = functions.pubsub
   .schedule("15 0 1 * *")
   .timeZone("Asia/Tokyo")
@@ -149,6 +192,7 @@ exports.resetMonthlyView = functions.pubsub
         snapshot.forEach(doc => {
           const data = doc.data() as System;
           data.monthlyView = 0;
+          data.ageGroup = [];
           admin.firestore().collection(systemIndex).doc(data.documentID).update(data).catch(err=>console.error(err));
         })
       }
@@ -170,17 +214,34 @@ const aggregate = (day: string) => {
       console.log("create DailyRanking");
       snapshot.forEach(doc => {
         const data = doc.data() as logType;
+        const currentAge = getAgeGroup(calcAge(data.user.birthday));
         const target = dailyRanking.find(logData => {
           return logData.documentID === data.documentID;
         });
-        if (target === undefined) {
+        if (target === undefined) { // Log一発目
+          const aG: ageGroup = {
+            count: 1,
+            age : currentAge
+          }
           const r: rankingType = {
             documentID: data.documentID,
             system: data.system,
-            count: 1
+            count: 1,
+            ageGroup: [aG]
           };
           dailyRanking.push(r);
-        } else {
+        } else { // Logに記録されてる
+          const targetAge = target.ageGroup.find(ag => {
+            return ag.age === currentAge
+          })
+          if(targetAge === undefined){ // この年代は最初
+            target.ageGroup.push({
+              count: 1,
+              age : currentAge
+            })
+          }else{
+            targetAge.count++
+          }
           target.count++;
         }
       });
@@ -208,15 +269,28 @@ const aggregate = (day: string) => {
             });
 
             data.weeklyView.shift();
-            if (target === undefined) {
+            if (target === undefined) { 
               data.dailyView = 0;
               data.weeklyView.push(0);
             } else {
+              // 閲覧された場合
               data.dailyView = target.count;
               data.weeklyView.push(target.count);
+
+              // ageGroupの処理
+              target.ageGroup.forEach(aG => {
+                const t = data.ageGroup.find(d => {return d.age === aG.age});
+                if (t === undefined){
+                  data.ageGroup.push(aG)
+                }else{
+                  t.count++
+                }
+              });
+              
             }
             data.monthlyView += data.dailyView;
             data.totalView += data.dailyView;
+            //保存
             admin
               .firestore()
               .collection(systemIndex)
@@ -230,6 +304,7 @@ const aggregate = (day: string) => {
       .catch(err => console.error(err));
     });
 }
+
 
 exports.onSystemCreated = functions.firestore
   .document(fireStoreIndex + "/{testId}")
@@ -324,3 +399,4 @@ const addNewData = async (system: System, indexName: string) => {
       console.error("error: ", err);
     });
 };
+
