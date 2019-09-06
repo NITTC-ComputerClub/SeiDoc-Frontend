@@ -23,7 +23,7 @@ export type UserState = {
   income: number;
   address: string;
   family: string;
-  sex: 'male' | 'female';
+  sex: 'male' | 'female' | 'None';
 };
 export type logType = {
   createdAt: number;
