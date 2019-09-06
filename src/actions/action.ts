@@ -1,6 +1,6 @@
 import actionCreatorFactory from 'typescript-fsa'
 import algoliasearch from 'algoliasearch';
-import { fireStore } from '../firebase/firebase'
+import { fireStore, algoliaSearchIndex } from '../firebase/firebase';
 import { Dispatch } from 'redux'
 import { systemIndex } from '../firebase/firebase'
 import { System, UserState } from '../types/type';
@@ -30,7 +30,7 @@ export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => 
 
 export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (dispatch: Dispatch) => {
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
-    const index = client.initIndex(systemIndex)
+    const index = client.initIndex(algoliaSearchIndex)
     dispatch(fetchSystemByAlgoliaSearchCreator.started())
     index.search({
         query: query,
