@@ -30,14 +30,18 @@ const ViewingStatus: React.FC<{documentId: string}> = props => {
               <h3>閲覧状況</h3>
               <table>
                   <thead>
-                      <td>今週の閲覧数</td>
-                      <td>今月の閲覧数</td>
-                      <td>総閲覧数</td>
+                      <tr>
+                        <th>今週の閲覧数</th>
+                        <th>今月の閲覧数</th>
+                        <th>総閲覧数</th>
+                      </tr>
                   </thead>
                   <tbody>
-                      <td>{detail.weeklyView.reduce((previous,current) => previous=+current)}</td>
-                      <td>{detail.monthlyView}</td>
-                      <td>{detail.totalView}</td>
+                      <tr>
+                        <th>{detail.weeklyView.reduce((previous,current) => previous=+current)}</th>
+                        <th>{detail.monthlyView}</th>
+                        <th>{detail.totalView}</th>
+                      </tr>
                   </tbody>
               </table>
               {detail.ageGroup.length === 0 ? 
@@ -45,12 +49,16 @@ const ViewingStatus: React.FC<{documentId: string}> = props => {
                 :
                 <table>
                     <thead>
+                        <tr>
                         <td colSpan={3} align="center">よく閲覧している層</td>
+                        </tr>
                     </thead>
                     <tbody>
-                        {detail.ageGroup.map((d,i) => (
-                            <td>{i+1}位: {d.age}代</td>
-                        ))}
+                        <tr>
+                            {detail.ageGroup.map((d,i) => (
+                                <td key={i}>{i+1}位: {d.age}代</td>
+                            ))}
+                        </tr>
                     </tbody>
                 </table>
               }
