@@ -29,7 +29,6 @@ type fireStorePopularSystemType = {
 const PopularSystemList: React.FC = () => {
   const [rankingData, setRankingData] = useState<rankingType[]>([
     {
-      count: -1,
       system: {
         Name: "",
         Department: "",
@@ -47,9 +46,12 @@ const PopularSystemList: React.FC = () => {
         totalView: 0,
         dailyView: 0,
         weeklyView: [0,0,0,0,0,0,0],
-        monthlyView:0
+        monthlyView:0,
+        ageGroup: []
       },
-      documentID: "XXX"
+      documentID: "XXX",
+      count: -1,
+      ageGroup: []
     }
   ]);
 

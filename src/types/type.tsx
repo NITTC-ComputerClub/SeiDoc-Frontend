@@ -33,6 +33,7 @@ export type rankingType = {
   documentID: string;
   system: System;
   count: number;
+  ageGroup: ageGroup[];
 };
 
 export type detailPageLogData = {
@@ -79,7 +80,12 @@ export type System = {
   weeklyView: number[];
   monthlyView: number;
   dailyView: number;
+  ageGroup: ageGroup[];
 };
+export type ageGroup = {
+  count: number;
+  age: '0' | '10' | '20' | '30' | '40' | '50' | '60' | '70'
+}
 
 export type SystemsState = {
   systems: Array<System>;

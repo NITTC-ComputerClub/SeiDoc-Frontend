@@ -21,7 +21,8 @@ const Registration: React.FC = () => {
         totalView: 0,
         dailyView: 0,
         weeklyView: [0,0,0,0,0,0,0],
-        monthlyView: 0
+        monthlyView: 0,
+        ageGroup: []
     }
     let [currentData, setCurrentData] = useState<System>(newSystem)
 

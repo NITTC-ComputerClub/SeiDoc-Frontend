@@ -21,6 +21,7 @@ const initialState: DetailState = {
         dailyView: 0,
         weeklyView: [0,0,0,0,0,0,0],
         monthlyView: 0,
+        ageGroup: [],
     }
 }
 

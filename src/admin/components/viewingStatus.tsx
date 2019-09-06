@@ -2,19 +2,28 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store';
+import { ageGroup } from '../../types/type';
 
+const compare = (a: ageGroup, b: ageGroup) => {
+    if (a.count > b.count) {
+      return -1;
+    } else {
+      return 1;
+    }
+  };
 
 const ViewingStatus: React.FC<{documentId: string}> = props => {
     let detail = useSelector((state: AppState) => state.detailState.detail)
     const isSystemLoaded = () => {
         // Nameだけでよさそう
         if ((detail.Name !== "") && (detail.Detail !== "") && (detail.Department !== "")) {
+            detail.ageGroup.sort(compare);
             return true
         } else {
             return false
         }
     }
-
+    
     if (isSystemLoaded()) {
         return (
           <div>
@@ -31,16 +40,20 @@ const ViewingStatus: React.FC<{documentId: string}> = props => {
                       <td>{detail.totalView}</td>
                   </tbody>
               </table>
-              <table>
-                  <thead>
-                     <td colSpan={3} align="center">よく閲覧している層</td>
-                  </thead>
-                  <tbody>
-                      <td>1位: 30代女性</td>
-                      <td>2位: 30代男性</td>
-                      <td>3位: 40代女性</td>
-                  </tbody>
-              </table>
+              {detail.ageGroup.length === 0 ? 
+                <div /> 
+                :
+                <table>
+                    <thead>
+                        <td colSpan={3} align="center">よく閲覧している層</td>
+                    </thead>
+                    <tbody>
+                        {detail.ageGroup.map((d,i) => (
+                            <td>{i+1}位: {d.age}代</td>
+                        ))}
+                    </tbody>
+                </table>
+              }
           </div>
         )
     } else{
