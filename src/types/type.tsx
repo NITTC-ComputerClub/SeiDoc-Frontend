@@ -52,6 +52,7 @@ export type UserState = {
   isAdmin: boolean; //
   city: string; 
   department: string;
+  sex: 'male' | 'female' | 'None';
 };
 
 
@@ -74,10 +75,6 @@ export type System = {
   isDeleted: boolean;
   ExpireAt: number;
   documentID: string;
-  totalView: number;
-  weeklyView: number[];
-  monthlyView: number;
-  dailyView: number;
 };
 
 export type SystemsState = {
