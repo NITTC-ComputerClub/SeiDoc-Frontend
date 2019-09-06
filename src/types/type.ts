@@ -33,6 +33,7 @@ export type rankingType = {
   documentID: string;
   system: System;
   count: number;
+  ageGroup: ageGroup[];
 };
 
 export type detailPageLogData = {
@@ -52,6 +53,7 @@ export type UserState = {
   isAdmin: boolean; //
   city: string; 
   department: string;
+  sex: 'male' | 'female' | 'None';
 };
 
 
@@ -74,7 +76,16 @@ export type System = {
   isDeleted: boolean;
   ExpireAt: number;
   documentID: string;
+  totalView: number;
+  weeklyView: number[];
+  monthlyView: number;
+  dailyView: number;
+  ageGroup: ageGroup[];
 };
+export type ageGroup = {
+  count: number;
+  age: '0' | '10' | '20' | '30' | '40' | '50' | '60' | '70'
+}
 
 export type SystemsState = {
   systems: Array<System>;
