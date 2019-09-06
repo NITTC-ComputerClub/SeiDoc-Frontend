@@ -22,6 +22,7 @@ export type UserState = {
   income: number;
   address: string;
   family: string;
+  sex: 'male' | 'female';
 };
 export type logType = {
   createdAt: number;
@@ -64,6 +65,15 @@ const getNowYMD = () => {
   const result = y + "-" + m + "-" + d;
   return result;
 };
+/*
+const calcAge = function(birthday: string){
+  const d = new Date();
+  const today = ''+d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
+  const b = new Date(birthday);
+  const b_day = ''+b.getFullYear()+('0'+(b.getMonth()+1)).slice(-2)+('0'+b.getDate()).slice(-2);
+  return Math.floor((parseInt(today)-parseInt(b_day))/10000);
+};
+*/
 
 exports.backup = functions.https.onRequest(() => {
   return admin.firestore().collection(productionSystemIndex).get().then(
