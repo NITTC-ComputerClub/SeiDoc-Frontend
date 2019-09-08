@@ -8,14 +8,15 @@ const env = functions.config();
 
 import * as algoliaSearch from "algoliasearch";
 
-const client = algoliaSearch(env.algolia.appid, env.algolia.apikey);
-const index = client.initIndex("testData");
-const fireStoreIndex = "testData";
-
+export const productionSystemIndex = "systems";
 export const detailPageLogIndex = "detailPageLog";
 export const popularPageIndex = "popularSystem";
-export const systemIndex = "testData2";
-export const productionSystemIndex = "testData";
+
+const client = algoliaSearch(env.algolia.appid, env.algolia.apikey);
+const index = client.initIndex(productionSystemIndex);
+
+
+
 export type UserState = {
   userId: string;
   nickName: string;
@@ -126,12 +127,12 @@ exports.backup = functions.https.onRequest(() => {
         data.weeklyView = Array(7).fill(0);
         data.monthlyView = 0;
         data.ageGroup = [];
-        admin.firestore().collection(systemIndex).doc(data.documentID).set(data).catch(err => console.error(err))
+        //admin.firestore().collection(CAREGORY_NAME).doc(data.documentID).set(data).catch(err => console.error(err))
       })
     }
   ).then(() => console.log("ばっくあっぷ だん"))
 })
-
+/*
 exports.aggregate0 = functions.https.onRequest(() => {
   const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
   aggregate(date[0]).catch(err=>console.error(err))
@@ -160,7 +161,7 @@ exports.aggregate6 = functions.https.onRequest(() => {
   const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
   aggregate(date[6]).catch(err=>console.error(err))
 })
-
+*/
 exports.aggregate_Cron = functions.pubsub
   .schedule("5 0 * * *")
   .timeZone("Asia/Tokyo")
@@ -172,12 +173,12 @@ exports.resetWeeklyView = functions.pubsub
   .schedule("10 0 * * 1")
   .timeZone("Asia/Tokyo")
   .onRun(() => {
-    return admin.firestore().collection(systemIndex).get().then(
+    return admin.firestore().collection(productionSystemIndex).get().then(
       snapshot => {
         snapshot.forEach(doc => {
           const data = doc.data() as System;
           data.weeklyView = [data.weeklyView[6],0,0,0,0,0,0];
-          admin.firestore().collection(systemIndex).doc(data.documentID).update(data).catch(err=>console.error(err));
+          admin.firestore().collection(productionSystemIndex).doc(data.documentID).update(data).catch(err=>console.error(err));
         })
       }
     )
@@ -187,13 +188,13 @@ exports.resetMonthlyView = functions.pubsub
   .schedule("15 0 1 * *")
   .timeZone("Asia/Tokyo")
   .onRun(() => {
-    return admin.firestore().collection(systemIndex).get().then(
+    return admin.firestore().collection(productionSystemIndex).get().then(
       snapshot => {
         snapshot.forEach(doc => {
           const data = doc.data() as System;
           data.monthlyView = 0;
           data.ageGroup = [];
-          admin.firestore().collection(systemIndex).doc(data.documentID).update(data).catch(err=>console.error(err));
+          admin.firestore().collection(productionSystemIndex).doc(data.documentID).update(data).catch(err=>console.error(err));
         })
       }
     );
@@ -259,7 +260,7 @@ const aggregate = (day: string) => {
       console.log("Update each systems")
       admin
         .firestore()
-        .collection(systemIndex)
+        .collection(productionSystemIndex)
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
@@ -293,7 +294,7 @@ const aggregate = (day: string) => {
             //保存
             admin
               .firestore()
-              .collection(systemIndex)
+              .collection(productionSystemIndex)
               .doc(data.documentID)
               .update(data)
               .catch(err => console.error(err));
@@ -307,13 +308,13 @@ const aggregate = (day: string) => {
 
 
 exports.onSystemCreated = functions.firestore
-  .document(fireStoreIndex + "/{testId}")
+  .document(productionSystemIndex + "/{testId}")
   .onCreate((snap, context) => {
     const data = snap.data() as System;
     data.documentID = snap.id;
     admin
       .firestore()
-      .collection(fireStoreIndex)
+      .collection(productionSystemIndex)
       .doc(snap.id)
       .update(data)
       .then(() => {
@@ -326,6 +327,23 @@ exports.onSystemCreated = functions.firestore
         });
       })
       .catch(err => console.error(err));
+  });
+
+  exports.addIndexToAlgoliaSearch = functions.https.onRequest(() => {
+    admin.firestore().collection(productionSystemIndex).get().then(
+      snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data() as System;
+          index.addObject(data, (err, res) => {
+            if (err) {
+              console.error(err);
+            }else {
+              console.log(res);
+            }
+          });
+        });
+      }
+    ).catch(err => console.error(err));
   });
 
 exports.addNewSystemsToAlgoliaSearch = functions.https.onRequest(
@@ -360,6 +378,7 @@ exports.addNewSystemsToAlgoliaSearch = functions.https.onRequest(
       .catch(err => console.error(err));
   }
 );
+
 exports.addNewSystemsByGAS = functions.https.onRequest((req, resp) => {
   if (req.method !== "GET") {
     resp.status(405).send("Method Not Allowed");
@@ -377,7 +396,7 @@ exports.addNewSystemsByGAS = functions.https.onRequest((req, resp) => {
         system.UpdatedAt = Date.now();
         system.isDeleted = false;
         system.UpdatedAt = 2262025600000;
-        await addNewData(system, fireStoreIndex);
+        await addNewData(system, productionSystemIndex);
       }
     })
     .then(res => {
