@@ -6,7 +6,7 @@ import SystemRankingList from '../components/systemRankingList'
 
 type historyProps = RouteComponentProps;
 
-const ViewingStatus: React.FC<historyProps> = props => {
+const Status: React.FC<historyProps> = props => {
     const categoryList: Array<string> = [
         '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
     ]
@@ -29,4 +29,4 @@ const ViewingStatus: React.FC<historyProps> = props => {
     )
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(ViewingStatus)
+export default withRouter<historyProps, React.FC<historyProps>>(Status)

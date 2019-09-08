@@ -12,7 +12,7 @@ import SignUp from './pages/userRegistration'
 import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
 import AdminCategory from './admin/pages/category'
-import AdminViewingStatus from './admin/pages/viewingStatus'
+import AdminViewingStatus from './admin/pages/status'
 import './scss/App.scss'
 
 const App: React.FC = () => {
