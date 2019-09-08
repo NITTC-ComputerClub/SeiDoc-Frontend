@@ -7,7 +7,6 @@ admin.initializeApp();
 const env = functions.config();
 
 import * as algoliaSearch from "algoliasearch";
-import { fireStore } from '../../src/firebase/firebase';
 
 export const productionSystemIndex = "systems";
 export const detailPageLogIndex = "detailPageLog";
@@ -309,8 +308,8 @@ const aggregate = (day: string) => {
 }
 
 exports.onSystemDeleted = functions.fireStore.document(productionSystemIndex + "/{testId}").onDelete((snap,context) => {
-  const data = snap.data() as System;
-  const filter = 'documentID:' + data.documentID
+  //const data = snap.data() as System;
+  const filter = 'documentID:' + snap.id;
   index.deleteBy({filters: filter},((err,res) => {
     if (err) {
       console.error(err)
