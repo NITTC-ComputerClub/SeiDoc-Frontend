@@ -13,7 +13,8 @@ const initialState: UserState = {
     family: '',
     isAdmin: false,
     city: '',  
-    department: ''
+    department: '',
+    sex: 'None'
 }
 
 

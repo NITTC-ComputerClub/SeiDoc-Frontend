@@ -7,8 +7,6 @@ import { fireStore, systemIndex } from '../firebase/firebase';
 import { detailPageLogger } from '../firebase/logger'
 import { System } from '../types/type';
 import "../scss/detail.scss"
-import Header from '../pages/header'
-import Footer from './footer';
 
 
 
@@ -46,7 +44,6 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
         return (
             <div>
                 <div className="detail">
-                    <Header />
                     <h1>{detail.Name}</h1>
                     <h2>援助対象者</h2>
                     <p className="detailParagraph">{detail.Target}</p>
@@ -62,7 +59,6 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
                         </a>
                     </div>
                 </div>
-                <Footer />
             </div>
         )
     } else {  //等しくないときはprops優先でfetch
