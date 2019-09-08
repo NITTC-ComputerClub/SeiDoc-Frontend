@@ -167,7 +167,7 @@ exports.aggregate_Cron = functions.pubsub
   .schedule("5 0 * * *")
   .timeZone("Asia/Tokyo")
   .onRun(() => {
-    aggregate(getNowYMD()).catch(err=>console.error(err));
+    return aggregate(getNowYMD()).catch(err=>console.error(err));
 });
 
 exports.resetWeeklyView = functions.pubsub
@@ -313,8 +313,10 @@ exports.onSystemDeleted = functions.fireStore.document(productionSystemIndex + "
   index.deleteBy({filters: filter},((err,res) => {
     if (err) {
       console.error(err)
+      return false;
     }else{
       console.log(res)
+      return true;
     }
   }));
 });
@@ -324,7 +326,7 @@ exports.onSystemCreated = functions.firestore
   .onCreate((snap, context) => {
     const data = snap.data() as System;
     data.documentID = snap.id;
-    admin
+    return admin
       .firestore()
       .collection(productionSystemIndex)
       .doc(snap.id)
@@ -342,7 +344,7 @@ exports.onSystemCreated = functions.firestore
   });
 
   exports.addIndexToAlgoliaSearch = functions.https.onRequest(() => {
-    admin.firestore().collection(productionSystemIndex).get().then(
+    return admin.firestore().collection(productionSystemIndex).get().then(
       snapshot => {
         snapshot.forEach(doc => {
           const data = doc.data() as System;
@@ -419,7 +421,7 @@ exports.addNewSystemsByGAS = functions.https.onRequest((req, resp) => {
 });
 
 const addNewData = async (system: System, indexName: string) => {
-  admin
+  return admin
     .firestore()
     .collection(indexName)
     .add(system)
