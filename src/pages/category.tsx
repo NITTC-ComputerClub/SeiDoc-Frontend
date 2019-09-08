@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import SearchBar from '../components/searchBar'
-import CategoryButton from '../components/categoryButton'
+import CategoryCardsList from '../components/categoryCardsList'
 import { useDispatch } from 'react-redux'
 import { deleteTagCreator } from '../actions/action'
 import Footer from '../components/footer';
@@ -21,7 +21,7 @@ const Category: React.FC = () => {
             <div className="categoryContainer">
                 <SearchBar pushTo="/search"/>
                 <h2>カテゴリー</h2>
-                <CategoryButton pushTo="/search"/>
+                <CategoryCardsList pushTo="/search"/>
             </div>
             <Footer />
         </div>
