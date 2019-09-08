@@ -172,7 +172,7 @@ const Input: React.FC = () => {
                             <option value="その他">その他</option>
                         </Select>
                         <Label>援助対象者</Label>
-                        <InputField type='text' onChange={e => { target = e.target.value }} placeholder="援助方法を入力" />
+                        <InputField type='text' onChange={e => { target = e.target.value }} placeholder="援助対象者4を入力" />
                         <Label>援助方法</Label>
                         <Select onChange={e => { sysmethod = [e.target.value] }}>
                             <option value='金銭補助' >金銭補助</option>
