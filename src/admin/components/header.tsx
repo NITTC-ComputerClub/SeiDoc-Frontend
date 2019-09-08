@@ -21,14 +21,10 @@ const StyledLink = styled(Link)`
     line-height: 48px;
 `
 
-const StyledNav = styled.nav`
-    display: flex;
-`
-
 const AdminHeader: React.FC<historyProps> = props => {
     return(
         <StyledHeader>
-            <StyledNav>
+            <nav>
                 <StyledLink to="/">
                     制度一覧
                 </StyledLink>
@@ -38,7 +34,7 @@ const AdminHeader: React.FC<historyProps> = props => {
                 <StyledLink to="/">
                     制度閲覧状況
                 </StyledLink>
-            </StyledNav>
+            </nav>
             <SearchBar
                 pushTo="/admin/search"
                 right
