@@ -3,6 +3,16 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store';
 import { ageGroup } from '../../types/type';
+import styled from 'styled-components';
+import setting from '../../designSystem/setting';
+
+type GridProps = {
+    gap?: boolean
+}
+
+type PProps = {
+    center?: boolean
+}
 
 const compare = (a: ageGroup, b: ageGroup) => {
     if (a.count > b.count) {
@@ -10,7 +20,50 @@ const compare = (a: ageGroup, b: ageGroup) => {
     } else {
       return 1;
     }
-  };
+};
+
+const getGap = (props: GridProps) => {
+    if (props.gap) {
+        return `grid-gap: 2px;`
+    }
+}
+
+const getTextAlign = (props: PProps) => {
+    if (props.center) {
+        return ` text-align: center`;
+    }
+}
+
+const Grid = styled.div`
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    ${(props: GridProps) => getGap(props)}
+    background-color: ${setting.White};
+    border-radius: 4px;
+`
+
+const GridTop = styled.div`
+    grid-column: 1 / 4;
+    background-color: ${setting.ThemeGreen};
+`
+
+const ViewTile = styled.div`
+    h3 {
+        background-color: ${setting.ThemeGreen};
+        margin: 0;
+        padding: 8px 16px;
+        font-weight: lighter;
+        font-size: ${setting.H2};
+        ${(props: PProps) => getTextAlign(props)};
+    }
+
+    p {
+        margin: 0;
+        padding: 8px 16px;
+        text-align: center;
+    }
+`
 
 const ViewingStatus: React.FC<{documentId: string}> = props => {
     let detail = useSelector((state: AppState) => state.detailState.detail)
@@ -26,43 +79,41 @@ const ViewingStatus: React.FC<{documentId: string}> = props => {
     
     if (isSystemLoaded()) {
         return (
-          <div>
-              <h3>閲覧状況</h3>
-              <table>
-                  <thead>
-                      <tr>
-                        <th>今週の閲覧数</th>
-                        <th>今月の閲覧数</th>
-                        <th>総閲覧数</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                        <th>{detail.weeklyView.reduce((previous,current) => previous=+current)}</th>
-                        <th>{detail.monthlyView}</th>
-                        <th>{detail.totalView}</th>
-                      </tr>
-                  </tbody>
-              </table>
-              {detail.ageGroup.length === 0 ? 
-                <div /> 
-                :
-                <table>
-                    <thead>
-                        <tr>
-                        <td colSpan={3} align="center">よく閲覧している層</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {detail.ageGroup.map((d,i) => (
-                                <td key={i}>{i+1}位: {d.age}代</td>
-                            ))}
-                        </tr>
-                    </tbody>
-                </table>
-              }
-          </div>
+            <div>
+                <h2>閲覧状況</h2>
+                <Grid gap>
+                    <ViewTile center>
+                        <h3>今週の閲覧数</h3>
+                        <p>{detail.weeklyView.reduce((previous,current) => previous=+current)}</p>
+                    </ViewTile>
+                    <ViewTile center>
+                        <h3>今月の閲覧数</h3>
+                        <p>{detail.monthlyView}</p>
+                    </ViewTile>
+                    <ViewTile center>
+                        <h3>総閲覧数</h3>
+                        <p>{detail.totalView}</p>
+                    </ViewTile>
+                    {detail.ageGroup.length === 0 ? 
+                        <div /> 
+                        :
+                            <GridTop>
+                                <Grid>
+                                    <GridTop>
+                                        <ViewTile>
+                                            <h3>よく閲覧している層</h3>
+                                        </ViewTile>
+                                    </GridTop>
+                                    {detail.ageGroup.map((d,i) => (
+                                        <ViewTile key={i}>
+                                            <p>{i+1}位: {d.age}代</p>
+                                        </ViewTile>
+                                    ))}
+                                </Grid>
+                            </GridTop>
+                    }
+                </Grid>
+            </div>
         )
     } else{
         return (
