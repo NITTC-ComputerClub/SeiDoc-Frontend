@@ -8,16 +8,7 @@ import Footer from '../components/footer';
 import styled from 'styled-components';
 import setting from '../designSystem/setting';
 import Button from '../designSystem/Button';
-
-const MainContents = styled.div`
-    box-sizing: border-box;
-    margin: 0 auto;
-    max-width: 960px;
-`
-
-const Container = styled.div`
-    margin: 0 16px 32px 16px;
-`
+import { Container, MainContents } from '../designSystem/Page';
 
 const Title = styled.h1`
     font-size: ${setting.H1};

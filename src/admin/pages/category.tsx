@@ -5,17 +5,8 @@ import Header from '../components/header'
 import Footer from '../../components/footer-pc'
 import CategoryCardsList from '../../components/categoryCardsList'
 import styled from 'styled-components';
+import { Container, MainContents } from '../../designSystem/Page';
 type historyProps = RouteComponentProps;
-
-const MainContents = styled.div`
-    box-sizing: border-box;
-    margin: 0 auto;
-    max-width: 960px;
-`
-
-const Container = styled.div`
-    margin: 0 16px 32px 16px;
-`
 
 const Search: React.FC<historyProps> = props => {
     return(
