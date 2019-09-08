@@ -13,6 +13,18 @@ import styled from 'styled-components';
 
 type historyProps = RouteComponentProps
 
+const StyledSignIn = styled.div`
+    padding: 0 32px;
+`
+
+const StyledDiv = styled.div`
+    margin-top: 32px;
+
+    display: flex;
+    button {
+        margin: 0 0 0 auto;
+    }
+`
 
 const SignIn: React.FC<historyProps> = (props) => {
     let [loginData, setLoginData] = useState<loginDataType>({ email: '', password: '' })
@@ -61,21 +73,8 @@ const SignIn: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
-    const SignIn = styled.div`
-        padding: 0 32px;
-    `
-
-    const StyledDiv = styled.div`
-        margin-top: 32px;
-
-        display: flex;
-        button {
-            margin: 0 0 0 auto;
-        }
-    `
-
     return (
-        <SignIn>
+        <StyledSignIn>
             <TextField label="メールアドレス" width="100%" type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
             <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}/>
             <StyledDiv className="lrContents">
@@ -84,9 +83,8 @@ const SignIn: React.FC<historyProps> = (props) => {
                     ログイン
                 </Button>
             </StyledDiv>
-        </SignIn>
+        </StyledSignIn>
     )
 }
-
 
 export default withRouter<historyProps, React.FC<historyProps>>(SignIn)
