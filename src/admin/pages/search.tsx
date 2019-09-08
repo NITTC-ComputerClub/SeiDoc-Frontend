@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchBar from '../../components/searchBar'
 import Tag from '../../components/tag'
-import SystemList from '../components/systemList'
+import AdminSystemList from '../components/adminSystemList'
 import Footer from '../../components/footer'
 import Header from '../components/header'
 
@@ -15,7 +15,7 @@ const Search: React.FC = () => {
                 </div>
                 <Tag pushTo="/category" />
                 <h3>検索結果</h3>
-                <SystemList />
+                <AdminSystemList />
             </div>
             <Footer />
         </div>

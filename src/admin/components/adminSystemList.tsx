@@ -47,7 +47,7 @@ const SystemList: React.FC<historyProps> = (props) => {
                     {systems.map((system: System) => (
                         <li key={system.Name} onClick={() => {
                             updateDetail(system)    //リロードなしでページを遷移させるのに必要
-                            props.history.push('/detail/' + system.documentID)
+                            props.history.push('/admin/detail/' + system.documentID)
                         }
                         }>
                             <h4>{system.Name}</h4>
