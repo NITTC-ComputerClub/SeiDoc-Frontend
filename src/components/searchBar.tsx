@@ -19,7 +19,7 @@ type SearchBarProps = {
 }
 
 const StyledSearchBar = styled.div`
-    display: inline-block;
+    display: block;
     max-width: 420px;
     min-width: 304px;
     height: 48px;
