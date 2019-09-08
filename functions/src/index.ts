@@ -7,6 +7,7 @@ admin.initializeApp();
 const env = functions.config();
 
 import * as algoliaSearch from "algoliasearch";
+import { fireStore } from '../../src/firebase/firebase';
 
 export const productionSystemIndex = "systems";
 export const detailPageLogIndex = "detailPageLog";
@@ -132,6 +133,7 @@ exports.backup = functions.https.onRequest(() => {
     }
   ).then(() => console.log("ばっくあっぷ だん"))
 })
+
 /*
 exports.aggregate0 = functions.https.onRequest(() => {
   const date = ["2019-08-30","2019-08-31","2019-09-01","2019-09-02","2019-09-03","2019-09-04","2019-09-05"]
@@ -306,6 +308,17 @@ const aggregate = (day: string) => {
     });
 }
 
+exports.onSystemDeleted = functions.fireStore.document(productionSystemIndex + "/{testId}").onDelete((snap,context) => {
+  const data = snap.data() as System;
+  const filter = 'documentID:' + data.documentID
+  index.deleteBy({filters: filter},((err,res) => {
+    if (err) {
+      console.error(err)
+    }else{
+      console.log(res)
+    }
+  }));
+});
 
 exports.onSystemCreated = functions.firestore
   .document(productionSystemIndex + "/{testId}")
