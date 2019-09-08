@@ -37,7 +37,7 @@ const StyledCategoryCard = styled.button`
 const Grid = styled.div`
     display: grid;
     grid-gap: 16px;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
 `
 
 const CategoryCardsList: React.FC<historyProps> = (props) => {

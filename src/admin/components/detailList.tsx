@@ -3,11 +3,48 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateDetailCreator } from '../../actions/action'
 import { AppState } from '../../store'
 import { fireStore, systemIndex } from '../../firebase/firebase';
-import "../../scss/detail.scss"
 import Indicator from '../../components/indicator';
 import { System } from '../../types/type';
 import { detailPageLogger } from '../../firebase/logger';
+import styled from 'styled-components';
+import setting from '../../designSystem/setting';
+import Button from '../../designSystem/Button';
 
+const SystemTile = styled.div`
+    overflow: hidden;
+    background-color: ${setting.White};
+    border-radius: 4px;
+
+    h3 {
+        margin: 0;
+        padding: 8px 16px;
+        background-color: ${setting.ThemeGreen};
+        font-weight: lighter;
+        font-size: ${setting.H2}
+    }
+
+    p, a {
+        display: block;
+        padding : 8px 16px;
+        margin: 0;
+    }
+`
+
+const FlexBox = styled.div`
+    display: flex;
+
+    h2 {
+        font-size: ${setting.H2}
+    }
+
+    button {
+        margin: auto 0 auto auto;
+    }
+`
+
+const Title = styled.h1`
+    font-size: ${setting.H1}
+`
 
 const DetailList: React.FC<{ documentId: string }> = (props) => {
     const user = useSelector((state: AppState) => state.userState)
@@ -42,25 +79,25 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
         detailPageLogger(detail.documentID, user, detail)
         return (
             <div>
-                <div>
+                <Title>
                     {detail.Name}
-                </div>
-                <div>
+                </Title>
+                <FlexBox>
                     <h2>公開内容</h2>
-                    <button>編集</button>
-                </div>
-                <div className="detail">
-                    <h2>援助対象者</h2>
+                    <Button blue>編集</Button>
+                </FlexBox>
+                <SystemTile>
+                    <h3>援助対象者</h3>
                     <p>{detail.Target}</p>
-                    <h2>援助方法</h2>
+                    <h3>援助方法</h3>
                     <p>{detail.Method}</p>
-                    <h2>担当部署</h2>
+                    <h3>担当部署</h3>
                     <p>{detail.Department}</p>
-                    <h2>詳細</h2>
+                    <h3>詳細</h3>
                     <p>{detail.Detail}</p>
-                    <h2>公式サイト</h2>
+                    <h3>公式サイト</h3>
                     <a href={detail.Site}>{detail.Site}</a>
-                </div>
+                </SystemTile>
             </div>
         )
     } else {  //等しくないときはprops優先でfetch
