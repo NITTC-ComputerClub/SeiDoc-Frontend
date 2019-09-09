@@ -3,8 +3,26 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import Header from '../components/header'
 import Footer from '../../components/footer'
 import SystemRankingList from '../components/systemRankingList'
+import { Container, MainContents } from '../../designSystem/Page';
+import styled from 'styled-components';
+import setting from '../../designSystem/setting';
 
 type historyProps = RouteComponentProps;
+
+const Title = styled.h1`
+    font-size: ${setting.H1};
+`
+
+const Label = styled.h1`
+    font-size: ${setting.H3};
+`
+
+const Select = styled.select`
+    height: 32px;
+    width: 104px;
+    background-color: ${setting.White};
+    border-radius: 2px;
+`
 
 const Status: React.FC<historyProps> = props => {
     const categoryList: Array<string> = [
@@ -13,17 +31,19 @@ const Status: React.FC<historyProps> = props => {
     return (
         <div>
             <Header />
-                <div>
-                    <h2>ランキング</h2>
-                    <h3>カテゴリ</h3>
-                    <select>
-                        <option key='すべて'>すべて</option>
-                        {categoryList.map((category) => (
-                            <option key={category}>{category}</option>
-                        ))}
-                    </select>
-                    <SystemRankingList />
-                </div>
+                <Container>
+                    <MainContents>
+                        <Title>ランキング</Title>
+                        <Label>カテゴリ</Label>
+                        <Select>
+                            <option key='すべて'>すべて</option>
+                            {categoryList.map((category) => (
+                                <option key={category}>{category}</option>
+                            ))}
+                        </Select>
+                        <SystemRankingList />
+                    </MainContents>
+                </Container>
             <Footer />
         </div>
     )

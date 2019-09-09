@@ -1,52 +1,80 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
+import styled from 'styled-components';
+import SystemCard from './systemCard';
 
 type historyProps = RouteComponentProps
 
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 16px;
+`
+
 const SystemRankingList: React.FC<historyProps> = props => {
     return (
-        <div>
-            <h4>1位</h4>
-            <h2>私学助成</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>2位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>3位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>4位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>5位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>6位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>7位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>8位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>9位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-            <h4>10位</h4>
-            <h2>児童手当</h2>
-            <h3>1129</h3>
-            <p>教育委員会事務局教務部学事課就学援助係</p>
-        </div>
+        <Grid>
+            <SystemCard
+                ranking={1}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={2}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={3}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={4}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={5}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={6}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={7}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={8}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={9}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+            <SystemCard
+                ranking={10}
+                systemName="私学助成"
+                view={1129}
+                department="教育委員会事務局教務部学事課就学援助係"
+            />
+        </Grid>
     )
 }
 
