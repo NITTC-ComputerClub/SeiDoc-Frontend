@@ -6,6 +6,8 @@ import Indicator from '../../user/components/indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
 import { System } from '../../types/type';
+import SystemCard from './systemCard';
+import Grid from '../../designSystem/Grid';
 
 type historyProps = RouteComponentProps
 
@@ -38,26 +40,24 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
         }
     }, [dispatch, tag, inputValue])
 
+    if (loading) {
+        return <Indicator />;
+    }
+
     return (
-        <div className="systemList">
-            {console.log('loading:', loading)}
-            {console.log('systems:', systems)}
-            {loading ? <Indicator /> :
-                <ul>
-                    {systems.map((system: System) => (
-                        <li key={system.Name} onClick={() => {
-                            updateDetail(system)    //リロードなしでページを遷移させるのに必要
-                            props.history.push('/admin/detail/' + system.documentID)
-                        }
-                        }>
-                            <h4>{system.Name}</h4>
-                            <h6>{system.totalView}</h6>
-                            <p>{system.Location}</p>
-                        </li>
-                    ))}
-                </ul>
-            }
-        </div>
+        <Grid>
+            {systems.map((system: System) => (
+                <SystemCard key={system.Name}
+                    onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}
+                    systemName={system.Name}
+                    view={system.totalView}
+                    department={system.Department}
+                />
+            ))}
+        </Grid>
     )
 }
 export default withRouter<historyProps, React.FC<historyProps>>(AdminSystemList)

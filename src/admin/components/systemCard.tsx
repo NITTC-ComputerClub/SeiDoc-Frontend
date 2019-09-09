@@ -5,11 +5,11 @@ import _ from 'lodash';
 import { FaEye } from 'react-icons/fa'
 import setting from '../../designSystem/setting';
 
-interface historyProps extends RouteComponentProps {
-    ranking: number,
+interface historyProps extends RouteComponentProps, React.HTMLAttributes<HTMLDivElement> {
+    ranking?: number,
     systemName: string,
     view: number,
-    department: string
+    department: string,
 }
 
 const Ranking = styled.h2`
@@ -49,11 +49,26 @@ const View = styled.p`
 `
 
 const SystemCard: React.FC<historyProps> = props => {
-    const systemCardProps = _.pick(props, ['ranking', 'systemName', 'view', 'department']);
+    const systemCardProps = _.omit(props, ['history', 'location', 'match', 'staticContext'])
+
+    if (props.ranking) {
+        return (
+            <div {...systemCardProps}>
+                <Ranking>{systemCardProps.ranking}位</Ranking>
+                <StyledSystemCard>
+                    <SystemName>{systemCardProps.systemName}</SystemName>
+                    <View>
+                        <FaEye className="icon" color={setting.TextGray} />
+                        {systemCardProps.view}
+                    </View>
+                    <Department>{systemCardProps.department}</Department>
+                </StyledSystemCard>
+            </div>
+        )
+    }
 
     return (
-        <div>
-            <Ranking>{systemCardProps.ranking}位</Ranking>
+        <div {...systemCardProps}>
             <StyledSystemCard>
                 <SystemName>{systemCardProps.systemName}</SystemName>
                 <View>

@@ -1,15 +1,9 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
-import styled from 'styled-components';
 import SystemCard from './systemCard';
+import Grid from '../../designSystem/Grid';
 
 type historyProps = RouteComponentProps
-
-const Grid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 16px;
-`
 
 const SystemRankingList: React.FC<historyProps> = props => {
     return (
