@@ -10,6 +10,20 @@ import TextField from '../../user/components/TextField';
 import styled from 'styled-components';
 
 type historyProps = RouteComponentProps
+
+const SignIn = styled.div`
+    padding: 0 32px;
+`
+
+const StyledDiv = styled.div`
+    margin-top: 32px;
+
+    display: flex;
+    button {
+        margin: 0 0 0 auto;
+    }
+`
+
 const SignInForm: React.FC<historyProps> = (props) => {
     let [loginData, setLoginData] = useState<loginDataType>({ email: '', password:''})
     let userData = useSelector((state: AppState) => state.userState);
@@ -63,19 +77,6 @@ const SignInForm: React.FC<historyProps> = (props) => {
         loginData[name] = e.target.value
         setLoginData(Object.assign({}, loginData))
     }
-
-    const SignIn = styled.div`
-        padding: 0 32px;
-    `
-
-    const StyledDiv = styled.div`
-        margin-top: 32px;
-
-        display: flex;
-        button {
-            margin: 0 0 0 auto;
-        }
-    `
 
     return (
         <SignIn>
