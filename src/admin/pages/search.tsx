@@ -1,5 +1,4 @@
 import React from 'react'
-import SearchBar from '../../components/searchBar'
 import Tag from '../../components/tag'
 import AdminSystemList from '../components/adminSystemList'
 import Footer from '../../components/footer'
