@@ -13,6 +13,7 @@ import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
 import AdminCategory from './admin/pages/category'
 import AdminStatus from './admin/pages/status'
+import AdminSearch from './admin/pages/search'
 import './scss/App.scss'
 
 import ML from './pages/machineLearning'
@@ -40,6 +41,7 @@ const App: React.FC = () => {
         <Route path='/admin/category' component={AdminCategory}/>
         <Route path='/admin/newSystem' component={AdminInput} />
         <Route path='/admin/status' component={AdminStatus} />
+        <Route path='/admin/search' component={AdminSearch} />
       </Switch>
     </div>
   )
