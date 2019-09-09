@@ -11,7 +11,6 @@ const Search: React.FC = () => {
             <Header />
             <div className="result">
                 <div className="container">
-                    <SearchBar pushTo="/admin/search" />
                 </div>
                 <Tag pushTo="/admin/category" />
                 <h3>検索結果</h3>
