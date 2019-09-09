@@ -3,7 +3,7 @@ import DetailList from '../components/detailList'
 import Header from '../pages/header'
 import Footer from '../components/footer'
 import { RouteComponentProps } from 'react-router'
-import "../scss/detail.scss"
+import "../../scss/detail.scss"
 
 type historyProps = RouteComponentProps<{documentId: string}>
 

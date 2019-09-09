@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from '../store'
-import { fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../actions/action'
+import { AppState } from '../../store'
+import { fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../../actions/action'
 import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
-import "../scss/systemList.scss"
-import { System } from '../types/type';
+import "../../scss/systemList.scss"
+import { System } from '../../types/type';
 import SystemCard from './Top/SystemCard';
 
 type historyProps = RouteComponentProps

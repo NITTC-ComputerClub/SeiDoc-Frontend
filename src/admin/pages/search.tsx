@@ -1,7 +1,7 @@
 import React from 'react'
-import Tag from '../../components/tag'
+import Tag from '../../user/components/tag'
 import AdminSystemList from '../components/adminSystemList'
-import Footer from '../../components/footer'
+import Footer from '../../user/components/footer'
 import Header from '../components/header'
 
 const Search: React.FC = () => {

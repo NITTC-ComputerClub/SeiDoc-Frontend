@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import Header from '../components/header'
-import Footer from '../../components/footer'
+import Footer from '../../user/components/footer'
 import SystemRankingList from '../components/systemRankingList'
 import { Container, MainContents } from '../../designSystem/Page';
 import styled from 'styled-components';

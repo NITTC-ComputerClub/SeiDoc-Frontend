@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
-import InputField, { InputFieldProps } from '../designSystem/InputField'
+import InputField, { InputFieldProps } from '../../designSystem/InputField'
 import styled from 'styled-components'
 import _ from 'lodash'
 

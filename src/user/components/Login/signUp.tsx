@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { loginCreator } from '../../actions/action'
-import { AppState } from '../../store'
-import { fireStore, auth } from '../../firebase/firebase'
+import { loginCreator } from '../../../actions/action'
+import { AppState } from '../../../store'
+import { fireStore, auth } from '../../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
-import '../../scss/signUp.scss'
-import { loginDataType, locationDataType, birthdayDataType, UserState, sexDataType } from '../../types/type';
-import Button from '../../designSystem/Button';
+import '../../../scss/signUp.scss'
+import { loginDataType, locationDataType, birthdayDataType, UserState, sexDataType } from '../../../types/type';
+import Button from '../../../designSystem/Button';
 
 type historyProps = RouteComponentProps
 
-const cityData = require('../../datas/cityData.json')
-const municipalityData = require('../../datas/municipalityData.json')
+const cityData = require('../../../datas/cityData.json')
+const municipalityData = require('../../../datas/municipalityData.json')
 
 const SignUp: React.FC<historyProps> = (props) => {
     const [loginData, setLoginData] = useState<loginDataType>({ email: '', password: '' })

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { updateDetailCreator } from '../../actions/action'
+import { updateDetailCreator } from '../../../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { System } from '../../types/type';
+import { System } from '../../../types/type';
 import styled from 'styled-components';
-import setting from '../../designSystem/setting';
+import setting from '../../../designSystem/setting';
 
 export type params = {
     system: System

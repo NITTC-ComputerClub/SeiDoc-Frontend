@@ -1,5 +1,5 @@
 import * as React from 'react'
-import '../../scss/ranking.scss'
+import '../../../scss/ranking.scss'
 
 const Ranking: React.FC = () => {
     return (

@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { initLoginCreator } from '../actions/action'
-import { AppState } from '../store'
+import { initLoginCreator } from '../../actions/action'
+import { AppState } from '../../store'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { auth } from '../firebase/firebase'
-import "../scss/header.scss"
-import Button from '../designSystem/Button';
+import { auth } from '../../firebase/firebase'
+import "../../scss/header.scss"
+import Button from '../../designSystem/Button';
 
 type historyProps = RouteComponentProps
 

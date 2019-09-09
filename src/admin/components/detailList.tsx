@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateDetailCreator } from '../../actions/action'
 import { AppState } from '../../store'
 import { fireStore, systemIndex } from '../../firebase/firebase';
-import Indicator from '../../components/indicator';
+import Indicator from '../../user/components/indicator';
 import { System } from '../../types/type';
 import { detailPageLogger } from '../../firebase/logger';
 import styled from 'styled-components';

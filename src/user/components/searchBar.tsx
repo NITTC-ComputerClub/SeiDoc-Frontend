@@ -1,9 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { AppState } from '../store'
+import { AppState } from '../../store'
 import { withRouter, RouteComponentProps } from 'react-router'
 import styled from 'styled-components';
-import setting from '../designSystem/setting';
+import setting from '../../designSystem/setting';
 
 interface historyProps extends RouteComponentProps {
     pushTo: string,

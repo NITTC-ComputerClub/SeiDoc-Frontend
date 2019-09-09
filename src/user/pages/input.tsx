@@ -1,14 +1,14 @@
 import React from 'react'
-import { fireStore, systemIndex } from '../firebase/firebase'
-import { AppState } from '../store';
+import { fireStore, systemIndex } from '../../firebase/firebase'
+import { AppState } from '../../store';
 import { useSelector } from 'react-redux';
-import { sendData } from '../types/type';
-import Header from '../admin/components/header';
-import Footer from '../components/footer';
+import { sendData } from '../../types/type';
+import Header from '../../admin/components/header';
+import Footer from '../../user/components/footer';
 import styled from 'styled-components';
-import setting from '../designSystem/setting';
-import Button from '../designSystem/Button';
-import { Container, MainContents } from '../designSystem/Page';
+import setting from '../../designSystem/setting';
+import Button from '../../designSystem/Button';
+import { Container, MainContents } from '../../designSystem/Page';
 
 const Title = styled.h1`
     font-size: ${setting.H1};

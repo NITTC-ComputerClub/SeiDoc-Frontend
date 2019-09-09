@@ -1,9 +1,9 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from '../store'
-import { deleteTagCreator, deleteSystemsCreator } from '../actions/action'
+import { AppState } from '../../store'
+import { deleteTagCreator, deleteSystemsCreator } from '../../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
-import '../scss/tag.scss'
+import '../../scss/tag.scss'
 
 interface historyProps extends RouteComponentProps {
     pushTo: string

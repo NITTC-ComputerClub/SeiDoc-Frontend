@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import SearchBar from '../components/searchBar'
 import CategoryCardsList from '../components/categoryCardsList'
 import { useDispatch } from 'react-redux'
-import { deleteTagCreator } from '../actions/action'
+import { deleteTagCreator } from '../../actions/action'
 import Footer from '../components/footer';
 import Header from '../pages/header'
-import "../scss/category.scss"
+import "../../scss/category.scss"
 
 
 const Category: React.FC = () => {

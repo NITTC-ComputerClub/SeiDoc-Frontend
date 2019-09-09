@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { loginCreator } from '../../actions/action'
-import { AppState } from '../../store'
-import { auth, fireStore } from '../../firebase/firebase'
+import { loginCreator } from '../../../actions/action'
+import { AppState } from '../../../store'
+import { auth, fireStore } from '../../../firebase/firebase'
 import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
-import { loginDataType, UserState } from '../../types/type';
-import Button from '../../designSystem/Button';
+import { loginDataType, UserState } from '../../../types/type';
+import Button from '../../../designSystem/Button';
 import TextField from '../TextField';
 import styled from 'styled-components';
 

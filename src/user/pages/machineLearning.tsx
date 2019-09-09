@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { machineLearningType, userProfile } from '../types/type'
+import { machineLearningType, userProfile } from '../../types/type'
 
 const MachineLearning: React.FC = () => {
     const machineLearning = (e: React.ChangeEvent<HTMLInputElement>) => {

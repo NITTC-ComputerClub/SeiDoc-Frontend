@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { updateDetailCreator } from '../actions/action'
-import { AppState } from '../store'
+import { updateDetailCreator } from '../../actions/action'
+import { AppState } from '../../store'
 import Indicator from './indicator'
-import { fireStore, systemIndex } from '../firebase/firebase';
-import { detailPageLogger } from '../firebase/logger'
-import { System } from '../types/type';
-import "../scss/detail.scss"
+import { fireStore, systemIndex } from '../../firebase/firebase';
+import { detailPageLogger } from '../../firebase/logger'
+import { System } from '../../types/type';
+import "../../scss/detail.scss"
 
 
 
