@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PopularSystemCard from './popularSystemCard'
+import SystemCard from './SystemCard'
 import { fireStore, popularPageIndex } from '../../firebase/firebase';
 import { rankingType } from '../../types/type'
 import Indicator from '../indicator'
@@ -29,7 +29,6 @@ type fireStorePopularSystemType = {
 const PopularSystemList: React.FC = () => {
   const [rankingData, setRankingData] = useState<rankingType[]>([
     {
-      count: -1,
       system: {
         Name: "",
         Department: "",
@@ -43,9 +42,16 @@ const PopularSystemList: React.FC = () => {
         UpdatedAt: 0,
         isDeleted: false,
         ExpireAt: 0,
-        documentID: "-1"
+        documentID: "-1",
+        totalView: 0,
+        dailyView: 0,
+        weeklyView: [0,0,0,0,0,0,0],
+        monthlyView:0,
+        ageGroup: []
       },
-      documentID: "XXX"
+      documentID: "XXX",
+      count: -1,
+      ageGroup: []
     }
   ]);
 
@@ -81,7 +87,7 @@ const PopularSystemList: React.FC = () => {
     <div className="popularSystemList">
       <ul>
         {rankingData.map(data => (
-          <PopularSystemCard key={data.system.Name} system={data.system} />
+          <SystemCard key={data.system.Name} system={data.system} />
         ))}
       </ul>
     </div>

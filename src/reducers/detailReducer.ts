@@ -17,6 +17,11 @@ const initialState: DetailState = {
         isDeleted: false,
         ExpireAt: 0,
         documentID: '-1',
+        totalView: 0,
+        dailyView: 0,
+        weeklyView: [0,0,0,0,0,0,0],
+        monthlyView: 0,
+        ageGroup: [],
     }
 }
 

@@ -12,7 +12,7 @@ const Search: React.FC = () => {
             <Header />
             <div className="result">
                 <div className="container">
-                    <SearchBar pushTo="/search"/>
+                    <SearchBar pushTo="/search" center/>
                 </div>
                 <Tag pushTo="/category"/>
                 <h3>検索結果</h3>

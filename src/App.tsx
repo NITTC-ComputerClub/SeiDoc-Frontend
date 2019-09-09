@@ -13,7 +13,10 @@ import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
 import AdminCategory from './admin/pages/category'
 import AdminSearch from './admin/pages/search'
+import AdminStatus from './admin/pages/status'
 import './scss/App.scss'
+
+import ML from './pages/machineLearning'
 
 const App: React.FC = () => {
   return (
@@ -29,12 +32,16 @@ const App: React.FC = () => {
         {/* MVP4で使えそう？ (inputとregistrationは機能被ってる)*/}
         <Route path='/view' component={ViewAll} />
         <Route path='/registration' component={Registration} />
+
+        {/* MVP5 */}
+        <Route path='/ml' component={ML} />
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
         <Route path='/admin/category' component={AdminCategory}/>
         <Route path='/admin/newSystem' component={AdminInput} />
         <Route path='/admin/search' component={AdminSearch} />
+        <Route path='/admin/status' component={AdminStatus} />
       </Switch>
     </div>
   )

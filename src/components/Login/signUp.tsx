@@ -8,6 +8,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../scss/signUp.scss'
 import { loginDataType, locationDataType, birthdayDataType, UserState } from '../../types/type';
+import Button from '../../designSystem/Button';
 
 type historyProps = RouteComponentProps
 
@@ -176,7 +177,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <button onClick={() => handleSignUp()}>登録</button>
+                <Button blue onClick={() => handleSignUp()}>登録</Button>
             </div>
         </div>
     )
