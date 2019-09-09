@@ -33,10 +33,11 @@ const SignInForm: React.FC<historyProps> = (props) => {
                         login(userData);
                         if(tmpUserState.isAdmin === true){
                             console.log("Welcome, Admin");   
-                            props.history.push('/'); // TODO: 職員用のtopに飛ばす
+                            props.history.push('/admin/category'); 
                         }else{
                             console.log("this user is not admin");
-                            props.history.push('/'); // TODO: 職員用アカウントではないことを表示し、普通の画面に遷移？
+                            alert('職員用アカウントではありません')
+                            props.history.push('/'); 
                         }
                     }else{
                         console.log("No such Document!");

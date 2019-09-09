@@ -25,13 +25,13 @@ const AdminHeader: React.FC<historyProps> = props => {
     return(
         <StyledHeader>
             <nav>
-                <StyledLink to="/">
+                <StyledLink to="/admin/category">
                     制度一覧
                 </StyledLink>
-                <StyledLink to="/">
+                <StyledLink to="/admin/newSystem">
                     新制度登録
                 </StyledLink>
-                <StyledLink to="/">
+                <StyledLink to="/admin/status">
                     制度閲覧状況
                 </StyledLink>
             </nav>
