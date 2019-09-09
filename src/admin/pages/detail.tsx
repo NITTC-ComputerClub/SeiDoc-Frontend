@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router'
 import ViewingStatus from '../components/viewingStatus'
 import Header from '../components/header'
-import Footer from '../../components/footer-pc'
+import Footer from '../../user/components/footer-pc'
 import DetailList from '../components/detailList';
 import { Container, MainContents } from '../../designSystem/Page';
 

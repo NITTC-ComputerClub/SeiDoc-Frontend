@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import setting from '../designSystem/setting'
+import setting from '../../designSystem/setting'
 
 const StyledFooter = styled.footer`
     padding: 24px 0;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { fireStore, systemIndex } from '../firebase/firebase';
-import '../scss/registration.scss'
-import { System } from '../types/type';
+import { fireStore, systemIndex } from '../../firebase/firebase';
+import '../../scss/registration.scss'
+import { System } from '../../types/type';
 
 const Registration: React.FC = () => {
     const newSystem: System = {

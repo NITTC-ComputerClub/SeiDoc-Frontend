@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import styled from 'styled-components';
-import setting from '../designSystem/setting';
+import setting from '../../designSystem/setting';
 
 interface GridProps {
     pc?: boolean,

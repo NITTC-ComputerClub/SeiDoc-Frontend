@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../../store'
 import { updateDetailCreator, fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../../actions/action'
-import Indicator from '../../components/indicator'
+import Indicator from '../../user/components/indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
 import { System } from '../../types/type';

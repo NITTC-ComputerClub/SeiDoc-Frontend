@@ -2,8 +2,8 @@ import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import Header from '../components/header'
-import Footer from '../../components/footer-pc'
-import CategoryCardsList from '../../components/categoryCardsList'
+import Footer from '../../user/components/footer-pc'
+import CategoryCardsList from '../../user/components/categoryCardsList'
 import { Container, MainContents } from '../../designSystem/Page';
 type historyProps = RouteComponentProps;
 

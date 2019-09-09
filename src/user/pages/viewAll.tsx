@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fireStore, systemIndex } from '../firebase/firebase'
-import { System, systemData, showOrderType } from '../types/type';
+import { fireStore, systemIndex } from '../../firebase/firebase'
+import { System, systemData, showOrderType } from '../../types/type';
 
 const ViewAll: React.FC = () => {
     let [searchData, setSearchData] = useState<{ [key: string]: systemData }>({})

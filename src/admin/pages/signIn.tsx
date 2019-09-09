@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import SignInForm from '../components/signInForm';
-import Footer from '../../components/footer-pc';
+import Footer from '../../user/components/footer-pc';
 import "../../scss/login.scss"
 
 

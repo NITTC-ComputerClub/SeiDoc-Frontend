@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import SignUp from '../components/Login/signUp'
-import '../scss/userRegistration.scss'
+import '../../scss/userRegistration.scss'
 import Footer from '../components/footer';
 
 type historyProps = RouteComponentProps

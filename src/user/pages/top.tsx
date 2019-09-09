@@ -5,7 +5,7 @@ import Ranking from "../components/Top/ranking";
 import Footer from "../components/footer";
 import Header from '../pages/header'
 
-import "../scss/top.scss";
+import "../../scss/top.scss";
 
 const Top: React.FC = () => {
   return (

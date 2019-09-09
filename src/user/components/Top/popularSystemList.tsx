@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import SystemCard from './SystemCard'
-import { fireStore, popularPageIndex } from '../../firebase/firebase';
-import { rankingType } from '../../types/type'
+import { fireStore, popularPageIndex } from '../../../firebase/firebase';
+import { rankingType } from '../../../types/type'
 import Indicator from '../indicator'
-import "../../scss/popularSystemList.scss"
+import "../../../scss/popularSystemList.scss"
 
 
 const getNowYMD = () => {

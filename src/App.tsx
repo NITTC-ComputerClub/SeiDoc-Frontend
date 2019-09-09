@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom';
-import Category from './pages/category'
-import Search from './pages/search'
-import AdminInput from './pages/input'
-import Detail from './pages/detail'
-import ViewAll from './pages/viewAll'
-import Top from './pages/top'
-import Registration from './pages/registration';
-import Login from './pages/login'
-import SignUp from './pages/userRegistration'
+import Category from './user/pages/category'
+import Search from './user/pages/search'
+import AdminInput from './user/pages/input'
+import Detail from './user/pages/detail'
+import ViewAll from './user/pages/viewAll'
+import Top from './user/pages/top'
+import Registration from './user/pages/registration';
+import Login from './user/pages/login'
+import SignUp from './user/pages/userRegistration'
 import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
 import AdminCategory from './admin/pages/category'
@@ -16,7 +16,7 @@ import AdminStatus from './admin/pages/status'
 import AdminSearch from './admin/pages/search'
 import './scss/App.scss'
 
-import ML from './pages/machineLearning'
+import ML from './user/pages/machineLearning'
 
 const App: React.FC = () => {
   return (

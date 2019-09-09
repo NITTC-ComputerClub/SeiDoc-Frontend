@@ -6,7 +6,7 @@ import { AppState } from '../../store';
 import { loginCreator } from '../../actions/action';
 import { auth, fireStore } from '../../firebase/firebase';
 import Button from '../../designSystem/Button';
-import TextField from '../../components/TextField';
+import TextField from '../../user/components/TextField';
 import styled from 'styled-components';
 
 type historyProps = RouteComponentProps
