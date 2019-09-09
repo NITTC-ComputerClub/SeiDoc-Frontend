@@ -7,7 +7,7 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../scss/signUp.scss'
-import { loginDataType, locationDataType, birthdayDataType, UserState } from '../../types/type';
+import { loginDataType, locationDataType, birthdayDataType, UserState, sexDataType } from '../../types/type';
 import Button from '../../designSystem/Button';
 
 type historyProps = RouteComponentProps
@@ -21,6 +21,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     const [municipalityArray, setMunicipalityArray] = useState<Array<string>>([''])
     const [locationData, setLocationData] = useState<locationDataType>({ prefecture: '', city: '', municipality: '' })
     const [birthdayData, setBirthdayData] = useState<birthdayDataType>({ year: '', month: '', date: '' })
+    const [sexData, setSexData] = useState<sexDataType>({sex:"None"})
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
@@ -36,6 +37,7 @@ const SignUp: React.FC<historyProps> = (props) => {
         userData.isAdmin = false;
         userData.city = '';
         userData.department = '';
+        userData.sex = sexData.sex;
 
         if (password.length < 8) {
             alert('Please enter a password')
@@ -116,6 +118,11 @@ const SignUp: React.FC<historyProps> = (props) => {
         })
     }
 
+    const handleSexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const data = e.target.value as "male" | "female" | "None"
+        setSexData({sex:data})
+    }
+
     return (
         <div className="signUp">
             <p>メールアドレス</p>
@@ -124,6 +131,13 @@ const SignUp: React.FC<historyProps> = (props) => {
             <input type="password" name="password" onChange={e => handleLoginDataInputChange(e)}></input>
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
+            <p>性別</p>
+            <select className="sex" name="sex" onChange={e => handleSexChange(e)} >
+                <option value="None">選択してください</option>
+                <option value="male">男性</option>
+                <option value="female">女性</option>
+                <option value="None">答えたくない</option>
+            </select>
             <p>生年月日</p>
             <select className="year" name="year" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1950, 2020)}

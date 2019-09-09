@@ -22,6 +22,10 @@ export type birthdayDataType = {
   date: string;
 };
 
+export type sexDataType = {
+  sex: 'male' | 'female' | 'None';
+}
+
 export type logType = {
   createdAt: number;
   documentID: string;
