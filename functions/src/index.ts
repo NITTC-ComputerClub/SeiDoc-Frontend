@@ -271,15 +271,8 @@ const aggregate = (day: string) => {
             });
 
             data.weeklyView.shift();
-            if (target === undefined) { 
-              data.dailyView = 0;
-              data.weeklyView.push(0);
-            } else {
-              // 閲覧された場合
-              data.dailyView = target.count;
-              data.weeklyView.push(target.count);
-
-              // ageGroupの処理
+            data.weeklyView.push(0);
+            if (target !== undefined) { 
               target.ageGroup.forEach(aG => {
                 const t = data.ageGroup.find(d => {return d.age === aG.age});
                 if (t === undefined){
@@ -288,10 +281,10 @@ const aggregate = (day: string) => {
                   t.count++
                 }
               });
-              
             }
-            data.monthlyView += data.dailyView;
-            data.totalView += data.dailyView;
+
+            
+            data.dailyView = 0;
             //保存
             admin
               .firestore()

@@ -35,6 +35,11 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
                 const detailData = res.data() as System
                 updateDetail(detailData)
                 isLoading = false
+                detailData.totalView += 1;
+                detailData.dailyView += 1;
+                detailData.monthlyView += 1;
+                detailData.weeklyView[6]++;
+                fireStore.collection(systemIndex).doc(props.documentId).update(detailData).then(res=>console.log("view:",res)).catch(err => console.error(err))
             }
         }).catch(err => console.error(err))
     }
