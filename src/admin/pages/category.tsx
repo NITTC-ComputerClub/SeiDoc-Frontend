@@ -4,7 +4,6 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import Header from '../components/header'
 import Footer from '../../components/footer-pc'
 import CategoryCardsList from '../../components/categoryCardsList'
-import styled from 'styled-components';
 import { Container, MainContents } from '../../designSystem/Page';
 type historyProps = RouteComponentProps;
 
