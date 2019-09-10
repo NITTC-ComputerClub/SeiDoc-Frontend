@@ -12,8 +12,8 @@ const Search: React.FC = () => {
             <div className="result">
                 <div className="container">
                 </div>
-                <Tag pushTo="/admin/category" />
                 <SearchValue />
+                <Tag pushTo="/admin/category" />
                 <AdminSystemList />
             </div>
             <Footer />
