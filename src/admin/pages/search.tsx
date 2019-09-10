@@ -3,6 +3,7 @@ import Tag from '../../user/components/tag'
 import AdminSystemList from '../components/adminSystemList'
 import Footer from '../../user/components/footer'
 import Header from '../components/header'
+import SearchValue from '../components/searchValue'
 
 const Search: React.FC = () => {
     return (
@@ -12,7 +13,7 @@ const Search: React.FC = () => {
                 <div className="container">
                 </div>
                 <Tag pushTo="/admin/category" />
-                <h3>検索結果</h3>
+                <SearchValue />
                 <AdminSystemList />
             </div>
             <Footer />
