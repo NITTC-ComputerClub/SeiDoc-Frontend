@@ -17,7 +17,7 @@ const Search: React.FC<historyProps> = props => {
             <CategoryCardsList pc pushTo="/admin/search" />
             <h2>一か月以内によく見られている制度</h2>
             <AdminPopularSystemList />
-            <a href="">さらに詳しく >></a>
+            <a href="/admin/top">さらに詳しく >></a>
             <h2>最近の検索ワード</h2>
             <p>戸建て</p>
             <p>家庭</p>
@@ -28,7 +28,7 @@ const Search: React.FC<historyProps> = props => {
             <p>託児所</p>
             <p>耐震工事</p>
             <p>LED</p>
-            <a href="">さらに詳しく >></a>
+            <a href="/admin/top">さらに詳しく >></a>
             <Footer />
         </div>
     )
