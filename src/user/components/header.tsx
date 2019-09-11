@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { initLoginCreator } from '../../actions/action'
 import { AppState } from '../../store'
 import { withRouter, RouteComponentProps } from 'react-router'
+import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase'
 import "../../scss/header.scss"
 import Button from '../../designSystem/Button';
@@ -22,6 +23,9 @@ const Header: React.FC<historyProps> = (props) => {
     if (user.userId === '') {    //ログインしてない場合
         return (
             <header>
+                <Link to="/">
+                    <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
+                </Link>
                 <Button link onClick={() => { props.history.push('/login') }}>ログイン/新規登録</Button>
             </header>
         )
@@ -30,10 +34,13 @@ const Header: React.FC<historyProps> = (props) => {
         return (
             <header>
                 <p>ようこそ{user.nickName}さん</p>
+                <Link to="/">
+                    <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
+                </Link>
                 <Button link onClick={() => handleSignOut()}>サインアウト</Button>
             </header>
-            )
-        }
+        )
     }
-    
+}
+
 export default withRouter<historyProps, React.FC<historyProps>>(Header)
