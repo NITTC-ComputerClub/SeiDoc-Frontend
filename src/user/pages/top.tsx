@@ -1,13 +1,16 @@
-import React from "react";
+import React from "react"
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from '../../store'
 import SearchButton from "../components/Top/searchButton";
 import PopularSystemList from "../components/Top/popularSystemList";
-import Ranking from "../components/Top/ranking";
+import Recommend from "../components/Top/recommend"
 import Footer from "../components/footer";
 import Header from '../components/header'
 
 import "../../scss/top.scss";
 
 const Top: React.FC = () => {
+  const user = useSelector((state: AppState) => state.userState)
   return (
     <div className="top">
       <Header />
@@ -28,10 +31,15 @@ const Top: React.FC = () => {
         </div>
       </div>
       <section className="container">
+        {/* TODO Recommendのfetch */}
+        {user.userId !== '' &&
+          <div>
+            <h2>あなたにおすすめの制度</h2>
+            <Recommend />
+          </div>
+        }
         <h2>みんなが見ている制度</h2>
         <PopularSystemList />
-        <h2>住みやすい街ランキング</h2>
-        <Ranking />
       </section>
       <Footer />
     </div>
