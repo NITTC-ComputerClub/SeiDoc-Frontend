@@ -1,5 +1,5 @@
 import React from "react"
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { AppState } from '../../store'
 import SearchButton from "../components/Top/searchButton";
 import PopularSystemList from "../components/Top/popularSystemList";
