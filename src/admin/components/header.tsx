@@ -1,7 +1,6 @@
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import SearchBar from '../../user/components/searchBar';
 import styled from 'styled-components';
 import setting from '../../designSystem/setting'
 
