@@ -26,7 +26,6 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
         if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ
             console.log('algolia', 'input:', inputValue, 'tag:', tag)
             alogliaSearch(inputValue, tag)
-            addTag(inputValue)
         }
         else if (tag !== undefined && inputValue === undefined) {   //カテゴリーオンリー
             console.log('category', 'input:', inputValue, 'tag:', tag)
@@ -40,7 +39,6 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
 
     return (
         <div className="systemList">
-            {console.log('loading:', loading)}
             {console.log('systems:', systems)}
             {loading ? <Indicator /> :
                 <ul>
