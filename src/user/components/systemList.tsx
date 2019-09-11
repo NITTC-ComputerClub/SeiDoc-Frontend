@@ -40,7 +40,6 @@ const SystemList: React.FC<historyProps> = (props) => {
 
     return (
         <div className="systemList">
-            {console.log('loading:', loading)}
             {console.log('systems:', systems)}
             {loading ? <Indicator /> :
                 <ul>

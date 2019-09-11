@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { AppState } from '../../store'
 import { withRouter, RouteComponentProps } from 'react-router'
+import { parse } from 'query-string'
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 
@@ -79,14 +80,25 @@ const getMargin = (props: SearchBarProps) => {
 
 const SearchBar: React.FC<historyProps> = (props) => {
     const tag = useSelector((state: AppState) => state.tagState.tag)
-    let inputValue: string = ''
+    const [inputValue, setInputValue] = useState<string>('')
+    const text = parse(props.location.search).value as string
+
+    useEffect(() => {
+        if (text !== undefined) {
+            setInputValue(text)
+        }
+        else {
+            setInputValue('')
+        }
+    }, [text])
+
     return (
         <StyledSearchBar {...props}>
-            <input type="text" onChange={e => {
-                inputValue = e.target.value
+            <input type="text" value={inputValue} onChange={e => {
+                setInputValue(e.target.value)
             }} placeholder="「未熟児」などの単語を入力" />
             <button onClick={() => {
-                props.history.push( props.pushTo + '?tag=' + tag + '&value=' + inputValue)
+                props.history.push(props.pushTo + '?tag=' + tag + '&value=' + inputValue)
             }}>
                 <img src="/img/虫眼鏡.png" alt="虫眼鏡"></img>
             </button>
