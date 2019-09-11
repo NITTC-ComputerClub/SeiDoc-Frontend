@@ -4,7 +4,7 @@ import CategoryCardsList from '../components/categoryCardsList'
 import { useDispatch } from 'react-redux'
 import { deleteTagCreator } from '../../actions/action'
 import Footer from '../components/footer';
-import Header from '../pages/header'
+import Header from '../components/header'
 import "../../scss/category.scss"
 
 

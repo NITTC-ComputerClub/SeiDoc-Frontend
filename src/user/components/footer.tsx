@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
                     <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                 </Link>
             </div>
-            {/* 今はリンクなし */}
+            {/* TODO: 今はリンクなし */}
             <div className="link">
                 <p>GitHub</p>
                 <p>このサイトについて</p>

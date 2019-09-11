@@ -1,6 +1,6 @@
 import React from 'react';
 import DetailList from '../components/detailList'
-import Header from '../pages/header'
+import Header from '../components/header'
 import Footer from '../components/footer'
 import { RouteComponentProps } from 'react-router'
 import "../../scss/detail.scss"

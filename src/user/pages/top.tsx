@@ -3,7 +3,7 @@ import SearchButton from "../components/Top/searchButton";
 import PopularSystemList from "../components/Top/popularSystemList";
 import Ranking from "../components/Top/ranking";
 import Footer from "../components/footer";
-import Header from '../pages/header'
+import Header from '../components/header'
 
 import "../../scss/top.scss";
 
