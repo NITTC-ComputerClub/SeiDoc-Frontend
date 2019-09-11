@@ -1,14 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { AppState } from '../../store'
-import { withRouter, RouteComponentProps } from 'react-router'
 import '../../scss/tag.scss'
 
-interface historyProps extends RouteComponentProps {
-    pushTo: string
-}
 
-const Tag: React.FC<historyProps> = (props) => {
+const Tag: React.FC = () => {
     const tag = useSelector((state: AppState) => state.tagState.tag)
     return (
         <div className="tag">
@@ -19,4 +15,4 @@ const Tag: React.FC<historyProps> = (props) => {
     )
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(Tag)
+export default Tag
