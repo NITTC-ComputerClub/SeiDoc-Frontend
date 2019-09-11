@@ -27,7 +27,6 @@ const SystemList: React.FC<historyProps> = (props) => {
         if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ
             console.log('algolia', 'input:', inputValue, 'tag:', tag)
             alogliaSearch(inputValue, tag)
-            addTag(inputValue)
         }
         else if (tag !== undefined && inputValue === undefined) {   //カテゴリーオンリー
             console.log('category', 'input:', inputValue, 'tag:', tag)
