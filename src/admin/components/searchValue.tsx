@@ -10,9 +10,6 @@ const SearchValue: React.FC<historyProps> = (props) => {
     if (tag !== undefined && inputValue !== undefined) { //アルゴリアサーチ
         return (<h2>「{inputValue}」の検索結果</h2>)
     }
-    else if (tag !== undefined && inputValue === undefined) { //タグ検索
-        return (<div></div>)
-    }
     else {
         return (<div></div>)
     }
