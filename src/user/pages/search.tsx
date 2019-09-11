@@ -3,7 +3,7 @@ import SearchBar from '../components/searchBar'
 import Tag from '../components/tag'
 import SystemList from '../components/systemList'
 import Footer from '../components/footer';
-import Header from '../pages/header'
+import Header from '../components/header'
 import '../../scss/result.scss'
 
 const Search: React.FC = () => {
