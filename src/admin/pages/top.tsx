@@ -13,8 +13,9 @@ const Search: React.FC<historyProps> = props => {
         <div>
             <Header />
             <SearchBar pushTo="/admin/search" />
-            <h2>カテゴリ別の閲覧状況</h2>
             <CategoryCardsList pc pushTo="/admin/search" />
+            <h2>カテゴリ別の閲覧状況</h2>
+            <CategoryCardsList pc pushTo="/admin/status" />
             <h2>一か月以内によく見られている制度</h2>
             <PopularSystemList />
             <a href="/admin/top">> さらに詳しく</a>
