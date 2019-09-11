@@ -1,26 +1,26 @@
 import React from 'react'
-import AdminPopularSystemCard from './adminPopularSystemCard'
+import PopularSystemCard from './popularSystemCard'
 
 const AdminPopularSystemList: React.FC = () => {
     return (
         <div>
             {/* 決め打ちマン */}
-            <AdminPopularSystemCard
+            <PopularSystemCard
                 systemName="出産育児一時金直接支払い制度"
                 view={563}
                 group="30代女性"
             />
-            <AdminPopularSystemCard
+            <PopularSystemCard
                 systemName="出産育児一時金直接支払い制度"
                 view={563}
                 group="30代女性"
             />
-            <AdminPopularSystemCard
+            <PopularSystemCard
                 systemName="出産育児一時金直接支払い制度"
                 view={563}
                 group="30代女性"
             />
-            <AdminPopularSystemCard
+            <PopularSystemCard
                 systemName="出産育児一時金直接支払い制度"
                 view={563}
                 group="30代女性"

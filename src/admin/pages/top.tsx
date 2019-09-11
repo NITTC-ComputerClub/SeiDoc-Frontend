@@ -4,7 +4,7 @@ import Header from '../components/header'
 import Footer from '../../user/components/footer-pc'
 import CategoryCardsList from '../../user/components/categoryCardsList'
 import SearchBar from '../../user/components/searchBar'
-import AdminPopularSystemList from '../components/adminPopularSystemList'
+import PopularSystemList from '../components/popularSystemList'
 
 type historyProps = RouteComponentProps
 
@@ -16,8 +16,8 @@ const Search: React.FC<historyProps> = props => {
             <h2>カテゴリ別の閲覧状況</h2>
             <CategoryCardsList pc pushTo="/admin/search" />
             <h2>一か月以内によく見られている制度</h2>
-            <AdminPopularSystemList />
-            <a href="/admin/top">さらに詳しく >></a>
+            <PopularSystemList />
+            <a href="/admin/top">> さらに詳しく</a>
             <h2>最近の検索ワード</h2>
             <p>戸建て</p>
             <p>家庭</p>
@@ -28,7 +28,11 @@ const Search: React.FC<historyProps> = props => {
             <p>託児所</p>
             <p>耐震工事</p>
             <p>LED</p>
-            <a href="/admin/top">さらに詳しく >></a>
+            <p>免許更新</p>
+            <p>生活保護</p>
+            <p>大学</p>
+            <p>成人</p>
+            <p>診断書</p>
             <Footer />
         </div>
     )
