@@ -14,7 +14,9 @@ const initialState: UserState = {
     isAdmin: false,
     city: '',  
     department: '',
-    sex: 'None'
+    sex: 'None',
+    searchedWords: [],
+    viewedCategory: [{categoryName:'子育て',count:0}],
 }
 
 
