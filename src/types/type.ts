@@ -58,6 +58,8 @@ export type UserState = {
   city: string; 
   department: string;
   sex: 'male' | 'female' | 'None';
+  searchedWords: string[];
+  viewedCategory: [{categoryName: string, count: number}]
 };
 
 
