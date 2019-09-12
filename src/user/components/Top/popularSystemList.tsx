@@ -3,6 +3,7 @@ import SystemCard from './SystemCard'
 import { fireStore, popularPageIndex } from '../../../firebase/firebase';
 import { rankingType } from '../../../types/type'
 import Indicator from '../indicator'
+import { Link } from 'react-router-dom'
 import "../../../scss/popularSystemList.scss"
 
 
@@ -45,8 +46,8 @@ const PopularSystemList: React.FC = () => {
         documentID: "-1",
         totalView: 0,
         dailyView: 0,
-        weeklyView: [0,0,0,0,0,0,0],
-        monthlyView:0,
+        weeklyView: [0, 0, 0, 0, 0, 0, 0],
+        monthlyView: 0,
         ageGroup: []
       },
       documentID: "XXX",
@@ -90,10 +91,11 @@ const PopularSystemList: React.FC = () => {
           <SystemCard key={data.system.Name} system={data.system} />
         ))}
       </ul>
+      <Link to="/">さらに詳しく</Link>
     </div>
   ) : (
-    <Indicator />
-  );
+      <Indicator />
+    );
 };
 
 export default PopularSystemList;
