@@ -51,15 +51,17 @@ const SignUp: React.FC<historyProps> = (props) => {
         }).then(() => {
             console.log('userData:', userData)
             login(userData)
-            props.history.push('/')
+            props.history.push('/picture')
             handleFirebaseSetUserdata()
         }).catch((error) => {
             const errorCode = error.code
             const errorMessage = error.message
             if (errorCode === 'auth/weak-password') {
                 alert('The password is too weak.')
+                props.history.push('/signup')
             } else {
                 alert(errorMessage)
+                props.history.push('/signup')
             }
             console.log(error)
         })
@@ -201,7 +203,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <Button blue onClick={() => handleSignUp()}>登録</Button>
+                <Button blue onClick={() => handleSignUp()}>次へ</Button>
             </div>
         </div>
     )
