@@ -33,6 +33,13 @@ export type logType = {
   user: UserState;
 };
 
+export type searchLogType = {
+  createdAt: number;
+  searchWord: string;
+  user: UserState;
+  userID: string
+}
+
 export type rankingType = {
   documentID: string;
   system: System;

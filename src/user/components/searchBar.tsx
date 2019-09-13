@@ -5,6 +5,8 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
+import { fireStore, searchLogIndex } from '../../firebase/firebase';
+import { searchLogType } from '../../types/type';
 
 interface historyProps extends RouteComponentProps {
     pushTo: string,
@@ -78,8 +80,10 @@ const getMargin = (props: SearchBarProps) => {
     }
 }
 
+
 const SearchBar: React.FC<historyProps> = (props) => {
     const tag = useSelector((state: AppState) => state.tagState.tag)
+    const user = useSelector((state: AppState) => state.userState)
     const [inputValue, setInputValue] = useState<string>('')
     const text = parse(props.location.search).value as string
 
@@ -92,12 +96,22 @@ const SearchBar: React.FC<historyProps> = (props) => {
         }
     }, [text])
 
+    const collectSearchLog　= (query: string) => {
+        const data : searchLogType = {
+            createdAt: Date.now(),
+            user: user,
+            searchWord: query,
+            userID: user.userId
+        }
+        fireStore.collection(searchLogIndex).add(data).catch(err => console.error(err))
+    }
     return (
         <StyledSearchBar {...props}>
             <input type="text" value={inputValue} onChange={e => {
                 setInputValue(e.target.value)
             }} placeholder="「未熟児」などの単語を入力" />
             <button onClick={() => {
+                collectSearchLog(inputValue);
                 props.history.push(props.pushTo + '?tag=' + tag + '&value=' + inputValue)
             }}>
                 <img src="/img/虫眼鏡.png" alt="虫眼鏡"></img>

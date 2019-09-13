@@ -8,5 +8,6 @@ export const systemIndex = 'systems'
 export const algoliaSearchIndex = 'systems'
 export const detailPageLogIndex = 'detailPageLog'
 export const popularPageIndex = 'popularSystem'
+export const searchLogIndex = 'searchLog'
 
 
