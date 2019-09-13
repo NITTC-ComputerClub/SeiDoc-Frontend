@@ -28,43 +28,17 @@ type fireStorePopularSystemType = {
 };
 
 const PopularSystemList: React.FC = () => {
-  const [rankingData, setRankingData] = useState<rankingType[]>([
-    {
-      system: {
-        Name: "",
-        Department: "",
-        Location: "",
-        Site: "",
-        Detail: "",
-        Target: "",
-        Method: [],
-        Category: [],
-        CreatedAt: 0,
-        UpdatedAt: 0,
-        isDeleted: false,
-        ExpireAt: 0,
-        documentID: "-1",
-        totalView: 0,
-        dailyView: 0,
-        weeklyView: [0, 0, 0, 0, 0, 0, 0],
-        monthlyView: 0,
-        ageGroup: []
-      },
-      documentID: "XXX",
-      count: -1,
-      ageGroup: []
-    }
-  ]);
+  const [rankingData, setRankingData] = useState<rankingType[]>([]);
 
   const isLoaded = () => {
-    if (rankingData[0].count !== -1) {
+    if (rankingData.length !== 0) {
       return true;
     } else {
       return false;
     }
   };
 
-  if (rankingData[0].count === -1) {
+  if (rankingData.length === 0) {
     //一度だけfetch
     fireStore
       .collection(popularPageIndex)

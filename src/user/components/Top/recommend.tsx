@@ -28,43 +28,19 @@ type fireStorePopularSystemType = {
 };
 
 const Recommend: React.FC = () => {
-    const [rankingData, setRankingData] = useState<rankingType[]>([
-        {
-            system: {
-                Name: "",
-                Department: "",
-                Location: "",
-                Site: "",
-                Detail: "",
-                Target: "",
-                Method: [],
-                Category: [],
-                CreatedAt: 0,
-                UpdatedAt: 0,
-                isDeleted: false,
-                ExpireAt: 0,
-                documentID: "-1",
-                totalView: 0,
-                dailyView: 0,
-                weeklyView: [0, 0, 0, 0, 0, 0, 0],
-                monthlyView: 0,
-                ageGroup: []
-            },
-            documentID: "XXX",
-            count: -1,
-            ageGroup: []
-        }
+    const [recommendData, setrecommendData] = useState<rankingType[]>([
+        
     ]);
 
     const isLoaded = () => {
-        if (rankingData[0].count !== -1) {
+        if (recommendData.length !== 0) {
             return true;
         } else {
             return false;
         }
     };
 
-    if (rankingData[0].count === -1) {
+    if (recommendData.length === 0) {
         //一度だけfetch
         fireStore
             .collection(popularPageIndex)
@@ -75,7 +51,7 @@ const Recommend: React.FC = () => {
                     const ranking = doc.data() as fireStorePopularSystemType;
                     const sortedRanking = ranking.ranking.sort(compare);
                     console.log(sortedRanking)
-                    setRankingData(sortedRanking.slice(0, 3));
+                    setrecommendData(sortedRanking.slice(0, 3));
                 } else {
                     console.error("fetch failed");
                 }
@@ -84,10 +60,12 @@ const Recommend: React.FC = () => {
                 console.error(err);
             });
     }
+
+    
     return isLoaded() ? (
         <div className="popularSystemList">
             <ul>
-                {rankingData.map(data => (
+                {recommendData.map(data => (
                     <SystemCard key={data.system.Name} system={data.system} />
                 ))}
             </ul>
