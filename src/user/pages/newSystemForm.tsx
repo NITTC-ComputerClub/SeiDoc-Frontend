@@ -10,6 +10,10 @@ import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents } from '../../designSystem/Page';
 
+type InputProps = {
+    bottomMargin: number
+}
+
 const Title = styled.h1`
     font-size: ${setting.H1};
     margin-bottom: 16px;
@@ -111,15 +115,24 @@ const NewSystemForm = styled.div`
     text-align: center;
 `
 
-const InputField = styled.div`
+const InputWrapper = styled.div`
     max-width: 460px;
     margin: 0 auto;
     width: 100%;
     text-align: left;
+    
+    * {
+        box-sizing: border-box;
+    }
 `
 
 const StyledInput = styled.input`
     width: 100%;
+    margin-bottom: ${(props: InputProps) => props.bottomMargin}px;
+    padding: 8px;
+    border-radius: 2px;
+    border: solid 2px ${setting.Gray3};
+    font-size: ${setting.P1};
 `
 
 const NewSytemForm: React.FC = () => {
@@ -172,10 +185,12 @@ const NewSytemForm: React.FC = () => {
                 <MainContents>
                     <NewSystemForm>
                         <Title>制度登録</Title>
-                        <InputField>
+                        <InputWrapper>
                             <label>制度名</label>
-                            <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder='制度名を入力'/>
-                        </InputField>
+                            <StyledInput bottomMargin={16} type='text' onChange={e => { name = e.target.value }} placeholder='制度名を入力'/>
+                            <label>大まかな制度対象者</label>
+                            <StyledInput bottomMargin={16} type='text' onChange={e => { target = e.target.value }} placeholder="援助対象者を入力" />
+                        </InputWrapper>
                     </NewSystemForm>
 
 
