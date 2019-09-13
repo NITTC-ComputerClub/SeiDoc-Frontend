@@ -4,7 +4,7 @@ import { AppState } from '../../store';
 import { useSelector } from 'react-redux';
 import { sendData } from '../../types/type';
 import Header from '../../admin/components/header';
-import Footer from '../../user/components/footer';
+import Footer from '../components/footer';
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
@@ -12,6 +12,7 @@ import { Container, MainContents } from '../../designSystem/Page';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
+    margin-bottom: 16px;
 `
 
 {/*
@@ -100,7 +101,28 @@ const ButtonWrapper = styled.div`
 
 */}
 
-const Input: React.FC = () => {
+const NewSystemForm = styled.div`
+    width: 100%;
+    background-color: ${setting.White};
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 32px;
+    padding: 32px 16px;
+    text-align: center;
+`
+
+const InputField = styled.div`
+    max-width: 460px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+`
+
+const StyledInput = styled.input`
+    width: 100%;
+`
+
+const NewSytemForm: React.FC = () => {
     let name: string = ''
     let department: string = ''
     let target: string = ''
@@ -148,7 +170,14 @@ const Input: React.FC = () => {
             <Header />
             <Container>
                 <MainContents>
-                    <Title>制度登録</Title>
+                    <NewSystemForm>
+                        <Title>制度登録</Title>
+                        <InputField>
+                            <label>制度名</label>
+                            <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder='制度名を入力'/>
+                        </InputField>
+                    </NewSystemForm>
+
 
                     {/* 
                     <SystemTile>
@@ -194,7 +223,7 @@ const Input: React.FC = () => {
         </div>
     )
 }
-export default Input
+export default NewSytemForm
 
 /*
     {
