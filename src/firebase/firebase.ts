@@ -9,5 +9,6 @@ export const algoliaSearchIndex = 'systems'
 export const detailPageLogIndex = 'detailPageLog'
 export const popularPageIndex = 'popularSystem'
 export const searchLogIndex = 'searchLog'
+export const tagLogIndex = 'tagLog'
 
 
