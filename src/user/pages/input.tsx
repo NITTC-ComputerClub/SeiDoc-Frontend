@@ -14,6 +14,7 @@ const Title = styled.h1`
     font-size: ${setting.H1};
 `
 
+{/*
 const SystemTile = styled.div`
     box-sizing: border-box;
     overflow: hidden;
@@ -97,6 +98,8 @@ const ButtonWrapper = styled.div`
     text-align: right;
 `
 
+*/}
+
 const Input: React.FC = () => {
     let name: string = ''
     let department: string = ''
@@ -146,6 +149,8 @@ const Input: React.FC = () => {
             <Container>
                 <MainContents>
                     <Title>制度登録</Title>
+
+                    {/* 
                     <SystemTile>
                         <TitleInputField type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力"/>
                         <Label>対象地区</Label>
@@ -181,6 +186,8 @@ const Input: React.FC = () => {
                     <ButtonWrapper>
                         <Button blue onClick={post}>登録</Button>
                     </ButtonWrapper>
+
+                    */}
                 </MainContents>
             </Container>
             <Footer />
