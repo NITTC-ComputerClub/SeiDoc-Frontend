@@ -7,7 +7,7 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../../scss/signUp.scss'
-import { loginDataType, locationDataType, birthdayDataType, UserState, sexDataType } from '../../../types/type';
+import { loginDataType, locationDataType, birthdayDataType, UserState, sexDataType, targetSex, targetFamily } from '../../../types/type';
 import Button from '../../../designSystem/Button';
 
 type historyProps = RouteComponentProps
@@ -21,7 +21,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     const [municipalityArray, setMunicipalityArray] = useState<Array<string>>([''])
     const [locationData, setLocationData] = useState<locationDataType>({ prefecture: '', city: '', municipality: '' })
     const [birthdayData, setBirthdayData] = useState<birthdayDataType>({ year: '', month: '', date: '' })
-    const [sexData, setSexData] = useState<sexDataType>({sex:"None"})
+    const [sexData, setSexData] = useState<{sex :targetSex}>({sex: 2})
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
@@ -37,7 +37,8 @@ const SignUp: React.FC<historyProps> = (props) => {
         userData.isAdmin = false;
         userData.city = '';
         userData.department = '';
-        userData.sex = sexData.sex;
+        userData.sex = sexData.sex
+
 
         if (password.length < 8) {
             alert('Please enter a password')
@@ -72,7 +73,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     }
 
     const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-        const name = e.target.name as 'family' | 'nickName' | 'income'
+        const name = e.target.name as  'nickName' | 'income'
         userData[name] = e.target.value
     }
 
@@ -117,10 +118,19 @@ const SignUp: React.FC<historyProps> = (props) => {
             console.log('set firebase', uid)
         })
     }
-
+    const handleFamilydataInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const data = e.target.value as   "独身" | "夫婦" | "子持ち" | "ひとり親" | "介護"
+        userData.family = targetFamily[data]
+    }
     const handleSexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const data = e.target.value as "male" | "female" | "None"
-        setSexData({sex:data})
+        const data = e.target.value as "male" | "female" | "other"
+        let sex = 2; // "None"
+        if(data === "male"){
+            sex = 0;
+        }else if(data === "female"){
+            sex = 1;
+        }
+        setSexData({sex: sex})
     }
 
     return (
@@ -182,12 +192,12 @@ const SignUp: React.FC<historyProps> = (props) => {
             </select>
             }
             <p>家族構成</p>
-            <select className="fullWidth" name="family" onChange={e => handleUserdataInputChange(e)}>
+            <select className="fullWidth" name="family" onChange={e => handleFamilydataInputChange(e)}>
                 <option value="">選択してください</option>
-                <option value="ひとり親家庭">ひとり親家庭</option>
-                <option value="選択肢1">選択肢1</option>
-                <option value="選択肢2">選択肢2</option>
-                <option value="選択肢3">選択肢3</option>
+                <option value="独身">独身</option>
+                <option value="子持ち">子持ち</option>
+                <option value="ひとり親">ひとり親</option>
+                <option value="介護">介護</option>
             </select>
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>

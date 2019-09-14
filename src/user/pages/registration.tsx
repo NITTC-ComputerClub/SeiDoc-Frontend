@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { fireStore, systemIndex } from '../../firebase/firebase';
 import '../../scss/registration.scss'
-import { System } from '../../types/type';
+import { System, targetFamily, targetAge } from '../../types/type';
 
 const Registration: React.FC = () => {
     const newSystem: System = {
@@ -22,7 +22,10 @@ const Registration: React.FC = () => {
         dailyView: 0,
         weeklyView: [0,0,0,0,0,0,0],
         monthlyView: 0,
-        ageGroup: []
+        ageGroup: [],
+        targetFamily:0,
+        targetSex:2,
+        targetAge:0
     }
     let [currentData, setCurrentData] = useState<System>(newSystem)
 
