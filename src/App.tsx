@@ -18,7 +18,6 @@ import AdminTop from './admin/pages/top'
 import './scss/App.scss'
 
 import ML from './user/pages/machineLearning'
-import Suggestion from './suggestion'
 
 const App: React.FC = () => {
   return (
@@ -45,7 +44,6 @@ const App: React.FC = () => {
         <Route path='/admin/status' component={AdminStatus} />
         <Route path='/admin/search' component={AdminSearch} />
         <Route path='/admin/' component={AdminTop} />
-        <Route path='/suggestion' component={Suggestion} />
       </Switch>
     </div>
   )

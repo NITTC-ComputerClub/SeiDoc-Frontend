@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import SystemCard from './SystemCard'
-import { fireStore, popularPageIndex, searchLogIndex } from '../../../firebase/firebase';
+import { fireStore, searchLogIndex } from '../../../firebase/firebase';
 import { System, searchLogType } from '../../../types/type';
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
@@ -28,14 +28,6 @@ a {
 }
 `
 
-const getNowYMD = () => {
-    const dt = new Date();
-    const y = dt.getFullYear();
-    const m = ("00" + (dt.getMonth() + 1)).slice(-2);
-    const d = ("00" + dt.getDate()).slice(-2);
-    const result = y + "-" + m + "-" + d;
-    return result;
-};
 
 const compare = (a: rankingType, b: rankingType) => {
     if (a.count > b.count) {
@@ -75,13 +67,13 @@ const Recommend: React.FC = () => {
             snapshot.forEach(doc => {
                 const data = doc.data() as System
                 const ranking : rankingType = {documentID: data.documentID, system: data, count:0}
-                if(data.targetAge == 15){
+                if(data.targetAge === 15){
                   ranking.count = ranking.count + 1
                 }
-                if(data.targetSex == user.sex || data.targetSex == 2){
+                if(data.targetSex === user.sex || data.targetSex === 2){
                   ranking.count = ranking.count + 1
                 }
-                if(data.targetFamily == user.family){
+                if(data.targetFamily === user.family){
                   ranking.count = ranking.count + 1
                 }
                 fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
@@ -93,8 +85,11 @@ const Recommend: React.FC = () => {
                     //   console.log('matched!')
                     }
                   })
-                }).then(() => newRanking.push(ranking)).then(() => {
+                })
+                .then(() => newRanking.push(ranking))
+                .then(() => {
                   const sortedRanking = newRanking.sort(compare);
+                  //console.log(sortedRanking)
                   setrecommendData(sortedRanking.slice(0,4))
                 })
                 .catch(err=>console.error(err))
