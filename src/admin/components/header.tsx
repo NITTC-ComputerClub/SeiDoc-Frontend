@@ -1,7 +1,12 @@
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux'
+import { initLoginCreator } from '../../actions/action'
+import { AppState } from '../../store'
+import { RouteComponentProps, withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
+import { auth } from '../../firebase/firebase'
+import Button from '../../designSystem/Button';
+import styled from 'styled-components'
 import setting from '../../designSystem/setting'
 
 
@@ -21,11 +26,24 @@ const StyledLink = styled(Link)`
 `
 
 const AdminHeader: React.FC<historyProps> = props => {
+    const user = useSelector((state: AppState) => state.userState)
+    const dispatch = useDispatch()
+    const initUserData = () => dispatch(initLoginCreator())
+
+    const handleSignOut = () => {
+        auth.signOut().then(() => {
+            initUserData()
+        })
+    }
+
     return(
         <StyledHeader>
-            <p>小牧市版</p>
+            <Link to="/admin/">
+                <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
+            </Link>
+            <p>{user.nickName}版</p>
             <nav>
-                <StyledLink to="/admin/top">
+                <StyledLink to="/admin/">
                     トップ
                 </StyledLink>
                 <StyledLink to="/admin/status">
@@ -34,7 +52,11 @@ const AdminHeader: React.FC<historyProps> = props => {
                 <StyledLink to="/admin/newSystem">
                     新制度登録
                 </StyledLink>
+                <StyledLink to="/admin/">
+                    データ出力
+                </StyledLink>
             </nav>
+            <Button link onClick={() => handleSignOut()}>サインアウト</Button>
         </StyledHeader>
     )
 }
