@@ -1,39 +1,53 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "./store";
-import { System } from './types/type';
-import { fireStore } from "./firebase/firebase";
+import { System, searchLogType, targetAge } from './types/type';
+import { fireStore, searchLogIndex } from './firebase/firebase';
 
 type rankingType  = {
     documentID: string;
     system: System;
     count: number;
 }
-const calcAge = function(birthday: string){
-    const d = new Date();
-    const today = ''+d.getFullYear()+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
-    const b = new Date(birthday);
-    const b_day = ''+b.getFullYear()+('0'+(b.getMonth()+1)).slice(-2)+('0'+b.getDate()).slice(-2);
-    return Math.floor((parseInt(today)-parseInt(b_day))/10000);
-  };
 
+const compare = (a: rankingType, b: rankingType) => {
+    if (a.count > b.count) {
+      return -1;
+    } else {
+      return 1;
+    }
+  };
 const Suggestion: React.FC = () => {
   const user = useSelector((state: AppState) => state.userState);
+  let newRanking: rankingType[] = []
   fireStore.collection('backup').get()
     .then(snapshot => {
         snapshot.forEach(doc => {
             const data = doc.data() as System
             const ranking : rankingType = {documentID: data.documentID, system: data, count:0}
-            const userAge = calcAge(user.birthday)
-            if(data.targetAge === 15){
-                ranking.count++
+            if(data.targetAge == 15){
+              ranking.count = ranking.count + 1
             }
-            const sex = ['male','female','None']
-            if(sex[data.targetSex] === user.sex){
-                ranking.count++
+            if(data.targetSex == user.sex || data.targetSex == 2){
+              ranking.count = ranking.count + 1
             }
-            if(data.targetFamily === user.family)
-            
+            if(data.targetFamily == user.family){
+              ranking.count = ranking.count + 1
+            }
+            fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
+              snapshot.forEach(doc => {
+                const searchLog = doc.data() as searchLogType
+                console.log(searchLog.searchWord)
+                if(~data.Detail.indexOf(searchLog.searchWord) || ~data.Name.indexOf(searchLog.searchWord)){
+                  ranking.count = ranking.count + 1
+                  console.log('matched!')
+                }
+              })
+            }).then(() => newRanking.push(ranking)).then(() => {
+              const sortedRanking = newRanking.sort(compare);
+              console.log(sortedRanking.slice(0,4))
+            })
+            .catch(err=>console.error(err))
         })
     })
 
