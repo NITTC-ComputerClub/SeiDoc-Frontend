@@ -43,7 +43,7 @@ const App: React.FC = () => {
         <Route path='/admin/newSystem' component={AdminInput} />
         <Route path='/admin/status' component={AdminStatus} />
         <Route path='/admin/search' component={AdminSearch} />
-        <Route path='/admin/top' component={AdminTop} />
+        <Route path='/admin/' component={AdminTop} />
       </Switch>
     </div>
   )
