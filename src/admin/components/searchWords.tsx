@@ -20,14 +20,20 @@ const SearchWords: React.FC = () => {
         ).then(
             () => {
                 setSearchData(searchDataArray)
+                setIsLoading(true)
             }
         )
     }
+    console.log(searchData)
 
-    return (
+    return isLoading ? (
         <div>
-
+            {searchData.map((query: searchLogType) => (
+                <p>{query.searchWord}</p>
+            ))}
         </div>
+    ) : (
+        <Indicator />
     )
 }
 
