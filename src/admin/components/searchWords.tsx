@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { fireStore, searchLogIndex } from '../../firebase/firebase'
 import Indicator from '../../user/components/indicator'
 import { searchLogType } from '../../types/type'
-import { firestore } from 'firebase'
 
 const SearchWords: React.FC = () => {
     const [searchData, setSearchData] = useState<searchLogType[]>([])
