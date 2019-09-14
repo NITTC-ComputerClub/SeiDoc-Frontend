@@ -7,7 +7,7 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../../scss/signUp.scss'
-import { loginDataType, locationDataType, birthdayDataType, UserState, sexDataType, targetSex, targetFamily } from '../../../types/type';
+import { loginDataType, locationDataType, birthdayDataType, UserState,  targetSex, targetFamily } from '../../../types/type';
 import Button from '../../../designSystem/Button';
 
 type historyProps = RouteComponentProps
