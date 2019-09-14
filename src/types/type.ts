@@ -154,10 +154,3 @@ export type sendData = {
   Method: Array<string>
   Category: Array<string>
 };
-
-export type tagLogType = {
-  createdAt: number
-  searchWord: string
-  user: UserState
-  userId: string
-}
