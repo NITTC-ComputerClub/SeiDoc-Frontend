@@ -5,8 +5,15 @@ import { useDispatch } from 'react-redux'
 import { deleteTagCreator, deleteSystemsCreator } from '../../actions/action'
 import Footer from '../components/footer';
 import Header from '../components/header'
-import "../../scss/category.scss"
+import styled from 'styled-components';
+import setting from '../../designSystem/setting';
 
+const CategoryContainer = styled.div`
+    padding: 16px;
+    margin-bottom: 8px;
+
+    background-color: ${setting.White};
+`
 
 const Category: React.FC = () => {
     const dispatch = useDispatch()
@@ -18,13 +25,13 @@ const Category: React.FC = () => {
         deleteSystems()
     }, [dispatch])
     return (
-        <div className="category">
+        <div>
             <Header />
-            <div className="categoryContainer">
+            <CategoryContainer>
                 <SearchBar pushTo="/search" center />
                 <h2>カテゴリー</h2>
                 <CategoryCardsList pushTo="/search" />
-            </div>
+            </CategoryContainer>
             <Footer />
         </div>
     )
