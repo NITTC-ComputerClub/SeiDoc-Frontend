@@ -4,8 +4,27 @@ import { fireStore, popularPageIndex } from '../../../firebase/firebase';
 import { rankingType } from '../../../types/type'
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
-import "../../../scss/popularSystemList.scss"
+import styled from 'styled-components';
 
+const StyledPopularSystemList = styled.div`
+  position: relative;
+  left: -24px;
+  margin: 0;
+  width: calc(100% + 48px);
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 24px 24px 24px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  a {
+    position: relative;
+    left: 24px;
+  }
+`
 
 const getNowYMD = () => {
   const dt = new Date();
@@ -59,14 +78,14 @@ const PopularSystemList: React.FC = () => {
       });
   }
   return isLoaded() ? (
-    <div className="popularSystemList">
+    <StyledPopularSystemList>
       <ul>
         {rankingData.map(data => (
           <SystemCard key={data.system.Name} system={data.system} />
         ))}
       </ul>
       <Link to="/">さらに詳しく</Link>
-    </div>
+    </StyledPopularSystemList>
   ) : (
       <Indicator />
     );
