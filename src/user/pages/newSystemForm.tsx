@@ -10,100 +10,19 @@ import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents } from '../../designSystem/Page';
 
-type InputProps = {
-    bottomMargin: number
-}
-
 const Title = styled.h1`
     font-size: ${setting.H1};
     margin-bottom: 16px;
 `
 
-{/*
-const SystemTile = styled.div`
-    box-sizing: border-box;
-    overflow: hidden;
-    background-color: ${setting.White};
-    border-radius: 4px;
-`
-
-const TitleInputField = styled.input`
-    box-sizing: border-box;
+const Label = styled.label`
     display: block;
-    margin: 0;
-    border: none;
-    width: 100%;
-    
-    font-size: ${setting.H2};
-    font-weight: bold;
-    color: ${setting.TextGray};
-    background-color: ${setting.ThemeBlue};
-    padding: 16px 16px 8px 16px;
-
-    ::focus {
-        outline: none;
-    }
-`
-
-const InputField = styled.input`
-    box-sizing: border-box;
-    display: block;
-    margin: 0;
-    border: none;
-    width: 100%;
-
-    font-size: ${setting.H2};
-    padding: 8px 16px;
-
-    :focus {
-        outline: 0;
-    }
-`
-
-const Label = styled.h2`
-    background-color: ${setting.ThemeGreen};
-    margin: 0;
-    font-size: ${setting.H2};
-    font-weight: normal;
-    padding: 8px 16px;
-`
-
-const Select = styled.select`
-    margin: 0;
-    border: none;
-    width: 100%;
-
-    font-size: ${setting.H2};
-    padding: 8px 16px;
-    height: 40px;
-    color: ${setting.TextBlack};
-    background-color: ${setting.White};
-
-    :focus {
-        outline: 0;
-    }
-`
-
-const TextField = styled.textarea`
-    box-sizing: border-box;
-    width: 100%;
-    font-size: ${setting.H2};
-    padding: 8px 16px;
-
-    resize: none;
-    border: none;
-
-    :focus {
-        outline: 0;
-    }
 `
 
 const ButtonWrapper = styled.div`
     margin-top: 16px;
     text-align: right;
 `
-
-*/}
 
 const NewSystemForm = styled.div`
     width: 100%;
@@ -128,11 +47,35 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
     width: 100%;
-    margin-bottom: ${(props: InputProps) => props.bottomMargin}px;
+    margin-bottom: 16px;
     padding: 8px;
     border-radius: 2px;
     border: solid 2px ${setting.Gray3};
     font-size: ${setting.P1};
+    vertical-align: middle;
+`
+
+const Select = styled.select`
+    width: 100%;
+    height: 36px;
+    margin-bottom: 16px;
+    padding: 8px;
+    border-radius: 2px;
+    border: none;
+    vertical-align: middle;
+`
+
+const CheckboxAndRadioWrapper = styled.div`
+    margin-left: 16px;
+`
+
+const Textarea = styled.textarea`
+    resize: none;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: solid 2px ${setting.Gray3};
+    border-radius: 2px;
 `
 
 const NewSytemForm: React.FC = () => {
@@ -184,54 +127,68 @@ const NewSytemForm: React.FC = () => {
             <Container>
                 <MainContents>
                     <NewSystemForm>
-                        <Title>制度登録</Title>
+                        <Title>新制度登録</Title>
                         <InputWrapper>
-                            <label>制度名</label>
-                            <StyledInput bottomMargin={16} type='text' onChange={e => { name = e.target.value }} placeholder='制度名を入力'/>
-                            <label>大まかな制度対象者</label>
-                            <StyledInput bottomMargin={16} type='text' onChange={e => { target = e.target.value }} placeholder="援助対象者を入力" />
+                            <Label>制度名</Label>
+                            <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder='制度名を入力'/>
+                            <Label>カテゴリ</Label>
+                            <Select onChange={e => { name = e.target.value }}>
+                                <option defaultChecked>カテゴリを選択</option>
+                                <option value="子育て">子育て</option>
+                                <option value="介護">介護</option>
+                                <option value="建築">建築</option>
+                                <option value="病気">病気</option>
+                                <option value="融資">融資</option>
+                                <option value="地域">地域</option>
+                                <option value="高齢者">高齢者</option>
+                                <option value="その他">その他</option>
+                            </Select>
+                            {/* 新しくなりました。ロジックの修正お願いします */}
+                            <Label>大まかな制度対象者</Label>
+                            <CheckboxAndRadioWrapper>
+                                <input type="radio" name="sex" value={0} />男性
+                                <input type="radio" name="sex" value={1} />女性
+                                <input type="radio" name="sex" value={2} checked />すべて<br/>
+                                <input type="checkbox" name="target" value={0} />独身
+                                <input type="checkbox" name="target" value={1} />子持ち
+                                <input type="checkbox" name="target" value={2} />夫婦
+                                <input type="checkbox" name="target" value={3} />ひとり親
+                                <input type="checkbox" name="target" value={4} />介護
+                            </CheckboxAndRadioWrapper>
+                            {/* 新しくなりました。ロジックの修正お願いします */}
+                            <Select onChange={ () => {  }}>
+                                <option defaultChecked>年齢を選択</option>
+                                <option value={0}>乳児</option>
+                                <option value={1}>幼児</option>
+                                <option value={2}>小学生</option>
+                                <option value={3}>小学生以下</option>
+                                <option value={4}>中学生</option>
+                                <option value={5}>小中学生</option>
+                                <option value={6}>中学生以下</option>
+                                <option value={7}>高校生</option>
+                                <option value={8}>高校生以下の就学児童</option>
+                                <option value={9}>18歳未満</option>
+                                <option value={10}>18歳以下</option>
+                                <option value={11}>未成年</option>
+                                <option value={12}>成人</option>
+                                <option value={13}>老人</option>
+                                <option value={14}>全年齢</option>
+                            </Select>
+                            <Label>援助対象者</Label>
+                            <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
+                            <Label>援助方法</Label>
+                            <StyledInput type='text' onChange={e => { sysmethod = [e.target.value] }} placeholder="例:授業料補助など" />
+                            <Label>担当部署</Label>
+                            <StyledInput type='text' onChange={e => { department = e.target.value }} placeholder="担当部署を入力" />
+                            <Label>詳細</Label>
+                            <Textarea rows={5} onChange={e => { detail = e.target.value }} placeholder="制度の詳細" />
+                            <Label>公式のページ</Label>
+                            <StyledInput type='text' onChange={e => { site = e.target.value }} placeholder="サイトURL" />
+                            <ButtonWrapper>
+                                <Button blue onClick={post}>登録</Button>
+                            </ButtonWrapper>
                         </InputWrapper>
                     </NewSystemForm>
-
-
-                    {/* 
-                    <SystemTile>
-                        <TitleInputField type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力"/>
-                        <Label>対象地区</Label>
-                        <InputField type='text' defaultValue={user.city} placeholder="対象地区を入力" />
-                        <Label>カテゴリ</Label>
-                        <Select onChange={() => {}}>
-                            <option defaultChecked>カテゴリを選択</option>
-                            <option value="子育て">子育て</option>
-                            <option value="介護">介護</option>
-                            <option value="建築">建築</option>
-                            <option value="病気">病気</option>
-                            <option value="融資">融資</option>
-                            <option value="地域">地域</option>
-                            <option value="高齢者">高齢者</option>
-                            <option value="その他">その他</option>
-                        </Select>
-                        <Label>援助対象者</Label>
-                        <InputField type='text' onChange={e => { target = e.target.value }} placeholder="援助対象者を入力" />
-                        <Label>援助方法</Label>
-                        <Select onChange={e => { sysmethod = [e.target.value] }}>
-                            <option value='金銭補助' >金銭補助</option>
-                            <option value='権利譲渡' >権利譲渡</option>
-                            <option value='物品支給' >物品支給</option>
-                            <option value='その他' >その他</option>
-                        </Select>
-                        <Label>担当部署</Label>
-                        <InputField type='text' onChange={e => { department = e.target.value }} placeholder="担当部署を入力" />
-                        <Label>詳細</Label>
-                        <TextField placeholder="詳細を入力" onChange={e => { detail = e.target.value }} />
-                        <Label>公式のページ</Label>
-                        <InputField placeholder="公式ページURLを入力" type='text' onChange={e => { site = e.target.value }} />
-                    </SystemTile>
-                    <ButtonWrapper>
-                        <Button blue onClick={post}>登録</Button>
-                    </ButtonWrapper>
-
-                    */}
                 </MainContents>
             </Container>
             <Footer />
