@@ -105,6 +105,7 @@ const Input: React.FC = () => {
     let detail: string = ''
     let targetSex: number = 0
     let targetFamily: number = 0
+    let targetAge: number = 0
     let sysmethod: Array<string> = ['金銭補助']
     let category: string = ''
     let systemData: sendData
@@ -122,7 +123,11 @@ const Input: React.FC = () => {
             Site: site,
             Detail: detail,
             Method: sysmethod,
-            Category: [category]
+            Category: [category],
+            targetFamily: targetFamily,
+            targetSex: targetSex,
+            targetAge: targetAge
+
         }
         console.log(systemData)
         const systemCollection = fireStore.collection(systemIndex)
@@ -169,6 +174,23 @@ const Input: React.FC = () => {
                             <option value="0">男性</option>
                             <option value="1">女性</option>
                             <option value="2" defaultChecked>すべて</option>
+                        </Select>
+                        <Select onChange={e => {targetAge = parseInt(e.target.value)}}>
+                            <option value="0">乳児</option>
+                            <option value="1">幼児</option>
+                            <option value="2">小学生</option>
+                            <option value="3">小学生以下</option>
+                            <option value="4">中学生</option>
+                            <option value="5">小中学生</option>
+                            <option value="6">中学生以下</option>
+                            <option value="7">高校生</option>
+                            <option value="8">高校生以下の就学児童</option>
+                            <option value="9">18歳未満</option>
+                            <option value="10">18歳以下</option>
+                            <option value="11">未成年</option>
+                            <option value="12">成人</option>
+                            <option value="13">老人</option>
+                            <option value="14">全年齢</option>
                         </Select>
                         <Select onChange={e =>{targetFamily = parseInt(e.target.value)}}>
                             <option value="0">独身</option>
