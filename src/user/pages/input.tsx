@@ -145,11 +145,10 @@ const Input: React.FC = () => {
             <Header />
             <Container>
                 <MainContents>
-                    <Title>制度登録</Title>
+                    <Title>新制度登録</Title>
                     <SystemTile>
+                        <Label>制度名</Label>
                         <TitleInputField type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力"/>
-                        <Label>対象地区</Label>
-                        <InputField type='text' defaultValue={user.city} placeholder="対象地区を入力" />
                         <Label>カテゴリ</Label>
                         <Select onChange={() => {}}>
                             <option defaultChecked>カテゴリを選択</option>
@@ -162,15 +161,33 @@ const Input: React.FC = () => {
                             <option value="高齢者">高齢者</option>
                             <option value="その他">その他</option>
                         </Select>
-                        <Label>援助対象者</Label>
-                        <InputField type='text' onChange={e => { target = e.target.value }} placeholder="援助対象者を入力" />
-                        <Label>援助方法</Label>
-                        <Select onChange={e => { sysmethod = [e.target.value] }}>
-                            <option value='金銭補助' >金銭補助</option>
-                            <option value='権利譲渡' >権利譲渡</option>
-                            <option value='物品支給' >物品支給</option>
-                            <option value='その他' >その他</option>
+                        <Label>おおまかな制度対象者</Label>
+                        <Select onChange={() => {}} >
+                            <option value="0">男性</option>
+                            <option value="1">女性</option>
+                            <option value="2" defaultChecked>すべて</option>
                         </Select>
+                        {/*
+                        export enum targetFamily {
+                        独身,
+                        夫婦,
+                        子持ち,
+                        ひとり親,
+                        介護
+                        }*/}
+                        <Select onChange={()=>{}}>
+                            <option value="0">独身</option>
+                            <option value="1">夫婦</option>
+                            <option value="2">子持ち</option>
+                            <option value="3">ひとり親</option>
+                            <option value="4">介護</option>
+                        </Select>
+                        <Label>援助対象者</Label>
+                        <InputField type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
+                        <Label>援助方法</Label>
+                        <InputField type='text' onChange={() => {}} placeholder="授業料補助など"/>
+                        <Label>対象地区</Label>
+                        <InputField type='text' defaultValue={user.city} placeholder="対象地区を入力" />
                         <Label>担当部署</Label>
                         <InputField type='text' onChange={e => { department = e.target.value }} placeholder="担当部署を入力" />
                         <Label>詳細</Label>
