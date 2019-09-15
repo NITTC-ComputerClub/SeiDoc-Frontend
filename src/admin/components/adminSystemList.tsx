@@ -6,8 +6,44 @@ import Indicator from '../../user/components/indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
 import { System } from '../../types/type';
+import styled from 'styled-components';
+import setting from '../../designSystem/setting';
 
 type historyProps = RouteComponentProps
+
+const Grid = styled.ul`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 16px;
+    padding: 0;
+    margin-bottom: 32px;
+`
+
+const AdminSystemCard = styled.li`
+    background-color: ${setting.White};
+    list-style: none;
+    border-radius: 4px;
+    padding: 16px;
+
+    h2, p {
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    h2 {
+        font-size: ${setting.H2};
+    }
+
+    p {
+        font-size: ${setting.P1};
+    }
+
+    .view {
+        margin-top: 8px;
+    }
+`
 
 const AdminSystemList: React.FC<historyProps> = (props) => {
     const tag = parse(props.location.search).tag as string
@@ -38,22 +74,25 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
     }, [dispatch, tag, inputValue])
 
     return (
-        <div className="systemList">
+        <div>
             {console.log('systems:', systems)}
             {loading ? <Indicator /> :
-                <ul>
+                <Grid>
                     {systems.map((system: System) => (
-                        <li key={system.Name} onClick={() => {
+                        <AdminSystemCard key={system.Name} onClick={() => {
                             updateDetail(system)    //リロードなしでページを遷移させるのに必要
                             props.history.push('/admin/detail/' + system.documentID)
                         }
                         }>
-                            <h4>{system.Name}</h4>
-                            <h6>{system.totalView}</h6>
-                            <p>{system.Location}</p>
-                        </li>
+                            <h2>{system.Name}</h2>
+                            <p>{system.Department}</p>
+                            <p className="view">閲覧数　{system.monthlyView}回/月</p>
+                            {/* 今だとundefined
+                                <p>{system.ageGroup[0].age}代に人気</p> 
+                            */}
+                        </AdminSystemCard>
                     ))}
-                </ul>
+                </Grid>
             }
         </div>
     )
