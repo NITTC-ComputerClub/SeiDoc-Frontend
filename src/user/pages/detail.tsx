@@ -4,17 +4,18 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import { RouteComponentProps } from 'react-router'
 import "../../scss/detail.scss"
+import { Wrapper } from '../../designSystem/Page';
 
 type historyProps = RouteComponentProps<{documentId: string}>
 
 const Detail: React.FC<historyProps> = (props: historyProps) => {
     const documentId = props.match.params.documentId
     return (
-        <div>
+        <Wrapper>
             <Header />
             <DetailList documentId={documentId}/>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 
