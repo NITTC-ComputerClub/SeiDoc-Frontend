@@ -103,9 +103,12 @@ const Input: React.FC = () => {
     let target: string = ''
     let site: string = ''
     let detail: string = ''
+    let targetSex: number = 0
+    let targetFamily: number = 0
     let sysmethod: Array<string> = ['金銭補助']
-    let category: Array<string> = []
+    let category: string = ''
     let systemData: sendData
+
 
     const user = useSelector((state: AppState) => state.userState)
     console.log(user)
@@ -119,7 +122,7 @@ const Input: React.FC = () => {
             Site: site,
             Detail: detail,
             Method: sysmethod,
-            Category: category
+            Category: [category]
         }
         console.log(systemData)
         const systemCollection = fireStore.collection(systemIndex)
@@ -150,7 +153,7 @@ const Input: React.FC = () => {
                         <Label>制度名</Label>
                         <TitleInputField type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力"/>
                         <Label>カテゴリ</Label>
-                        <Select onChange={() => {}}>
+                        <Select onChange={e => {category = e.target.value}}>
                             <option defaultChecked>カテゴリを選択</option>
                             <option value="子育て">子育て</option>
                             <option value="介護">介護</option>
@@ -162,20 +165,12 @@ const Input: React.FC = () => {
                             <option value="その他">その他</option>
                         </Select>
                         <Label>おおまかな制度対象者</Label>
-                        <Select onChange={() => {}} >
+                        <Select onChange={e => {targetSex = parseInt(e.target.value)}} >
                             <option value="0">男性</option>
                             <option value="1">女性</option>
                             <option value="2" defaultChecked>すべて</option>
                         </Select>
-                        {/*
-                        export enum targetFamily {
-                        独身,
-                        夫婦,
-                        子持ち,
-                        ひとり親,
-                        介護
-                        }*/}
-                        <Select onChange={()=>{}}>
+                        <Select onChange={e =>{targetFamily = parseInt(e.target.value)}}>
                             <option value="0">独身</option>
                             <option value="1">夫婦</option>
                             <option value="2">子持ち</option>
@@ -185,7 +180,7 @@ const Input: React.FC = () => {
                         <Label>援助対象者</Label>
                         <InputField type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
                         <Label>援助方法</Label>
-                        <InputField type='text' onChange={() => {}} placeholder="授業料補助など"/>
+                        <InputField type='text' onChange={e => { target = e.target.value }} placeholder="授業料補助など"/>
                         <Label>対象地区</Label>
                         <InputField type='text' defaultValue={user.city} placeholder="対象地区を入力" />
                         <Label>担当部署</Label>
