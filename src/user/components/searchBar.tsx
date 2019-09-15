@@ -22,8 +22,7 @@ type SearchBarProps = {
 }
 
 const StyledSearchBar = styled.div`
-    display: block;
-    max-width: 420px;
+    width: 100%;
     min-width: 304px;
     height: 48px;
     text-align: center;

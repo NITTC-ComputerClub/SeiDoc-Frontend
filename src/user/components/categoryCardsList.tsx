@@ -13,31 +13,28 @@ interface historyProps extends RouteComponentProps, GridProps {
 }
 
 const StyledCategoryCard = styled.button`
-    padding: 0;
+    border-radius: 4px;
     background-color: ${setting.White};
-
-    border-radius: 4px 4px 4px 4px;
-    border: none;
-    box-shadow: 1px 1px 4px ${setting.TextGray};
+    border: solid 2px ${setting.TextGray};
+    color: ${setting.TextGray};
 
     img {
-        width: 100%;
+        width: 40px;
+        margin-top: 8px;
     }
 
-    .categoryName {
-        padding: 4px 0;
-
+    div {
         font-size: ${setting.H2};
         font-weight: bold;
-
-        color: ${setting.TextBlack};
     }
 `
 
 const Grid = styled.div`
     display: grid;
-    grid-gap: 16px;
-    grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
+    grid-gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+    margin-top: 16px;
+    margin-bottom: 32px;
 `
 
 const CategoryCardsList: React.FC<historyProps> = (props) => {

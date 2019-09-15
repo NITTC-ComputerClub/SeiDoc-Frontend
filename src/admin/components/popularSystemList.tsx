@@ -5,8 +5,38 @@ import { updateDetailCreator } from '../../actions/action'
 import { withRouter, RouteComponentProps } from 'react-router'
 import Indicator from '../../user/components/indicator'
 import { System } from '../../types/type'
+import styled from 'styled-components';
+import setting from '../../designSystem/setting';
 
 type historyProps = RouteComponentProps
+
+const AdminSystemList = styled.li`
+    list-style: none;
+    background-color: ${setting.White};
+    border-radius: 4px;
+    padding: 8px;
+
+    h2 {
+        margin: 0 0 4px 0;
+        font-size: ${setting.H2};
+    }
+
+    p {
+        margin: 0;
+        font-size: ${setting.P2};
+    }
+
+    .blue {
+        color: ${setting.ThemeBlue};
+    }
+`
+
+const Grid = styled.ul`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0;
+    grid-gap: 8px;
+`
 
 const AdminPopularSystemList: React.FC<historyProps> = (props) => {
     const [popularData, setPopularData] = useState<System[]>([])
@@ -34,18 +64,18 @@ const AdminPopularSystemList: React.FC<historyProps> = (props) => {
 
     return isLoading ? (
         <div>
-            <ul>
+            <Grid>
                 {popularData.map((system: System) => (
-                    <li key={system.Name} onClick={() => {
+                    <AdminSystemList key={system.Name} onClick={() => {
                         updateDetail(system)    //リロードなしでページを遷移させるのに必要
                         props.history.push('/admin/detail/' + system.documentID)
                     }}>
-                        <h4>{system.Name}</h4>
-                        <h6>閲覧数 {system.monthlyView}/月</h6>
-                        <p>{system.ageGroup[0].age}代に人気</p>
-                    </li>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        <p className="blue">{system.ageGroup[0].age}代に人気</p>
+                    </AdminSystemList>
                 ))}
-            </ul>
+            </Grid>
         </div>
     ) : (
         <Indicator />
