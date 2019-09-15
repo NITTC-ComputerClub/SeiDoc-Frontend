@@ -6,6 +6,7 @@ import CategoryCardsList from '../../user/components/categoryCardsList'
 import SearchBar from '../../user/components/searchBar'
 import PopularSystemList from '../components/popularSystemList'
 import { Link } from 'react-router-dom'
+import SearchWords from '../components/searchWords'
 
 type historyProps = RouteComponentProps
 
@@ -21,20 +22,7 @@ const Search: React.FC<historyProps> = props => {
             <PopularSystemList />
             <Link to="/admin/">> さらに詳しく</Link>
             <h2>最近の検索ワード</h2>
-            <p>戸建て</p>
-            <p>家庭</p>
-            <p>特養</p>
-            <p>個人事業主</p>
-            <p>学校</p>
-            <p>扶養家族</p>
-            <p>託児所</p>
-            <p>耐震工事</p>
-            <p>LED</p>
-            <p>免許更新</p>
-            <p>生活保護</p>
-            <p>大学</p>
-            <p>成人</p>
-            <p>診断書</p>
+            <SearchWords />
             <Footer />
         </div>
     )
