@@ -18,7 +18,7 @@ const MachineLearning: React.FC = () => {
             .post(url + version, params, {
                 auth: {
                     username: 'apikey',
-                    password: 'x6F7sZxxC5JsvT2GsXRFk5jmjZWeObem-YEEL5Ul5DWL'
+                    password: 'v_ogdwtTpO4JhG4fbp44jbRkUIMlcwBecVIEaweQWo_Y'
                 }
             })
             .then((result) => {
