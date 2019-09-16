@@ -186,4 +186,7 @@ export type sendData = {
   Detail: string
   Method: Array<string>
   Category: Array<string>
+  targetSex: targetSex
+  targetAge: targetAge
+  targetFamily: targetFamily
 };
