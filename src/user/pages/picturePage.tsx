@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import Picture from '../components/Login/picture'
 import SelectImage from '../components/Login/selectImage'
+import FixProfile from '../components/Login/fixProfile'
 import Footer from '../components/footer';
 import '../../scss/userRegistration.scss'
 
 const PicturePage: React.FC = () => {
-    const [imgBuf, setImgBuf] = useState<string>('')
     const [next, setNext] = useState<boolean>(false)
-    console.log('CH', imgBuf, next)
+    console.log('CH', next)
     return (
         <div className="userRegistration">
             <div className="signUpForm">
@@ -16,7 +16,10 @@ const PicturePage: React.FC = () => {
                     <h2>登録</h2>
                 </div>
                 <Picture />
-                <SelectImage />
+                {next ? 
+                <FixProfile /> :
+                <SelectImage setNext={setNext}/>
+                }
             </div>
             <Footer />
         </div>
