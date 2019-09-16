@@ -1,12 +1,11 @@
-import React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router'
+import React, { useState } from 'react'
 import Picture from '../components/Login/picture'
 import '../../scss/userRegistration.scss'
 import Footer from '../components/footer';
 
-type historyProps = RouteComponentProps
-
-const picturePage: React.FC<historyProps> = (props) => {
+const PicturePage: React.FC = () => {
+    const [imgBuf,setImgBuf] = useState<string>('')
+    console.log('CH',imgBuf)
     return (
         <div className="userRegistration">
             <div className="signUpForm">
@@ -14,11 +13,11 @@ const picturePage: React.FC<historyProps> = (props) => {
                     <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                     <h2>登録</h2>
                 </div>
-                <Picture />
+                <Picture setImgBuf={setImgBuf}/>
             </div>
             <Footer />
         </div>
     )
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(picturePage)
+export default PicturePage
