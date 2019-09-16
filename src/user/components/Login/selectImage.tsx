@@ -6,8 +6,11 @@ import { awsRekognition, awsResData } from '../../../types/type'
 type resType = {
     FaceDetails: Array<awsResData>
 }
+type propsType = {
+    setNext: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-const SelectImage: React.FC = () => {
+const SelectImage: React.FC<propsType> = (props) => {
     const [select, setSelect] = useState<boolean>(false)
     const [readerResult, setReaderResult] = useState<string>('')
 
@@ -50,7 +53,7 @@ const SelectImage: React.FC = () => {
                 res.FaceDetails.forEach(value => {
                     data.push(_.pick(value, ['AgeRange', 'BoundingBox', 'Gender']))
                 })
-                console.log(data)
+                console.log('res:', data)
                 imageView(readerResult, data)
             }
         })
@@ -96,6 +99,20 @@ const SelectImage: React.FC = () => {
                 inputAge.style.width = width - 5 + 'px'
                 obj.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
                 //document.body.appendChild(inputAge)
+
+                /* 家族関係のセレクトボックス作成 */
+                const selectGender = document.createElement('select')
+                selectGender.className = 'info'
+                selectGender.add(new Option('本人', '本人'))
+                selectGender.add(new Option('夫', '夫'))
+                selectGender.add(new Option('妻', '妻'))
+                selectGender.add(new Option('息子', '息子'))
+                selectGender.add(new Option('娘', '娘'))
+                selectGender.add(new Option('祖父', '祖父'))
+                selectGender.add(new Option('祖母', '祖母'))
+
+                /* コンポーネントの変更 */
+                props.setNext(true)
             })
         }
     }

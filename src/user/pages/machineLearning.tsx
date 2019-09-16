@@ -81,6 +81,15 @@ const MachineLearning: React.FC = () => {
                 })
             }
 
+            data.sort(function (a, b) {
+                if (a.AgeRange.High + a.AgeRange.Low > b.AgeRange.High + b.AgeRange.Low) {
+                    return -1
+                } else {
+                    return 1
+                }
+            })
+            console.log('CH', data)
+
             data.forEach(element => {
                 const heigh = element.BoundingBox.Height * img.height * shrinkH
                 const left = element.BoundingBox.Left * img.width * shrinkW
@@ -112,6 +121,43 @@ const MachineLearning: React.FC = () => {
                 inputAge.addEventListener('change', () => addOnChange(inputAge.value))
                 */
                 document.body.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
+
+                /* 家族関係のセレクトボックス作成 */
+                const selectRelationship = document.createElement('select')
+                selectRelationship.className = 'info'
+                selectRelationship.add(new Option('本人', '本人'))
+                selectRelationship.add(new Option('夫', '夫'))
+                selectRelationship.add(new Option('妻', '妻'))
+                selectRelationship.add(new Option('息子', '息子'))
+                selectRelationship.add(new Option('娘', '娘'))
+                selectRelationship.add(new Option('祖父', '祖父'))
+                selectRelationship.add(new Option('祖母', '祖母'))
+
+                console.log(age, gender)
+                if (age > 45 && gender === 'Male') {
+                    selectRelationship.selectedIndex = 5
+                }
+                else if (age > 45 && gender === 'Female') {
+                    selectRelationship.selectedIndex = 6
+                }
+                else if (age <= 45&& age >= 23 && gender === 'Male') {
+                    selectRelationship.selectedIndex = 1
+                }
+                else if (age <= 45 && age >= 23 && gender === 'Female') {
+                    selectRelationship.selectedIndex = 2
+                }
+                else if (age < 23 && gender === 'Male') {
+                    selectRelationship.selectedIndex = 3
+                }
+                else if (age < 23 && gender === 'Female') {
+                    selectRelationship.selectedIndex = 4
+                }
+
+                selectRelationship.style.position = 'absolute'
+                selectRelationship.style.top = top - 50 + 'px'
+                selectRelationship.style.left = left + 'px'
+                selectRelationship.style.width = width + 'px'
+                document.body.appendChild(selectRelationship)
 
             })
         }
