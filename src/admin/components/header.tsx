@@ -1,8 +1,12 @@
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
-import SearchBar from '../../user/components/searchBar';
-import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux'
+import { initLoginCreator } from '../../actions/action'
+import { AppState } from '../../store'
+import { RouteComponentProps, withRouter, Redirect } from 'react-router'
+import { Link } from 'react-router-dom'
+import { auth } from '../../firebase/firebase'
+import Button from '../../designSystem/Button';
+import styled from 'styled-components'
 import setting from '../../designSystem/setting'
 
 
@@ -22,25 +26,46 @@ const StyledLink = styled(Link)`
 `
 
 const AdminHeader: React.FC<historyProps> = props => {
-    return(
+    const user = useSelector((state: AppState) => state.userState)
+    const dispatch = useDispatch()
+    const initUserData = () => dispatch(initLoginCreator())
+
+    const handleSignOut = () => {
+        auth.signOut().then(() => {
+            initUserData()
+        })
+    }
+
+    if (user.userId === '') {
+        return (
+            <Redirect to={'/admin/login'} />
+        )
+    }
+    else
+    return (
         <StyledHeader>
+            <Link to="/admin/">
+                <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
+            </Link>
+            <p>{user.nickName}版</p>
             <nav>
-                <StyledLink to="/admin/category">
-                    制度一覧
+                <StyledLink to="/admin/">
+                    トップ
+                </StyledLink>
+                <StyledLink to="/admin/status">
+                    ランキング
                 </StyledLink>
                 <StyledLink to="/admin/newSystem">
                     新制度登録
                 </StyledLink>
-                <StyledLink to="/admin/status">
-                    制度閲覧状況
+                <StyledLink to="/admin/">
+                    データ出力
                 </StyledLink>
             </nav>
-            <SearchBar
-                pushTo="/admin/search"
-                right
-            />
+            <Button link onClick={() => handleSignOut()}>サインアウト</Button>
         </StyledHeader>
     )
+
 }
 
 export default withRouter<historyProps, React.FC<historyProps>>(AdminHeader) 

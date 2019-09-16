@@ -4,6 +4,7 @@ import Header from '../components/header'
 import Footer from '../../user/components/footer-pc'
 import CategoryCardsList from '../../user/components/categoryCardsList'
 import PopularSystemList from '../components/popularSystemList'
+import { Link } from 'react-router-dom'
 import SearchWords from '../components/searchWords'
 import { Container, MainContents } from '../../designSystem/Page';
 import AdminSearch from '../components/adminSearch';
@@ -21,7 +22,7 @@ const Search: React.FC<historyProps> = props => {
                     <CategoryCardsList pc pushTo="/admin/status" />
                     <h2>一か月以内によく見られている制度</h2>
                     <PopularSystemList />
-                    <a href="/admin/top">> さらに詳しく</a>
+                    <Link to="/admin/">> さらに詳しく</Link>
                     <h2>最近の検索ワード</h2>
                     <SearchWords />
                 </MainContents>
