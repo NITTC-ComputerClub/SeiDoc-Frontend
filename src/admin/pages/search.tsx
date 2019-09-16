@@ -1,9 +1,9 @@
 import React from 'react'
-import Tag from '../../user/components/tag'
 import AdminSystemList from '../components/adminSystemList'
 import Footer from '../../user/components/footer'
 import Header from '../components/header'
-import SearchValue from '../components/searchValue'
+import SearchBar from '../../user/components/searchBar'
+import CategoryCardsList from '../../user/components/categoryCardsList'
 
 const Search: React.FC = () => {
     return (
@@ -12,8 +12,9 @@ const Search: React.FC = () => {
             <div className="result">
                 <div className="container">
                 </div>
-                <SearchValue />
-                <Tag />
+                <SearchBar pushTo='/admin/search'/>
+                <CategoryCardsList pc pushTo='/admin/search'/>
+                <h2>検索結果</h2>
                 <AdminSystemList />
             </div>
             <Footer />
