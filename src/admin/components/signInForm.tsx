@@ -47,7 +47,7 @@ const SignInForm: React.FC<historyProps> = (props) => {
                         login(userData);
                         if(tmpUserState.isAdmin === true){
                             console.log("Welcome, Admin");   
-                            props.history.push('/admin/category'); 
+                            props.history.push('/admin/'); 
                         }else{
                             console.log("this user is not admin");
                             alert('職員用アカウントではありません')

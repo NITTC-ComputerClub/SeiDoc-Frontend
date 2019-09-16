@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { initLoginCreator } from '../../actions/action'
 import { AppState } from '../../store'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { RouteComponentProps, withRouter, Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase'
 import Button from '../../designSystem/Button';
@@ -36,7 +36,13 @@ const AdminHeader: React.FC<historyProps> = props => {
         })
     }
 
-    return(
+    if (user.userId === '') {
+        return (
+            <Redirect to={'/admin/login'} />
+        )
+    }
+    else
+    return (
         <StyledHeader>
             <Link to="/admin/">
                 <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
@@ -59,6 +65,7 @@ const AdminHeader: React.FC<historyProps> = props => {
             <Button link onClick={() => handleSignOut()}>サインアウト</Button>
         </StyledHeader>
     )
+
 }
 
 export default withRouter<historyProps, React.FC<historyProps>>(AdminHeader) 
