@@ -1,34 +1,89 @@
 import React from 'react'
-import axios from 'axios'
-import { machineLearningType, userProfile } from '../../types/type'
+import { machineLearningType, userProfile, awsRekognition, awsResData } from '../../types/type'
+import _ from 'lodash'
+
+type resType = {
+    FaceDetails: Array<awsResData>
+}
 
 const MachineLearning: React.FC = () => {
-    const machineLearning = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files as FileList
-        const image: File = file[0]
-        /* こうかくとnullの問題でエラー
-        const images = e.target.files[0] as File
-        */
-        const url = 'https://gateway.watsonplatform.net/visual-recognition/api/v3/detect_faces?'
-        const version = 'version=2018-03-19'
-        const params = new FormData()
-        params.append('images_file', image)
+    const AWS = require('aws-sdk')
+    var accessKey = process.env.REACT_APP_AWS_ACCESSKEY
+    var secretKey = process.env.REACT_APP_AWS_SECRETKEY
+    AWS.config.update({
+        region: 'ap-northeast-1',
+        credentials: new AWS.Credentials(accessKey, secretKey)
+    });
+    var rekognition = new AWS.Rekognition()
 
-        axios
-            .post(url + version, params, {
-                auth: {
-                    username: 'apikey',
-                    password: 'v_ogdwtTpO4JhG4fbp44jbRkUIMlcwBecVIEaweQWo_Y'
+    const getBinary = (encodedFile: string) => {
+        var base64Image = encodedFile.split("data:image/jpeg;base64,")[1];
+        var binaryImg = atob(base64Image);
+        var length = binaryImg.length;
+        var ab = new ArrayBuffer(length);
+        var ua = new Uint8Array(ab);
+        for (var i = 0; i < length; i++) {
+            ua[i] = binaryImg.charCodeAt(i);
+        }
+        return ab;
+    }
+
+    const handle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const fileList = e.target.files as FileList
+        const image: File = fileList[0]
+        const reader = new FileReader()
+
+        reader.onload = () => {
+            const img = reader.result as string
+
+            const params = {
+                Image: {
+                    Bytes: getBinary(img)
+                },
+                Attributes: [
+                    'ALL'
+                ]
+            };
+
+            rekognition.detectFaces(params, (err: string, res: resType) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    const data: Array<awsRekognition> = []
+                    res.FaceDetails.forEach(value => {
+                        data.push(_.pick(value, ['AgeRange', 'BoundingBox']))
+                    })
+                    console.log(data)
+                    imageView(img, data)
                 }
+            });
+        }
+        reader.readAsDataURL(image)
+    };
+
+    const imageView = (image: string, data: Array<awsRekognition>) => {
+        const canvas = document.getElementById('cvs') as HTMLCanvasElement
+        const context = canvas.getContext('2d') as CanvasRenderingContext2D
+        context.lineWidth = 3  //線の太さ設定
+
+        const img = new Image()
+        img.src = image
+        img.onload = () => {
+            const shrinkW = 600 / img.width
+            const shrinkH = 400 / img.height
+            context.drawImage(img, 0, 0, 600, 400)  //写真描画
+            
+            data.forEach(element => {
+                const heigh = element.BoundingBox.Height * img.height * shrinkH
+                const left = element.BoundingBox.Left * img.width * shrinkW
+                const top = element.BoundingBox.Top * img.height * shrinkH
+                const width = element.BoundingBox.Width * img.width * shrinkW
+
+                /* 顔に四角を生成 */
+                context.strokeRect(left, top, width, heigh)
+
             })
-            .then((result) => {
-                const data: Array<machineLearningType> = result.data.images[0].faces
-                console.log(data)
-                imageDraw(image, data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        }
     }
 
     const imageDraw = (file: File, data: Array<machineLearningType>) => {
@@ -123,10 +178,38 @@ const MachineLearning: React.FC = () => {
     return (
         <div>
             <canvas id='cvs' width='600' height='400'></canvas>
-            <input accept='image/*' multiple type='file' onChange={e => machineLearning(e)} />
+            <input accept='image/*' multiple type='file' onChange={e => handle(e)} />
             <button onClick={handleGetAge}>確定</button>
         </div>
     )
 }
 
 export default MachineLearning
+
+/*
+    const machineLearning = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files as FileList
+        const image: File = file[0]
+
+        const url = 'https://gateway.watsonplatform.net/visual-recognition/api/v3/detect_faces?'
+        const version = 'version=2018-03-19'
+        const params = new FormData()
+        params.append('images_file', image)
+
+        axios
+            .post(url + version, params, {
+                auth: {
+                    username: 'apikey',
+                    password: 'v_ogdwtTpO4JhG4fbp44jbRkUIMlcwBecVIEaweQWo_Y'
+                }
+            })
+            .then((result) => {
+                const data: Array<machineLearningType> = result.data.images[0].faces
+                console.log(data)
+                imageDraw(image, data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+*/
