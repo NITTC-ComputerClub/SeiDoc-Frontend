@@ -24,6 +24,9 @@ const StyledSystemCard = styled.li`
 const SystemTitle = styled.h4`
     margin: 0 0 8px 0;
     font-size: $H2;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `
 
 const SystemRegion = styled.p`
