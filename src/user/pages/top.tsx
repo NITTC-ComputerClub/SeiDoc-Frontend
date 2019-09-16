@@ -8,11 +8,12 @@ import Footer from "../components/footer";
 import Header from '../components/header'
 
 import "../../scss/top.scss";
+import { Wrapper } from "../../designSystem/Page";
 
 const Top: React.FC = () => {
   const user = useSelector((state: AppState) => state.userState)
   return (
-    <div className="top">
+    <Wrapper className="top">
       <Header />
       <div className="title">
         <div className="wrapper">
@@ -42,7 +43,7 @@ const Top: React.FC = () => {
         <PopularSystemList />
       </section>
       <Footer />
-    </div>
+    </Wrapper>
   );
 };
 

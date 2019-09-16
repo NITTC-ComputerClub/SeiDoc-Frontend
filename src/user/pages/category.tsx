@@ -7,6 +7,7 @@ import Footer from '../components/footer';
 import Header from '../components/header'
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
+import { Wrapper } from '../../designSystem/Page';
 
 const CategoryContainer = styled.div`
     padding: 16px;
@@ -25,7 +26,7 @@ const Category: React.FC = () => {
         deleteSystems()
     }, [dispatch])
     return (
-        <div>
+        <Wrapper>
             <Header />
             <CategoryContainer>
                 <SearchBar pushTo="/search" center />
@@ -33,7 +34,7 @@ const Category: React.FC = () => {
                 <CategoryCardsList pushTo="/search" />
             </CategoryContainer>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 
