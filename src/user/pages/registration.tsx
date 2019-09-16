@@ -22,7 +22,10 @@ const Registration: React.FC = () => {
         dailyView: 0,
         weeklyView: [0,0,0,0,0,0,0],
         monthlyView: 0,
-        ageGroup: []
+        ageGroup: [],
+        targetFamily:0,
+        targetSex:2,
+        targetAge:0
     }
     let [currentData, setCurrentData] = useState<System>(newSystem)
 
