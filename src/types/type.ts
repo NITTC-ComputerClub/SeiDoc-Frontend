@@ -62,11 +62,11 @@ export type UserState = {
   address: string;
   family: targetFamily;
   isAdmin: boolean; //
-  city: string; 
+  city: string;
   department: string;
   sex: targetSex;
   searchedWords: string[];
-  viewedCategory: [{categoryName: string, count: number}]
+  viewedCategory: [{ categoryName: string, count: number }]
 };
 
 
@@ -153,6 +153,52 @@ export type showOrderType = {
   order: Array<string>
 };
 
+export type awsRekognition = {
+  AgeRange: {
+    High: number
+    Low: number
+  },
+  BoundingBox: {
+    Height: number
+    Left: number
+    Top: number
+    Width: number
+  }
+}
+
+export type awsResData = {
+  AgeRange: { Low: number, High: number }
+  Beard: { Value: boolean, Confidence: number }
+  BoundingBox: { Width: number, Height: number, Left: number, Top: number }
+  Confidence: number
+  Emotions: Array<{ Type: string, Confidence: number }>
+  Eyeglasses: { Value: boolean, Confidence: number }
+  EyesOpen: { Value: boolean, Confidence: number }
+  Gender: { Value: string, Confidence: number }
+  Landmarks: Array<{ Type: string, X: number, Y: number }>
+  MouthOpen: { Value: boolean, Confidence: number }
+  Mustache: { Value: false, Confidence: number }
+  Pose: { Roll: number, Yaw: number, Pitch: number }
+  Quality: { Brightness: number, Sharpness: number }
+  Smile: { Value: boolean, Confidence: number }
+  Sunglasses: { Value: boolean, Confidence: number }
+}
+
+export type sendData = {
+  Name: string
+  Location: string
+  Department: string
+  Target: string
+  Site: string
+  Detail: string
+  Method: Array<string>
+  Category: Array<string>
+  targetSex: targetSex
+  targetAge: targetAge
+  targetFamily: targetFamily
+};
+
+/* もしものために残しておく*/
 export type machineLearningType = {
   age: {
     min: number,
@@ -176,17 +222,3 @@ export type userProfile = {
   age: string,
   gender: string
 }
-
-export type sendData = {
-  Name: string
-  Location: string
-  Department: string
-  Target: string
-  Site: string
-  Detail: string
-  Method: Array<string>
-  Category: Array<string>
-  targetSex: targetSex
-  targetAge: targetAge
-  targetFamily: targetFamily
-};
