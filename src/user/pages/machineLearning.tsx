@@ -140,7 +140,7 @@ const MachineLearning: React.FC = () => {
                 else if (age > 45 && gender === 'Female') {
                     selectRelationship.selectedIndex = 6
                 }
-                else if (age <= 45&& age >= 23 && gender === 'Male') {
+                else if (age <= 45 && age >= 23 && gender === 'Male') {
                     selectRelationship.selectedIndex = 1
                 }
                 else if (age <= 45 && age >= 23 && gender === 'Female') {
