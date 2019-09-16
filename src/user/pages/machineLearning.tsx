@@ -51,7 +51,7 @@ const MachineLearning: React.FC = () => {
                 } else {
                     const data: Array<awsRekognition> = []
                     res.FaceDetails.forEach(value => {
-                        data.push(_.pick(value, ['AgeRange', 'BoundingBox']))
+                        data.push(_.pick(value, ['AgeRange', 'BoundingBox', 'Gender']))
                     })
                     console.log(data)
                     imageView(img, data)
@@ -72,12 +72,19 @@ const MachineLearning: React.FC = () => {
             const shrinkW = 600 / img.width
             const shrinkH = 400 / img.height
             context.drawImage(img, 0, 0, 600, 400)  //写真描画
-            
+
             data.forEach(element => {
                 const heigh = element.BoundingBox.Height * img.height * shrinkH
                 const left = element.BoundingBox.Left * img.width * shrinkW
                 const top = element.BoundingBox.Top * img.height * shrinkH
                 const width = element.BoundingBox.Width * img.width * shrinkW
+                const gender = element.Gender.Value
+                if (gender === 'Male') {
+                    context.strokeStyle = 'blue'
+                }
+                else if (gender === 'Female') {
+                    context.strokeStyle = 'red'
+                }
 
                 /* 顔に四角を生成 */
                 context.strokeRect(left, top, width, heigh)
