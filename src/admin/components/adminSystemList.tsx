@@ -48,10 +48,11 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
                             props.history.push('/admin/detail/' + system.documentID)
                         }
                         }>
+                            {console.log(system.ageGroup.length === 0)}
                             <h4>{system.Name}</h4>
                             <p>{system.Department}</p>
                             <h6>閲覧数 {system.monthlyView}/月</h6>
-                            {system.ageGroup[0].age !== undefined ? <p>{system.ageGroup[0].age}代に人気</p> : <div></div>}
+                            {system.ageGroup.length === 0 ? <div></div> : <p>{system.ageGroup[0].age}代に人気</p>}
                         </li>
                     ))}
                 </ul>
