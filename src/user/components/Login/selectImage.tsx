@@ -93,12 +93,11 @@ const SelectImage: React.FC<propsType> = (props) => {
                 const age = Math.round((element.AgeRange.High + element.AgeRange.Low) / 2)
 
                 inputAge.value = age.toString()
-                //inputAge.style.position = 'relative'
+                inputAge.style.position = 'absolute'
                 inputAge.style.top = top - 30 + 'px'
                 inputAge.style.left = left + 'px'
                 inputAge.style.width = width - 5 + 'px'
                 obj.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
-                //document.body.appendChild(inputAge)
 
                 /* 家族関係のセレクトボックス作成 */
                 const selectGender = document.createElement('select')

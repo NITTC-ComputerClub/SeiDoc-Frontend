@@ -1,10 +1,15 @@
 import React from 'react'
+import styled from 'styled-components';
+
+const ShowImage = styled.div`
+    position: relative;
+`
 
 const Picture: React.FC = () => {
     return (
-        <div id='showImage'>
+        <ShowImage id='showImage'>
             <canvas id='cvs' width='350' height='400'></canvas>
-        </div>
+        </ShowImage>
     )
 }
 
