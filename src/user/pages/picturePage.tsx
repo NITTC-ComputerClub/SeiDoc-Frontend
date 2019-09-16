@@ -7,7 +7,6 @@ import '../../scss/userRegistration.scss'
 
 const PicturePage: React.FC = () => {
     const [next, setNext] = useState<boolean>(false)
-    console.log('CH', next)
     return (
         <div className="userRegistration">
             <div className="signUpForm">
