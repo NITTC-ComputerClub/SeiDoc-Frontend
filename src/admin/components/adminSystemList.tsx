@@ -49,8 +49,9 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
                         }
                         }>
                             <h4>{system.Name}</h4>
-                            <h6>{system.totalView}</h6>
-                            <p>{system.Location}</p>
+                            <p>{system.Department}</p>
+                            <h6>閲覧数 {system.monthlyView}/月</h6>
+                            {system.ageGroup[0].age !== undefined ? <p>{system.ageGroup[0].age}代に人気</p> : <div></div>}
                         </li>
                     ))}
                 </ul>
