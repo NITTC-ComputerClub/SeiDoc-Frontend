@@ -48,7 +48,6 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
                             props.history.push('/admin/detail/' + system.documentID)
                         }
                         }>
-                            {console.log(system.ageGroup.length === 0)}
                             <h4>{system.Name}</h4>
                             <p>{system.Department}</p>
                             <h6>閲覧数 {system.monthlyView}/月</h6>
