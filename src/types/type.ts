@@ -130,6 +130,10 @@ export type awsRekognition = {
     Left: number
     Top: number
     Width: number
+  },
+  Gender: {
+    Value: string,
+    Confidence: number
   }
 }
 
