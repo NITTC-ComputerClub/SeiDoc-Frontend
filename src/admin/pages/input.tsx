@@ -131,8 +131,8 @@ const Input: React.FC = () => {
             <Header />
             <Container>
                 <MainContents>
-                    <Title>新制度登録</Title>
                     <NewSystemForm>
+                        <Title>新制度登録</Title>
                         <InputWrapper>
                             <Label>制度名</Label>
                             <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力"/>
