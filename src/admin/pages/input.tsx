@@ -3,7 +3,7 @@ import { fireStore, systemIndex } from '../../firebase/firebase'
 import { AppState } from '../../store';
 import { useSelector } from 'react-redux';
 import { sendData } from '../../types/type';
-import Header from '../../admin/components/header';
+import Header from '../components/header';
 import Footer from '../../user/components/footer';
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
@@ -171,11 +171,13 @@ const Input: React.FC = () => {
                         </Select>
                         <Label>おおまかな制度対象者</Label>
                         <Select onChange={e => {targetSex = parseInt(e.target.value)}} >
+                            <option value="-1">性別を選択してください</option>
                             <option value="0">男性</option>
                             <option value="1">女性</option>
-                            <option value="2" defaultChecked>すべて</option>
+                            <option value="2">すべて</option>
                         </Select>
                         <Select onChange={e => {targetAge = parseInt(e.target.value)}}>
+                            <option value="-1">対象を選択してください</option>
                             <option value="0">乳児</option>
                             <option value="1">幼児</option>
                             <option value="2">小学生</option>
@@ -193,6 +195,7 @@ const Input: React.FC = () => {
                             <option value="14">全年齢</option>
                         </Select>
                         <Select onChange={e =>{targetFamily = parseInt(e.target.value)}}>
+                            <option value="-1">対象の家庭を選択してください</option>
                             <option value="0">独身</option>
                             <option value="1">夫婦</option>
                             <option value="2">子持ち</option>
@@ -223,22 +226,5 @@ const Input: React.FC = () => {
 }
 export default Input
 
-/*
-    {
-        "Name": "児童手当",
-        "Department": "各区民生子ども課",
-        "Location": "愛知県名古屋市",
-        "Site": "http://www.city.nagoya.jp/kodomoseishonen/page/0000034404.html",
-        "Detail": "子どもを養育されている方に対して児童手当が支給されます。",
-        "Target": "中学生以下の子ども持つ保護者",
-        "Method": [
-        "金銭補助"
-        ],
-        "Category": [
-        "子育て",
-        "育児"
-        ]
-  }
-*/
 
 
