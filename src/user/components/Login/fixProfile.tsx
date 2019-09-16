@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import { awsRekognition, awsResData } from '../../../types/type'
@@ -7,10 +8,9 @@ type resType = {
     FaceDetails: Array<awsResData>
 }
 
-const SelectImage: React.FC = () => {
-    const [select, setSelect] = useState<boolean>(false)
-    const [readerResult, setReaderResult] = useState<string>('')
+type historyProps = RouteComponentProps
 
+const FixProfile: React.FC<historyProps> = (props) => {
     const AWS = require('aws-sdk')
     var accessKey = process.env.REACT_APP_AWS_ACCESSKEY
     var secretKey = process.env.REACT_APP_AWS_SECRETKEY
@@ -32,30 +32,39 @@ const SelectImage: React.FC = () => {
         return ab;
     }
 
-    const handleRekognition = () => {
-        const params = {
-            Image: {
-                Bytes: getBinary(readerResult)
-            },
-            Attributes: [
-                'ALL'
-            ]
-        }
+    const handle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const fileList = e.target.files as FileList
+        const image: File = fileList[0]
+        const reader = new FileReader()
 
-        rekognition.detectFaces(params, (err: string, res: resType) => {
-            if (err) {
-                console.log(err)
-            } else {
-                const data: Array<awsRekognition> = []
-                res.FaceDetails.forEach(value => {
-                    data.push(_.pick(value, ['AgeRange', 'BoundingBox', 'Gender']))
-                })
-                console.log(data)
-                imageView(readerResult, data)
+        reader.onload = () => {
+            const img = reader.result as string
+
+            const params = {
+                Image: {
+                    Bytes: getBinary(img)
+                },
+                Attributes: [
+                    'ALL'
+                ]
             }
-        })
 
+            rekognition.detectFaces(params, (err: string, res: resType) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    const data: Array<awsRekognition> = []
+                    res.FaceDetails.forEach(value => {
+                        data.push(_.pick(value, ['AgeRange', 'BoundingBox', 'Gender']))
+                    })
+                    console.log(data)
+                    imageView(img, data)
+                }
+            })
+        }
+        reader.readAsDataURL(image)
     }
+
     const imageView = (image: string, data: Array<awsRekognition>) => {
         const obj = document.getElementById('showImage') as HTMLElement
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
@@ -67,7 +76,7 @@ const SelectImage: React.FC = () => {
         img.onload = () => {
             const shrinkW = 350 / img.width
             const shrinkH = 400 / img.height
-            //context.drawImage(img, 0, 0, 350, 400)  //写真描画
+            context.drawImage(img, 0, 0, 350, 400)  //写真描画
 
             /* 前回の入力フォームを削除 */
             const inputNode = document.querySelectorAll('input.info')
@@ -109,43 +118,10 @@ const SelectImage: React.FC = () => {
         }
     }
 
-    const imageShow = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const fileList = e.target.files as FileList
-        const file: File = fileList[0]
-        const canvas = document.getElementById('cvs') as HTMLCanvasElement
-        const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        const reader = new FileReader()
-
-        reader.onload = () => {
-            const image = reader.result as string
-            setReaderResult(image)
-            const img = new Image()
-            img.src = image
-            img.onload = () => {
-                context.drawImage(img, 0, 0, 350, 400)  //写真描画
-                setSelect(true)
-                //props.setImgBuf(image)
-            }
-        }
-        reader.readAsDataURL(file)
-    }
-
     return (
         <div>
-            <p>家族写真から家族構成を</p>
-            <p>自動で識別します</p>
-            {select ?
-                <div>
-                    <button onClick={() => handleRekognition()}>この写真で識別</button>
-                    <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
-                </div> :
-                <div>
-                    <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
-                    <Link to='/'>スキップ</Link>
-                </div>
-            }
         </div>
     )
 }
 
-export default SelectImage
+export default withRouter<historyProps, React.FC<historyProps>>(FixProfile)
