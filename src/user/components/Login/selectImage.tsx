@@ -67,15 +67,6 @@ const SelectImage: React.FC = () => {
         img.onload = () => {
             const shrinkW = 350 / img.width
             const shrinkH = 400 / img.height
-            //context.drawImage(img, 0, 0, 350, 400)  //写真描画
-
-            /* 前回の入力フォームを削除 */
-            const inputNode = document.querySelectorAll('input.info')
-            if (inputNode.length !== 0) {
-                inputNode.forEach((child) => {
-                    obj.removeChild(child)
-                })
-            }
 
             data.forEach(element => {
                 const heigh = element.BoundingBox.Height * img.height * shrinkH
@@ -114,9 +105,25 @@ const SelectImage: React.FC = () => {
         const file: File = fileList[0]
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
+        const obj = document.getElementById('showImage') as HTMLElement
+
         const reader = new FileReader()
 
         reader.onload = () => {
+            /* 前回の入力フォームを削除 */
+            const inputNode = document.querySelectorAll('input.info')
+            if (inputNode.length !== 0) {
+                inputNode.forEach((child) => {
+                    obj.removeChild(child)
+                })
+            }
+            const selectNode = document.querySelectorAll('select.info')
+            if (selectNode.length !== 0) {
+                selectNode.forEach((child) => {
+                    document.body.removeChild(child)
+                })
+            }
+
             const image = reader.result as string
             setReaderResult(image)
             const img = new Image()
