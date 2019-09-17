@@ -3,12 +3,12 @@ import Picture from '../components/Login/picture'
 import SelectImage from '../components/Login/selectImage'
 import FixProfile from '../components/Login/fixProfile'
 import Footer from '../components/footer';
-import { profileData } from '../../types/type'
+import { profileDataType } from '../../types/type'
 import '../../scss/userRegistration.scss'
 
 const PicturePage: React.FC = () => {
-    const [profileData, setProfileData] = useState<Array<profileData>>([])
-    console.log('CH', profileData)
+    const [profileData, setProfileData] = useState<Array<profileDataType>>([])
+
     return (
         <div className="userRegistration">
             <div className="signUpForm">
@@ -16,10 +16,15 @@ const PicturePage: React.FC = () => {
                     <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                     <h2>登録</h2>
                 </div>
+                {profileData.length !== 0 &&
+                    <div>
+                        <p>修正したい人物の顔をタッチして</p>
+                        <p>情報を修正してください</p>
+                    </div>}
                 <Picture />
                 {profileData.length === 0 ?
                     <SelectImage setProfileData={setProfileData} /> :
-                    <FixProfile />
+                    <FixProfile profileData={profileData} />
                 }
             </div>
             <Footer />

@@ -188,7 +188,7 @@ export type awsResData = {
   Sunglasses: { Value: boolean, Confidence: number }
 }
 
-export type profileData = {
+export type profileDataType = {
   age: number,
   boundingBox: {
     width: number,
