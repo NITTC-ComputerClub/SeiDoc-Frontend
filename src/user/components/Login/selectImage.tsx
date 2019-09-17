@@ -24,15 +24,15 @@ const SelectImage: React.FC<propsType> = (props) => {
     const rekognition = new AWS.Rekognition()
 
     const getBinary = (encodedFile: string) => {
-        const base64Image = encodedFile.split("data:image/jpeg;base64,")[1];
-        const binaryImg = atob(base64Image);
-        const length = binaryImg.length;
-        const ab = new ArrayBuffer(length);
-        const ua = new Uint8Array(ab);
+        const base64Image = encodedFile.split("data:image/jpeg;base64,")[1]
+        const binaryImg = atob(base64Image)
+        const length = binaryImg.length
+        const ab = new ArrayBuffer(length)
+        const ua = new Uint8Array(ab)
         for (let i = 0; i < length; i++) {
-            ua[i] = binaryImg.charCodeAt(i);
+            ua[i] = binaryImg.charCodeAt(i)
         }
-        return ab;
+        return ab
     }
 
     const handleRekognition = () => {
@@ -201,7 +201,7 @@ const SelectImage: React.FC<propsType> = (props) => {
             const selectNode = document.querySelectorAll('select.info')
             if (selectNode.length !== 0) {
                 selectNode.forEach((child) => {
-                    document.body.removeChild(child)
+                    obj.removeChild(child)
                 })
             }
 
