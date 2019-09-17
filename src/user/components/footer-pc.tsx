@@ -4,8 +4,14 @@ import styled from 'styled-components'
 import setting from '../../designSystem/setting'
 
 const StyledFooter = styled.footer`
+    width: 100%;
+    height: 128px;
     padding: 24px 0;
     background-color: ${setting.White};
+
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
 `
 
 const Contents = styled.div`

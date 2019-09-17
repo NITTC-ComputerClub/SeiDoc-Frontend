@@ -1,6 +1,8 @@
 @import "setting";
 
 .login {
+    overflow: hidden;
+
     .loginForm {
         max-width: 336px;
         margin: 96px auto;
