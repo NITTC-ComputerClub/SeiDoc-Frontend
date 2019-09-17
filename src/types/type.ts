@@ -188,6 +188,18 @@ export type awsResData = {
   Sunglasses: { Value: boolean, Confidence: number }
 }
 
+export type userProfile = {
+  age: number,
+  boundingBox: {
+    width: number,
+    height: number,
+    left: number,
+    top: number
+  },
+  gender: string,
+  relationship: string
+}
+
 export type sendData = {
   Name: string
   Location: string
@@ -202,7 +214,7 @@ export type sendData = {
   targetFamily: targetFamily
 };
 
-/* もしものために残しておく*/
+/* もしものために残しておく
 export type machineLearningType = {
   age: {
     min: number,
@@ -226,3 +238,4 @@ export type userProfile = {
   age: string,
   gender: string
 }
+*/
