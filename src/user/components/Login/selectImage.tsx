@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-import { awsRekognition, awsResData, profileData } from '../../../types/type'
+import { awsRekognition, awsResData, profileDataType } from '../../../types/type'
 
 type resType = {
     FaceDetails: Array<awsResData>
 }
 type propsType = {
-    setProfileData: React.Dispatch<React.SetStateAction<Array<profileData>>>
+    setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>
 }
 
 const SelectImage: React.FC<propsType> = (props) => {
@@ -61,7 +61,7 @@ const SelectImage: React.FC<propsType> = (props) => {
     }
 
     const createData = (data: Array<awsRekognition>, img: HTMLImageElement) => {
-        const profileData: Array<profileData> = []
+        const profileData: Array<profileDataType> = []
 
         // 拡大・縮小倍率の取得
         const shrinkW = 350 / img.width
@@ -122,7 +122,7 @@ const SelectImage: React.FC<propsType> = (props) => {
         img.src = image
         img.onload = () => {
             // 専用データの作成
-            const profileData: Array<profileData> = createData(data, img)
+            const profileData: Array<profileDataType> = createData(data, img)
 
             profileData.forEach(element => {
                 const heigh = element.boundingBox.height
