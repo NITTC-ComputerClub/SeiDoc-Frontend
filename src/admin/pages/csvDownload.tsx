@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Header from '../components/header'
 import Footer from '../../user/components/footer-pc'
 import styled from 'styled-components';
+import Button from '../../designSystem/Button';
+
 
 
 const Select = styled.select` 
@@ -15,13 +17,24 @@ const Select = styled.select`
 `
 
 const CSVDownload: React.FC = () => {
+    const [category, setCategory] = useState<string>('すべて')
     const [isName, setIsName] = useState<boolean>(false)
+    const [isCategory, setIsCategory] = useState<boolean>(false)
+    const [isTarget, setIsTarget] = useState<boolean>(false)
+    const [isDepartment,setIsDepartment] = useState<boolean>(false)
+    const [isDetail,setIsDetail] = useState<boolean>(false)
+    const [isOfficialURL, setIsOfficialURL] = useState<boolean>(false)
+
+    const handleSubmit = () => {
+        console.log(category,isName,isCategory,isTarget,isDepartment,isDetail,isOfficialURL)
+        console.log("CSV出力完了！")
+    }
     return (
         <div>
             <Header />
             <div>
                 <h5>データ内容</h5>
-                <Select>
+                <Select onChange={e => setCategory(e.target.value)}>
                     <option value="すべて">全カテゴリ</option>
                     <option value="子育て">子育て</option>
                     <option value="介護">介護</option>
@@ -35,18 +48,58 @@ const CSVDownload: React.FC = () => {
             </div>
             <div>
                 <h2>項目</h2>
-                <label key="制度" >
+                <div>
                 <h5>制度名</h5>
                 <input
                     type="checkbox"
                     checked={isName}
                     onChange={() => setIsName(!isName)}
                 />
-                </label>
-        </div>  
+                </div>
+                <h5>カテゴリ</h5>
+                <input
+                    type="checkbox"
+                    checked={isCategory}
+                    onChange={() => setIsCategory(!isCategory)}
+                />
+                <h5>制度対象者</h5>
+                <input
+                    type="checkbox"
+                    checked={isTarget}
+                    onChange={() => setIsTarget(!isTarget)}
+                />
+                <h5>援助方法</h5>
+                <input
+                    type="checkbox"
+                    checked={isTarget}
+                    onChange={() => setIsTarget(!isTarget)}
+                />
+                <h5>担当部署</h5>
+                <input
+                    type="checkbox"
+                    checked={isDepartment}
+                    onChange={() => setIsDepartment(!isDepartment)}
+                />
+                <h5>詳細</h5>
+                <input
+                    type="checkbox"
+                    checked={isDetail}
+                    onChange={() => setIsDetail(!isDetail)}
+                />
+                <h5>公式サイト</h5>
+                <input
+                    type="checkbox"
+                    checked={isOfficialURL}
+                    onChange={() => setIsOfficialURL(!isOfficialURL)}
+                />
+            </div>  
+            <div>
+                <Button onClick={() => handleSubmit()}>CSVとして出力</Button>
+            </div>
         <Footer />
         </div>
     )
 }
+
 
 export default CSVDownload
