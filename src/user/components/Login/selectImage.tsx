@@ -7,7 +7,7 @@ type resType = {
     FaceDetails: Array<awsResData>
 }
 type propsType = {
-    setNext: React.Dispatch<React.SetStateAction<boolean>>
+    setProfileData: React.Dispatch<React.SetStateAction<Array<profileData>>>
 }
 
 const SelectImage: React.FC<propsType> = (props) => {
@@ -163,8 +163,8 @@ const SelectImage: React.FC<propsType> = (props) => {
                 selectRelationship.add(new Option('祖父', '祖父'))
                 selectRelationship.add(new Option('祖母', '祖母'))
 
-                for (let i = 0;i<selectRelationship.length;i++){
-                    if(selectRelationship.options[i].value === element.relationship){
+                for (let i = 0; i < selectRelationship.length; i++) {
+                    if (selectRelationship.options[i].value === element.relationship) {
                         selectRelationship.selectedIndex = i
                         break
                     }
@@ -175,10 +175,9 @@ const SelectImage: React.FC<propsType> = (props) => {
                 selectRelationship.style.left = left + 'px'
                 selectRelationship.style.width = width + 20 + 'px'
                 obj.appendChild(selectRelationship)
-
-                /* コンポーネントの変更 */
-                props.setNext(true)
             })
+            /* コンポーネントの変更 */
+            props.setProfileData(profileData)
         }
     }
 
@@ -213,7 +212,6 @@ const SelectImage: React.FC<propsType> = (props) => {
             img.onload = () => {
                 context.drawImage(img, 0, 0, 350, 400)  //写真描画
                 setSelect(true)
-                //props.setImgBuf(image)
             }
         }
         reader.readAsDataURL(file)
