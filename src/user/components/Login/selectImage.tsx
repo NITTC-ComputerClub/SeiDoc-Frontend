@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-import { awsRekognition, awsResData } from '../../../types/type'
+import { awsRekognition, awsResData, profileData } from '../../../types/type'
 
 type resType = {
     FaceDetails: Array<awsResData>
@@ -15,21 +15,21 @@ const SelectImage: React.FC<propsType> = (props) => {
     const [readerResult, setReaderResult] = useState<string>('')
 
     const AWS = require('aws-sdk')
-    var accessKey = process.env.REACT_APP_AWS_ACCESSKEY
-    var secretKey = process.env.REACT_APP_AWS_SECRETKEY
+    const accessKey = process.env.REACT_APP_AWS_ACCESSKEY
+    const secretKey = process.env.REACT_APP_AWS_SECRETKEY
     AWS.config.update({
         region: 'ap-northeast-1',
         credentials: new AWS.Credentials(accessKey, secretKey)
     });
-    var rekognition = new AWS.Rekognition()
+    const rekognition = new AWS.Rekognition()
 
     const getBinary = (encodedFile: string) => {
-        var base64Image = encodedFile.split("data:image/jpeg;base64,")[1];
-        var binaryImg = atob(base64Image);
-        var length = binaryImg.length;
-        var ab = new ArrayBuffer(length);
-        var ua = new Uint8Array(ab);
-        for (var i = 0; i < length; i++) {
+        const base64Image = encodedFile.split("data:image/jpeg;base64,")[1];
+        const binaryImg = atob(base64Image);
+        const length = binaryImg.length;
+        const ab = new ArrayBuffer(length);
+        const ua = new Uint8Array(ab);
+        for (let i = 0; i < length; i++) {
             ua[i] = binaryImg.charCodeAt(i);
         }
         return ab;
@@ -54,12 +54,65 @@ const SelectImage: React.FC<propsType> = (props) => {
                     data.push(_.pick(value, ['AgeRange', 'BoundingBox', 'Gender']))
                 })
                 console.log('res:', data)
-                imageView(readerResult, data)
+                drawProfile(readerResult, data)
             }
         })
 
     }
-    const imageView = (image: string, data: Array<awsRekognition>) => {
+
+    const createData = (data: Array<awsRekognition>, img: HTMLImageElement) => {
+        const profileData: Array<profileData> = []
+
+        // 拡大・縮小倍率の取得
+        const shrinkW = 350 / img.width
+        const shrinkH = 400 / img.height
+
+        data.forEach(element => {
+            const heigh = element.BoundingBox.Height * img.height * shrinkH
+            const left = element.BoundingBox.Left * img.width * shrinkW
+            const top = element.BoundingBox.Top * img.height * shrinkH
+            const width = element.BoundingBox.Width * img.width * shrinkW
+            const gender = element.Gender.Value
+            const age = Math.round((element.AgeRange.High + element.AgeRange.Low) / 2)
+            let relationship = ''
+
+            if (age > 45 && gender === 'Male') {
+                relationship = '祖父'
+            }
+            else if (age > 45 && gender === 'Female') {
+                relationship = '祖母'
+            }
+            else if (age <= 45 && age >= 23 && gender === 'Male') {
+                relationship = '夫'
+            }
+            else if (age <= 45 && age >= 23 && gender === 'Female') {
+                relationship = '妻'
+            }
+            else if (age < 23 && gender === 'Male') {
+                relationship = '息子'
+            }
+            else if (age < 23 && gender === 'Female') {
+                relationship = '娘'
+            }
+
+            profileData.push({
+                age: age,
+                boundingBox: {
+                    width: width,
+                    height: heigh,
+                    left: left,
+                    top: top
+                },
+                gender: gender,
+                relationship: relationship
+            })
+        })
+
+        console.log('profileData:', profileData)
+        return profileData
+    }
+
+    const drawProfile = (image: string, data: Array<awsRekognition>) => {
         const obj = document.getElementById('showImage') as HTMLElement
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
@@ -68,23 +121,16 @@ const SelectImage: React.FC<propsType> = (props) => {
         const img = new Image()
         img.src = image
         img.onload = () => {
-            const shrinkW = 350 / img.width
-            const shrinkH = 400 / img.height
+            // 専用データの作成
+            const profileData: Array<profileData> = createData(data, img)
 
-            data.sort(function (a, b) {
-                if (a.AgeRange.High + a.AgeRange.Low > b.AgeRange.High + b.AgeRange.Low) {
-                    return -1
-                } else {
-                    return 1
-                }
-            })
-
-            data.forEach(element => {
-                const heigh = element.BoundingBox.Height * img.height * shrinkH
-                const left = element.BoundingBox.Left * img.width * shrinkW
-                const top = element.BoundingBox.Top * img.height * shrinkH
-                const width = element.BoundingBox.Width * img.width * shrinkW
-                const gender = element.Gender.Value
+            profileData.forEach(element => {
+                const heigh = element.boundingBox.height
+                const left = element.boundingBox.left
+                const top = element.boundingBox.top
+                const width = element.boundingBox.width
+                const gender = element.gender
+                const age = element.age
 
                 /* 顔に四角を生成 */
                 if (gender === 'Male') {
@@ -98,7 +144,6 @@ const SelectImage: React.FC<propsType> = (props) => {
                 /* 年齢のテキストボックスを生成 */
                 const inputAge = document.createElement('input')
                 inputAge.className = 'info' // これでCSS当てられる？
-                const age = Math.round((element.AgeRange.High + element.AgeRange.Low) / 2)
 
                 inputAge.value = age.toString()
                 inputAge.style.position = 'absolute'
@@ -118,23 +163,11 @@ const SelectImage: React.FC<propsType> = (props) => {
                 selectRelationship.add(new Option('祖父', '祖父'))
                 selectRelationship.add(new Option('祖母', '祖母'))
 
-                if (age > 45 && gender === 'Male') {
-                    selectRelationship.selectedIndex = 5
-                }
-                else if (age > 45 && gender === 'Female') {
-                    selectRelationship.selectedIndex = 6
-                }
-                else if (age <= 45 && age >= 23 && gender === 'Male') {
-                    selectRelationship.selectedIndex = 1
-                }
-                else if (age <= 45 && age >= 23 && gender === 'Female') {
-                    selectRelationship.selectedIndex = 2
-                }
-                else if (age < 23 && gender === 'Male') {
-                    selectRelationship.selectedIndex = 3
-                }
-                else if (age < 23 && gender === 'Female') {
-                    selectRelationship.selectedIndex = 4
+                for (let i = 0;i<selectRelationship.length;i++){
+                    if(selectRelationship.options[i].value === element.relationship){
+                        selectRelationship.selectedIndex = i
+                        break
+                    }
                 }
 
                 selectRelationship.style.position = 'absolute'
