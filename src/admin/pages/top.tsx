@@ -6,14 +6,14 @@ import CategoryCardsList from '../../user/components/categoryCardsList'
 import PopularSystemList from '../components/popularSystemList'
 import { Link } from 'react-router-dom'
 import SearchWords from '../components/searchWords'
-import { Container, MainContents } from '../../designSystem/Page';
+import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import AdminSearch from '../components/adminSearch';
 
 type historyProps = RouteComponentProps
 
 const Search: React.FC<historyProps> = props => {
     return (
-        <div>
+        <Wrapper>
             <Header />
             <Container>
                 <MainContents>
@@ -28,7 +28,7 @@ const Search: React.FC<historyProps> = props => {
                 </MainContents>
             </Container>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 

@@ -4,10 +4,11 @@ import Footer from '../../user/components/footer'
 import Header from '../components/header'
 import SearchBar from '../../user/components/searchBar'
 import CategoryCardsList from '../../user/components/categoryCardsList'
+import { Wrapper } from '../../designSystem/Page';
 
 const Search: React.FC = () => {
     return (
-        <div>
+        <Wrapper>
             <Header />
             <div className="result">
                 <div className="container">
@@ -18,7 +19,7 @@ const Search: React.FC = () => {
                 <AdminSystemList />
             </div>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 
