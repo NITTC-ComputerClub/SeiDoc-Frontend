@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import Button from '../../designSystem/Button';
 import { fireStore, systemIndex } from '../../firebase/firebase';
 import { System } from '../../types/type';
+import _ from 'lodash';
+import { FaWindows } from 'react-icons/fa';
+
 
 
 
@@ -26,24 +29,74 @@ const CSVDownload: React.FC = () => {
     const [isDepartment,setIsDepartment] = useState<boolean>(false)
     const [isDetail,setIsDetail] = useState<boolean>(false)
     const [isOfficialURL, setIsOfficialURL] = useState<boolean>(false)
+    const [isMethod, setIsMethod] = useState<boolean>(false)
 
+    const json2csv = (json: Partial<System>[]) => {
+        console.log(json)
+        const header = Object.keys(json[0]).join(',') + "\n";
+        const body = json.map(d => {
+            return Object.keys(d).map(key => {
+                const query = key as 'Name' // ヤバイ
+                return d[query];
+            }).join(',');
+        }).join("\n");
+        return header + body;
+    }
+    const createCSV = (systemList: System[]) => {
+        console.log("systemList", systemList.length, systemList)
+        const query: string[] = []
+        if(isName){
+            query.push('Name')
+        }
+        if(isCategory){ query.push('Category') }
+        if(isTarget){ query.push('Target') }
+        if(isDepartment){ query.push('Department') }
+        if(isDetail){ query.push('Detail') }
+        if(isOfficialURL){ query.push('Site') }
+        //const data: System[] = [];
+        const pickedData = systemList.map(system => {
+            return _.pick(system, query)
+        })
+        
+        const csv = json2csv(pickedData)
+        console.log(csv)
+        const blob = new Blob([csv],{ type: 'text/csv'})
+        const fileName = 'data.csv'
+        
+        const a = document.createElement('a')
+        a.download = fileName
+        a.href = URL.createObjectURL(blob)
+        a.click()
+        console.log("CSV出力完了！")
+    }
     const handleSubmit = () => {
         console.log(category,isName,isCategory,isTarget,isDepartment,isDetail,isOfficialURL)
         const systemList : System[] = []
-        fireStore.collection(systemIndex).where("Category", "array-contains",category).get().then(
-            snapshot => {
-                snapshot.forEach(doc => {
-                    systemList.push(doc.data() as System)
-                })
-            }
-        ).then(
-            () => {
-                console.log("systemList", systemList.length, systemList)
-            }
-        )
-        console.log("CSV出力完了！")
-
+        if(category === 'すべて'){
+            fireStore.collection(systemIndex).get().then(
+                snapshot => {
+                    snapshot.forEach(doc => {
+                        systemList.push(doc.data() as System)
+                    })
+                }
+            ).then(
+                () => {
+                    createCSV(systemList)
+                });
+        }else{
+            fireStore.collection(systemIndex).where("Category", "array-contains",category).get().then(
+                snapshot => {
+                    snapshot.forEach(doc => {
+                        systemList.push(doc.data() as System)
+                    })
+                }
+            ).then(
+                () => {
+                    createCSV(systemList)
+                });
+        }
     }
+
     return (
         <div>
             <Header />
@@ -86,8 +139,8 @@ const CSVDownload: React.FC = () => {
                 <h5>援助方法</h5>
                 <input
                     type="checkbox"
-                    checked={isTarget}
-                    onChange={() => setIsTarget(!isTarget)}
+                    checked={isMethod}
+                    onChange={() => setIsTarget(!isMethod)}
                 />
                 <h5>担当部署</h5>
                 <input
