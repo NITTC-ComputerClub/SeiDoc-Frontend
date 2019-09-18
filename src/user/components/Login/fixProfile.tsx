@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, SetStateAction } from 'react'
 import { profileDataType } from '../../../types/type'
 
 type propsType = {
-    profileData: Array<profileDataType>
+    profileData: Array<profileDataType>,
+    setProfileData: React.Dispatch<SetStateAction<Array<profileDataType>>>
 }
 
 const FixProfile: React.FC<propsType> = (props) => {
@@ -15,6 +16,7 @@ const FixProfile: React.FC<propsType> = (props) => {
         const rect = canvas.getBoundingClientRect()
         const x = e.clientX - rect.left
         const y = e.clientY - rect.top
+        let sequence = 0
         console.log(x, y)
         props.profileData.forEach(element => {
             if (element.boundingBox.left <= x && x <= (element.boundingBox.left + element.boundingBox.width)
