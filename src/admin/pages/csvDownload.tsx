@@ -6,7 +6,6 @@ import Button from '../../designSystem/Button';
 import { fireStore, systemIndex } from '../../firebase/firebase';
 import { System } from '../../types/type';
 import _ from 'lodash';
-import { FaWindows } from 'react-icons/fa';
 
 
 
@@ -140,7 +139,7 @@ const CSVDownload: React.FC = () => {
                 <input
                     type="checkbox"
                     checked={isMethod}
-                    onChange={() => setIsTarget(!isMethod)}
+                    onChange={() => setIsMethod(!isMethod)}
                 />
                 <h5>担当部署</h5>
                 <input
