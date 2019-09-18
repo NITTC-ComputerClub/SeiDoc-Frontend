@@ -8,7 +8,7 @@ import '../../scss/userRegistration.scss'
 
 const PicturePage: React.FC = () => {
     const [profileData, setProfileData] = useState<Array<profileDataType>>([])
-    console.log('CH', profileData)
+
     return (
         <div className="userRegistration">
             <div className="signUpForm">

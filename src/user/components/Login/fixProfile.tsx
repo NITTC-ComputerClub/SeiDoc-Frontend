@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import drawProfile from './drawProfile'
+import { withRouter, RouteComponentProps } from 'react-router'
 import { profileDataType } from '../../../types/type'
 
-type propsType = {
+type historyProps = RouteComponentProps
+
+type dataType = {
     profileData: Array<profileDataType>,
 }
+type propsType = historyProps & dataType
 
 const FixProfile: React.FC<propsType> = (props) => {
     const canvas = document.getElementById('cvs') as HTMLCanvasElement
@@ -64,8 +68,9 @@ const FixProfile: React.FC<propsType> = (props) => {
             <p>年齢</p>
             <input id='age' type="text" className='fix'></input>
             <button onClick={fetchData}>修正</button>
+            <button onClick={() => props.history.push('/finish')}>登録完了</button>
         </div>
     )
 }
 
-export default FixProfile
+export default withRouter<propsType, React.FC<propsType>>(FixProfile)
