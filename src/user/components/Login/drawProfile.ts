@@ -2,6 +2,7 @@ import { profileDataType } from '../../../types/type'
 
 const DrawProfile = (profileData: Array<profileDataType>) => {
     if (profileData.length !== 0) {
+        console.log('check:', profileData)
         const obj = document.getElementById('showImage') as HTMLElement
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
