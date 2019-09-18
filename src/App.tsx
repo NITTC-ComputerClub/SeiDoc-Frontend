@@ -10,6 +10,7 @@ import Registration from './user/pages/registration';
 import Login from './user/pages/login'
 import SignUp from './user/pages/userRegistration'
 import Picute from './user/pages/picturePage'
+import Finish from './user/pages/finishPage'
 import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
 import AdminCategory from './admin/pages/category'
@@ -38,6 +39,7 @@ const App: React.FC = () => {
         {/* MVP5 */}
         <Route path='/ml' component={ML} />
         <Route path='/picture' component={Picute} />
+        <Route path='/finish' component={Finish} />
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
