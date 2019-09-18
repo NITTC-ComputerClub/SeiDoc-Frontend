@@ -58,7 +58,7 @@ const AdminHeader: React.FC<historyProps> = props => {
                 <StyledLink to="/admin/newSystem">
                     新制度登録
                 </StyledLink>
-                <StyledLink to="/admin/">
+                <StyledLink to="/admin/download">
                     データ出力
                 </StyledLink>
             </nav>
