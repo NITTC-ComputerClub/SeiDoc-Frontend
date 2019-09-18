@@ -24,7 +24,7 @@ const PicturePage: React.FC = () => {
                 <Picture />
                 {profileData.length === 0 ?
                     <SelectImage setProfileData={setProfileData} /> :
-                    <FixProfile profileData={profileData} setProfileData={setProfileData} />
+                    <FixProfile profileData={profileData} />
                 }
             </div>
             <Footer />
