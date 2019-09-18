@@ -35,12 +35,17 @@ const CSVDownload: React.FC = () => {
         const header = Object.keys(json[0]).join(',') + "\n";
         const body = json.map(d => {
             return Object.keys(d).map(key => {
-                const query = key as 'Name' // ヤバイ
-                return d[query];
+                const query = key as 'Name'|'Method'|'Category'  // ヤバイ
+                if(query === 'Method' || 'Category'){
+                    return '"' + JSON.stringify(d[query]) + '"'
+                }else{
+                    return d[query];
+                }
             }).join(',');
         }).join("\n");
         return header + body;
     }
+
     const createCSV = (systemList: System[]) => {
         console.log("systemList", systemList.length, systemList)
         const query: string[] = []
@@ -52,6 +57,7 @@ const CSVDownload: React.FC = () => {
         if(isDepartment){ query.push('Department') }
         if(isDetail){ query.push('Detail') }
         if(isOfficialURL){ query.push('Site') }
+        if(isMethod){ query.push('Method') }
         //const data: System[] = [];
         const pickedData = systemList.map(system => {
             return _.pick(system, query)
@@ -77,22 +83,14 @@ const CSVDownload: React.FC = () => {
                     snapshot.forEach(doc => {
                         systemList.push(doc.data() as System)
                     })
-                }
-            ).then(
-                () => {
-                    createCSV(systemList)
-                });
+                }).then(() => createCSV(systemList));
         }else{
-            fireStore.collection(systemIndex).where("Category", "array-contains",category).get().then(
+            fireStore.collection(systemIndex).where("Category", "array-contains", category).get().then(
                 snapshot => {
                     snapshot.forEach(doc => {
                         systemList.push(doc.data() as System)
                     })
-                }
-            ).then(
-                () => {
-                    createCSV(systemList)
-                });
+                }).then(() =>  createCSV(systemList));
         }
     }
 
