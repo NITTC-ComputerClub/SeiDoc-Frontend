@@ -4,7 +4,6 @@ import { profileDataType } from '../../../types/type'
 
 type propsType = {
     profileData: Array<profileDataType>,
-    setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>
 }
 
 const FixProfile: React.FC<propsType> = (props) => {
@@ -46,7 +45,6 @@ const FixProfile: React.FC<propsType> = (props) => {
         value.relationship = selectRelationship.value
         props.profileData.splice(sequence, 1, value)
         drawProfile(props.profileData)
-        props.setProfileData(props.profileData)
     }
 
     canvas.addEventListener('click', onClick, false)
