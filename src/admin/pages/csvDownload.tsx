@@ -3,6 +3,8 @@ import Header from '../components/header'
 import Footer from '../../user/components/footer-pc'
 import styled from 'styled-components';
 import Button from '../../designSystem/Button';
+import { fireStore, systemIndex } from '../../firebase/firebase';
+import { System } from '../../types/type';
 
 
 
@@ -27,7 +29,20 @@ const CSVDownload: React.FC = () => {
 
     const handleSubmit = () => {
         console.log(category,isName,isCategory,isTarget,isDepartment,isDetail,isOfficialURL)
+        const systemList : System[] = []
+        fireStore.collection(systemIndex).where("Category", "array-contains",category).get().then(
+            snapshot => {
+                snapshot.forEach(doc => {
+                    systemList.push(doc.data() as System)
+                })
+            }
+        ).then(
+            () => {
+                console.log("systemList", systemList.length, systemList)
+            }
+        )
         console.log("CSV出力完了！")
+
     }
     return (
         <div>
