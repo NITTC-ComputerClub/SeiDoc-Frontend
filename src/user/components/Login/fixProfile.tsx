@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import drawProfile from './drawProfile'
 import { profileDataType } from '../../../types/type'
 
@@ -10,6 +10,10 @@ type propsType = {
 const FixProfile: React.FC<propsType> = (props) => {
     const canvas = document.getElementById('cvs') as HTMLCanvasElement
     const [sequence, setSequence] = useState<number>(0)
+
+    useEffect(() => {
+        drawProfile(props.profileData)
+    }, [props.profileData])
 
     const onClick = (e: MouseEvent) => {
         const inputAge = document.getElementById('age') as HTMLInputElement
@@ -40,9 +44,8 @@ const FixProfile: React.FC<propsType> = (props) => {
         const value: profileDataType = props.profileData[sequence]
         value.age = Number(inputAge.value)
         value.relationship = selectRelationship.value
-        console.log(value)
         props.profileData.splice(sequence, 1, value)
-        console.log(props.profileData)
+        drawProfile(props.profileData)
         props.setProfileData(props.profileData)
     }
 
@@ -50,7 +53,6 @@ const FixProfile: React.FC<propsType> = (props) => {
 
     return (
         <div>
-            {drawProfile(props.profileData)}
             <p>関係</p>
             <select id='relationship' className='fix'>
                 <option value='本人'>本人</option>
@@ -63,7 +65,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             </select>
             <p>年齢</p>
             <input id='age' type="text" className='fix'></input>
-            <button onClick={fetchData}>保存</button>
+            <button onClick={fetchData}>修正</button>
         </div>
     )
 }
