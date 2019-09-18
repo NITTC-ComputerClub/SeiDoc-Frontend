@@ -87,9 +87,6 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
                             <h2>{system.Name}</h2>
                             <p>{system.Department}</p>
                             <p className="view">閲覧数　{system.monthlyView}回/月</p>
-                            {/* 今だとundefined
-                                <p>{system.ageGroup[0].age}代に人気</p> 
-                            */}
                         </AdminSystemCard>
                     ))}
                 </Grid>
