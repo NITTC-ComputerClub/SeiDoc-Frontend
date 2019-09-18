@@ -7,6 +7,20 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
         context.lineWidth = 3  //線の太さ設定
 
+        // 前回の入力フォームを削除
+        const inputNode = document.querySelectorAll('input.info')
+        if (inputNode.length !== 0) {
+            inputNode.forEach((child) => {
+                obj.removeChild(child)
+            })
+        }
+        const selectNode = document.querySelectorAll('select.info')
+        if (selectNode.length !== 0) {
+            selectNode.forEach((child) => {
+                obj.removeChild(child)
+            })
+        }
+
         profileData.forEach(element => {
             const heigh = element.boundingBox.height
             const left = element.boundingBox.left
