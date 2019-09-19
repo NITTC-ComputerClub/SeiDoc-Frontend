@@ -13,13 +13,47 @@ import setting from '../../designSystem/setting'
 type historyProps = RouteComponentProps
 
 const StyledHeader = styled.header`
-    background-color: ${setting.White};
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .right {
+        margin-right: auto;
+        margin-left: 24px
+    }
+
+    ul {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+        margin-right: 24px;
+    }
+
+    img {
+        height: 32px;
+    }
+
+    button {
+        margin-right: 24px;
+    }
+`
+
+const CityName = styled.p`
+    margin-left: 8px;
+    font-size: ${setting.P1};
+    color: ${setting.ThemeGreen};
+    background: linear-gradient(129.22deg, #44DD9D 0%, #449DDD 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    float: right;
 `
 
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: ${setting.TextGray};
-    font-weight: bold;
+    font-weight: normal;
     font-size: ${setting.H2};
     margin-right: 16px;
     line-height: 48px;
@@ -44,23 +78,35 @@ const AdminHeader: React.FC<historyProps> = props => {
     else
     return (
         <StyledHeader>
-            <Link to="/admin/">
-                <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
-            </Link>
-            <p>{user.nickName}版</p>
+            <div className="right">
+                <Link className="imgWrapper" to="/admin/">
+                    <img src="/img/logoWithoutText.png" alt="SeiDocのロゴ"></img>
+                </Link>
+                <CityName>{user.nickName}版</CityName>
+            </div>
             <nav>
-                <StyledLink to="/admin/">
-                    トップ
-                </StyledLink>
-                <StyledLink to="/admin/status">
-                    ランキング
-                </StyledLink>
-                <StyledLink to="/admin/newSystem">
-                    新制度登録
-                </StyledLink>
-                <StyledLink to="/admin/">
-                    データ出力
-                </StyledLink>
+                <ul>
+                    <li>
+                        <StyledLink className="top" to="/admin/">
+                            トップ
+                        </StyledLink>
+                    </li>
+                    <li>
+                        <StyledLink className="ranking" to="/admin/status">
+                            ランキング
+                        </StyledLink>
+                    </li>
+                    <li>
+                        <StyledLink className="newSystem" to="/admin/newSystem">
+                            新制度登録
+                        </StyledLink>
+                    </li>
+                    <li>
+                        <StyledLink className="output" to="/admin/">
+                            データ出力
+                        </StyledLink>
+                    </li>
+                </ul>
             </nav>
             <Button link onClick={() => handleSignOut()}>サインアウト</Button>
         </StyledHeader>
