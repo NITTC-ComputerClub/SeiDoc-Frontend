@@ -30,7 +30,7 @@ const Status: React.FC<historyProps> = props => {
     ]
     return (
         <div>
-            <Header />
+            <Header ranking />
                 <Container>
                     <MainContents>
                         <Title>ランキング</Title>

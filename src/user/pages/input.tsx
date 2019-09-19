@@ -142,7 +142,7 @@ const Input: React.FC = () => {
 
     return (
         <div>
-            <Header />
+            <Header newSystem />
             <Container>
                 <MainContents>
                     <Title>制度登録</Title>

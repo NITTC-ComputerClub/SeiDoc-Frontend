@@ -8,9 +8,49 @@ import { auth } from '../../firebase/firebase'
 import Button from '../../designSystem/Button';
 import styled from 'styled-components'
 import setting from '../../designSystem/setting'
+import _ from 'lodash';
 
+type headerProps = {
+    top?: boolean,
+    ranking?: boolean,
+    newSystem?: boolean,
+    dataOutput?: boolean
+}
+type historyProps = RouteComponentProps & headerProps
 
-type historyProps = RouteComponentProps
+const getHighrightNav = (props: headerProps) => {
+    if (props.top) {
+        return `
+            .top {
+                color: ${setting.ThemeGreen};
+            }
+        `
+    }
+
+    if (props.ranking) {
+        return `
+            .ranking {
+                color: ${setting.ThemeGreen};
+            }
+        `
+    }
+
+    if (props.newSystem) {
+        return `
+            .newSystem {
+                color: ${setting.ThemeGreen};
+            }
+        `
+    }
+
+    if (props.dataOutput) {
+        return `
+            .dataOutput {
+                color: ${setting.ThemeGreen};
+            }
+        `
+    }
+}
 
 const StyledHeader = styled.header`
     background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
@@ -38,6 +78,8 @@ const StyledHeader = styled.header`
     button {
         margin-right: 24px;
     }
+
+    ${(props: headerProps) => getHighrightNav(props)}
 `
 
 const CityName = styled.p`
@@ -64,6 +106,8 @@ const AdminHeader: React.FC<historyProps> = props => {
     const dispatch = useDispatch()
     const initUserData = () => dispatch(initLoginCreator())
 
+    const highright = _.pick(props, ["top", "ranking", "newSystem", "dataOutput"])
+
     const handleSignOut = () => {
         auth.signOut().then(() => {
             initUserData()
@@ -77,7 +121,7 @@ const AdminHeader: React.FC<historyProps> = props => {
     }
     else
     return (
-        <StyledHeader>
+        <StyledHeader {...highright}>
             <div className="right">
                 <Link className="imgWrapper" to="/admin/">
                     <img src="/img/logoWithoutText.png" alt="SeiDocのロゴ"></img>
@@ -102,7 +146,7 @@ const AdminHeader: React.FC<historyProps> = props => {
                         </StyledLink>
                     </li>
                     <li>
-                        <StyledLink className="output" to="/admin/">
+                        <StyledLink className="dataOutput" to="/admin/">
                             データ出力
                         </StyledLink>
                     </li>
