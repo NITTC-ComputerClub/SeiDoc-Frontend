@@ -24,7 +24,7 @@ const SelectImage: React.FC<propsType> = (props) => {
     const rekognition = new AWS.Rekognition()
 
     const getBinary = (encodedFile: string) => {
-        const base64Image = encodedFile.split("data:image/jpeg;base64,")[1]
+        const base64Image = encodedFile.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
         const binaryImg = atob(base64Image)
         const length = binaryImg.length
         const ab = new ArrayBuffer(length)
