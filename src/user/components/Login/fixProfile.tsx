@@ -44,6 +44,10 @@ const FixProfile: React.FC<propsType> = (props) => {
     const fetchData = () => {
         const inputAge = document.getElementById('age') as HTMLInputElement
         const selectRelationship = document.getElementById('relationship') as HTMLSelectElement
+        if (inputAge.value === '') {
+            alert('修正したい人の顔写真をタッチしてください\n修正が必要ないときは登録完了を押してください')
+            return
+        }
         const value: profileDataType = props.profileData[sequence]
         value.age = Number(inputAge.value)
         value.relationship = selectRelationship.value
