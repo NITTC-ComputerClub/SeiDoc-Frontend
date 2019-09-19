@@ -22,11 +22,14 @@ const SearchWords: React.FC = () => {
     const searchDataArray: searchLogType[] = []
 
     if (searchData.length === 0) {
-        fireStore.collection(searchLogIndex).orderBy("createdAt", "desc").limit(10).get()
+        fireStore.collection(searchLogIndex).orderBy("createdAt", "desc").limit(15).get()
         .then(
             (snapshot) => {
                 snapshot.forEach((doc) => {
-                    searchDataArray.push(doc.data() as searchLogType)
+                    const data = doc.data() as searchLogType
+                    if(data.searchWord !== ''){
+                       searchDataArray.push(doc.data() as searchLogType)
+                   }
                 })
             }
         ).then(

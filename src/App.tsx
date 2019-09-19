@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Category from './user/pages/category'
 import Search from './user/pages/search'
-import AdminInput from './user/pages/input'
+import AdminInput from './admin/pages/input'
 import Detail from './user/pages/detail'
 import ViewAll from './user/pages/viewAll'
 import Top from './user/pages/top'
@@ -11,7 +11,6 @@ import Login from './user/pages/login'
 import SignUp from './user/pages/userRegistration'
 import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
-import AdminCategory from './admin/pages/category'
 import AdminStatus from './admin/pages/status'
 import AdminSearch from './admin/pages/search'
 import AdminTop from './admin/pages/top'
@@ -39,7 +38,6 @@ const App: React.FC = () => {
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
-        <Route path='/admin/category' component={AdminCategory}/>
         <Route path='/admin/newSystem' component={AdminInput} />
         <Route path='/admin/status' component={AdminStatus} />
         <Route path='/admin/search' component={AdminSearch} />
