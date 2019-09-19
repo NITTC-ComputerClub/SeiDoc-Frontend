@@ -35,9 +35,10 @@ const SignUp: React.FC<historyProps> = (props) => {
         userData['birthday'] = birthday
         userData['address'] = address
         userData.isAdmin = false;
-        userData.city = '';
-        userData.department = '';
-        userData.sex = sexData.sex;
+        userData.city = 'None';
+        userData.department = 'None';
+        userData.sex = 'None';
+        userData.family = 'None';
 
         if (password.length < 8) {
             alert('Please enter a password')
@@ -120,11 +121,6 @@ const SignUp: React.FC<historyProps> = (props) => {
         })
     }
 
-    const handleSexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const data = e.target.value as "male" | "female" | "None"
-        setSexData({sex:data})
-    }
-
     return (
         <div className="signUp">
             <p>メールアドレス</p>
@@ -133,13 +129,6 @@ const SignUp: React.FC<historyProps> = (props) => {
             <input type="password" name="password" onChange={e => handleLoginDataInputChange(e)}></input>
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
-            <p>性別</p>
-            <select className="sex" name="sex" onChange={e => handleSexChange(e)} >
-                <option value="None">選択してください</option>
-                <option value="male">男性</option>
-                <option value="female">女性</option>
-                <option value="None">答えたくない</option>
-            </select>
             <p>生年月日</p>
             <select className="year" name="year" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1950, 2020)}
@@ -183,14 +172,6 @@ const SignUp: React.FC<historyProps> = (props) => {
                     ))}
             </select>
             }
-            <p>家族構成</p>
-            <select className="fullWidth" name="family" onChange={e => handleUserdataInputChange(e)}>
-                <option value="">選択してください</option>
-                <option value="ひとり親家庭">ひとり親家庭</option>
-                <option value="選択肢1">選択肢1</option>
-                <option value="選択肢2">選択肢2</option>
-                <option value="選択肢3">選択肢3</option>
-            </select>
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
                 <Button blue onClick={() => handleSignUp()}>次へ</Button>
