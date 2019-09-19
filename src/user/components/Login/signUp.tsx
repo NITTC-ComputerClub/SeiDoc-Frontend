@@ -7,7 +7,7 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../../scss/signUp.scss'
-import { loginDataType, locationDataType, birthdayDataType, UserState, sexDataType } from '../../../types/type';
+import { loginDataType, locationDataType, birthdayDataType, UserState } from '../../../types/type';
 import Button from '../../../designSystem/Button';
 
 type historyProps = RouteComponentProps
@@ -21,7 +21,6 @@ const SignUp: React.FC<historyProps> = (props) => {
     const [municipalityArray, setMunicipalityArray] = useState<Array<string>>([''])
     const [locationData, setLocationData] = useState<locationDataType>({ prefecture: '', city: '', municipality: '' })
     const [birthdayData, setBirthdayData] = useState<birthdayDataType>({ year: '', month: '', date: '' })
-    const [sexData, setSexData] = useState<sexDataType>({sex:"None"})
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
