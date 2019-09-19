@@ -21,7 +21,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     const [municipalityArray, setMunicipalityArray] = useState<Array<string>>([''])
     const [locationData, setLocationData] = useState<locationDataType>({ prefecture: '', city: '', municipality: '' })
     const [birthdayData, setBirthdayData] = useState<birthdayDataType>({ year: '', month: '', date: '' })
-    const [sexData, setSexData] = useState<{sex :targetSex}>({sex: 2})
+    //const [sexData, setSexData] = useState<{sex :targetSex}>({sex: 2})
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
