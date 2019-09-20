@@ -9,15 +9,15 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
         context.lineWidth = 3  //線の太さ設定
 
         // 前回の入力フォームを削除
-        const inputNode = document.querySelectorAll('input.info')
-        if (inputNode.length !== 0) {
-            inputNode.forEach((child) => {
+        const ageNode = document.querySelectorAll('input.view_age')
+        if (ageNode.length !== 0) {
+            ageNode.forEach((child) => {
                 obj.removeChild(child)
             })
         }
-        const selectNode = document.querySelectorAll('select.info')
-        if (selectNode.length !== 0) {
-            selectNode.forEach((child) => {
+        const relationshipNode = document.querySelectorAll('inpout.view_relationship')
+        if (relationshipNode.length !== 0) {
+            relationshipNode.forEach((child) => {
                 obj.removeChild(child)
             })
         }
@@ -29,6 +29,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             const width = element.boundingBox.width
             const gender = element.gender
             const age = element.age
+            const relationship = element.relationship
 
             // 顔に四角を生成 
             if (gender === 'Male') {
@@ -40,39 +41,25 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             context.strokeRect(left, top, width, heigh)
 
             // 年齢のテキストボックスを生成 
-            const inputAge = document.createElement('input')
-            inputAge.className = 'info' // これでCSS当てられる？
+            const viewAge = document.createElement('input')
+            viewAge.className = 'view_age' // これでCSS当てられる？
 
-            inputAge.value = age.toString()
-            inputAge.style.position = 'absolute'
-            inputAge.style.top = top - 30 + 'px'
-            inputAge.style.left = left + 'px'
-            inputAge.style.width = width - 5 + 'px'
-            obj.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
+            viewAge.value = age.toString()
+            viewAge.style.position = 'absolute'
+            viewAge.style.top = top - 30 + 'px'
+            viewAge.style.left = left + 'px'
+            viewAge.style.width = width + 'px'
+            obj.appendChild(viewAge) //bodyの子ノードリストの末尾にノードを追加
 
-            //家族関係のセレクトボックス作成 
-            const selectRelationship = document.createElement('select')
-            selectRelationship.className = 'info'
-            selectRelationship.add(new Option('本人', '本人'))
-            selectRelationship.add(new Option('夫', '夫'))
-            selectRelationship.add(new Option('妻', '妻'))
-            selectRelationship.add(new Option('息子', '息子'))
-            selectRelationship.add(new Option('娘', '娘'))
-            selectRelationship.add(new Option('祖父', '祖父'))
-            selectRelationship.add(new Option('祖母', '祖母'))
-
-            for (let i = 0; i < selectRelationship.length; i++) {
-                if (selectRelationship.options[i].value === element.relationship) {
-                    selectRelationship.selectedIndex = i
-                    break
-                }
-            }
-
-            selectRelationship.style.position = 'absolute'
-            selectRelationship.style.top = top - 50 + 'px'
-            selectRelationship.style.left = left + 'px'
-            selectRelationship.style.width = width + 20 + 'px'
-            obj.appendChild(selectRelationship)
+            //家族関係のテキストボックス生成
+            const viewRelationship = document.createElement('input')
+            viewRelationship.className = 'view_relationship'
+            viewRelationship.value = relationship
+            viewRelationship.style.position = 'absolute'
+            viewRelationship.style.top = top - 50 + 'px'
+            viewRelationship.style.left = left + 'px'
+            viewRelationship.style.width = width + 'px'
+            obj.appendChild(viewRelationship)
         })
     }
 }
