@@ -128,7 +128,7 @@ const Input: React.FC = () => {
 
     return (
         <Wrapper>
-            <Header />
+            <Header newSystem />
             <Container>
                 <MainContents>
                     <NewSystemForm>
