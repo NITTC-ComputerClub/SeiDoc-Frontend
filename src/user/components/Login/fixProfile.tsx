@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from '../../../store'
+import { loginCreator } from '../../../actions/action'
 import drawProfile from './drawProfile'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { profileDataType } from '../../../types/type'
+import { profileDataType, UserState } from '../../../types/type'
+import { fireStore } from '../../../firebase/firebase'
 
 type historyProps = RouteComponentProps
 
@@ -11,6 +15,10 @@ type dataType = {
 type propsType = historyProps & dataType
 
 const FixProfile: React.FC<propsType> = (props) => {
+    const userData = useSelector((state: AppState) => state.userState)
+    const dispatch = useDispatch()
+    const login = (data: UserState) => dispatch(loginCreator(data))
+
     const canvas = document.getElementById('cvs') as HTMLCanvasElement
     const [sequence, setSequence] = useState<number>(0)
 
@@ -36,7 +44,6 @@ const FixProfile: React.FC<propsType> = (props) => {
                         break
                     }
                 }
-                //TODO 性別どうするよ
             }
         })
     }
@@ -51,8 +58,66 @@ const FixProfile: React.FC<propsType> = (props) => {
         const value: profileDataType = props.profileData[sequence]
         value.age = Number(inputAge.value)
         value.relationship = selectRelationship.value
+        if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '祖父') {
+            value.gender = 'Male'
+        }
+        else if (selectRelationship.value === '妻' || selectRelationship.value === '娘' || selectRelationship.value === '祖母') {
+            value.gender = 'Female'
+        }
+
+        //本人かどうかの判定
+        if (selectRelationship.value === '本人') {
+            userData.sex = props.profileData[sequence].gender as "male" | "female" | "None"
+        }
+
+        console.log('new value:', value)
         props.profileData.splice(sequence, 1, value)
         drawProfile(props.profileData)
+    }
+
+    const fixData = () => {
+        const husband: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '夫' })
+        const wife: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '妻' })
+        const son: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '息子' })
+        const daughter: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '娘' })
+        const grandfather: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖父' })
+        const grandmother: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖母' })
+
+        //家族構成を登録
+        if (props.profileData.length === 1) {
+            userData.family = '独身'
+        }
+        else if (husband && wife) {
+            if (props.profileData.length === 2) {
+                userData.family = '夫婦'
+            }
+            else if ((son || daughter) && !grandfather && !grandmother) {
+                userData.family = '子持ち'
+            }
+            else if (grandfather || grandmother) {
+                userData.family = '2世帯'
+            }
+        }
+        else if ((husband && !wife) || (!husband && wife)) {
+            if (son || daughter) {
+                userData.family = 'ひとり親'
+            }
+        }
+        else {
+            console.log('介護はどうやって表現しよう')
+            userData.family = 'None'
+        }
+    }
+
+    const handleFirebaseUpdata = () => {
+        fixData() //データ更新
+        console.log('userData:', userData)
+        const uid = userData.userId
+        const sendData = userData
+        delete sendData.userId
+        fireStore.collection('user').doc(uid).update(sendData).then(res => {
+            console.log('updata firebase', uid)
+        })
     }
 
     canvas.addEventListener('click', onClick, false)
@@ -72,7 +137,11 @@ const FixProfile: React.FC<propsType> = (props) => {
             <p>年齢</p>
             <input id='age' type="text" className='fix'></input>
             <button onClick={fetchData}>修正</button>
-            <button onClick={() => props.history.push('/finish')}>登録完了</button>
+            <button onClick={() => {
+                props.history.push('/finish')
+                login(userData)
+                handleFirebaseUpdata()
+            }}>登録完了</button>
         </div>
     )
 }
