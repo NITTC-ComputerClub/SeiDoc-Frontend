@@ -78,7 +78,8 @@ const CSVDownload: React.FC = () => {
 
     const csv = json2csv(pickedData);
     console.log(csv);
-    const blob = new Blob([csv], { type: "text/csv" });
+    const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+    const blob = new Blob([bom, csv], { type: "text/csv" });
     const fileName = "data.csv";
 
     const a = document.createElement("a");
