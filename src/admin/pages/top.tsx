@@ -14,7 +14,7 @@ type historyProps = RouteComponentProps
 const Search: React.FC<historyProps> = props => {
     return (
         <Wrapper>
-            <Header />
+            <Header top />
             <Container>
                 <MainContents>
                     <AdminSearch />
