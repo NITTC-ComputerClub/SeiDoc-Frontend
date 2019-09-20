@@ -1,20 +1,28 @@
 import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import styled from 'styled-components';
-import setting from '../../designSystem/setting';
+import setting from '../../designSystem/setting'
+import { parse } from 'query-string'
 
-interface GridProps {
-    pc?: boolean,
-    sp?: boolean
+interface CategoryCardProps {
+    tag: boolean
 }
 
-interface historyProps extends RouteComponentProps, GridProps {
+interface historyProps extends RouteComponentProps {
     pushTo: string
+}
+
+const getBackgroundColor = (props: CategoryCardProps) => {
+    if (props.tag) {
+        return `background-color: ${setting.ThemeGreen};`
+    } else {
+        return `background-color: ${setting.White};`
+    }
 }
 
 const StyledCategoryCard = styled.button`
     border-radius: 4px;
-    background-color: ${setting.White};
+    ${(props: CategoryCardProps) => getBackgroundColor(props)}
     border: solid 2px ${setting.TextGray};
     color: ${setting.TextGray};
 
@@ -42,12 +50,19 @@ const CategoryCardsList: React.FC<historyProps> = (props) => {
         '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
     ]
 
+    const tag = parse(props.location.search).tag as string
+    console.log(`tag: ${tag}`)
+
     return (
         <Grid>
             {categoryList.map((category) => (
-                <StyledCategoryCard key={category} onClick={() => {
-                    props.history.push(props.pushTo + '?tag=' + category)
-                }}>
+                <StyledCategoryCard
+                    key={category}
+                    onClick={() => {
+                        props.history.push(props.pushTo + '?tag=' + category)
+                    }}
+                    tag={(category===tag)}
+                >
                     <img src={"/img/" + category + ".png"} alt={category + "の写真"}></img>
                     <div className="categoryName">
                         {category}

@@ -14,7 +14,7 @@ const AdminSearch: React.FC<historyProps> = props => {
     return (
         <StyledAdminSearch>
             <SearchBar center pushTo="/admin/search" />
-            <CategoryCardsList pc pushTo="/admin/search" />
+            <CategoryCardsList pushTo="/admin/search" />
         </StyledAdminSearch>
     )
 }
