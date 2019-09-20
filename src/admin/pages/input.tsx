@@ -8,7 +8,7 @@ import Footer from '../../user/components/footer';
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
-import { Container, MainContents } from '../../designSystem/Page';
+import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -127,8 +127,8 @@ const Input: React.FC = () => {
     }
 
     return (
-        <div>
-            <Header />
+        <Wrapper>
+            <Header newSystem />
             <Container>
                 <MainContents>
                     <NewSystemForm>
@@ -201,7 +201,7 @@ const Input: React.FC = () => {
                 </MainContents>
             </Container>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 export default Input

@@ -3,13 +3,14 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import SignInForm from '../components/signInForm';
 import Footer from '../../user/components/footer-pc';
 import "../../scss/login.scss"
+import { Wrapper } from '../../designSystem/Page';
 
 
 type historyProps = RouteComponentProps;
 
 const SignIn: React.FC<historyProps> = (props) => {
     return (
-        <div className="login">
+        <Wrapper className="login">
             <div className="loginForm" >
                 <div className="title">
                     <img src="/img/logo.png" alt="SeiDocのロゴ" />
@@ -19,7 +20,7 @@ const SignIn: React.FC<historyProps> = (props) => {
                 <SignInForm />
             </div>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 
