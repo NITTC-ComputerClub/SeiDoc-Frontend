@@ -78,7 +78,13 @@ const SelectImage: React.FC<propsType> = (props) => {
             const top = element.BoundingBox.Top * img.height * shrinkH
             const width = element.BoundingBox.Width * img.width * shrinkW
             const gender = element.Gender.Value
-            const age = Math.round((element.AgeRange.High + element.AgeRange.Low) / 2)
+            let age = 0
+            if (element.AgeRange.High > 20 && element.AgeRange.Low > 20) {
+                age = element.AgeRange.High
+            }
+            else {
+                age = Math.round((element.AgeRange.High + element.AgeRange.Low) / 2)
+            }
             let relationship = ''
 
             if (age > 45 && gender === 'Male') {
