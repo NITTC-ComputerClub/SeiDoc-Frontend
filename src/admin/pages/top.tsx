@@ -6,18 +6,18 @@ import CategoryCardsList from '../../user/components/categoryCardsList'
 import PopularSystemList from '../components/popularSystemList'
 import { Link } from 'react-router-dom'
 import SearchWords from '../components/searchWords'
-import { Container, MainContents } from '../../designSystem/Page';
+import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import AdminSearch from '../components/adminSearch';
 
 type historyProps = RouteComponentProps
 
 const Search: React.FC<historyProps> = props => {
     return (
-        <div>
+        <Wrapper>
             <Header top />
             <Container>
                 <MainContents>
-                    <AdminSearch></AdminSearch>
+                    <AdminSearch />
                     <h2>カテゴリ別の閲覧状況</h2>
                     <CategoryCardsList pc pushTo="/admin/status" />
                     <h2>一か月以内によく見られている制度</h2>
@@ -28,7 +28,7 @@ const Search: React.FC<historyProps> = props => {
                 </MainContents>
             </Container>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 

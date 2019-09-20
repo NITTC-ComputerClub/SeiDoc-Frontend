@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import SystemCard from './SystemCard'
-import { fireStore, popularPageIndex } from '../../../firebase/firebase'
-import { rankingType } from '../../../types/type'
+import { fireStore, searchLogIndex } from '../../../firebase/firebase';
+import { System, searchLogType } from '../../../types/type';
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
+import { useSelector } from 'react-redux'
+import { AppState } from '../../../store';
 
 const StyledRecommend = styled.div`
 position: relative;
@@ -26,14 +28,6 @@ a {
 }
 `
 
-const getNowYMD = () => {
-    const dt = new Date();
-    const y = dt.getFullYear();
-    const m = ("00" + (dt.getMonth() + 1)).slice(-2);
-    const d = ("00" + dt.getDate()).slice(-2);
-    const result = y + "-" + m + "-" + d;
-    return result;
-};
 
 const compare = (a: rankingType, b: rankingType) => {
     if (a.count > b.count) {
@@ -46,10 +40,17 @@ type fireStorePopularSystemType = {
     ranking: rankingType[];
 };
 
+type rankingType  = {
+    documentID: string;
+    system: System;
+    count: number;
+}
 const Recommend: React.FC = () => {
-    const [recommendData, setrecommendData] = useState<rankingType[]>([
-        
-    ]);
+    const [recommendData, setrecommendData] = useState<rankingType[]>([]);
+    const user = useSelector((state: AppState) => state.userState);
+    let newRanking: rankingType[] = []
+    
+         
 
     const isLoaded = () => {
         if (recommendData.length !== 0) {
@@ -61,23 +62,42 @@ const Recommend: React.FC = () => {
 
     if (recommendData.length === 0) {
         //一度だけfetch
-        fireStore
-            .collection(popularPageIndex)
-            .doc(getNowYMD())
-            .get()
-            .then(doc => {
-                if (doc.exists) {
-                    const ranking = doc.data() as fireStorePopularSystemType;
-                    const sortedRanking = ranking.ranking.sort(compare);
-                    console.log(sortedRanking)
-                    setrecommendData(sortedRanking.slice(0, 3));
-                } else {
-                    console.error("fetch failed");
+        fireStore.collection('backup').get()
+        .then(snapshot => {
+            snapshot.forEach(doc => {
+                const data = doc.data() as System
+                const ranking : rankingType = {documentID: data.documentID, system: data, count:0}
+                if(data.targetAge === 15){
+                  ranking.count = ranking.count + 1
                 }
+                if(data.targetSex === user.sex || data.targetSex === 2){
+                  ranking.count = ranking.count + 1
+                }
+                if(data.targetFamily === user.family){
+                  ranking.count = ranking.count + 1
+                }
+                fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
+                  snapshot.forEach(doc => {
+                    const searchLog = doc.data() as searchLogType
+                    // console.log(searchLog.searchWord)
+                    if(~data.Detail.indexOf(searchLog.searchWord) || ~data.Name.indexOf(searchLog.searchWord)){
+                      ranking.count = ranking.count + 1
+                    //   console.log('matched!')
+                    }
+                  })
+                })
+                .then(() => newRanking.push(ranking))
+                .then(() => {
+                  const sortedRanking = newRanking.sort(compare);
+                  //console.log(sortedRanking)
+                  setrecommendData(sortedRanking.slice(0,4))
+                })
+                .catch(err=>console.error(err))
             })
-            .catch(err => {
-                console.error(err);
-            });
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
     

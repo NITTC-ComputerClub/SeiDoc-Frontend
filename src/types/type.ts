@@ -60,11 +60,11 @@ export type UserState = {
   birthday: string;
   income: string;
   address: string;
-  family: string;
+  family: targetFamily;
   isAdmin: boolean; //
   city: string; 
   department: string;
-  sex: 'male' | 'female' | 'None';
+  sex: targetSex;
   searchedWords: string[];
   viewedCategory: [{categoryName: string, count: number}]
 };
@@ -94,7 +94,40 @@ export type System = {
   monthlyView: number;
   dailyView: number;
   ageGroup: ageGroup[];
+  targetAge: targetAge;
+  targetFamily: targetFamily;
+  targetSex: targetSex;
 };
+export enum targetSex {
+  male,
+  female,
+  other
+}
+export enum targetFamily {
+  独身,
+  夫婦,
+  子持ち,
+  ひとり親,
+  介護
+}
+export enum targetAge  {
+  乳児,
+  幼児,
+  小学生,
+  小学生以下,
+  中学生,
+  小中学生,
+  中学生以下,
+  高校生,
+  高校生以下の就学児童,
+  拾八歳未満,
+  拾八歳以下,
+  未成年,
+  成人,
+  老人,
+  全年齢
+}
+// 乳児・幼児・小学生・小学生以下・中学生・小中学生・中学生以下・高校生・高校生以下の就学児童・18歳未満・18歳以下・未成年・成人・老人・全年齢
 export type ageGroup = {
   count: number;
   age: '0' | '10' | '20' | '30' | '40' | '50' | '60' | '70'
@@ -153,4 +186,7 @@ export type sendData = {
   Detail: string
   Method: Array<string>
   Category: Array<string>
+  targetSex: targetSex
+  targetAge: targetAge
+  targetFamily: targetFamily
 };

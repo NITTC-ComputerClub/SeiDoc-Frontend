@@ -5,10 +5,11 @@ import SystemList from '../components/systemList'
 import Footer from '../components/footer';
 import Header from '../components/header'
 import '../../scss/result.scss'
+import { Wrapper } from '../../designSystem/Page';
 
 const Search: React.FC = () => {
     return (
-        <div>
+        <Wrapper>
             <Header />
             <div className="result">
                 <div className="container">
@@ -19,7 +20,7 @@ const Search: React.FC = () => {
                 <SystemList />
             </div>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 

@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import Header from '../components/header'
 import Footer from '../../user/components/footer'
 import SystemRankingList from '../components/systemRankingList'
-import { Container, MainContents } from '../../designSystem/Page';
+import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 
@@ -29,7 +29,7 @@ const Status: React.FC<historyProps> = props => {
         '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
     ]
     return (
-        <div>
+        <Wrapper>
             <Header ranking />
                 <Container>
                     <MainContents>
@@ -45,7 +45,7 @@ const Status: React.FC<historyProps> = props => {
                     </MainContents>
                 </Container>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 

@@ -102,7 +102,9 @@ const SearchBar: React.FC<historyProps> = (props) => {
             searchWord: query,
             userID: user.userId
         }
-        fireStore.collection(searchLogIndex).add(data).catch(err => console.error(err))
+        if(query.trim().length !== 0){
+            fireStore.collection(searchLogIndex).add(data).catch(err => console.error(err))
+        }
     }
     return (
         <StyledSearchBar {...props}>

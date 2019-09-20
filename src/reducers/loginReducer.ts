@@ -10,11 +10,11 @@ const initialState: UserState = {
     birthday: '',
     income: '',
     address: '',
-    family: '',
+    family: 0,
     isAdmin: false,
     city: '',  
     department: '',
-    sex: 'None',
+    sex: 2,
     searchedWords: [],
     viewedCategory: [{categoryName:'子育て',count:0}],
 }
