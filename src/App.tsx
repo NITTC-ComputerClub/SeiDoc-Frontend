@@ -44,8 +44,8 @@ const App: React.FC = () => {
         <Route path='/admin/status' component={AdminStatus} />
         <Route path='/admin/search' component={AdminSearch} />
         <Route path='/admin/download' component={CSVDownload} />
-        <Route path='/admin/' component={AdminTop} />
         <Route path='/admin/ranking' component={AdminRanking} />
+        <Route path='/admin/' component={AdminTop} />
       </Switch>
     </div>
   )
