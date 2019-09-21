@@ -67,7 +67,15 @@ const FixProfile: React.FC<propsType> = (props) => {
 
         //本人かどうかの判定
         if (selectRelationship.value === '本人') {
-            userData.sex = props.profileData[sequence].gender as "male" | "female" | "None"
+            const sex = props.profileData[sequence].gender as "male" | "female" | "other"
+            let num = 2
+            if (sex === 'male') {
+                num = 0
+            }
+            else if (sex === 'female') {
+                num = 1
+            }
+            userData.sex = num
         }
 
         console.log('new value:', value)
@@ -85,27 +93,27 @@ const FixProfile: React.FC<propsType> = (props) => {
 
         //家族構成を登録
         if (props.profileData.length === 1) {
-            userData.family = '独身'
+            userData.family = 0 //'独身'
         }
         else if (husband && wife) {
             if (props.profileData.length === 2) {
-                userData.family = '夫婦'
+                userData.family = 1 //'夫婦'
             }
             else if ((son || daughter) && !grandfather && !grandmother) {
-                userData.family = '子持ち'
+                userData.family = 2 //'子持ち'
             }
             else if (grandfather || grandmother) {
-                userData.family = '2世帯'
+                userData.family = 3 //'2世帯'
             }
         }
         else if ((husband && !wife) || (!husband && wife)) {
             if (son || daughter) {
-                userData.family = 'ひとり親'
+                userData.family = 4 //'ひとり親'
             }
         }
         else {
             console.log('介護はどうやって表現しよう')
-            userData.family = 'None'
+            //userData.family = 'None'
         }
     }
 

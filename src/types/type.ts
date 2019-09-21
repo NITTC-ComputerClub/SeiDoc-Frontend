@@ -107,6 +107,7 @@ export enum targetFamily {
   独身,
   夫婦,
   子持ち,
+  二世帯,
   ひとり親,
   介護
 }

@@ -7,7 +7,7 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../../scss/signUp.scss'
-import { loginDataType, locationDataType, birthdayDataType, UserState,  targetSex, targetFamily } from '../../../types/type';
+import { loginDataType, locationDataType, birthdayDataType, UserState } from '../../../types/type';
 import Button from '../../../designSystem/Button';
 
 type historyProps = RouteComponentProps
@@ -21,7 +21,6 @@ const SignUp: React.FC<historyProps> = (props) => {
     const [municipalityArray, setMunicipalityArray] = useState<Array<string>>([''])
     const [locationData, setLocationData] = useState<locationDataType>({ prefecture: '', city: '', municipality: '' })
     const [birthdayData, setBirthdayData] = useState<birthdayDataType>({ year: '', month: '', date: '' })
-    //const [sexData, setSexData] = useState<{sex :targetSex}>({sex: 2})
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
@@ -35,13 +34,8 @@ const SignUp: React.FC<historyProps> = (props) => {
         userData['birthday'] = birthday
         userData['address'] = address
         userData.isAdmin = false;
-       
-        //userData.sex = sexData.sex
-
         userData.city = 'None';
         userData.department = 'None';
-        
-        //userData.family = 'None';
 
         if (password.length < 8) {
             alert('Please enter a password')
