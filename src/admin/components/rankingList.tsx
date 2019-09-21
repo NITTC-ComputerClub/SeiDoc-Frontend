@@ -79,7 +79,7 @@ const RankingList: React.FC<historyProps> = props => {
                     }
                 })
             })
-        })
+        }) 
         console.log(viewData)
         setIsLoading(true)
     }
