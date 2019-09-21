@@ -62,7 +62,6 @@ const RankingList: React.FC<historyProps> = props => {
                 () => {
                     setPopularData(popularDataArray)
                     setCategoryDataArray()
-                    setIsLoading(true)
                 }
             )
     }
@@ -70,8 +69,10 @@ const RankingList: React.FC<historyProps> = props => {
     const setCategoryDataArray = () => {
         viewData = popularDataArray.slice(0, 4)
         console.log(viewData)
+        console.log(categoryList)
+        console.log(popularDataArray)
         categoryList.forEach((category: string) => {
-            popularData.forEach((system: System) => {
+            popularDataArray.forEach((system: System) => {
                 system.Category.forEach((value: string) => {
                     if (value === category) {
                         viewData.push(system)
@@ -80,6 +81,7 @@ const RankingList: React.FC<historyProps> = props => {
             })
         })
         console.log(viewData)
+        setIsLoading(true)
     }
 
     return isLoading ? (
