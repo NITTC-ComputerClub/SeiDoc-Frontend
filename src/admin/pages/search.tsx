@@ -2,8 +2,7 @@ import React from 'react'
 import AdminSystemList from '../components/adminSystemList'
 import Footer from '../../user/components/footer'
 import Header from '../components/header'
-import SearchBar from '../../user/components/searchBar'
-import CategoryCardsList from '../../user/components/categoryCardsList'
+import AdminSearch from '../components/adminSearch';
 import { Wrapper } from '../../designSystem/Page';
 import { Container, MainContents } from '../../designSystem/Page';
 import styled from 'styled-components';
@@ -20,8 +19,7 @@ const Search: React.FC = () => {
             <Header />
             <Container>
                 <MainContents>
-                    <SearchBar pushTo='/admin/search'/>
-                    <CategoryCardsList pc pushTo='/admin/search'/>
+                    <AdminSearch />
                     <Title>検索結果</Title>
                     <AdminSystemList />
                 </MainContents>
