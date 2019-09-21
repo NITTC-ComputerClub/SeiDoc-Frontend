@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Picture from '../components/Login/picture'
 import SelectImage from '../components/Login/selectImage'
 import FixProfile from '../components/Login/fixProfile'
-import Footer from '../components/footer';
+//import Footer from '../components/footer';
 import { profileDataType } from '../../types/type'
 import '../../scss/userRegistration.scss'
 
@@ -27,7 +27,7 @@ const PicturePage: React.FC = () => {
                     <FixProfile profileData={profileData} />
                 }
             </div>
-            <Footer />
+            { /*<Footer /> */}
         </div>
     )
 }
