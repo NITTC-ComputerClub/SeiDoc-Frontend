@@ -6,6 +6,8 @@ import Button from "../../designSystem/Button";
 import { fireStore, systemIndex } from "../../firebase/firebase";
 import { System } from "../../types/type";
 import _ from "lodash";
+import { Wrapper, MainContents } from "../../designSystem/Page";
+import setting from "../../designSystem/setting";
 
 const Select = styled.select`
   width: 100%;
@@ -15,7 +17,51 @@ const Select = styled.select`
   border-radius: 2px;
   border: none;
   vertical-align: middle;
+  background-color: ${setting.Gray5}
 `;
+
+const Form = styled.div`
+  width: 100%;
+  background-color: ${setting.White};
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 32px;
+  padding: 32px 16px;
+  text-align: center;
+`
+
+const InputWrapper = styled.div`
+  max-width: 460px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: left;
+  
+  * {
+      box-sizing: border-box;
+  }
+`
+
+const Title = styled.h1`
+  font-size: ${setting.H1};
+`
+
+const SubTitle = styled.h2`
+  font-size: ${setting.H2};
+`
+
+const Checkbox = styled.div`
+  font-size: ${setting.P1};
+  text-align: center;
+  margin: 0 auto 8px auto;
+  width: 216px;
+  display: flex;
+  justify-content: space-between;
+`
+
+const ButtonWrapper = styled.div`
+  text-align: right;
+  margin-top: 64px;
+`
 
 const CSVDownload: React.FC = () => {
   const [category, setCategory] = useState<string>("すべて");
@@ -126,71 +172,92 @@ const CSVDownload: React.FC = () => {
   return (
     <div>
       <Header />
-      <div>
-        <h5>データ内容</h5>
-        <Select onChange={e => setCategory(e.target.value)}>
-          <option value="すべて">全カテゴリ</option>
-          <option value="子育て">子育て</option>
-          <option value="介護">介護</option>
-          <option value="建築">建築</option>
-          <option value="病気">病気</option>
-          <option value="融資">融資</option>
-          <option value="地域">地域</option>
-          <option value="高齢者">高齢者</option>
-          <option value="その他">その他</option>
-        </Select>
-      </div>
-      <div>
-        <h2>項目</h2>
-        <div>
-          <h5>制度名</h5>
-          <input
-            type="checkbox"
-            checked={isName}
-            onChange={() => setIsName(!isName)}
-          />
-        </div>
-        <h5>カテゴリ</h5>
-        <input
-          type="checkbox"
-          checked={isCategory}
-          onChange={() => setIsCategory(!isCategory)}
-        />
-        <h5>制度対象者</h5>
-        <input
-          type="checkbox"
-          checked={isTarget}
-          onChange={() => setIsTarget(!isTarget)}
-        />
-        <h5>援助方法</h5>
-        <input
-          type="checkbox"
-          checked={isMethod}
-          onChange={() => setIsMethod(!isMethod)}
-        />
-        <h5>担当部署</h5>
-        <input
-          type="checkbox"
-          checked={isDepartment}
-          onChange={() => setIsDepartment(!isDepartment)}
-        />
-        <h5>詳細</h5>
-        <input
-          type="checkbox"
-          checked={isDetail}
-          onChange={() => setIsDetail(!isDetail)}
-        />
-        <h5>公式サイト</h5>
-        <input
-          type="checkbox"
-          checked={isOfficialURL}
-          onChange={() => setIsOfficialURL(!isOfficialURL)}
-        />
-      </div>
-      <div>
-        <Button onClick={() => handleSubmit()}>CSVとして出力</Button>
-      </div>
-      <Footer />
+      <Wrapper>
+        <MainContents>
+          <Form>
+            <Title>データ出力</Title>
+            <InputWrapper>
+              <div>
+                <SubTitle>データ内容</SubTitle>
+                <Select onChange={e => setCategory(e.target.value)}>
+                  <option value="すべて">全カテゴリ</option>
+                  <option value="子育て">子育て</option>
+                  <option value="介護">介護</option>
+                  <option value="建築">建築</option>
+                  <option value="病気">病気</option>
+                  <option value="融資">融資</option>
+                  <option value="地域">地域</option>
+                  <option value="高齢者">高齢者</option>
+                  <option value="その他">その他</option>
+                </Select>
+              </div>
+              <div>
+                <SubTitle>データに含める項目</SubTitle>
+                <Checkbox>
+                  <label>制度名</label>
+                  <input
+                    type="checkbox"
+                    checked={isName}
+                    onChange={() => setIsName(!isName)}
+                  />
+                </Checkbox>
+                <Checkbox>
+                  <label>カテゴリ</label>
+                  <input
+                    type="checkbox"
+                    checked={isCategory}
+                    onChange={() => setIsCategory(!isCategory)}
+                  />
+                </Checkbox>
+                <Checkbox>
+                  <label>制度対象者</label>
+                  <input
+                    type="checkbox"
+                    checked={isTarget}
+                    onChange={() => setIsTarget(!isTarget)}
+                  />
+                </Checkbox>
+                <Checkbox>
+                  <label>援助方法</label>
+                  <input
+                    type="checkbox"
+                    checked={isMethod}
+                    onChange={() => setIsMethod(!isMethod)}
+                  />
+                </Checkbox>
+                <Checkbox>
+                  <label>担当部署</label>
+                  <input
+                    type="checkbox"
+                    checked={isDepartment}
+                    onChange={() => setIsDepartment(!isDepartment)}
+                  />
+                </Checkbox>
+                <Checkbox>
+                  <label>詳細</label>
+                  <input
+                    type="checkbox"
+                    checked={isDetail}
+                    onChange={() => setIsDetail(!isDetail)}
+                  />
+                </Checkbox>
+                <Checkbox>
+                  <label>公式サイト</label>
+                  <input
+                    type="checkbox"
+                    checked={isOfficialURL}
+                    onChange={() => setIsOfficialURL(!isOfficialURL)}
+                  />
+                </Checkbox>
+              </div>
+            <ButtonWrapper>
+              <Button blue onClick={() => handleSubmit()}>CSVとして出力</Button>
+            </ButtonWrapper>
+            </InputWrapper>
+          </Form>
+        </MainContents>
+        <Footer />
+      </Wrapper>
     </div>
   );
 };
