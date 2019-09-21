@@ -40,47 +40,15 @@ const Grid = styled.ul`
 
 const RankingList: React.FC<historyProps> = props => {
     const categoryList: Array<string> = [
-        '総合', '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
+        '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
     ]
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [popularData, setPopularData] = useState<System[]>([])
     const popularDataArray: System[] = []
-    const [viewData, setViewData] = useState<System[]>([])
-    
+    let viewData: System[] = []
+
     const dispatch = useDispatch()
     const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
-
-    const setCategoryPopularData = (value: string) => {
-        if (value === '総合') {
-            setViewData(popularData.slice(0, 3))
-            console.log(viewData)
-        } else {
-            popularData.map((system: System) => {
-                system.Category.map((category: string) => {
-                    if (value === category) {
-                        viewData.push(system)
-                    }
-                })
-            })
-            setViewData(viewData.slice(0, 3))
-            console.log(viewData)
-        }
-        return (
-            <div>
-                <h4>{value}</h4>
-                {viewData.map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)    //リロードなしでページを遷移させるのに必要
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p>{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-            </div>
-        )
-    }
 
     if (popularData.length === 0) {
         fireStore.collection(systemIndex).orderBy("monthlyView", "desc").get()
@@ -93,22 +61,46 @@ const RankingList: React.FC<historyProps> = props => {
             ).then(
                 () => {
                     setPopularData(popularDataArray)
+                    setCategoryDataArray()
                     setIsLoading(true)
                 }
             )
     }
 
+    const setCategoryDataArray = () => {
+        viewData = popularDataArray.slice(0, 4)
+        console.log(viewData)
+        categoryList.forEach((category: string) => {
+            popularData.forEach((system: System) => {
+                system.Category.forEach((value: string) => {
+                    if (value === category) {
+                        viewData.push(system)
+                    }
+                })
+            })
+        })
+        console.log(viewData)
+    }
+
     return isLoading ? (
-        <div>
-            <Grid>
-                {categoryList.map((category: string) => {
-                    setCategoryPopularData(category)
-                })}
-            </Grid>
-        </div>
+        <Grid>
+            <div>
+                {viewData.map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)    //リロードなしでページを遷移させるのに必要
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p>{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+            </div>
+        </Grid>
     ) : (
             <Indicator />
         )
+
 }
 
 export default withRouter<historyProps, React.FC<historyProps>>(RankingList)
