@@ -4,6 +4,7 @@ import Header from '../components/header'
 import CategoryCardsList from '../../user/components/categoryCardsList'
 import SearchValue from '../components/searchValue'
 import CategoryRankingList from '../components/categoryRankingList'
+import Footer from '../../user/components/footer'
 
 type historyProps = RouteComponentProps
 
@@ -15,6 +16,7 @@ const CategoryRanking: React.FC<historyProps> = props => {
             <CategoryCardsList pushTo='/admin/categoryRanking' />
             <SearchValue />
             <CategoryRankingList />
+            <Footer />
         </div>
     )
 }
