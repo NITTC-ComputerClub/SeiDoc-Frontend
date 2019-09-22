@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SystemCard from './SystemCard'
 import { fireStore, searchLogIndex } from '../../../firebase/firebase';
-import { System, searchLogType } from '../../../types/type';
+import { System, searchLogType, targetAge } from '../../../types/type';
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
@@ -67,7 +67,7 @@ const Recommend: React.FC = () => {
                 snapshot.forEach(doc => {
                     const data = doc.data() as System
                     const ranking: rankingType = { documentID: data.documentID, system: data, count: 0 }
-                    if (data.targetAge === 15) {
+                    if (data.targetAge === targetAge.全年齢) {
                         ranking.count = ranking.count + 1
                     }
                     if (data.targetSex === user.sex || data.targetSex === 2) {
