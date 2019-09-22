@@ -73,9 +73,12 @@ const Recommend: React.FC = () => {
                     if (data.targetSex === user.sex || data.targetSex === 2) {
                         ranking.count = ranking.count + 1
                     }
+                    // Systemには家族関係あるけどUserStateには無いから比較できない
+                    /*
                     if (user.family.some((value) => { return value.relation === data.targetFamily })) {
                         ranking.count = ranking.count + 1
                     }
+                    */
                     fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
                         snapshot.forEach(doc => {
                             const searchLog = doc.data() as searchLogType

@@ -65,6 +65,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             value.gender = 'Female'
         }
 
+        /*
         //本人かどうかの判定
         if (selectRelationship.value === '本人') {
             const sex = props.profileData[sequence].gender as "male" | "female" | "other"
@@ -77,6 +78,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             }
             userData.sex = num
         }
+        */
 
         console.log('new value:', value)
         props.profileData.splice(sequence, 1, value)
@@ -84,38 +86,21 @@ const FixProfile: React.FC<propsType> = (props) => {
     }
 
     const fixData = () => {
-        const husband: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '夫' })
-        const wife: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '妻' })
-        const son: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '息子' })
-        const daughter: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '娘' })
-        const grandfather: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖父' })
-        const grandmother: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖母' })
-
-        /*
-        //家族構成を登録
-        if (props.profileData.length === 1) {
-            userData.family = 0 //'独身'
-        }
-        else if (husband && wife) {
-            if (props.profileData.length === 2) {
-                userData.family = 1 //'夫婦'
+        userData.family = [] //データの初期化
+        props.profileData.forEach((value) => {
+            const sex = value.gender
+            let num = 2
+            if (sex === 'Male') {
+                num = 0
             }
-            else if ((son || daughter) && !grandfather && !grandmother) {
-                userData.family = 2 //'子持ち'
+            else if (sex === 'Female') {
+                num = 1
             }
-            else if (grandfather || grandmother) {
-                userData.family = 3 //'2世帯'
-            }
-        }
-        else if ((husband && !wife) || (!husband && wife)) {
-            if (son || daughter) {
-                userData.family = 4 //'ひとり親'
-            }
-        }
-        else {
-            console.log('介護はどうやって表現しよう')
-            //userData.family = 'None'
-        }*/
+            userData.family.push({
+                age: value.age,
+                gender: num
+            })
+        })
     }
 
     const handleFirebaseUpdata = () => {

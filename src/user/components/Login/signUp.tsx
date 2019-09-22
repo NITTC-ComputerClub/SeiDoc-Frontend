@@ -36,6 +36,7 @@ const SignUp: React.FC<historyProps> = (props) => {
         userData.isAdmin = false;
         userData.city = 'None';
         userData.department = 'None';
+        userData.family = []
 
         if (password.length < 8) {
             alert('Please enter a password')
