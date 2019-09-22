@@ -15,7 +15,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
                 obj.removeChild(child)
             })
         }
-        const relationshipNode = document.querySelectorAll('inpout.view_relationship')
+        const relationshipNode = document.querySelectorAll('input.view_relationship')
         if (relationshipNode.length !== 0) {
             relationshipNode.forEach((child) => {
                 obj.removeChild(child)

@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from '../../../store'
-import { loginCreator } from '../../../actions/action'
+import React, { useEffect } from 'react'
 import drawProfile from './drawProfile'
-import { withRouter, RouteComponentProps } from 'react-router'
-import { profileDataType, UserState } from '../../../types/type'
-import { fireStore } from '../../../firebase/firebase'
+import { profileDataType } from '../../../types/type'
 
 type propsType = {
     profileData: Array<profileDataType>,
@@ -41,13 +36,37 @@ const Myself: React.FC<propsType> = (props) => {
         drawProfile(props.profileData)
     }
 
+    const clearImage = () => {
+        const canvas = document.getElementById('cvs') as HTMLCanvasElement
+        const context = canvas.getContext('2d') as CanvasRenderingContext2D
+        const obj = document.getElementById('showImage') as HTMLElement
+
+        // 前回の入力フォームを削除
+        const ageNode = document.querySelectorAll('input.view_age')
+        if (ageNode.length !== 0) {
+            ageNode.forEach((child) => {
+                obj.removeChild(child)
+            })
+        }
+        const relationshipNode = document.querySelectorAll('input.view_relationship')
+        if (relationshipNode.length !== 0) {
+            relationshipNode.forEach((child) => {
+                obj.removeChild(child)
+            })
+        }
+        context.clearRect(0, 0, 350, 400)
+
+        props.setProfileData([])
+    }
+
     //TODO ここで本人の性別も変更できたらいいのでは？
     canvas.addEventListener('click', onClick, false)
 
     return (
         <div>
-            <button>戻る</button>
+            <button onClick={clearImage}>戻る</button>
             <button onClick={() => {
+                canvas.removeEventListener('click', onClick, false)
                 props.setProfileData(props.profileData)
                 props.setMyself(false)
             }}>次へ</button>

@@ -104,7 +104,8 @@ export enum targetSex {
   other
 }
 export type familyType = {
-  age: number
+  relationship: string,
+  age: number,
   gender: targetSex
 }
 export enum targetFamily {

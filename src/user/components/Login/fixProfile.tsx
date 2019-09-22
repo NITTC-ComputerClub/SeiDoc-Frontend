@@ -65,21 +65,6 @@ const FixProfile: React.FC<propsType> = (props) => {
             value.gender = 'Female'
         }
 
-        /*
-        //本人かどうかの判定
-        if (selectRelationship.value === '本人') {
-            const sex = props.profileData[sequence].gender as "male" | "female" | "other"
-            let num = 2
-            if (sex === 'male') {
-                num = 0
-            }
-            else if (sex === 'female') {
-                num = 1
-            }
-            userData.sex = num
-        }
-        */
-
         console.log('new value:', value)
         props.profileData.splice(sequence, 1, value)
         drawProfile(props.profileData)
@@ -88,18 +73,24 @@ const FixProfile: React.FC<propsType> = (props) => {
     const fixData = () => {
         userData.family = [] //データの初期化
         props.profileData.forEach((value) => {
-            const sex = value.gender
-            let num = 2
-            if (sex === 'Male') {
-                num = 0
+            //家族情報更新
+            let sex = 2
+            if (value.gender === 'Male') {
+                sex = 0
             }
-            else if (sex === 'Female') {
-                num = 1
+            else if (value.gender === 'Female') {
+                sex = 1
             }
             userData.family.push({
+                relationship: value.relationship,
                 age: value.age,
-                gender: num
+                gender: sex
             })
+
+            //本人情報更新
+            if(value.relationship === '本人') {
+                userData.sex = sex
+            }
         })
     }
 
