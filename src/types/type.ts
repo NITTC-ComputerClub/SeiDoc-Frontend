@@ -104,9 +104,9 @@ export enum targetSex {
   other
 }
 export type familyType = {
-  relation: '独身' | '夫婦' | '子持ち' | '二世帯' | 'ひとり親' | '介護'
+  relation: targetFamily
   age: number
-  gender: number
+  gender: targetSex
 }
 export enum targetFamily {
   独身,
