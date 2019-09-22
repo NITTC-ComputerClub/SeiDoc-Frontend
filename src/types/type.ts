@@ -60,8 +60,8 @@ export type UserState = {
   birthday: string;
   income: string;
   address: string;
-  family: targetFamily;
-  isAdmin: boolean; //
+  family: Array<familyType>;
+  isAdmin: boolean;
   city: string;
   department: string;
   sex: targetSex;
@@ -103,6 +103,11 @@ export enum targetSex {
   female,
   other
 }
+export type familyType = {
+  relation: '独身' | '夫婦' | '子持ち' | '二世帯' | 'ひとり親' | '介護'
+  age: number
+  gender: number
+}
 export enum targetFamily {
   独身,
   夫婦,
@@ -111,7 +116,7 @@ export enum targetFamily {
   ひとり親,
   介護
 }
-export enum targetAge  {
+export enum targetAge {
   乳児,
   幼児,
   小学生,

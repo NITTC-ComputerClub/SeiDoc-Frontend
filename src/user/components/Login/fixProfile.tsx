@@ -91,6 +91,7 @@ const FixProfile: React.FC<propsType> = (props) => {
         const grandfather: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖父' })
         const grandmother: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖母' })
 
+        /*
         //家族構成を登録
         if (props.profileData.length === 1) {
             userData.family = 0 //'独身'
@@ -114,7 +115,7 @@ const FixProfile: React.FC<propsType> = (props) => {
         else {
             console.log('介護はどうやって表現しよう')
             //userData.family = 'None'
-        }
+        }*/
     }
 
     const handleFirebaseUpdata = () => {

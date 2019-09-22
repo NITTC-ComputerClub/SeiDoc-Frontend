@@ -10,7 +10,7 @@ const initialState: UserState = {
     birthday: '',
     income: '',
     address: '',
-    family: 0,
+    family: [],
     isAdmin: false,
     city: '',  
     department: '',
