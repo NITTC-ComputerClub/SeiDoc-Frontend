@@ -38,7 +38,7 @@ const Grid = styled.ul`
     grid-gap: 8px;
 `
 
-const RankingList: React.FC<historyProps> = props => {
+const TotalRankingList: React.FC<historyProps> = props => {
     const categoryList: Array<string> = [
         '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
     ]
@@ -105,4 +105,4 @@ const RankingList: React.FC<historyProps> = props => {
 
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(RankingList)
+export default withRouter<historyProps, React.FC<historyProps>>(TotalRankingList)

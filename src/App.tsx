@@ -15,7 +15,7 @@ import AdminStatus from './admin/pages/status'
 import AdminSearch from './admin/pages/search'
 import AdminTop from './admin/pages/top'
 import CSVDownload from './admin/pages/csvDownload'
-import AdminRanking from './admin/pages/ranking'
+import AdminTotalRanking from './admin/pages/totalRanking'
 import './scss/App.scss'
 
 import ML from './user/pages/machineLearning'
@@ -44,7 +44,7 @@ const App: React.FC = () => {
         <Route path='/admin/status' component={AdminStatus} />
         <Route path='/admin/search' component={AdminSearch} />
         <Route path='/admin/download' component={CSVDownload} />
-        <Route path='/admin/ranking' component={AdminRanking} />
+        <Route path='/admin/totalRanking' component={AdminTotalRanking} />
         <Route path='/admin/' component={AdminTop} />
       </Switch>
     </div>
