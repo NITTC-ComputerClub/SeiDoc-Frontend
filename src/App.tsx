@@ -14,6 +14,7 @@ import AdminDetail from './admin/pages/detail'
 import AdminStatus from './admin/pages/status'
 import AdminSearch from './admin/pages/search'
 import AdminTop from './admin/pages/top'
+import AdminCategoryRanking from './admin/pages/categoryRanking'
 import CSVDownload from './admin/pages/csvDownload'
 import './scss/App.scss'
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Route path='/admin/status' component={AdminStatus} />
         <Route path='/admin/search' component={AdminSearch} />
         <Route path='/admin/download' component={CSVDownload} />
+        <Route path='/admin/categoryRanking' component={AdminCategoryRanking} />
         <Route path='/admin/' component={AdminTop} />
       </Switch>
     </div>
