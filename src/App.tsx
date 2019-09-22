@@ -11,7 +11,6 @@ import Login from './user/pages/login'
 import SignUp from './user/pages/userRegistration'
 import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
-import AdminStatus from './admin/pages/status'
 import AdminSearch from './admin/pages/search'
 import AdminTop from './admin/pages/top'
 import AdminCategoryRanking from './admin/pages/categoryRanking'
@@ -41,7 +40,6 @@ const App: React.FC = () => {
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
         <Route path='/admin/newSystem' component={AdminInput} />
-        <Route path='/admin/status' component={AdminStatus} />
         <Route path='/admin/search' component={AdminSearch} />
         <Route path='/admin/download' component={CSVDownload} />
         <Route path='/admin/categoryRanking' component={AdminCategoryRanking} />

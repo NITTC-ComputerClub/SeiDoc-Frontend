@@ -6,9 +6,8 @@ type historyProps = RouteComponentProps
 
 const SearchValue: React.FC<historyProps> = (props) => {
     const tag = parse(props.location.search).tag as string
-    const inputValue = parse(props.location.search).value as string
-    if (tag !== undefined && inputValue !== undefined) { //アルゴリアサーチ
-        return (<h2>「{inputValue}」の検索結果</h2>)
+    if (tag !== undefined ) {
+        return (<h2>一か月以内によく見られている「{tag}」制度</h2>)
     }
     else {
         return (<div></div>)
