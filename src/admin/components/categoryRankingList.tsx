@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { parse } from 'query-string'
 import { System } from '../../types/type'
@@ -42,12 +42,13 @@ const Grid = styled.ul`
 const CategoryRankingList: React.FC<historyProps> = props => {
     const tag = parse(props.location.search).tag as string
     const [popularData, setPopularData] = useState<System[]>([])
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const popularDataArray: System[] = []
+    const [isLoading, setIsLoading] = useState<boolean>(true)
     const dispatch = useDispatch()
     const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
-    
-    if (popularData.length === 0 || popularData[0].Category.includes(tag)) {
+
+    useEffect(() => {
+        const popularDataArray: System[] = []
+        setIsLoading(true)
         fireStore.collection(systemIndex).where("Category", "array-contains", tag).orderBy("monthlyView", "desc").limit(15).get()
             .then(
                 (snapshot) => {
@@ -58,13 +59,12 @@ const CategoryRankingList: React.FC<historyProps> = props => {
             ).then(
                 () => {
                     setPopularData(popularDataArray)
-                    setIsLoading(true)
+                    setIsLoading(false)
                 }
             )
-    }
-    // console.log(popularData)
+    }, [tag])
 
-    return isLoading ? (
+    return !isLoading ? (
         <div>
             <Grid>
                 {popularData.map((system: System, index: number) => (
@@ -72,7 +72,7 @@ const CategoryRankingList: React.FC<historyProps> = props => {
                         updateDetail(system)
                         props.history.push('/admin/detail/' + system.documentID)
                     }}>
-                        <div>{index}</div>
+                        <div>{index + 1}</div>
                         <h2>{system.Name}</h2>
                         <p>{system.Department}</p>
                         <p>閲覧数 {system.monthlyView}/月</p>
@@ -82,8 +82,8 @@ const CategoryRankingList: React.FC<historyProps> = props => {
             </Grid>
         </div>
     ) : (
-        <Indicator />
-    )
+            <Indicator />
+        )
 }
 
 export default withRouter<historyProps, React.FC<historyProps>>(CategoryRankingList)
