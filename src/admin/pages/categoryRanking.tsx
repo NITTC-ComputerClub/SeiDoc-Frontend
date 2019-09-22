@@ -8,9 +8,11 @@ import CategoryRankingList from '../components/categoryRankingList'
 type historyProps = RouteComponentProps
 
 const CategoryRanking: React.FC<historyProps> = props => {
+    console.log("Shown")
     return (
         <div>
-            <Header ranking/>
+            {console.log("hogehoge")}
+            <Header />
             <h2>カテゴリ別の制度閲覧状況</h2>
             <CategoryCardsList pushTo='/admin/categoryRanking' />
             <SearchValue />

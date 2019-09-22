@@ -46,8 +46,8 @@ const CategoryRankingList: React.FC<historyProps> = props => {
     const popularDataArray: System[] = []
     const dispatch = useDispatch()
     const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
-
-    if (popularData.length === 0) {
+    
+    if (popularData.length === 0 || popularData[0].Category.includes(tag)) {
         fireStore.collection(systemIndex).where("Category", "array-contains", tag).orderBy("monthlyView", "desc").limit(15).get()
             .then(
                 (snapshot) => {
@@ -62,20 +62,21 @@ const CategoryRankingList: React.FC<historyProps> = props => {
                 }
             )
     }
-    console.log(popularData)
+    // console.log(popularData)
 
     return isLoading ? (
         <div>
             <Grid>
-                {popularData.map((system: System) => (
+                {popularData.map((system: System, index: number) => (
                     <AdminSystemList key={system.Name} onClick={() => {
                         updateDetail(system)
                         props.history.push('/admin/detail/' + system.documentID)
                     }}>
+                        <div>{index}</div>
                         <h2>{system.Name}</h2>
                         <p>{system.Department}</p>
                         <p>閲覧数 {system.monthlyView}/月</p>
-                        <p className="blue">{system.ageGroup[0].age}代に人気</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
                     </AdminSystemList>
                 ))}
             </Grid>
