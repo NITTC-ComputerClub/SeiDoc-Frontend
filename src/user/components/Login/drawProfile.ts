@@ -38,6 +38,9 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             else if (gender === 'Female') {
                 context.strokeStyle = 'red'
             }
+            if (relationship === '本人') {
+                context.strokeStyle = 'green'
+            }
             context.strokeRect(left, top, width, heigh)
 
             // 年齢のテキストボックスを生成 
