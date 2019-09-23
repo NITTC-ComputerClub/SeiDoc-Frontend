@@ -146,7 +146,7 @@ const AdminHeader: React.FC<historyProps> = props => {
                         </StyledLink>
                     </li>
                     <li>
-                        <StyledLink className="dataOutput" to="/admin/">
+                        <StyledLink className="dataOutput" to="/admin/download">
                             データ出力
                         </StyledLink>
                     </li>
