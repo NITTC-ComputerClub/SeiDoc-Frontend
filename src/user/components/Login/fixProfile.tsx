@@ -4,7 +4,7 @@ import { AppState } from '../../../store'
 import { loginCreator } from '../../../actions/action'
 import drawProfile from './drawProfile'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { profileDataType, UserState, targetSex, targetFamily } from '../../../types/type'
+import { profileDataType, UserState, TargetSex, TargetFamily } from '../../../types/type'
 import { fireStore } from '../../../firebase/firebase'
 
 type historyProps = RouteComponentProps
@@ -38,7 +38,7 @@ const FixProfile: React.FC<propsType> = (props) => {
                 && element.boundingBox.top <= y && y <= (element.boundingBox.top + element.boundingBox.height)) {
                 for (let i = 0; i < selectRelationship.length; i++) {
                     if (selectRelationship.options[i].value === element.relationship) {
-                        if (element.isPerson) selectRelationship.selectedIndex = 0
+                        if (element.isMyself) selectRelationship.selectedIndex = 0
                         else selectRelationship.selectedIndex = i
                         inputAge.value = element.age.toString()
                         setSequence(index)
@@ -49,7 +49,7 @@ const FixProfile: React.FC<propsType> = (props) => {
         })
     }
 
-    const fetchData = () => {
+    const editData = () => {
         const inputAge = document.getElementById('age') as HTMLInputElement
         const selectRelationship = document.getElementById('relationship') as HTMLSelectElement
         if (inputAge.value === '') {    //エラー処理
@@ -59,11 +59,11 @@ const FixProfile: React.FC<propsType> = (props) => {
         const value: profileDataType = props.profileData[sequence]
         value.age = Number(inputAge.value)
         if (selectRelationship.value === '本人') {
-            value.isPerson = true
+            value.isMyself = true
         }
         else {
             value.relationship = selectRelationship.value
-            value.isPerson = false
+            value.isMyself = false
             if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '父') {
                 value.gender = 'Male'
             }
@@ -77,7 +77,7 @@ const FixProfile: React.FC<propsType> = (props) => {
         drawProfile(props.profileData)
     }
 
-    const fixData = () => {
+    const updateData = () => {
         const husband: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '夫' })
         const wife: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '妻' })
         const son: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '息子' })
@@ -87,34 +87,37 @@ const FixProfile: React.FC<propsType> = (props) => {
 
         //家族構成を登録
         if (props.profileData.length === 1) {
-            userData.targetFamily = targetFamily.独身
+            userData.targetFamily = TargetFamily.独身
         }
         else if (husband && wife) {
             if (props.profileData.length === 2) {
-                userData.targetFamily = targetFamily.夫婦
+                userData.targetFamily = TargetFamily.夫婦
             }
             else if ((son || daughter) && !grandfather && !grandmother) {
-                userData.targetFamily = targetFamily.子持ち
+                userData.targetFamily = TargetFamily.子持ち
             }
             else if (grandfather || grandmother) {
-                userData.targetFamily = targetFamily.二世帯
+                userData.targetFamily = TargetFamily.二世帯
             }
         }
         else if ((husband && !wife) || (!husband && wife)) {
             if (son || daughter) {
-                userData.targetFamily = targetFamily.ひとり親
+                userData.targetFamily = TargetFamily.ひとり親
             }
+        }
+        else {
+            userData.targetFamily = TargetFamily.不明
         }
 
         userData.family = [] //データの初期化
         props.profileData.forEach((value) => {
             //家族情報更新
-            let sex = targetSex.other
+            let sex = TargetSex.other
             if (value.gender === 'Male') {
-                sex = targetSex.male
+                sex = TargetSex.male
             }
             else if (value.gender === 'Female') {
-                sex = targetSex.female
+                sex = TargetSex.female
             }
             userData.family.push({
                 relationship: value.relationship,
@@ -123,14 +126,14 @@ const FixProfile: React.FC<propsType> = (props) => {
             })
 
             //本人情報更新
-            if (value.isPerson) {
+            if (value.isMyself) {
                 userData.sex = sex
             }
         })
     }
 
     const handleFirebaseUpdata = () => {
-        fixData() //データ更新
+        updateData() //データ更新
         console.log('userData:', userData)
         const uid = userData.userId
         const sendData = userData
@@ -156,7 +159,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             </select>
             <p>年齢</p>
             <input id='age' type="text" className='fix'></input>
-            <button onClick={fetchData}>修正</button>
+            <button onClick={editData}>修正</button>
             <button onClick={() => {
                 props.history.push('/finish')
                 login(userData)

@@ -60,12 +60,12 @@ export type UserState = {
   birthday: string;
   income: string;
   address: string;
-  targetFamily: targetFamily
-  family: Array<familyType>;
+  targetFamily: TargetFamily
+  family: Array<FamilyType>;
   isAdmin: boolean;
   city: string;
   department: string;
-  sex: targetSex;
+  sex: TargetSex;
   searchedWords: string[];
   viewedCategory: [{ categoryName: string, count: number }]
 };
@@ -95,29 +95,30 @@ export type System = {
   monthlyView: number;
   dailyView: number;
   ageGroup: ageGroup[];
-  targetAge: targetAge;
-  targetFamily: targetFamily;
-  targetSex: targetSex;
+  targetAge: TargetAge;
+  targetFamily: TargetFamily;
+  targetSex: TargetSex;
 };
-export enum targetSex {
+export enum TargetSex {
   male,
   female,
   other
 }
-export type familyType = {
+export type FamilyType = {
   relationship: string,
   age: number,
-  gender: targetSex
+  gender: TargetSex
 }
-export enum targetFamily {
+export enum TargetFamily {
   独身,
   夫婦,
   子持ち,
   二世帯,
   ひとり親,
-  介護
+  介護,
+  不明
 }
-export enum targetAge {
+export enum TargetAge {
   乳児,
   幼児,
   小学生,
@@ -205,7 +206,7 @@ export type profileDataType = {
   },
   gender: string,
   relationship: string,
-  isPerson :boolean
+  isMyself :boolean
 }
 
 export type sendData = {
@@ -217,9 +218,9 @@ export type sendData = {
   Detail: string
   Method: Array<string>
   Category: Array<string>
-  targetSex: targetSex
-  targetAge: targetAge
-  targetFamily: targetFamily
+  targetSex: TargetSex
+  targetAge: TargetAge
+  targetFamily: TargetFamily
 };
 
 /* もしものために残しておく */

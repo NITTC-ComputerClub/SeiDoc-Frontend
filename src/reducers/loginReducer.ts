@@ -1,6 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { loginCreator, initLoginCreator } from '../actions/action'
-import { UserState } from '../types/type';
+import { UserState, TargetFamily } from '../types/type';
 
 
 
@@ -10,7 +10,7 @@ const initialState: UserState = {
     birthday: '',
     income: '',
     address: '',
-    targetFamily: -1,
+    targetFamily: TargetFamily.不明,
     family: [],
     isAdmin: false,
     city: '',  

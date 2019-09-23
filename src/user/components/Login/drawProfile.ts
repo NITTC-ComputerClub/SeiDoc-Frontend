@@ -30,7 +30,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             const gender = element.gender
             const age = element.age
             const relationship = element.relationship
-            const person = element.isPerson
+            const person = element.isMyself
 
             // 顔に四角を生成 
             if (gender === 'Male') {

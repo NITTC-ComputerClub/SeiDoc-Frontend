@@ -116,7 +116,7 @@ const SelectImage: React.FC<propsType> = (props) => {
                 },
                 gender: gender,
                 relationship: relationship,
-                isPerson: false
+                isMyself: false
             })
         })
 

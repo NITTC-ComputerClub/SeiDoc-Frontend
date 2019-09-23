@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SystemCard from './SystemCard'
 import { fireStore, searchLogIndex } from '../../../firebase/firebase';
-import { System, searchLogType, targetAge } from '../../../types/type';
+import { System, searchLogType, TargetAge } from '../../../types/type';
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
@@ -67,18 +67,15 @@ const Recommend: React.FC = () => {
                 snapshot.forEach(doc => {
                     const data = doc.data() as System
                     const ranking: rankingType = { documentID: data.documentID, system: data, count: 0 }
-                    if (data.targetAge === targetAge.全年齢) {
+                    if (data.targetAge === TargetAge.全年齢) {
                         ranking.count = ranking.count + 1
                     }
                     if (data.targetSex === user.sex || data.targetSex === 2) {
                         ranking.count = ranking.count + 1
                     }
-                    // Systemには家族関係あるけどUserStateには無いから比較できない
-                    /*
-                    if (user.family.some((value) => { return value.relation === data.targetFamily })) {
+                    if (data.targetFamily === user.targetFamily) {
                         ranking.count = ranking.count + 1
                     }
-                    */
                     fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
                         snapshot.forEach(doc => {
                             const searchLog = doc.data() as searchLogType
