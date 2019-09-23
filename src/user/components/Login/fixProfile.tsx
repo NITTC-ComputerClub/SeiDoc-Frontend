@@ -123,7 +123,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             })
 
             //本人情報更新
-            if (value.relationship === '本人') {
+            if (value.isPerson) {
                 userData.sex = sex
             }
         })
