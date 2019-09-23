@@ -38,7 +38,8 @@ const FixProfile: React.FC<propsType> = (props) => {
                 && element.boundingBox.top <= y && y <= (element.boundingBox.top + element.boundingBox.height)) {
                 for (let i = 0; i < selectRelationship.length; i++) {
                     if (selectRelationship.options[i].value === element.relationship) {
-                        selectRelationship.selectedIndex = i
+                        if (element.isPerson) selectRelationship.selectedIndex = 0
+                        else selectRelationship.selectedIndex = i
                         inputAge.value = element.age.toString()
                         setSequence(index)
                         break
@@ -51,18 +52,24 @@ const FixProfile: React.FC<propsType> = (props) => {
     const fetchData = () => {
         const inputAge = document.getElementById('age') as HTMLInputElement
         const selectRelationship = document.getElementById('relationship') as HTMLSelectElement
-        if (inputAge.value === '') {
+        if (inputAge.value === '') {    //エラー処理
             alert('修正したい人の顔写真をタッチしてください\n修正が必要ないときは登録完了を押してください')
             return
         }
         const value: profileDataType = props.profileData[sequence]
         value.age = Number(inputAge.value)
-        value.relationship = selectRelationship.value
-        if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '祖父') {
-            value.gender = 'Male'
+        if (selectRelationship.value === '本人') {
+            value.isPerson = true
         }
-        else if (selectRelationship.value === '妻' || selectRelationship.value === '娘' || selectRelationship.value === '祖母') {
-            value.gender = 'Female'
+        else {
+            value.relationship = selectRelationship.value
+            value.isPerson = false
+            if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '祖父') {
+                value.gender = 'Male'
+            }
+            else if (selectRelationship.value === '妻' || selectRelationship.value === '娘' || selectRelationship.value === '祖母') {
+                value.gender = 'Female'
+            }
         }
 
         console.log('new value:', value)
@@ -80,7 +87,7 @@ const FixProfile: React.FC<propsType> = (props) => {
 
         //家族構成を登録
         if (props.profileData.length === 1) {
-            userData.targetFamily =  targetFamily.独身
+            userData.targetFamily = targetFamily.独身
         }
         else if (husband && wife) {
             if (props.profileData.length === 2) {
@@ -116,7 +123,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             })
 
             //本人情報更新
-            if(value.relationship === '本人') {
+            if (value.relationship === '本人') {
                 userData.sex = sex
             }
         })

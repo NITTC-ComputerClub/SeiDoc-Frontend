@@ -204,7 +204,8 @@ export type profileDataType = {
     top: number
   },
   gender: string,
-  relationship: string
+  relationship: string,
+  isPerson :boolean
 }
 
 export type sendData = {

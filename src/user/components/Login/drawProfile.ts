@@ -30,6 +30,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             const gender = element.gender
             const age = element.age
             const relationship = element.relationship
+            const person = element.isPerson
 
             // 顔に四角を生成 
             if (gender === 'Male') {
@@ -38,7 +39,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             else if (gender === 'Female') {
                 context.strokeStyle = 'red'
             }
-            if (relationship === '本人') {
+            if (person) {
                 context.strokeStyle = 'green'
             }
             context.strokeRect(left, top, width, heigh)
@@ -57,7 +58,8 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             //家族関係のテキストボックス生成
             const viewRelationship = document.createElement('input')
             viewRelationship.className = 'view_relationship'
-            viewRelationship.value = relationship
+            if (person) viewRelationship.value = '本人'
+            else viewRelationship.value = relationship
             viewRelationship.style.position = 'absolute'
             viewRelationship.style.top = top - 50 + 'px'
             viewRelationship.style.left = left + 'px'

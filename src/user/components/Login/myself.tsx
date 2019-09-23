@@ -25,7 +25,7 @@ const Myself: React.FC<propsType> = (props) => {
                 && element.boundingBox.top <= y && y <= (element.boundingBox.top + element.boundingBox.height)) {
                 sequence = index
                 const value = element
-                value.relationship = '本人'
+                value.isPerson = true
                 handleProfileData(value)
             }
         })
