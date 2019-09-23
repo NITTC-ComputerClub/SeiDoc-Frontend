@@ -60,6 +60,7 @@ const CategoryCardsList: React.FC<historyProps> = (props) => {
                     key={category}
                     onClick={() => {
                         props.history.push(props.pushTo + '?tag=' + category)
+                        
                     }}
                     tag={(category===tag)}
                 >

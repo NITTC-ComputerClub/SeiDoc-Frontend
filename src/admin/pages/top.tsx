@@ -19,7 +19,7 @@ const Search: React.FC<historyProps> = props => {
                 <MainContents>
                     <AdminSearch />
                     <h2>カテゴリ別の閲覧状況</h2>
-                    <CategoryCardsList pushTo="/admin/status" />
+                    <CategoryCardsList pushTo="/admin/categoryRanking" />
                     <h2>一か月以内によく見られている制度</h2>
                     <PopularSystemList />
                     <Link to="/admin/">> さらに詳しく</Link>
