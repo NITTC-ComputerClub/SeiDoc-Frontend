@@ -41,11 +41,11 @@ const Grid = styled.ul`
 const RankingList: React.FC<historyProps> = props => {
     const [popularData, setPopularData] = useState<Array<System[]>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const popularDataArray: System[] = []
     const dispatch = useDispatch()
     const updateDetail = (selectData: System) => dispatch(updateDetailCreator(selectData))
 
     useEffect(() => {
+        const popularDataArray: System[] = []
         setIsLoading(true)
         fireStore.collection(systemIndex).orderBy("monthlyView", "desc").get()
         .then (
@@ -60,28 +60,28 @@ const RankingList: React.FC<historyProps> = props => {
                 setIsLoading(false)
             }
         )
-    }, [dispatch])
 
-    const setCategoryPopularData = () => {
-        const categoryList: Array<string> = [
-            '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
-        ]
-        const categoryPopularDataArray: Array<System[]> = []
-        categoryPopularDataArray[0] = popularDataArray.slice(0, 4)
-        categoryList.forEach((category: string, index: number) => {
-            categoryPopularDataArray[index + 1] = []
-            popularDataArray.forEach((system: System) => {
-                if (categoryPopularDataArray[index + 1].length === 4) {
-                    return true
-                } else if (system.Category.some(value => value === category)) {
-                    categoryPopularDataArray[index + 1].push(system)
-                }
+        const setCategoryPopularData = () => {
+            const categoryList: Array<string> = [
+                '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
+            ]
+            const categoryPopularDataArray: Array<System[]> = []
+            categoryPopularDataArray[0] = popularDataArray.slice(0, 4)
+            categoryList.forEach((category: string, index: number) => {
+                categoryPopularDataArray[index + 1] = []
+                popularDataArray.forEach((system: System) => {
+                    if (categoryPopularDataArray[index + 1].length === 4) {
+                        return true
+                    } else if (system.Category.some(value => value === category)) {
+                        categoryPopularDataArray[index + 1].push(system)
+                    }
+                })
             })
-        })
-        console.log(popularDataArray)
-        console.log(categoryPopularDataArray)
-        setPopularData(categoryPopularDataArray)
-    }
+            console.log(popularDataArray)
+            console.log(categoryPopularDataArray)
+            setPopularData(categoryPopularDataArray)
+        }
+    }, [dispatch])
 
     return !isLoading ? (
         <div>
