@@ -71,20 +71,22 @@ const RankingList: React.FC<historyProps> = props => {
         categoryList.forEach((category: string, index: number) => {
             categoryPopularDataArray[index + 1] = []
             popularDataArray.forEach((system: System) => {
-                if (system.Category.some(value => value === category)) {
+                if (categoryPopularDataArray[index + 1].length === 4) {
+                    return true
+                } else if (system.Category.some(value => value === category)) {
                     categoryPopularDataArray[index + 1].push(system)
                 }
             })
-            categoryPopularDataArray[index + 1].splice(4)
         })
         console.log(popularDataArray)
         console.log(categoryPopularDataArray)
+        setPopularData(categoryPopularDataArray)
     }
 
     return !isLoading ? (
         <div>
             <Grid>
-
+                
             </Grid>
         </div>
     ) : (
