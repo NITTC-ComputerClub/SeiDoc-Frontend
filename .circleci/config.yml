@@ -8,9 +8,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run: # 順に実行したいコマンドとコマンドに名前をつけます
           name: npm install
           command: npm i
@@ -27,12 +27,12 @@ jobs:
       - image: circleci/node:12.0 # ジョブ実行環境のDockerイメージを記述
     steps:
       - checkout # ソースコードのチェックアウト
-         # Download and cache dependencies
+      # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run: # 順に実行したいコマンドとコマンドに名前をつけます
           name: npm install
           command: npm i
@@ -40,6 +40,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Decode env file
+          command: echo $ENV_FILE | base64 --decode > .env
       - run:
           name: build
           command: npm run build

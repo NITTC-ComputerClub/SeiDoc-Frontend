@@ -60,13 +60,14 @@ export type UserState = {
   birthday: string;
   income: string;
   address: string;
-  family: targetFamily;
-  isAdmin: boolean; //
-  city: string; 
+  targetFamily: TargetFamily
+  family: Array<FamilyType>;
+  isAdmin: boolean;
+  city: string;
   department: string;
-  sex: targetSex;
+  sex: TargetSex;
   searchedWords: string[];
-  viewedCategory: [{categoryName: string, count: number}]
+  viewedCategory: [{ categoryName: string, count: number }]
 };
 
 
@@ -94,23 +95,30 @@ export type System = {
   monthlyView: number;
   dailyView: number;
   ageGroup: ageGroup[];
-  targetAge: targetAge;
-  targetFamily: targetFamily;
-  targetSex: targetSex;
+  targetAge: TargetAge;
+  targetFamily: TargetFamily;
+  targetSex: TargetSex;
 };
-export enum targetSex {
+export enum TargetSex {
   male,
   female,
   other
 }
-export enum targetFamily {
+export type FamilyType = {
+  relationship: string,
+  age: number,
+  gender: TargetSex
+}
+export enum TargetFamily {
   独身,
   夫婦,
   子持ち,
+  二世帯,
   ひとり親,
-  介護
+  介護,
+  不明
 }
-export enum targetAge  {
+export enum TargetAge {
   乳児,
   幼児,
   小学生,
@@ -153,6 +161,69 @@ export type showOrderType = {
   order: Array<string>
 };
 
+export type awsRekognition = {
+  AgeRange: {
+    High: number
+    Low: number
+  },
+  BoundingBox: {
+    Height: number
+    Left: number
+    Top: number
+    Width: number
+  },
+  Gender: {
+    Value: string,
+    Confidence: number
+  }
+}
+
+export type awsResData = {
+  AgeRange: { Low: number, High: number }
+  Beard: { Value: boolean, Confidence: number }
+  BoundingBox: { Width: number, Height: number, Left: number, Top: number }
+  Confidence: number
+  Emotions: Array<{ Type: string, Confidence: number }>
+  Eyeglasses: { Value: boolean, Confidence: number }
+  EyesOpen: { Value: boolean, Confidence: number }
+  Gender: { Value: string, Confidence: number }
+  Landmarks: Array<{ Type: string, X: number, Y: number }>
+  MouthOpen: { Value: boolean, Confidence: number }
+  Mustache: { Value: false, Confidence: number }
+  Pose: { Roll: number, Yaw: number, Pitch: number }
+  Quality: { Brightness: number, Sharpness: number }
+  Smile: { Value: boolean, Confidence: number }
+  Sunglasses: { Value: boolean, Confidence: number }
+}
+
+export type profileDataType = {
+  age: number,
+  boundingBox: {
+    width: number,
+    height: number,
+    left: number,
+    top: number
+  },
+  gender: string,
+  relationship: string,
+  isMyself :boolean
+}
+
+export type sendData = {
+  Name: string
+  Location: string
+  Department: string
+  Target: string
+  Site: string
+  Detail: string
+  Method: Array<string>
+  Category: Array<string>
+  targetSex: TargetSex
+  targetAge: TargetAge
+  targetFamily: TargetFamily
+};
+
+/* もしものために残しておく */
 export type machineLearningType = {
   age: {
     min: number,
@@ -177,16 +248,3 @@ export type userProfile = {
   gender: string
 }
 
-export type sendData = {
-  Name: string
-  Location: string
-  Department: string
-  Target: string
-  Site: string
-  Detail: string
-  Method: Array<string>
-  Category: Array<string>
-  targetSex: targetSex
-  targetAge: targetAge
-  targetFamily: targetFamily
-};

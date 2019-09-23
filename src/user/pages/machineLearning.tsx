@@ -1,14 +1,197 @@
 import React from 'react'
-import axios from 'axios'
-import { machineLearningType, userProfile } from '../../types/type'
+import { userProfile, awsRekognition, awsResData } from '../../types/type'
+import _ from 'lodash'
+
+type resType = {
+    FaceDetails: Array<awsResData>
+}
 
 const MachineLearning: React.FC = () => {
+    const AWS = require('aws-sdk')
+    var accessKey = process.env.REACT_APP_AWS_ACCESSKEY
+    var secretKey = process.env.REACT_APP_AWS_SECRETKEY
+    AWS.config.update({
+        region: 'ap-northeast-1',
+        credentials: new AWS.Credentials(accessKey, secretKey)
+    });
+    var rekognition = new AWS.Rekognition()
+
+    const getBinary = (encodedFile: string) => {
+        var base64Image = encodedFile.split("data:image/jpeg;base64,")[1];
+        var binaryImg = atob(base64Image);
+        var length = binaryImg.length;
+        var ab = new ArrayBuffer(length);
+        var ua = new Uint8Array(ab);
+        for (var i = 0; i < length; i++) {
+            ua[i] = binaryImg.charCodeAt(i);
+        }
+        return ab;
+    }
+
+    const handle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const fileList = e.target.files as FileList
+        const image: File = fileList[0]
+        const reader = new FileReader()
+
+        reader.onload = () => {
+            const img = reader.result as string
+
+            const params = {
+                Image: {
+                    Bytes: getBinary(img)
+                },
+                Attributes: [
+                    'ALL'
+                ]
+            };
+
+            rekognition.detectFaces(params, (err: string, res: resType) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    const data: Array<awsRekognition> = []
+                    res.FaceDetails.forEach(value => {
+                        data.push(_.pick(value, ['AgeRange', 'BoundingBox', 'Gender']))
+                    })
+                    console.log(data)
+                    imageView(img, data)
+                }
+            });
+        }
+        reader.readAsDataURL(image)
+    };
+
+    const imageView = (image: string, data: Array<awsRekognition>) => {
+        const canvas = document.getElementById('cvs') as HTMLCanvasElement
+        const context = canvas.getContext('2d') as CanvasRenderingContext2D
+        context.lineWidth = 3  //線の太さ設定
+
+        const img = new Image()
+        img.src = image
+        img.onload = () => {
+            const shrinkW = 600 / img.width
+            const shrinkH = 400 / img.height
+            context.drawImage(img, 0, 0, 600, 400)  //写真描画
+
+            /* 前回の入力フォームを削除 */
+            const inputNode = document.querySelectorAll('input.info')
+            if (inputNode.length !== 0) {
+                inputNode.forEach((child) => {
+                    document.body.removeChild(child)
+                })
+            }
+
+            data.sort(function (a, b) {
+                if (a.AgeRange.High + a.AgeRange.Low > b.AgeRange.High + b.AgeRange.Low) {
+                    return -1
+                } else {
+                    return 1
+                }
+            })
+            console.log('CH', data)
+
+            data.forEach(element => {
+                const heigh = element.BoundingBox.Height * img.height * shrinkH
+                const left = element.BoundingBox.Left * img.width * shrinkW
+                const top = element.BoundingBox.Top * img.height * shrinkH
+                const width = element.BoundingBox.Width * img.width * shrinkW
+                const gender = element.Gender.Value
+
+                /* 顔に四角を生成 */
+                if (gender === 'Male') {
+                    context.strokeStyle = 'blue'
+                }
+                else if (gender === 'Female') {
+                    context.strokeStyle = 'red'
+                }
+                context.strokeRect(left, top, width, heigh)
+
+                /* 年齢のテキストボックスを生成 */
+                const inputAge = document.createElement('input')
+                inputAge.className = 'info' // これでCSS当てられる？
+                const age = Math.round((element.AgeRange.High + element.AgeRange.Low) / 2)
+
+                inputAge.value = age.toString()
+                inputAge.style.position = 'absolute'
+                inputAge.style.top = top - 30 + 'px'
+                inputAge.style.left = left + 'px'
+                inputAge.style.width = width - 5 + 'px'
+                /* TODO：将来的に使うかもだから消さないで
+                inputAge.addEventListener('inputAge', () => addInput(inputAge.value))
+                inputAge.addEventListener('change', () => addOnChange(inputAge.value))
+                */
+                document.body.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
+
+                /* 家族関係のセレクトボックス作成 */
+                const selectRelationship = document.createElement('select')
+                selectRelationship.className = 'info'
+                selectRelationship.add(new Option('本人', '本人'))
+                selectRelationship.add(new Option('夫', '夫'))
+                selectRelationship.add(new Option('妻', '妻'))
+                selectRelationship.add(new Option('息子', '息子'))
+                selectRelationship.add(new Option('娘', '娘'))
+                selectRelationship.add(new Option('祖父', '祖父'))
+                selectRelationship.add(new Option('祖母', '祖母'))
+
+                console.log(age, gender)
+                if (age > 45 && gender === 'Male') {
+                    selectRelationship.selectedIndex = 5
+                }
+                else if (age > 45 && gender === 'Female') {
+                    selectRelationship.selectedIndex = 6
+                }
+                else if (age <= 45 && age >= 23 && gender === 'Male') {
+                    selectRelationship.selectedIndex = 1
+                }
+                else if (age <= 45 && age >= 23 && gender === 'Female') {
+                    selectRelationship.selectedIndex = 2
+                }
+                else if (age < 23 && gender === 'Male') {
+                    selectRelationship.selectedIndex = 3
+                }
+                else if (age < 23 && gender === 'Female') {
+                    selectRelationship.selectedIndex = 4
+                }
+
+                selectRelationship.style.position = 'absolute'
+                selectRelationship.style.top = top - 50 + 'px'
+                selectRelationship.style.left = left + 'px'
+                selectRelationship.style.width = width + 'px'
+                document.body.appendChild(selectRelationship)
+
+            })
+        }
+    }
+
+    const handleGetAge = () => {
+        const inputAge = document.querySelectorAll('input.info') as NodeListOf<HTMLInputElement>
+        const selectGender = document.querySelectorAll('select.info') as NodeListOf<HTMLInputElement>
+        const profile: Array<userProfile> = [{ age: '', gender: '' }]
+        for (let i = 0; i < inputAge.length; i++) {
+            profile.splice(i, 1, {
+                age: inputAge[i].value,
+                gender: selectGender[i].value
+            })
+        }
+        console.log('userProfile', profile)
+    }
+
+    return (
+        <div>
+            <canvas id='cvs' width='600' height='400'></canvas>
+            <input accept='image/*' multiple type='file' onChange={e => handle(e)} />
+            <button onClick={handleGetAge}>確定</button>
+        </div>
+    )
+}
+
+export default MachineLearning
+
+/*
     const machineLearning = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files as FileList
         const image: File = file[0]
-        /* こうかくとnullの問題でエラー
-        const images = e.target.files[0] as File
-        */
+
         const url = 'https://gateway.watsonplatform.net/visual-recognition/api/v3/detect_faces?'
         const version = 'version=2018-03-19'
         const params = new FormData()
@@ -18,7 +201,7 @@ const MachineLearning: React.FC = () => {
             .post(url + version, params, {
                 auth: {
                     username: 'apikey',
-                    password: 'x6F7sZxxC5JsvT2GsXRFk5jmjZWeObem-YEEL5Ul5DWL'
+                    password: 'v_ogdwtTpO4JhG4fbp44jbRkUIMlcwBecVIEaweQWo_Y'
                 }
             })
             .then((result) => {
@@ -45,7 +228,7 @@ const MachineLearning: React.FC = () => {
                 const shrinkH = 400 / img.height
                 context.drawImage(img, 0, 0, 600, 400)  //写真描画
 
-                /* 前回の入力フォームを削除 */
+                /* 前回の入力フォームを削除
                 const inputNode = document.querySelectorAll('input.info')
                 if (inputNode.length !== 0) {
                     inputNode.forEach((child) => {
@@ -65,11 +248,11 @@ const MachineLearning: React.FC = () => {
                     const top = value.face_location.top * shrinkH
                     const width = value.face_location.width * shrinkW
 
-                    /* 顔に四角を生成 */
+                    /* 顔に四角を生成
                     context.strokeRect(left, top, width, heigh)
 
 
-                    /* 年齢のテキストボックスを生成 */
+                    /* 年齢のテキストボックスを生成
                     const inputAge = document.createElement('input')
                     inputAge.className = 'info' // これでCSS当てられる？
                     const age = Math.round((value.age.max + value.age.min) / 2)
@@ -82,10 +265,10 @@ const MachineLearning: React.FC = () => {
                     /* TODO：将来的に使うかもだから消さないで
                     inputAge.addEventListener('inputAge', () => addInput(inputAge.value))
                     inputAge.addEventListener('change', () => addOnChange(inputAge.value))
-                    */
+
                     document.body.appendChild(inputAge) //bodyの子ノードリストの末尾にノードを追加
 
-                    /* 性別のセレクトボックスを作成 */
+                    /* 性別のセレクトボックスを作成
                     const selectGender = document.createElement('select')
                     selectGender.className = 'info'
                     selectGender.add(new Option('男性', '男性'))
@@ -106,27 +289,4 @@ const MachineLearning: React.FC = () => {
         }
         reader.readAsDataURL(file)
     }
-
-    const handleGetAge = () => {
-        const inputAge = document.querySelectorAll('input.info') as NodeListOf<HTMLInputElement>
-        const selectGender = document.querySelectorAll('select.info') as NodeListOf<HTMLInputElement>
-        const profile: Array<userProfile> = [{ age: '', gender: '' }]
-        for (let i = 0; i < inputAge.length; i++) {
-            profile.splice(i, 1, {
-                age: inputAge[i].value,
-                gender: selectGender[i].value
-            })
-        }
-        console.log('userProfile', profile)
-    }
-
-    return (
-        <div>
-            <canvas id='cvs' width='600' height='400'></canvas>
-            <input accept='image/*' multiple type='file' onChange={e => machineLearning(e)} />
-            <button onClick={handleGetAge}>確定</button>
-        </div>
-    )
-}
-
-export default MachineLearning
+*/
