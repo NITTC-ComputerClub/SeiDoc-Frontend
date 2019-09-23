@@ -86,7 +86,94 @@ const RankingList: React.FC<historyProps> = props => {
     return !isLoading ? (
         <div>
             <Grid>
-                
+                <h3>総合</h3>
+                {popularData[0].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+                <h3>子育て</h3>
+                {popularData[1].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+                <h3>介護</h3>
+                {popularData[2].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+                <h3>建築</h3>
+                {popularData[3].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+                <h3>病気</h3>
+                {popularData[4].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+                <h3>融資</h3>
+                {popularData[5].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+                <h3>地域</h3>
+                {popularData[6].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
+                <h3>高齢者</h3>
+                {popularData[7].map((system: System) => (
+                    <AdminSystemList key={system.Name} onClick={() => {
+                        updateDetail(system)
+                        props.history.push('/admin/detail/' + system.documentID)
+                    }}>
+                        <h2>{system.Name}</h2>
+                        <p>閲覧数 {system.monthlyView}/月</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                    </AdminSystemList>
+                ))}
             </Grid>
         </div>
     ) : (
