@@ -39,6 +39,9 @@ const Grid = styled.ul`
 `
 
 const RankingList: React.FC<historyProps> = props => {
+    const categoryList: Array<string> = [
+        '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
+    ]
     const [popularData, setPopularData] = useState<Array<System[]>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const dispatch = useDispatch()
@@ -48,23 +51,20 @@ const RankingList: React.FC<historyProps> = props => {
         const popularDataArray: System[] = []
         setIsLoading(true)
         fireStore.collection(systemIndex).orderBy("monthlyView", "desc").get()
-        .then (
-            (snapshot) => {
-                snapshot.forEach((doc) => {
-                    popularDataArray.push(doc.data() as System)
-                })
-            }
-        ).then (
-            () => {
-                setCategoryPopularData()
-                setIsLoading(false)
-            }
-        )
+            .then(
+                (snapshot) => {
+                    snapshot.forEach((doc) => {
+                        popularDataArray.push(doc.data() as System)
+                    })
+                }
+            ).then(
+                () => {
+                    setCategoryPopularData()
+                    setIsLoading(false)
+                }
+            )
 
         const setCategoryPopularData = () => {
-            const categoryList: Array<string> = [
-                '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
-            ]
             const categoryPopularDataArray: Array<System[]> = []
             categoryPopularDataArray[0] = popularDataArray.slice(0, 4)
             categoryList.forEach((category: string, index: number) => {
@@ -77,108 +77,37 @@ const RankingList: React.FC<historyProps> = props => {
                     }
                 })
             })
-            console.log(popularDataArray)
-            console.log(categoryPopularDataArray)
             setPopularData(categoryPopularDataArray)
         }
-    }, [dispatch])
+    }, [dispatch, categoryList])
 
     return !isLoading ? (
         <div>
-            <Grid>
-                <h3>総合</h3>
-                {popularData[0].map((system: System) => (
+            {popularData.map((data: System[], index: number) => {
+                const arr = data.map((system: System) => (
                     <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
+                            updateDetail(system)
+                            props.history.push("/admin/detail/" + system.documentID)
+                        }}
+                    >
                         <h2>{system.Name}</h2>
                         <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
+                        {system.ageGroup.length === 0 ? (<div></div>) : (<p className="blue">{system.ageGroup[0].age}代に人気</p>)}
                     </AdminSystemList>
-                ))}
-                <h3>子育て</h3>
-                {popularData[1].map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-                <h3>介護</h3>
-                {popularData[2].map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-                <h3>建築</h3>
-                {popularData[3].map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-                <h3>病気</h3>
-                {popularData[4].map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-                <h3>融資</h3>
-                {popularData[5].map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-                <h3>地域</h3>
-                {popularData[6].map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-                <h3>高齢者</h3>
-                {popularData[7].map((system: System) => (
-                    <AdminSystemList key={system.Name} onClick={() => {
-                        updateDetail(system)
-                        props.history.push('/admin/detail/' + system.documentID)
-                    }}>
-                        <h2>{system.Name}</h2>
-                        <p>閲覧数 {system.monthlyView}/月</p>
-                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
-                    </AdminSystemList>
-                ))}
-            </Grid>
+                ));
+                return (
+                    <div>
+                        {index === 0 ? <h3>総合</h3> : <h3>{categoryList[index - 1]}</h3>}
+                        <Grid>
+                            {arr}
+                        </Grid>
+                    </div>
+                )
+            })}
         </div>
     ) : (
-        <Indicator />
-    )
+            <Indicator />
+        )
 }
 
 export default withRouter<historyProps, React.FC<historyProps>>(RankingList)
