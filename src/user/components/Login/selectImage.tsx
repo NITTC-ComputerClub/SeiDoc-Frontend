@@ -88,10 +88,10 @@ const SelectImage: React.FC<propsType> = (props) => {
             let relationship = ''
 
             if (age > 45 && gender === 'Male') {
-                relationship = '祖父'
+                relationship = '父'
             }
             else if (age > 45 && gender === 'Female') {
-                relationship = '祖母'
+                relationship = '母'
             }
             else if (age <= 45 && age >= 23 && gender === 'Male') {
                 relationship = '夫'

@@ -64,10 +64,10 @@ const FixProfile: React.FC<propsType> = (props) => {
         else {
             value.relationship = selectRelationship.value
             value.isPerson = false
-            if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '祖父') {
+            if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '父') {
                 value.gender = 'Male'
             }
-            else if (selectRelationship.value === '妻' || selectRelationship.value === '娘' || selectRelationship.value === '祖母') {
+            else if (selectRelationship.value === '妻' || selectRelationship.value === '娘' || selectRelationship.value === '母') {
                 value.gender = 'Female'
             }
         }
@@ -82,8 +82,8 @@ const FixProfile: React.FC<propsType> = (props) => {
         const wife: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '妻' })
         const son: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '息子' })
         const daughter: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '娘' })
-        const grandfather: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖父' })
-        const grandmother: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖母' })
+        const grandfather: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '父' })
+        const grandmother: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '母' })
 
         //家族構成を登録
         if (props.profileData.length === 1) {
@@ -151,8 +151,8 @@ const FixProfile: React.FC<propsType> = (props) => {
                 <option value='妻'>妻</option>
                 <option value='息子'>息子</option>
                 <option value='娘'>娘</option>
-                <option value='祖父'>祖父</option>
-                <option value='祖母'>祖母</option>
+                <option value='父'>父</option>
+                <option value='母'>母</option>
             </select>
             <p>年齢</p>
             <input id='age' type="text" className='fix'></input>
