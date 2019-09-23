@@ -136,7 +136,7 @@ const AdminHeader: React.FC<historyProps> = props => {
                         </StyledLink>
                     </li>
                     <li>
-                        <StyledLink className="ranking" to="/admin/status">
+                        <StyledLink className="ranking" to="/admin/totalRanking">
                             ランキング
                         </StyledLink>
                     </li>
