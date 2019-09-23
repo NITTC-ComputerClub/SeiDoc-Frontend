@@ -22,7 +22,7 @@ const Search: React.FC<historyProps> = props => {
                     <CategoryCardsList pushTo="/admin/categoryRanking" />
                     <h2>一か月以内によく見られている制度</h2>
                     <PopularSystemList />
-                    <Link to="/admin/">> さらに詳しく</Link>
+                    <Link to="/admin/totalRanking">> さらに詳しく</Link>
                     <h2>最近の検索ワード</h2>
                     <SearchWords />
                 </MainContents>
