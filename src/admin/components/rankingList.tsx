@@ -38,10 +38,11 @@ const Grid = styled.ul`
     grid-gap: 8px;
 `
 
+const categoryList: Array<string> = [
+    '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
+]
+
 const RankingList: React.FC<historyProps> = props => {
-    const categoryList: Array<string> = [
-        '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
-    ]
     const [popularData, setPopularData] = useState<Array<System[]>>([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const dispatch = useDispatch()
@@ -63,8 +64,9 @@ const RankingList: React.FC<historyProps> = props => {
                     setIsLoading(false)
                 }
             )
-
+        
         const setCategoryPopularData = () => {
+            console.log('check')
             const categoryPopularDataArray: Array<System[]> = []
             categoryPopularDataArray[0] = popularDataArray.slice(0, 4)
             categoryList.forEach((category: string, index: number) => {
@@ -79,16 +81,16 @@ const RankingList: React.FC<historyProps> = props => {
             })
             setPopularData(categoryPopularDataArray)
         }
-    }, [dispatch, categoryList])
+    }, [dispatch])
 
     return !isLoading ? (
         <div>
             {popularData.map((data: System[], index: number) => {
                 const arr = data.map((system: System) => (
                     <AdminSystemList key={system.Name} onClick={() => {
-                            updateDetail(system)
-                            props.history.push("/admin/detail/" + system.documentID)
-                        }}
+                        updateDetail(system)
+                        props.history.push("/admin/detail/" + system.documentID)
+                    }}
                     >
                         <h2>{system.Name}</h2>
                         <p>閲覧数 {system.monthlyView}/月</p>
