@@ -60,6 +60,7 @@ export type UserState = {
   birthday: string;
   income: string;
   address: string;
+  targetFamily: targetFamily
   family: Array<familyType>;
   isAdmin: boolean;
   city: string;

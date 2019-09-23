@@ -10,6 +10,7 @@ const initialState: UserState = {
     birthday: '',
     income: '',
     address: '',
+    targetFamily: -1,
     family: [],
     isAdmin: false,
     city: '',  
@@ -30,7 +31,8 @@ export const LoginReducer = reducerWithInitialState(initialState)
             address: loginData.address,
             family: loginData.family,
             city: loginData.city,
-            department: loginData.department
+            department: loginData.department,
+            targetFamily: loginData.targetFamily  
         })
     })
     .case(initLoginCreator, (state) => {

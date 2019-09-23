@@ -4,7 +4,7 @@ import { AppState } from '../../../store'
 import { loginCreator } from '../../../actions/action'
 import drawProfile from './drawProfile'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { profileDataType, UserState } from '../../../types/type'
+import { profileDataType, UserState, targetSex, targetFamily } from '../../../types/type'
 import { fireStore } from '../../../firebase/firebase'
 
 type historyProps = RouteComponentProps
@@ -71,15 +71,43 @@ const FixProfile: React.FC<propsType> = (props) => {
     }
 
     const fixData = () => {
+        const husband: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '夫' })
+        const wife: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '妻' })
+        const son: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '息子' })
+        const daughter: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '娘' })
+        const grandfather: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖父' })
+        const grandmother: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '祖母' })
+
+        //家族構成を登録
+        if (props.profileData.length === 1) {
+            userData.targetFamily =  targetFamily.独身
+        }
+        else if (husband && wife) {
+            if (props.profileData.length === 2) {
+                userData.targetFamily = targetFamily.夫婦
+            }
+            else if ((son || daughter) && !grandfather && !grandmother) {
+                userData.targetFamily = targetFamily.子持ち
+            }
+            else if (grandfather || grandmother) {
+                userData.targetFamily = targetFamily.二世帯
+            }
+        }
+        else if ((husband && !wife) || (!husband && wife)) {
+            if (son || daughter) {
+                userData.targetFamily = targetFamily.ひとり親
+            }
+        }
+
         userData.family = [] //データの初期化
         props.profileData.forEach((value) => {
             //家族情報更新
-            let sex = 2
+            let sex = targetSex.other
             if (value.gender === 'Male') {
-                sex = 0
+                sex = targetSex.male
             }
             else if (value.gender === 'Female') {
-                sex = 1
+                sex = targetSex.female
             }
             userData.family.push({
                 relationship: value.relationship,
