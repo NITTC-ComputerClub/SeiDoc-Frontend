@@ -98,7 +98,7 @@ const RankingList: React.FC<historyProps> = props => {
                     </AdminSystemList>
                 ));
                 return (
-                    <div>
+                    <div key={index}>
                         {index === 0 ? <h3>総合</h3> : <h3>{categoryList[index - 1]}</h3>}
                         <Grid>
                             {arr}

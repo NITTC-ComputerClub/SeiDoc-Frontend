@@ -44,7 +44,7 @@ const SearchWords: React.FC = () => {
     return isLoading ? (
         <div>
             {searchData.map((query: searchLogType) => (
-                <Word>{query.searchWord}</Word>
+                <Word key={query.createdAt}>{query.searchWord}</Word>
             ))}
         </div>
     ) : (
