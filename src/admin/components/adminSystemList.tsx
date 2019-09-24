@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../../store'
 import { updateDetailCreator, fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../../actions/action'
@@ -48,6 +48,7 @@ const AdminSystemCard = styled.li`
 const AdminSystemList: React.FC<historyProps> = (props) => {
     const tag = parse(props.location.search).tag as string
     const inputValue = parse(props.location.search).value as string
+    const [isAlgolia, setIsAlgolia] = useState<Boolean>(false)
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()
@@ -61,11 +62,13 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
         const deleteSystems = () => dispatch(deleteSystemsCreator())
         if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ
             console.log('algolia', 'input:', inputValue, 'tag:', tag)
+            setIsAlgolia(true)
             alogliaSearch(inputValue, tag)
         }
         else if (tag !== undefined && inputValue === undefined) {   //カテゴリーオンリー
             console.log('category', 'input:', inputValue, 'tag:', tag)
             categorySearch(tag)
+            setIsAlgolia(false)
             addTag(tag)
         }
         else {
@@ -80,8 +83,8 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
                 <Grid>
                     {systems.map((system: System) => (
                         <AdminSystemCard key={system.Name} onClick={() => {
-                            updateDetail(system)    //リロードなしでページを遷移させるのに必要
-                            props.history.push('/admin/detail/' + system.documentID)
+                            if(!isAlgolia){ updateDetail(system) };    //リロードなしでページを遷移させるのに必要
+                            props.history.push('/admin/detail/' + system.documentID);
                         }
                         }>
                             <h2>{system.Name}</h2>
