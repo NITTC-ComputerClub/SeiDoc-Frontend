@@ -38,7 +38,8 @@ const FixProfile: React.FC<propsType> = (props) => {
                 && element.boundingBox.top <= y && y <= (element.boundingBox.top + element.boundingBox.height)) {
                 for (let i = 0; i < selectRelationship.length; i++) {
                     if (selectRelationship.options[i].value === element.relationship) {
-                        if (element.isMyself) selectRelationship.selectedIndex = 0
+                        if (element.isMyself && element.gender === 'Male') selectRelationship.selectedIndex = 0
+                        else if (element.isMyself && element.gender == 'Female') selectRelationship.selectedIndex = 1
                         else selectRelationship.selectedIndex = i
                         inputAge.value = element.age.toString()
                         setSequence(index)
@@ -58,8 +59,13 @@ const FixProfile: React.FC<propsType> = (props) => {
         }
         const value: profileDataType = props.profileData[sequence]
         value.age = Number(inputAge.value)
-        if (selectRelationship.value === '本人') {
+        if (selectRelationship.value === '本人-男性') {
             value.isMyself = true
+            value.gender = 'Male'
+        }
+        else if (selectRelationship.value === '本人-女性') {
+            value.isMyself = true
+            value.gender = 'Female'
         }
         else {
             value.relationship = selectRelationship.value
@@ -149,7 +155,8 @@ const FixProfile: React.FC<propsType> = (props) => {
         <div>
             <p>関係</p>
             <select id='relationship' className='fix'>
-                <option value='本人'>本人</option>
+                <option value='本人-男性'>本人-男性</option>
+                <option value='本人-女性'>本人-女性</option>
                 <option value='夫'>夫</option>
                 <option value='妻'>妻</option>
                 <option value='息子'>息子</option>
