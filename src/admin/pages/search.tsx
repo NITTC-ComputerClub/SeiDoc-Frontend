@@ -18,7 +18,7 @@ const Title = styled.h1`
 
 const Search: React.FC = () => {
     const user = useSelector((state: AppState) => state.userState)
-    if (user.userId === '') {
+    if (!user.isAdmin) {
         return (
             <Redirect to={'/admin/login'} />
         )

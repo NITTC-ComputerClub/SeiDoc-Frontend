@@ -12,7 +12,7 @@ type historyProps = RouteComponentProps<{ documentId: string }>
 
 const Detail: React.FC<historyProps> = (props: historyProps) => {
     const user = useSelector((state: AppState) => state.userState)
-    if (user.userId === '') {
+    if (!user.isAdmin) {
         return (
             <Redirect to={'/admin/login'} />
         )

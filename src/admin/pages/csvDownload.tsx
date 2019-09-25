@@ -174,7 +174,7 @@ const CSVDownload: React.FC = () => {
     }
   };
 
-  if (user.userId === '') {
+  if (!user.isAdmin) {
     return (
       <Redirect to={'/admin/login'} />
     )

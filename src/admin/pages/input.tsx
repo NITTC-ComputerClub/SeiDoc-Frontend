@@ -127,7 +127,7 @@ const Input: React.FC = () => {
         ).catch(err => console.error(err))
     }
 
-    if (user.userId === '') {
+    if (!user.isAdmin) {
         return (
             <Redirect to={'/admin/login'} />
         )
