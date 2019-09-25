@@ -10,7 +10,7 @@ const Word = styled.p`
     background-color: ${setting.White}
     border-radius: 4px;
     padding: 4px 8px
-    margin: 0;
+    margin: 0 4px 8px 0;
     height: 28px
     vertical-align: middle;
     margin-left: 4px;
