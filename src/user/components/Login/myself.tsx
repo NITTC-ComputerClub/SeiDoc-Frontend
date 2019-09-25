@@ -20,9 +20,16 @@ const Myself: React.FC<propsType> = (props) => {
         const rect = canvas.getBoundingClientRect()
         const x = e.clientX - rect.left
         const y = e.clientY - rect.top
+        const flag = props.profileData.some((value) => { return value.isMyself === true })
         props.profileData.forEach((element, index) => {
             if (element.boundingBox.left <= x && x <= (element.boundingBox.left + element.boundingBox.width)
                 && element.boundingBox.top <= y && y <= (element.boundingBox.top + element.boundingBox.height)) {
+                if (flag) {
+                    const value = props.profileData.filter((value) => value.isMyself === true)
+                    value[0].isMyself = false
+                    const index = props.profileData.indexOf(value[0])
+                    props.profileData.splice(index, 1, value[0])
+                }
                 sequence = index
                 const value = element
                 value.isMyself = true
