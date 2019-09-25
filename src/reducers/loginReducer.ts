@@ -45,6 +45,7 @@ export const LoginReducer = reducerWithInitialState(initialState)
             address: '',
             family: '',
             city: '',
-            department: ''
+            department: '',
+            isAdmin: false
         })
     })
