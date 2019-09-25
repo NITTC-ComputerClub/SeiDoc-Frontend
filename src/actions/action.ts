@@ -41,9 +41,20 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (
             return
         }
         console.log(res)
+        const systemData  = res.hits as Array<System>
+        const system : Array<System> = []
+        
+        systemData.forEach(eachSysten => { 
+            fireStore.collection(systemIndex).where('documentID', '==', eachSysten.documentID).get().then(
+                snapshot =>  snapshot.forEach(doc => {
+                    console.log("firebase: ", doc.data())
+                    system.push(doc.data() as System)
+                })
+            )
+        })
         dispatch(fetchSystemByAlgoliaSearchCreator.done({
             params: undefined,
-            result: res.hits as Array<System>
+            result: system
         }))
 
     })
