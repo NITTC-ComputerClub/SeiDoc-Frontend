@@ -20,12 +20,14 @@ const PicturePage: React.FC = () => {
                         <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                         <h2>登録</h2>
                     </div>
-                    {profileData.length !== 0 && myself ?
-                        <p>自分の顔をタッチしてください</p> :
-                        <div>
-                            <p>修正したい人物の顔をタッチして</p>
-                            <p>情報を修正してください</p>
-                        </div>
+                    {profileData.length === 0 ?
+                        <p></p> :
+                        myself ?
+                            <p>自分の顔をタッチしてください</p> :
+                            <div>
+                                <p>修正したい人物の顔をタッチして</p>
+                                <p>情報を修正してください</p>
+                            </div>
                     }
                     <Picture />
                     {profileData.length === 0 ?
