@@ -39,7 +39,7 @@ const FixProfile: React.FC<propsType> = (props) => {
                 for (let i = 0; i < selectRelationship.length; i++) {
                     if (selectRelationship.options[i].value === element.relationship) {
                         if (element.isMyself && element.gender === 'Male') selectRelationship.selectedIndex = 0
-                        else if (element.isMyself && element.gender == 'Female') selectRelationship.selectedIndex = 1
+                        else if (element.isMyself && element.gender === 'Female') selectRelationship.selectedIndex = 1
                         else selectRelationship.selectedIndex = i
                         inputAge.value = element.age.toString()
                         setSequence(index)
