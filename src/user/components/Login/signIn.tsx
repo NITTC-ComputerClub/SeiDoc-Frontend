@@ -76,10 +76,17 @@ const SignIn: React.FC<historyProps> = (props) => {
     return (
         <StyledSignIn>
             <TextField label="メールアドレス" width="100%" type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
-            <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password} onChange={e => handleInputChange(e)}/>
+            <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password} 
+                onChange={e => handleInputChange(e)} 
+                onKeyDown={e => {
+                    if (e.keyCode === 13) {
+                        handleSignIn();
+                    }
+                }}
+            />
             <StyledDiv className="lrContents">
                 <Link to='signup'><Button link>登録はこちらから</Button></Link>
-                <Button blue onClick={() => handleSignIn()}>
+                <Button blue onClick={() => handleSignIn()} >
                     ログイン
                 </Button>
             </StyledDiv>
