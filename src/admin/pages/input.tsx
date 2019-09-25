@@ -2,7 +2,6 @@ import React from 'react'
 import { fireStore, systemIndex } from '../../firebase/firebase'
 import { AppState } from '../../store';
 import { useSelector } from 'react-redux';
-import { sendData } from '../../types/type';
 import Header from '../components/header';
 import Footer from '../../user/components/footer';
 import styled from 'styled-components';
@@ -11,7 +10,6 @@ import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { System } from '../../types/type'
-import { number } from 'prop-types';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -91,14 +89,14 @@ const Input: React.FC<historyProps> = props => {
     let targetAge: number = 0
     let sysmethod: Array<string> = ['金銭補助']
     let category: string = ''
-    let systemData: sendData
+    let systemData: System
 
 
     const user = useSelector((state: AppState) => state.userState)
     console.log(user)
 
     const post = () => {
-        const systemData: System = {
+        systemData = {
             Name: name,
             Location: user.city,
             Department: department,
