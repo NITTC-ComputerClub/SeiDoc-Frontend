@@ -10,6 +10,8 @@ import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { System } from '../../types/type'
+import { number } from 'prop-types';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -96,7 +98,7 @@ const Input: React.FC<historyProps> = props => {
     console.log(user)
 
     const post = () => {
-        systemData = {
+        const systemData: System = {
             Name: name,
             Location: user.city,
             Department: department,
@@ -105,10 +107,19 @@ const Input: React.FC<historyProps> = props => {
             Detail: detail,
             Method: sysmethod,
             Category: [category],
+            CreatedAt: Date.now(),
+            UpdatedAt: 2262025600000,
+            isDeleted: false,
+            ExpireAt: 2262025600000,
+            documentID: '-1',
+            totalView: 0,
+            dailyView: 0,
+            monthlyView: 0,
+            weeklyView: [0,0,0,0,0,0,0],
+            ageGroup: [],
             targetFamily: targetFamily,
             targetSex: targetSex,
             targetAge: targetAge
-
         }
         console.log(systemData)
         const systemCollection = fireStore.collection(systemIndex)
