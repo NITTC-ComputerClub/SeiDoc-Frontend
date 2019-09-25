@@ -62,7 +62,6 @@ const Header: React.FC<historyProps> = (props) => {
     else {
         return (
             <StyledHeader>
-                <p>ようこそ{user.nickName}さん</p>
                 <Link to="/">
                     <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                 </Link>
