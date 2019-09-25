@@ -106,14 +106,24 @@ const SearchBar: React.FC<historyProps> = (props) => {
             fireStore.collection(searchLogIndex).add(data).catch(err => console.error(err))
         }
     }
+    const searchHandler = () => {
+        collectSearchLog(inputValue);
+        props.history.push(props.pushTo + '?tag=' + tag + '&value=' + inputValue)
+    }
     return (
         <StyledSearchBar {...props}>
-            <input type="text" value={inputValue} onChange={e => {
+            <input type="text" value={inputValue} 
+            onChange={e => {
                 setInputValue(e.target.value)
-            }} placeholder="「未熟児」などの単語を入力" />
+            }}
+            onKeyDown={e => {
+                if (e.keyCode === 13) {
+                    searchHandler();
+                }
+            }}
+            placeholder="「未熟児」などの単語を入力" />
             <button onClick={() => {
-                collectSearchLog(inputValue);
-                props.history.push(props.pushTo + '?tag=' + tag + '&value=' + inputValue)
+               searchHandler()
             }}>
                 <img src="/img/虫眼鏡.png" alt="虫眼鏡"></img>
             </button>
