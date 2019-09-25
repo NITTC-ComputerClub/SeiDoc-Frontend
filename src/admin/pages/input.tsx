@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
-import { Redirect } from 'react-router';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -76,7 +76,9 @@ const Textarea = styled.textarea`
     border-radius: 2px;
 `
 
-const Input: React.FC = () => {
+type historyProps = RouteComponentProps
+
+const Input: React.FC<historyProps> = props => {
     let name: string = ''
     let department: string = ''
     let target: string = ''
@@ -122,11 +124,9 @@ const Input: React.FC = () => {
                 fetch('https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec',
                     { mode, method, headers, body })
                     .then(res => {
-                        alert("登録が完了しました。")
                         console.log(res)
-                        return (
-                            <Redirect to="/admin/" />
-                        )
+                        alert("登録が完了しました。")
+                        props.history.push('/admin/')
                     })
                     .catch(err => console.error(err))
             }
@@ -219,7 +219,7 @@ const Input: React.FC = () => {
         )
 
 }
-export default Input
+export default withRouter<historyProps, React.FC<historyProps>>(Input)
 
 
 
