@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { initLoginCreator } from '../../actions/action'
 import { AppState } from '../../store'
-import { RouteComponentProps, withRouter, Redirect } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import { auth } from '../../firebase/firebase'
 import Button from '../../designSystem/Button';
@@ -114,12 +114,6 @@ const AdminHeader: React.FC<historyProps> = props => {
         })
     }
 
-    if (user.userId === '') {
-        return (
-            <Redirect to={'/admin/login'} />
-        )
-    }
-    else
     return (
         <StyledHeader {...highright}>
             <div className="right">

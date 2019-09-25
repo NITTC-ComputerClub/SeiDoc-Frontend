@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
+import { Redirect } from 'react-router';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -126,84 +127,91 @@ const Input: React.FC = () => {
         ).catch(err => console.error(err))
     }
 
-    return (
-        <Wrapper>
-            <Header newSystem />
-            <Container>
-                <MainContents>
-                    <NewSystemForm>
-                        <Title>新制度登録</Title>
-                        <InputWrapper>
-                            <Label>制度名</Label>
-                            <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力" />
-                            <Label>カテゴリ</Label>
-                            <Select onChange={e => { category = e.target.value }}>
-                                <option defaultChecked>カテゴリを選択</option>
-                                <option value="子育て">子育て</option>
-                                <option value="介護">介護</option>
-                                <option value="建築">建築</option>
-                                <option value="病気">病気</option>
-                                <option value="融資">融資</option>
-                                <option value="地域">地域</option>
-                                <option value="高齢者">高齢者</option>
-                                <option value="その他">その他</option>
-                            </Select>
-                            <Label>おおまかな制度対象者</Label>
-                            <Select onChange={e => { targetSex = parseInt(e.target.value) }} >
-                                <option value="-1">性別を選択してください</option>
-                                <option value="0">男性</option>
-                                <option value="1">女性</option>
-                                <option value="2">すべて</option>
-                            </Select>
-                            <Select onChange={e => { targetAge = parseInt(e.target.value) }}>
-                                <option value="-1">対象を選択してください</option>
-                                <option value="0">乳児</option>
-                                <option value="1">幼児</option>
-                                <option value="2">小学生</option>
-                                <option value="3">小学生以下</option>
-                                <option value="4">中学生</option>
-                                <option value="5">小中学生</option>
-                                <option value="6">中学生以下</option>
-                                <option value="7">高校生</option>
-                                <option value="8">高校生以下の就学児童</option>
-                                <option value="9">18歳未満</option>
-                                <option value="10">18歳以下</option>
-                                <option value="11">未成年</option>
-                                <option value="12">成人</option>
-                                <option value="13">老人</option>
-                                <option value="14">全年齢</option>
-                            </Select>
-                            <Select onChange={e => { targetFamily = parseInt(e.target.value) }}>
-                                <option value="-1">対象の家庭を選択してください</option>
-                                <option value="0">独身</option>
-                                <option value="1">夫婦</option>
-                                <option value="2">子持ち</option>
-                                <option value="3">二世帯</option>
-                                <option value="4">ひとり親</option>
-                                <option value="5">介護</option>
-                            </Select>
-                            <Label>援助対象者</Label>
-                            <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
-                            <Label>援助方法</Label>
-                            <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="授業料補助など" />
-                            <Label>対象地区</Label>
-                            <StyledInput type='text' defaultValue={user.city} placeholder="対象地区を入力" />
-                            <Label>担当部署</Label>
-                            <StyledInput type='text' onChange={e => { department = e.target.value }} placeholder="担当部署を入力" />
-                            <Label>詳細</Label>
-                            <Textarea rows={5} placeholder="詳細を入力" onChange={e => { detail = e.target.value }} />
-                            <Label>公式のページ</Label>
-                            <StyledInput placeholder="公式ページURLを入力" type='text' onChange={e => { site = e.target.value }} />
-                            <ButtonWrapper>
-                                <Button blue onClick={post}>登録</Button>
-                            </ButtonWrapper>
-                        </InputWrapper>
-                    </NewSystemForm>
-                </MainContents>
-            </Container>
-            <Footer />
-        </Wrapper>
-    )
+    if (user.userId === '') {
+        return (
+            <Redirect to={'/admin/login'} />
+        )
+    }
+    else
+        return (
+            <Wrapper>
+                <Header newSystem />
+                <Container>
+                    <MainContents>
+                        <NewSystemForm>
+                            <Title>新制度登録</Title>
+                            <InputWrapper>
+                                <Label>制度名</Label>
+                                <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力" />
+                                <Label>カテゴリ</Label>
+                                <Select onChange={e => { category = e.target.value }}>
+                                    <option defaultChecked>カテゴリを選択</option>
+                                    <option value="子育て">子育て</option>
+                                    <option value="介護">介護</option>
+                                    <option value="建築">建築</option>
+                                    <option value="病気">病気</option>
+                                    <option value="融資">融資</option>
+                                    <option value="地域">地域</option>
+                                    <option value="高齢者">高齢者</option>
+                                    <option value="その他">その他</option>
+                                </Select>
+                                <Label>おおまかな制度対象者</Label>
+                                <Select onChange={e => { targetSex = parseInt(e.target.value) }} >
+                                    <option value="-1">性別を選択してください</option>
+                                    <option value="0">男性</option>
+                                    <option value="1">女性</option>
+                                    <option value="2">すべて</option>
+                                </Select>
+                                <Select onChange={e => { targetAge = parseInt(e.target.value) }}>
+                                    <option value="-1">対象を選択してください</option>
+                                    <option value="0">乳児</option>
+                                    <option value="1">幼児</option>
+                                    <option value="2">小学生</option>
+                                    <option value="3">小学生以下</option>
+                                    <option value="4">中学生</option>
+                                    <option value="5">小中学生</option>
+                                    <option value="6">中学生以下</option>
+                                    <option value="7">高校生</option>
+                                    <option value="8">高校生以下の就学児童</option>
+                                    <option value="9">18歳未満</option>
+                                    <option value="10">18歳以下</option>
+                                    <option value="11">未成年</option>
+                                    <option value="12">成人</option>
+                                    <option value="13">老人</option>
+                                    <option value="14">全年齢</option>
+                                </Select>
+                                <Select onChange={e => { targetFamily = parseInt(e.target.value) }}>
+                                    <option value="-1">対象の家庭を選択してください</option>
+                                    <option value="0">独身</option>
+                                    <option value="1">夫婦</option>
+                                    <option value="2">子持ち</option>
+                                    <option value="3">二世帯</option>
+                                    <option value="4">ひとり親</option>
+                                    <option value="5">介護</option>
+                                </Select>
+                                <Label>援助対象者</Label>
+                                <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
+                                <Label>援助方法</Label>
+                                <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="授業料補助など" />
+                                <Label>対象地区</Label>
+                                <StyledInput type='text' defaultValue={user.city} placeholder="対象地区を入力" />
+                                <Label>担当部署</Label>
+                                <StyledInput type='text' onChange={e => { department = e.target.value }} placeholder="担当部署を入力" />
+                                <Label>詳細</Label>
+                                <Textarea rows={5} placeholder="詳細を入力" onChange={e => { detail = e.target.value }} />
+                                <Label>公式のページ</Label>
+                                <StyledInput placeholder="公式ページURLを入力" type='text' onChange={e => { site = e.target.value }} />
+                                <ButtonWrapper>
+                                    <Button blue onClick={post}>登録</Button>
+                                </ButtonWrapper>
+                            </InputWrapper>
+                        </NewSystemForm>
+                    </MainContents>
+                </Container>
+                <Footer />
+            </Wrapper>
+        )
+
 }
 export default Input
 

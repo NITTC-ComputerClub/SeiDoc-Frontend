@@ -1,14 +1,21 @@
 import React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
 import Header from '../components/header'
 import CategoryCardsList from '../../user/components/categoryCardsList'
 import SearchValue from '../components/searchValue'
 import CategoryRankingList from '../components/categoryRankingList'
 import Footer from '../../user/components/footer'
+import { Redirect } from 'react-router'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../store'
 
-type historyProps = RouteComponentProps
-
-const CategoryRanking: React.FC<historyProps> = props => {
+const CategoryRanking: React.FC = () => {
+    const user = useSelector((state: AppState) => state.userState)
+    if (user.userId === '') {
+        return (
+            <Redirect to={'/admin/login'} />
+        )
+    }
+    else
     return (
         <div>
             <Header />
@@ -21,4 +28,4 @@ const CategoryRanking: React.FC<historyProps> = props => {
     )
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(CategoryRanking)
+export default CategoryRanking
