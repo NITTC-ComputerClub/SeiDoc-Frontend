@@ -32,7 +32,8 @@ export const LoginReducer = reducerWithInitialState(initialState)
             family: loginData.family,
             city: loginData.city,
             department: loginData.department,
-            targetFamily: loginData.targetFamily  
+            targetFamily: loginData.targetFamily,
+            isAdmin: loginData.isAdmin
         })
     })
     .case(initLoginCreator, (state) => {
