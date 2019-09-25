@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router'
+import { Redirect } from 'react-router'
 import Header from '../components/header'
 import Footer from '../../user/components/footer-pc'
 import CategoryCardsList from '../../user/components/categoryCardsList'
@@ -8,10 +8,17 @@ import { Link } from 'react-router-dom'
 import SearchWords from '../components/searchWords'
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import AdminSearch from '../components/adminSearch';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../store';
 
-type historyProps = RouteComponentProps
-
-const Search: React.FC<historyProps> = props => {
+const Top: React.FC = () => {
+    const user = useSelector((state: AppState) => state.userState)
+    if (!user.isAdmin) {
+        return (
+            <Redirect to={'/admin/login'} />
+        )
+    }
+    else
     return (
         <Wrapper>
             <Header top />
@@ -32,4 +39,4 @@ const Search: React.FC<historyProps> = props => {
     )
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(Search)
+export default Top
