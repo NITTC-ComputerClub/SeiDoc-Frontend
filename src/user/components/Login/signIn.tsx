@@ -57,11 +57,10 @@ const SignIn: React.FC<historyProps> = (props) => {
                 })
         }).catch((error) => {
             const errorCode = error.code
-            const errorMessage = error.message;
             if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password')
+                alert('ユーザー名もしくはパスワードが間違っています。<password>') //<>内はデバッグ用です
             } else {
-                alert(errorMessage)
+                alert('ユーザー名もしくはパスワードが間違っています。<username>')
             }
             console.log(error)
         })
