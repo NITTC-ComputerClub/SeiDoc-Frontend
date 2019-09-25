@@ -121,7 +121,13 @@ const Input: React.FC = () => {
                 }
                 fetch('https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec',
                     { mode, method, headers, body })
-                    .then(res => console.log(res))
+                    .then(res => {
+                        alert("登録が完了しました。")
+                        console.log(res)
+                        return (
+                            <Redirect to="/admin/" />
+                        )
+                    })
                     .catch(err => console.error(err))
             }
         ).catch(err => console.error(err))

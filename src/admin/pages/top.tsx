@@ -14,6 +14,7 @@ import { AppState } from '../../store';
 const Top: React.FC = () => {
     const user = useSelector((state: AppState) => state.userState)
     if (!user.isAdmin) {
+        console.log("not Admin")
         return (
             <Redirect to={'/admin/login'} />
         )
