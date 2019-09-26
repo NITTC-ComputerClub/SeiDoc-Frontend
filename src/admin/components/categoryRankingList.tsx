@@ -17,6 +17,7 @@ type RankProps = {
 
 const ListWrapper = styled.div`
     position: relative;
+    overflow: hidden;
 `
 
 const AdminSystemList = styled.li`
@@ -53,7 +54,7 @@ const AdminSystemList = styled.li`
 
 const Grid = styled.ul`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
     padding: 0;
     grid-gap: 8px;
 `

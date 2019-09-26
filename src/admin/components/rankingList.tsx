@@ -28,6 +28,9 @@ const AdminSystemList = styled.li`
     p {
         margin: 0;
         font-size: ${setting.P2};
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     .blue {
