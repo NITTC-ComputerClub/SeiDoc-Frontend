@@ -7,7 +7,8 @@ type resType = {
     FaceDetails: Array<awsResData>
 }
 type propsType = {
-    setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>
+    setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const SelectImage: React.FC<propsType> = (props) => {
@@ -44,7 +45,7 @@ const SelectImage: React.FC<propsType> = (props) => {
                 'ALL'
             ]
         }
-
+        props.setIsLoading(true)
         rekognition.detectFaces(params, (err: string, res: resType) => {
             if (err) {
                 console.log(err)
@@ -59,6 +60,7 @@ const SelectImage: React.FC<propsType> = (props) => {
                 img.onload = () => {
                     /* 専用データの作成 */
                     props.setProfileData(createData(data, img))
+                    props.setIsLoading(false)
                 }
             }
         })

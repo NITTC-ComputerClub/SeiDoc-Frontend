@@ -10,6 +10,7 @@ import '../../scss/userRegistration.scss'
 
 const PicturePage: React.FC = () => {
     const [profileData, setProfileData] = useState<Array<profileDataType>>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [myself, setMyself] = useState<boolean>(true)
 
     return (
@@ -29,9 +30,9 @@ const PicturePage: React.FC = () => {
                                 <p>情報を修正してください</p>
                             </div>
                     }
-                    <Picture />
+                    <Picture isLoading={isLoading}/>
                     {profileData.length === 0 ?
-                        <SelectImage setProfileData={setProfileData} /> :
+                        <SelectImage setProfileData={setProfileData} setIsLoading={setIsLoading} /> :
                         myself ?
                             <Myself profileData={profileData} setProfileData={setProfileData} setMyself={setMyself} /> :
                             <FixProfile profileData={profileData} />
