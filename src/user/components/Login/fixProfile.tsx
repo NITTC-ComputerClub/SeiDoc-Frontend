@@ -19,46 +19,47 @@ const FixProfile: React.FC<propsType> = (props) => {
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
 
-    const canvas = document.getElementById('cvs') as HTMLCanvasElement
-    const [sequence, setSequence] = useState<number>(0)
+    const [sequence, setSequence] = useState<number>(-1)
 
     useEffect(() => {
         drawProfile(props.profileData)
     }, [props.profileData])
 
-    const onClick = (e: MouseEvent) => {
-        const inputAge = document.getElementById('age') as HTMLInputElement
-        const selectRelationship = document.getElementById('relationship') as HTMLSelectElement
-        const rect = canvas.getBoundingClientRect()
-        const x = e.clientX - rect.left
-        const y = e.clientY - rect.top
+    useEffect(() => {
+        const canvas = document.getElementById('cvs') as HTMLCanvasElement
 
-        props.profileData.forEach((element, index) => {
-            if (element.boundingBox.left <= x && x <= (element.boundingBox.left + element.boundingBox.width)
-                && element.boundingBox.top <= y && y <= (element.boundingBox.top + element.boundingBox.height)) {
-                for (let i = 0; i < selectRelationship.length; i++) {
-                    if (selectRelationship.options[i].value === element.relationship) {
-                        if (element.isMyself && element.gender === 'Male') selectRelationship.selectedIndex = 0
-                        else if (element.isMyself && element.gender === 'Female') selectRelationship.selectedIndex = 1
-                        else selectRelationship.selectedIndex = i
-                        inputAge.value = element.age.toString()
-                        setSequence(index)
-                        break
+        const onClick = (e: MouseEvent) => {
+            const selectAge = document.getElementById('age') as HTMLSelectElement
+            const selectRelationship = document.getElementById('relationship') as HTMLSelectElement
+            const rect = canvas.getBoundingClientRect()
+            const x = e.clientX - rect.left
+            const y = e.clientY - rect.top
+
+            props.profileData.forEach((element, index) => {
+                if (element.boundingBox.left <= x && x <= (element.boundingBox.left + element.boundingBox.width)
+                    && element.boundingBox.top <= y && y <= (element.boundingBox.top + element.boundingBox.height)) {
+                    for (let i = 0; i < selectRelationship.length; i++) {
+                        if (selectRelationship.options[i].value === element.relationship) {
+                            if (element.isMyself && element.gender === 'Male') selectRelationship.selectedIndex = 0
+                            else if (element.isMyself && element.gender === 'Female') selectRelationship.selectedIndex = 1
+                            else selectRelationship.selectedIndex = i
+                            selectAge.selectedIndex = element.age
+                            setSequence(index)
+                            break
+                        }
                     }
                 }
-            }
-        })
-    }
+            })
+        }
+
+        canvas.addEventListener('click', onClick, false)
+    }, [props])
 
     const editData = () => {
-        const inputAge = document.getElementById('age') as HTMLInputElement
+        const selectAge = document.getElementById('age') as HTMLSelectElement
         const selectRelationship = document.getElementById('relationship') as HTMLSelectElement
-        if (inputAge.value === '') {    //エラー処理
-            alert('修正したい人の顔写真をタッチしてください\n修正が必要ないときは登録完了を押してください')
-            return
-        }
         const value: profileDataType = props.profileData[sequence]
-        value.age = Number(inputAge.value)
+        value.age = Number(selectAge.value)
         if (selectRelationship.value === '本人-男性') {
             value.isMyself = true
             value.gender = 'Male'
@@ -149,12 +150,18 @@ const FixProfile: React.FC<propsType> = (props) => {
         })
     }
 
-    canvas.addEventListener('click', onClick, false)
+    const ageLoop = () => {
+        const items = []
+        for (let i = 0; i < 99; i++) {
+            items.push(<option key={i} value={i}>{i}</option>)
+        }
+        return items
+    }
 
     return (
         <div>
             <p>関係</p>
-            <select id='relationship' className='fix'>
+            <select id='relationship'>
                 <option value='本人-男性'>本人-男性</option>
                 <option value='本人-女性'>本人-女性</option>
                 <option value='夫'>夫</option>
@@ -165,7 +172,9 @@ const FixProfile: React.FC<propsType> = (props) => {
                 <option value='母'>母</option>
             </select>
             <p>年齢</p>
-            <input id='age' type="text" className='fix'></input>
+            <select id='age'>
+                {ageLoop()}
+            </select>
             <button onClick={editData}>修正</button>
             <button onClick={() => {
                 props.history.push('/finish')
