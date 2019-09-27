@@ -7,6 +7,7 @@ import Footer from '../../user/components/footer'
 import { Redirect } from 'react-router'
 import { useSelector } from 'react-redux'
 import { AppState } from '../../store'
+import { Wrapper, MainContents, Container } from '../../designSystem/Page'
 
 const CategoryRanking: React.FC = () => {
     const user = useSelector((state: AppState) => state.userState)
@@ -17,14 +18,18 @@ const CategoryRanking: React.FC = () => {
     }
     else
     return (
-        <div>
+        <Wrapper>
             <Header />
-            <h2>カテゴリ別の制度閲覧状況</h2>
-            <CategoryCardsList pushTo='/admin/categoryRanking' />
-            <SearchValue />
-            <CategoryRankingList />
+            <Container>
+                <MainContents>
+                    <h2>カテゴリ別の制度閲覧状況</h2>
+                    <CategoryCardsList pushTo='/admin/categoryRanking' />
+                    <SearchValue />
+                    <CategoryRankingList />
+                </MainContents>
+            </Container>
             <Footer />
-        </div>
+        </Wrapper>
     )
 }
 

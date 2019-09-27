@@ -15,15 +15,22 @@ const AdminSystemList = styled.li`
     background-color: ${setting.White};
     border-radius: 4px;
     padding: 8px;
+    overflow: hidden;
 
     h2 {
         margin: 0 0 4px 0;
         font-size: ${setting.H2};
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     p {
         margin: 0;
         font-size: ${setting.P2};
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     .blue {
