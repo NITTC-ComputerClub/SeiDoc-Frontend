@@ -65,6 +65,7 @@ export type UserState = {
   isAdmin: boolean;
   city: string;
   department: string;
+  region: string; // 愛知県小牧市　など
   sex: TargetSex;
   searchedWords: string[];
   viewedCategory: [{ categoryName: string, count: number }]
