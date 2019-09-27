@@ -95,6 +95,11 @@ const SignInForm: React.FC<historyProps> = (props) => {
                 name="password"
                 value={loginData.password}
                 onChange={e => handleInputChange(e)}
+                onKeyDown={e => {
+                    if (e.keyCode === 13) {
+                        handleSignIn();
+                    }
+                }}
             />
             <StyledDiv>
                 <Button blue onClick={() => handleSignIn()}>ログイン</Button>
