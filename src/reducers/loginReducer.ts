@@ -18,6 +18,7 @@ const initialState: UserState = {
     sex: 2,
     searchedWords: [],
     viewedCategory: [{categoryName:'子育て',count:0}],
+    region: ''
 }
 
 
@@ -33,7 +34,9 @@ export const LoginReducer = reducerWithInitialState(initialState)
             city: loginData.city,
             department: loginData.department,
             targetFamily: loginData.targetFamily,
-            isAdmin: loginData.isAdmin
+            isAdmin: loginData.isAdmin,
+            region: loginData.region
+            
         })
     })
     .case(initLoginCreator, (state) => {

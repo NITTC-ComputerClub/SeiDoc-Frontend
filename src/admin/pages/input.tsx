@@ -1,5 +1,4 @@
 import React from 'react'
-import { fireStore, systemIndex } from '../../firebase/firebase'
 import { AppState } from '../../store';
 import { useSelector } from 'react-redux';
 import { sendData } from '../../types/type';
@@ -10,6 +9,7 @@ import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import { Redirect } from 'react-router';
+import { fireStore, systemIndex } from '../../firebase/firebase';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -82,31 +82,63 @@ const Input: React.FC = () => {
     let target: string = ''
     let site: string = ''
     let detail: string = ''
-    let targetSex: number = 0
-    let targetFamily: number = 0
-    let targetAge: number = 0
-    let sysmethod: Array<string> = ['金銭補助']
+    let targetSex: number = -1
+    let targetFamily: number = -1
+    let targetAge: number = -1
+    let sysmethod: string = ''
     let category: string = ''
     let systemData: sendData
+    let region: string = ''
 
 
     const user = useSelector((state: AppState) => state.userState)
     console.log(user)
 
     const post = () => {
+        let alertComment : string = ''
+        if(name === ''){
+            alertComment += "制度名が入力されていません。\n"
+        }
+        if(category === ''){
+            alertComment += "カテゴリが選択されていません。\n"
+        }
+        if(targetSex === -1){
+            alertComment += "制度対象者の性別が選択されていません。\n"
+        }
+        if(targetAge === -1){
+            alertComment += "制度対象者の年代が選択されていません。\n"
+        }
+        if(targetFamily === -1){
+            alertComment += "制度対象者の家庭が選択されていません。\n"
+        }
+        if(target.length === 0){
+            alertComment += "制度対象者の詳細について入力されていません。\n"
+        }
+        if(sysmethod === ''){
+            alertComment += "援助方法が入力されていません。\n"
+        }
+        if(department === ''){
+            alertComment += "担当部署が入力されていません。\n"
+        }
+        if(detail === ''){
+            alertComment += "詳細が入力されていません。\n"
+        }
+        if(alertComment.length !== 0){
+            alert(alertComment)
+            return 
+        }
         systemData = {
             Name: name,
-            Location: user.city,
+            Location: region,
             Department: department,
             Target: target,
             Site: site,
             Detail: detail,
-            Method: sysmethod,
+            Method: [sysmethod],
             Category: [category],
             targetFamily: targetFamily,
             targetSex: targetSex,
             targetAge: targetAge
-
         }
         console.log(systemData)
         const systemCollection = fireStore.collection(systemIndex)
@@ -192,9 +224,9 @@ const Input: React.FC = () => {
                                 <Label>援助対象者</Label>
                                 <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
                                 <Label>援助方法</Label>
-                                <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="授業料補助など" />
+                                <StyledInput type='text' onChange={e => { sysmethod = e.target.value }} placeholder="授業料補助など" />
                                 <Label>対象地区</Label>
-                                <StyledInput type='text' defaultValue={user.city} placeholder="対象地区を入力" />
+                                <StyledInput type='text' defaultValue={user.region} onChange={e => region = e.target.value} placeholder="対象地区を入力" />
                                 <Label>担当部署</Label>
                                 <StyledInput type='text' onChange={e => { department = e.target.value }} placeholder="担当部署を入力" />
                                 <Label>詳細</Label>
