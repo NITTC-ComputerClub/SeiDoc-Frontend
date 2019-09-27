@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Category from './user/pages/category'
 import Search from './user/pages/search'
+import Region from './user/pages/region'
 import AdminInput from './admin/pages/input'
 import Detail from './user/pages/detail'
 import ViewAll from './user/pages/viewAll'
@@ -42,6 +43,8 @@ const App: React.FC = () => {
         <Route path='/ml' component={ML} />
         <Route path='/picture' component={Picute} />
         <Route path='/finish' component={Finish} />
+
+        <Route path='/region' component={Region} />
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />

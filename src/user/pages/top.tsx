@@ -25,10 +25,9 @@ const Top: React.FC = () => {
             green
             nextLocation="/category"
           >制度名から調べる</SearchButton>
-          {/* TODO: 地域から調べるページへ遷移 */}
           <SearchButton
             blue
-            nextLocation="/"
+            nextLocation="/region"
           >地域から調べる</SearchButton>
         </div>
       </div>
