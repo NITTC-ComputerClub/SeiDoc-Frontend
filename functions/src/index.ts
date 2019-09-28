@@ -58,7 +58,8 @@ type System = {
   weeklyView: number[]; //[0,0,0,0,0,0,0]
   monthlyView: number;
   dailyView: number;
-  ageGroup: ageGroup[]
+  ageGroup: ageGroup[];
+  objectID: string
 };
 
 type ageGroup = {
@@ -300,18 +301,14 @@ const aggregate = (day: string) => {
     });
 }
 
-exports.onSystemDeleted = functions.fireStore.document(productionSystemIndex + "/{testId}").onDelete((snap,context) => {
-  //const data = snap.data() as System;
-  const filter = 'documentID:' + snap.id;
-  index.deleteBy({filters: filter},((err,res) => {
-    if (err) {
-      console.error(err)
-      return false;
-    }else{
-      console.log(res)
-      return true;
+exports.onSystemDeleted = functions.firestore.document(productionSystemIndex + "/{testId}").onDelete((snap,context) => {
+  const data = snap.data() as System;
+  index.deleteObject(data.documentID).then(
+    hits => {
+      console.log("object deleted" , hits)
     }
-  }));
+  ).catch(err => console.error(err))
+
 });
 
 exports.onSystemCreated = functions.firestore
@@ -325,6 +322,7 @@ exports.onSystemCreated = functions.firestore
       .doc(snap.id)
       .update(data)
       .then(() => {
+        data.objectID = snap.id
         index.addObject(data, (err, res) => {
           if (err) {
             console.error(err);
