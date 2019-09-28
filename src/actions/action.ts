@@ -10,10 +10,10 @@ export const fetchSystemByCategoryCreator = actionCreator.async<undefined, Array
 export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
 
-export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => {
+export const fetchSystemByCategory = (query: string, region: string) => (dispatch: Dispatch) => {
     dispatch(fetchSystemByCategoryCreator.started())
-    console.log('start fetchSystem query:', query)
-    const searchData: Array<System> = []
+    console.log('start fetching System. query:', query)
+    let searchData: Array<System> = []
     fireStore.collection(systemIndex).where('Category', 'array-contains', query).get()
         .then(
             (snapshot) => {
@@ -21,11 +21,25 @@ export const fetchSystemByCategory = (query: string) => (dispatch: Dispatch) => 
                     searchData.push(doc.data() as System)
                 })
             }).then(() => {
-                dispatch(fetchSystemByCategoryCreator.done({
+                console.log(region)
+                if(region !== undefined){
+                    searchData = searchData.filter(system => {
+                        if(system.Location === region){
+                            return true
+                        }else{
+                            return false
+                        }
+                    }).map(system =>  system)
+                }
+            }).then(
+                () => {
+                    console.log(searchData)
+                    dispatch(fetchSystemByCategoryCreator.done({
                     params: undefined,
                     result: searchData
-                }))
-            })
+                    }))
+                }
+            )
 }
 
 const getSystemDataByFireStore = async (systems: Array<System>) => {

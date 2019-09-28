@@ -48,7 +48,7 @@ const AdminSystemCard = styled.li`
 const AdminSystemList: React.FC<historyProps> = (props) => {
     const tag = parse(props.location.search).tag as string
     const inputValue = parse(props.location.search).value as string
-    // const region = parse(props.location.search).region as string
+    const region = parse(props.location.search).region as string
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()
@@ -56,17 +56,17 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
 
     //データのfetch
     useEffect(() => {
-        const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
-        const alogliaSearch = (query: string, category: string) => dispatch(fetchSystemByAlgoliaSearch(query, category, ''))
+        const categorySearch = (category: string, region: string) => dispatch(fetchSystemByCategory(category, region))
+        const alogliaSearch = (query: string, category: string, region: string) => dispatch(fetchSystemByAlgoliaSearch(query, category, region))
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const deleteSystems = () => dispatch(deleteSystemsCreator())
         if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ
             console.log('algolia', 'input:', inputValue, 'tag:', tag)
-            alogliaSearch(inputValue, tag)
+            alogliaSearch(inputValue, tag, region)
         }
         else if (tag !== undefined && inputValue === undefined) {   //カテゴリーオンリー
             console.log('category', 'input:', inputValue, 'tag:', tag)
-            categorySearch(tag)
+            categorySearch(tag, region)
             addTag(tag)
         }
         else {
