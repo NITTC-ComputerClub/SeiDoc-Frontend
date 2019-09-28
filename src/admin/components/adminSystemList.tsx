@@ -43,6 +43,10 @@ const AdminSystemCard = styled.li`
     .view {
         margin-top: 8px;
     }
+
+    .blue {
+        color: ${setting.ThemeBlue};
+    }
 `
 
 const AdminSystemList: React.FC<historyProps> = (props) => {
@@ -88,6 +92,7 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
                             <h2>{system.Name}</h2>
                             <p>{system.Department}</p>
                             <p className="view">閲覧数　{system.monthlyView}回/月</p>
+                            {system.ageGroup[0] ? <p className="blue">{system.ageGroup[0].age}代に人気</p> : ""}
                         </AdminSystemCard>
                     ))}
                 </Grid>
