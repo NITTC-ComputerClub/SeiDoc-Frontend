@@ -27,28 +27,35 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
         }
     }
 
-    if (props.documentId !== detail.documentID) {
+    if (props.documentId !== detail.documentID) { //fetch
         isLoading = true
         detail.documentID = props.documentId    //無限ループ防止
-        if(!user.isAdmin){
-            fireStore.collection(systemIndex).doc(props.documentId).get().then(res => {
-                if (res.exists) {
-                    const detailData = res.data() as System
-                    updateDetail(detailData)
-                    isLoading = false
-                    detailData.totalView += 1;
-                    detailData.dailyView += 1;
-                    detailData.monthlyView += 1;
-                    detailData.weeklyView[6]++;
-                    fireStore.collection(systemIndex).doc(props.documentId).update(detailData).then(res=>console.log("view:",res)).catch(err => console.error(err))
-                }
-            }
-            ).then(() => detailPageLogger(detail.documentID, user, detail))
-            .catch(err => console.error(err))
-        }
+        fireStore.collection(systemIndex).doc(props.documentId).get().then(res => {
+            if (res.exists) {
+                const detailData = res.data() as System
+                updateDetail(detailData)
+                isLoading = false
+        }})
+        .catch(err => console.error(err))
     }
+    
 
     if (!isLoading && isSystemLoaded()) {   //等しいときはfetchなし
+        if(!user.isAdmin && (user.nickName !== '')){
+            console.log("Login user detected.")
+            detail.totalView += 1;
+            detail.dailyView += 1;
+            detail.monthlyView += 1;
+            detail.weeklyView[6]++;
+            fireStore.collection(systemIndex)
+                .doc(props.documentId)
+                .update(detail)
+                    .then(() => detailPageLogger(detail.documentID, user, detail))
+            .catch(err => console.error(err))
+        }else{
+            console.log("This user is not logged in")
+        }
+
         return (
             <div>
                 <div className="detail">
