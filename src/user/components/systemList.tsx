@@ -36,7 +36,7 @@ const SystemList: React.FC<historyProps> = (props) => {
         else {
             deleteSystems()
         }
-    }, [dispatch, tag, inputValue])
+    }, [dispatch, tag, inputValue, region])
 
     return (
         <div className="systemList">

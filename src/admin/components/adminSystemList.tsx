@@ -72,7 +72,7 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
         else {
             deleteSystems()
         }
-    }, [dispatch, tag, inputValue])
+    }, [dispatch, tag, inputValue, region])
 
     return (
         <div>
