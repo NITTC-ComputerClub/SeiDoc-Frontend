@@ -30,22 +30,25 @@ const DetailList: React.FC<{ documentId: string }> = (props) => {
     if (props.documentId !== detail.documentID) {
         isLoading = true
         detail.documentID = props.documentId    //無限ループ防止
-        fireStore.collection(systemIndex).doc(props.documentId).get().then(res => {
-            if (res.exists) {
-                const detailData = res.data() as System
-                updateDetail(detailData)
-                isLoading = false
-                detailData.totalView += 1;
-                detailData.dailyView += 1;
-                detailData.monthlyView += 1;
-                detailData.weeklyView[6]++;
-                fireStore.collection(systemIndex).doc(props.documentId).update(detailData).then(res=>console.log("view:",res)).catch(err => console.error(err))
+        if(!user.isAdmin){
+            fireStore.collection(systemIndex).doc(props.documentId).get().then(res => {
+                if (res.exists) {
+                    const detailData = res.data() as System
+                    updateDetail(detailData)
+                    isLoading = false
+                    detailData.totalView += 1;
+                    detailData.dailyView += 1;
+                    detailData.monthlyView += 1;
+                    detailData.weeklyView[6]++;
+                    fireStore.collection(systemIndex).doc(props.documentId).update(detailData).then(res=>console.log("view:",res)).catch(err => console.error(err))
+                }
             }
-        }).catch(err => console.error(err))
+            ).then(() => detailPageLogger(detail.documentID, user, detail))
+            .catch(err => console.error(err))
+        }
     }
 
     if (!isLoading && isSystemLoaded()) {   //等しいときはfetchなし
-        detailPageLogger(detail.documentID, user, detail)
         return (
             <div>
                 <div className="detail">
