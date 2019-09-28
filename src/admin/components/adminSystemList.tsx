@@ -68,6 +68,8 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
             console.log('category', 'input:', inputValue, 'tag:', tag)
             categorySearch(tag, region)
             addTag(tag)
+        }else if (region !== undefined){
+            alogliaSearch('', '', region)
         }
         else {
             deleteSystems()

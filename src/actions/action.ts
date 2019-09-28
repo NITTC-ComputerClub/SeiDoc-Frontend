@@ -57,6 +57,7 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
     if(region !== undefined){
         query = query + ' ' + region
     }
+    console.log(query)
     index.search({
         query: query,
         facetFilters: [category]
