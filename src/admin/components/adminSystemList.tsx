@@ -48,6 +48,7 @@ const AdminSystemCard = styled.li`
 const AdminSystemList: React.FC<historyProps> = (props) => {
     const tag = parse(props.location.search).tag as string
     const inputValue = parse(props.location.search).value as string
+    // const region = parse(props.location.search).region as string
     const systems = useSelector((state: AppState) => state.systemsState.systems)
     const loading = useSelector((state: AppState) => state.systemsState.loading)
     const dispatch = useDispatch()
@@ -56,7 +57,7 @@ const AdminSystemList: React.FC<historyProps> = (props) => {
     //データのfetch
     useEffect(() => {
         const categorySearch = (category: string) => dispatch(fetchSystemByCategory(category))
-        const alogliaSearch = (query: string, category: string) => dispatch(fetchSystemByAlgoliaSearch(query, category))
+        const alogliaSearch = (query: string, category: string) => dispatch(fetchSystemByAlgoliaSearch(query, category, ''))
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const deleteSystems = () => dispatch(deleteSystemsCreator())
         if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ

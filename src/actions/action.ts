@@ -36,10 +36,13 @@ const getSystemDataByFireStore = async (systems: Array<System>) => {
     return Promise.all(promises)
 }
 
-export const fetchSystemByAlgoliaSearch = (query: string, category: string) => (dispatch: Dispatch) => {
+export const fetchSystemByAlgoliaSearch = (query: string, category: string, region: string) => (dispatch: Dispatch) => {
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
     const index = client.initIndex(algoliaSearchIndex)
     dispatch(fetchSystemByAlgoliaSearchCreator.started())
+    if(region !== undefined){
+        query = query + ' ' + region
+    }
     index.search({
         query: query,
         facetFilters: [category]
