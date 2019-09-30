@@ -18,6 +18,7 @@ import AdminTop from './admin/pages/top'
 import AdminCategoryRanking from './admin/pages/categoryRanking'
 import AdminTotalRanking from './admin/pages/totalRanking'
 import CSVDownload from './admin/pages/csvDownload'
+import NotFound from './admin/pages/notFound'
 import './scss/App.scss'
 
 import ML from './user/pages/machineLearning'
@@ -50,6 +51,7 @@ const App: React.FC = () => {
         <Route path='/admin/categoryRanking' component={AdminCategoryRanking} />
         <Route path='/admin/totalRanking' component={AdminTotalRanking} />
         <Route path='/admin/' component={AdminTop} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   )
