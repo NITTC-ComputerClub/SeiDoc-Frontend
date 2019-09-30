@@ -25,6 +25,7 @@ export type UserState = {
   address: string;
   family: string;
   sex: 'male' | 'female' | 'None';
+  isAdmin: boolean;
 };
 export type logType = {
   createdAt: number;
@@ -217,6 +218,7 @@ const aggregate = (day: string) => {
       console.log("create DailyRanking");
       snapshot.forEach(doc => {
         const data = doc.data() as logType;
+        if(data.user.isAdmin){return}
         const currentAge = getAgeGroup(calcAge(data.user.birthday));
         const target = dailyRanking.find(logData => {
           return logData.documentID === data.documentID;
