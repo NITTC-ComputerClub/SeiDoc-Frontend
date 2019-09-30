@@ -58,7 +58,8 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             //家族関係のテキストボックス生成
             const viewRelationship = document.createElement('input')
             viewRelationship.className = 'view_relationship'
-            if (person) viewRelationship.value = '本人'
+            if (person && gender === 'Male') viewRelationship.value = '本人-男性'
+            else if (person && gender === 'Female') viewRelationship.value = '本人-女性'
             else viewRelationship.value = relationship
             viewRelationship.style.position = 'absolute'
             viewRelationship.style.top = top - 50 + 'px'
