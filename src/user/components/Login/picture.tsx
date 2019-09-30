@@ -12,7 +12,7 @@ type propsType = {
 const Picture: React.FC<propsType> = (props) => {
     return (
         <ShowImage id='showImage'>
-            <canvas id='cvs' width='350' height='400' style={{ visibility: props.isLoading ? 'hidden' : 'visible' }}></canvas>
+            <canvas id='cvs' width='350' height='400' style={{ display: props.isLoading ? 'none' : 'inline' }}></canvas>
             {props.isLoading ? <Indicator /> : <p></p>}
         </ShowImage>
     )

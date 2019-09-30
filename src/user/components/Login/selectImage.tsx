@@ -171,8 +171,7 @@ const SelectImage: React.FC<propsType> = (props) => {
 
     return (
         <div>
-            <p>家族写真から家族構成を</p>
-            <p>自動で識別します</p>
+            <p>家族写真から家族構成を<br/>自動で識別します</p>
             {select ?
                 <div>
                     <button onClick={() => handleRekognition()}>この写真で識別</button>
