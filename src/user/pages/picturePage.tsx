@@ -14,6 +14,7 @@ const Form = styled.div`
     margin: 16px 0;
     border-radius: 4px;
     text-align: center;
+    overflow: hidden;
 `
 
 const TitleLogo = styled.img`
@@ -46,6 +47,7 @@ const getNavigationMessage = (isLoadedImg: boolean, myself: boolean) => {
 
 const PicturePage: React.FC = () => {
     const [profileData, setProfileData] = useState<Array<profileDataType>>([])
+    const [select, setSelect] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [myself, setMyself] = useState<boolean>(true)
     const isLoadedImg = profileData.length !== 0
@@ -60,10 +62,15 @@ const PicturePage: React.FC = () => {
                             <h2>新規登録</h2>
                         </div>
                         {getNavigationMessage(isLoadedImg, myself)}
-                        <Picture isLoading={isLoading}/>
-                        <FamilyImg src="/img/family.png" alt="家族"></FamilyImg>
-                        {profileData.length === 0 ?
-                            <SelectImage setProfileData={setProfileData} setIsLoading={setIsLoading} /> :
+                        
+                        {/* isLoadedImgじゃなくて(selectImageにある)select使いたい */}
+                        {select ?
+                            "" :
+                            <FamilyImg src="/img/family.png" alt="家族"></FamilyImg>
+                        }
+                        <Picture select={select} isLoading={isLoading}/>
+                        {!isLoadedImg ?
+                            <SelectImage select={select} setSelect={setSelect} setProfileData={setProfileData} setIsLoading={setIsLoading} /> :
                             myself ?
                                 <Myself profileData={profileData} setProfileData={setProfileData} setMyself={setMyself} /> :
                                 <FixProfile profileData={profileData} />

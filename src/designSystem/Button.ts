@@ -4,9 +4,11 @@ import styled from 'styled-components';
 export type ButtonProps = {
     big?: boolean,
     blue?: boolean,
+    normal?: boolean,
     green?: boolean,
     link?: boolean,
-    maxwidth?: string
+    maxwidth?: string,
+    wide?: boolean
 }
 
 const Button = styled.button`
@@ -24,11 +26,22 @@ const Button = styled.button`
 const getWidth = (props: ButtonProps) => {
     if (props.maxwidth)
         return `max-width: ${props.maxwidth};`
+    if (props.wide) {
+        return `
+            display: block;
+            margin: 16px 32px;
+            width: calc(100% - 68px);
+            box-sizing: border-box;
+        `
+    }
 }
 
 const getFont = (props: ButtonProps) => {
     if (props.big)
         return `font-size: ${setting.H1}; font-weight: bold;`
+
+    if (props.normal)
+        return `font-size: ${setting.P2};`
     
     if (props.link)
         return `font-size: ${setting.P3};`

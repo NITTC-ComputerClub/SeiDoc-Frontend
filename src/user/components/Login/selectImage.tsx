@@ -4,21 +4,46 @@ import _ from 'lodash'
 import { awsRekognition, awsResData, profileDataType } from '../../../types/type'
 import styled from 'styled-components'
 import setting from '../../../designSystem/setting'
+import Button from '../../../designSystem/Button'
 
 type resType = {
     FaceDetails: Array<awsResData>
 }
 type propsType = {
     setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>,
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setSelect: React.Dispatch<React.SetStateAction<boolean>>,
+    select: boolean
 }
 
 const Message = styled.p`
     color: ${setting.ThemeGreen};
 `
 
+const FileUploadButton = styled.label`
+    background-color: ${setting.ThemeGreen};
+    color: ${setting.White};
+    padding: 8px;
+    margin: 16px 32px;
+    border-radius: 4px;
+    text-align: center;
+    display: block;
+
+    input {
+        display: none;
+    }
+`
+
+const SkipButton = styled(Link)`
+    color: ${setting.TextGray};
+    display: inline-block;
+`
+
+const Menu = styled.div`
+    margin-bottom: 32px;
+`
+
 const SelectImage: React.FC<propsType> = (props) => {
-    const [select, setSelect] = useState<boolean>(false)
     const [readerResult, setReaderResult] = useState<string>('')
 
     const AWS = require('aws-sdk')
@@ -162,7 +187,7 @@ const SelectImage: React.FC<propsType> = (props) => {
             img.src = image
             img.onload = () => {
                 context.drawImage(img, 0, 0, 350, 400)  //写真描画
-                setSelect(true)
+                props.setSelect(true)
             }
         }
         reader.readAsDataURL(file)
@@ -172,23 +197,24 @@ const SelectImage: React.FC<propsType> = (props) => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
         context.clearRect(0, 0, 350, 400)
-        setSelect(false)
+        props.setSelect(false)
     }
 
     return (
         <div>
             <Message>家族写真から家族構成を<br/>自動で識別します</Message>
-            {select ?
-                <div>
-                    <button onClick={() => handleRekognition()}>この写真で識別</button>
-                    <button onClick={returnView}>別の写真を選択</button>
-                </div> :
-                <div>
-                    <label>
+            {props.select ?
+                <Menu>
+                    <Button wide blue onClick={() => handleRekognition()}>この写真で識別</Button>
+                    <Button link normal onClick={returnView}>別の写真を選択</Button>
+                </Menu> :
+                <Menu>
+                    <FileUploadButton>
+                        家族写真を選択
                         <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
-                    </label>
-                    <Link to='/'>スキップ</Link>
-                </div>
+                    </FileUploadButton>
+                    <SkipButton to='/'>スキップ</SkipButton>
+                </Menu>
             }
         </div>
     )
