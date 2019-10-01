@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../store";
 import {
   updateDetailCreator,
-  fetchSystemByCategory,
   deleteSystemsCreator,
   addTagCreator,
   fetchSystemByAlgoliaSearch
@@ -64,25 +63,17 @@ const AdminSystemList: React.FC<historyProps> = props => {
 
   //データのfetch
   useEffect(() => {
-    const categorySearch = (category: string, region: string) =>
-      dispatch(fetchSystemByCategory(category, region));
     const alogliaSearch = (query: string, category: string, region: string) =>
       dispatch(fetchSystemByAlgoliaSearch(query, category, region));
     const addTag = (newtag: string) => dispatch(addTagCreator(newtag));
     const deleteSystems = () => dispatch(deleteSystemsCreator());
-    if (tag !== undefined && inputValue !== undefined) {
-      //アルゴリアサーチ
-      console.log("algolia", "input:", inputValue, "tag:", tag);
-      alogliaSearch(inputValue, tag, region);
-    } else if (tag !== undefined && inputValue === undefined) {
-      //カテゴリーオンリー
-      console.log("category", "input:", inputValue, "tag:", tag);
-      categorySearch(tag, region);
-      addTag(tag);
-    } else if (region !== undefined) {
-      alogliaSearch(inputValue, tag, region);
-    } else {
-      deleteSystems();
+    if(tag === undefined && inputValue === undefined && region === undefined){
+      deleteSystems()
+    }else{
+      alogliaSearch(inputValue, tag, region)
+      if(tag !== undefined){
+          addTag(tag)
+      }
     }
   }, [dispatch, tag, inputValue, region]);
 
