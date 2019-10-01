@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../../store'
-import { fetchSystemByCategory, deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../../actions/action'
+import { deleteSystemsCreator, addTagCreator, fetchSystemByAlgoliaSearch } from '../../actions/action'
 import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
@@ -20,23 +20,18 @@ const SystemList: React.FC<historyProps> = (props) => {
     const dispatch = useDispatch()
     //データのfetch
     useEffect(() => {
-        const categorySearch = (category: string, region: string) => dispatch(fetchSystemByCategory(category,region))
+        //const categorySearch = (category: string, region: string) => dispatch(fetchSystemByCategory(category,region))
         const alogliaSearch = (query: string, category: string, region: string) => dispatch(fetchSystemByAlgoliaSearch(query, category, region))
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const deleteSystems = () => dispatch(deleteSystemsCreator())
-        if (tag !== undefined && inputValue !== undefined) {    //アルゴリアサーチ
-            console.log('algolia', 'input:', inputValue, 'tag:', tag)
-            alogliaSearch(inputValue, tag, region)
-        }
-        else if (tag !== undefined && inputValue === undefined) {   //カテゴリーオンリー
-            console.log('category', 'input:', inputValue, 'tag:', tag)
-            categorySearch(tag, region)
-            addTag(tag)
-        }else if (region !== undefined){
-            alogliaSearch('', '', region)
-        }
-        else {
+        console.log(inputValue, tag, region)
+        if(tag === undefined && inputValue === undefined && region === undefined){
             deleteSystems()
+        }else{
+            alogliaSearch(inputValue, tag, region)
+            if(tag !== undefined){
+                addTag(tag)
+            }
         }
     }, [dispatch, tag, inputValue, region])
 

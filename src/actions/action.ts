@@ -54,24 +54,30 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
     const index = client.initIndex(algoliaSearchIndex)
     dispatch(fetchSystemByAlgoliaSearchCreator.started())
-    if(region !== undefined){
-        query = query + ' ' + region
+
+    let searchQuery = ' ';
+    if(query !== undefined){
+        console.log("query:", query)
+        searchQuery = searchQuery + ' ' + query
     }
-    if(category !== undefined){
-        query = query + ' ' + category
-    }
-    console.log(query)
+    console.log(searchQuery)
+    let algoliaSearchData :Array<System>
     index.search({
-        query: query,
-        facetFilters: [category]
-    }, (err, res) => {
-        if (err) {
-            console.error(err)
-            return
+        query: searchQuery,
+    }).then(res => {
+        algoliaSearchData = res.hits as Array<System>
+        console.log(algoliaSearchData.length)
+        console.log(algoliaSearchData)
+        if(region !== undefined){
+            algoliaSearchData = algoliaSearchData.filter(s => (s.Location === region)).map(s => s)
         }
-        const systemData  = res.hits as Array<System>
+        if(category !== undefined){
+            algoliaSearchData = algoliaSearchData.filter(s => s.Category.includes(category)).map(s => s)
+        }
+        console.log(algoliaSearchData)
+    }).then(() => {
         const system : Array<System> = []
-        getSystemDataByFireStore(systemData).then(snapshot => {
+        getSystemDataByFireStore(algoliaSearchData).then(snapshot => {
             snapshot.forEach(s => 
                 system.push(s.data() as System)
             )
@@ -81,7 +87,7 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
                 result: system
             }))
         })
-    })
+    }).catch(err => console.error("error at algoliasearch", err))
 }
 
 
