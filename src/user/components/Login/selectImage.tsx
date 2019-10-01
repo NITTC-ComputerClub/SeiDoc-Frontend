@@ -165,7 +165,7 @@ const SelectImage: React.FC<propsType> = (props) => {
     const returnView = () => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        context.clearRect(0, 0, 350, 400)
+        context.clearRect(0, 0, canvas.width, canvas.height)
         setSelect(false)
     }
 

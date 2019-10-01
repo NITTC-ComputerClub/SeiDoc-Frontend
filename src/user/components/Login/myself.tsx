@@ -27,7 +27,7 @@ const Myself: React.FC<propsType> = (props) => {
                 obj.removeChild(child)
             })
         }
-        context.clearRect(0, 0, 350, 400)
+        context.clearRect(0, 0, canvas.width, canvas.height)
 
         props.setProfileData([])
     }
