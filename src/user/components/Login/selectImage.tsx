@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import { awsRekognition, awsResData, profileDataType } from '../../../types/type'
+import styled from 'styled-components'
+import setting from '../../../designSystem/setting'
 
 type resType = {
     FaceDetails: Array<awsResData>
@@ -10,6 +12,10 @@ type propsType = {
     setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+const Message = styled.p`
+    color: ${setting.ThemeGreen};
+`
 
 const SelectImage: React.FC<propsType> = (props) => {
     const [select, setSelect] = useState<boolean>(false)
@@ -171,14 +177,16 @@ const SelectImage: React.FC<propsType> = (props) => {
 
     return (
         <div>
-            <p>家族写真から家族構成を<br/>自動で識別します</p>
+            <Message>家族写真から家族構成を<br/>自動で識別します</Message>
             {select ?
                 <div>
                     <button onClick={() => handleRekognition()}>この写真で識別</button>
                     <button onClick={returnView}>別の写真を選択</button>
                 </div> :
                 <div>
-                    <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
+                    <label>
+                        <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
+                    </label>
                     <Link to='/'>スキップ</Link>
                 </div>
             }
