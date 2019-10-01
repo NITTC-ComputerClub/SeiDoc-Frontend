@@ -72,7 +72,7 @@ const AdminPopularSystemList: React.FC<historyProps> = (props) => {
                     }}>
                         <h2>{system.Name}</h2>
                         <p>閲覧数 {system.monthlyView}/月</p>
-                        <p className="blue">{system.ageGroup[0].age}代に人気</p>
+                        {system.ageGroup.length === 0 ? <div></div> : <p className="blue">{system.ageGroup[0].age}代に人気</p>}
                     </AdminSystemList>
                 ))}
             </Grid>
