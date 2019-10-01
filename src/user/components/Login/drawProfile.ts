@@ -30,19 +30,29 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             const gender = element.gender
             const age = element.age
             const relationship = element.relationship
-            const person = element.isMyself
+            const isMyself = element.isMyself
 
-            // 顔に四角を生成 
-            if (gender === 'Male') {
-                context.strokeStyle = 'blue'
-            }
-            else if (gender === 'Female') {
-                context.strokeStyle = 'red'
-            }
-            if (person) {
+            // 前回の四角を消す
+            // context.clearRect(left - 1, top - 2, width, 2)
+            // context.clearRect(left - 2, top - 1, 3, heigh)
+            // context.clearRect(left + width - 2, top - 1, 2, heigh)
+            // context.clearRect(left - 1, top + heigh - 2, width + 3, 3)
+            context.strokeStyle = 'white'
+            context.strokeRect(left, top, width, heigh)
+
+            // 顔に四角を生成
+            if (isMyself) {
                 context.strokeStyle = 'green'
             }
-            context.strokeRect(left, top, width, heigh)
+            else {
+                if (gender === 'Male') {
+                    context.strokeStyle = 'blue'
+                }
+                else if (gender === 'Female') {
+                    context.strokeStyle = 'red'
+                }
+            }
+            //context.strokeRect(left, top, width, heigh)
 
             // 年齢のテキストボックスを生成 
             const viewAge = document.createElement('input')
@@ -58,8 +68,8 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             //家族関係のテキストボックス生成
             const viewRelationship = document.createElement('input')
             viewRelationship.className = 'view_relationship'
-            if (person && gender === 'Male') viewRelationship.value = '本人-男性'
-            else if (person && gender === 'Female') viewRelationship.value = '本人-女性'
+            if (isMyself && gender === 'Male') viewRelationship.value = '本人-男性'
+            else if (isMyself && gender === 'Female') viewRelationship.value = '本人-女性'
             else viewRelationship.value = relationship
             viewRelationship.style.position = 'absolute'
             viewRelationship.style.top = top - 50 + 'px'
