@@ -186,7 +186,12 @@ const SelectImage: React.FC<propsType> = (props) => {
             const img = new Image()
             img.src = image
             img.onload = () => {
-                context.drawImage(img, 0, 0, 350, 400)  //写真描画
+                const height = Math.round((canvas.clientWidth / img.naturalWidth) * img.naturalHeight)
+                canvas.style.height = height + 'px'
+                canvas.width = img.naturalWidth
+                canvas.height = img.naturalHeight
+
+                context.drawImage(img, 0, 0, canvas.width, canvas.height)  //写真描画
                 props.setSelect(true)
             }
         }
@@ -196,7 +201,7 @@ const SelectImage: React.FC<propsType> = (props) => {
     const returnView = () => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        context.clearRect(0, 0, 350, 400)
+        context.clearRect(0, 0, canvas.width, canvas.height)
         props.setSelect(false)
     }
 
