@@ -85,6 +85,7 @@ const SearchBar: React.FC<historyProps> = (props) => {
     const user = useSelector((state: AppState) => state.userState)
     const [inputValue, setInputValue] = useState<string>('')
     const text = parse(props.location.search).value as string
+    const region = parse(props.location.search).region as string
 
     useEffect(() => {
         if (text !== undefined) {
@@ -95,35 +96,38 @@ const SearchBar: React.FC<historyProps> = (props) => {
         }
     }, [text])
 
-    const collectSearchLog　= (query: string) => {
-        const data : searchLogType = {
+    const collectSearchLog = (query: string) => {
+        const data: searchLogType = {
             createdAt: Date.now(),
             user: user,
             searchWord: query,
             userID: user.userId
         }
-        if(query.trim().length !== 0){
+        if (query.trim().length !== 0) {
             fireStore.collection(searchLogIndex).add(data).catch(err => console.error(err))
         }
     }
     const searchHandler = () => {
         collectSearchLog(inputValue);
-        props.history.push(props.pushTo + '?tag=' + tag + '&value=' + inputValue)
+        let query = '?value=' + inputValue
+        if (tag !== '') query = query + '&tag=' + tag
+        if (region !== undefined) query = query + '&region=' + region
+        props.history.push(props.pushTo + query)
     }
     return (
         <StyledSearchBar {...props}>
-            <input type="text" value={inputValue} 
-            onChange={e => {
-                setInputValue(e.target.value)
-            }}
-            onKeyDown={e => {
-                if (e.keyCode === 13) {
-                    searchHandler();
-                }
-            }}
-            placeholder="「未熟児」などの単語を入力" />
+            <input type="text" value={inputValue}
+                onChange={e => {
+                    setInputValue(e.target.value)
+                }}
+                onKeyDown={e => {
+                    if (e.keyCode === 13) {
+                        searchHandler();
+                    }
+                }}
+                placeholder="「未熟児」などの単語を入力" />
             <button onClick={() => {
-               searchHandler()
+                searchHandler()
             }}>
                 <img src="/img/虫眼鏡.png" alt="虫眼鏡"></img>
             </button>

@@ -1,11 +1,14 @@
 import React from 'react'
+import { withRouter, RouteComponentProps } from 'react-router'
 
-const RegionButton: React.FC = () => {
+type historyProps = RouteComponentProps
+
+const RegionButton: React.FC<historyProps> = (props) => {
     return (
         <div>
-            <button>愛知県名古屋市</button>
-            <button>愛知県小牧市</button>
+            <button onClick={() => props.history.push('./category?region=愛知県名古屋市')}>愛知県名古屋市</button>
+            <button onClick={() => props.history.push('./category?region=愛知県小牧市')}>愛知県小牧市</button>
         </div>
     )
 }
-export default RegionButton
+export default withRouter<historyProps, React.FC<historyProps>>(RegionButton)

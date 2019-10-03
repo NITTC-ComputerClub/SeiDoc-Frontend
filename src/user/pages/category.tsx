@@ -8,6 +8,10 @@ import Header from '../components/header'
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 import { Wrapper } from '../../designSystem/Page';
+import { parse } from 'query-string'
+import { RouteComponentProps } from 'react-router'
+
+type historyProps = RouteComponentProps
 
 const CategoryContainer = styled.div`
     padding: 16px;
@@ -16,7 +20,7 @@ const CategoryContainer = styled.div`
     background-color: ${setting.White};
 `
 
-const Category: React.FC = () => {
+const Category: React.FC<historyProps> = (props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         const deleteTag = () => dispatch(deleteTagCreator())
