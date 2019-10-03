@@ -4,10 +4,13 @@ import { withRouter, RouteComponentProps } from 'react-router'
 type historyProps = RouteComponentProps
 
 const RegionButton: React.FC<historyProps> = (props) => {
+    const regionMap = ['愛知県名古屋市', '愛知県小牧市']
+
     return (
         <div>
-            <button onClick={() => props.history.push('./category?region=愛知県名古屋市')}>愛知県名古屋市</button>
-            <button onClick={() => props.history.push('./category?region=愛知県小牧市')}>愛知県小牧市</button>
+            {regionMap.map((region) => (
+                <button key={region} onClick={() => props.history.push('./category?region=' + region)}>{region}</button>
+            ))}
         </div>
     )
 }
