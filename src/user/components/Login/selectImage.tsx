@@ -101,15 +101,11 @@ const SelectImage: React.FC<propsType> = (props) => {
     const createData = (data: Array<awsRekognition>, img: HTMLImageElement) => {
         const profileData: Array<profileDataType> = []
 
-        // 拡大・縮小倍率の取得
-        const shrinkW = 350 / img.width
-        const shrinkH = 400 / img.height
-
         data.forEach(element => {
-            const heigh = element.BoundingBox.Height * img.height * shrinkH
-            const left = element.BoundingBox.Left * img.width * shrinkW
-            const top = element.BoundingBox.Top * img.height * shrinkH
-            const width = element.BoundingBox.Width * img.width * shrinkW
+            const heigh = element.BoundingBox.Height * img.height
+            const left = element.BoundingBox.Left * img.width
+            const top = element.BoundingBox.Top * img.height
+            const width = element.BoundingBox.Width * img.width
             const gender = element.Gender.Value
             let age = 0
             if (element.AgeRange.High > 20 && element.AgeRange.Low > 20) {

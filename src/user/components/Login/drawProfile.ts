@@ -24,9 +24,9 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
 
         profileData.forEach(element => {
             const heigh = element.boundingBox.height
+            const width = element.boundingBox.width
             const left = element.boundingBox.left
             const top = element.boundingBox.top
-            const width = element.boundingBox.width
             const gender = element.gender
             const age = element.age
             const relationship = element.relationship
@@ -50,9 +50,13 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
 
             viewAge.value = age.toString()
             viewAge.style.position = 'absolute'
-            viewAge.style.top = top - 30 + 'px'
-            viewAge.style.left = left + 'px'
-            viewAge.style.width = width + 'px'
+
+            // canvas -> clientへの変換用
+            const ratio =  canvas.clientWidth / canvas.width
+
+            viewAge.style.top = top * ratio - 30 + 'px'
+            viewAge.style.left = left * ratio + 'px'
+            viewAge.style.width = width * ratio + 'px'
             obj.appendChild(viewAge) //bodyの子ノードリストの末尾にノードを追加
 
             //家族関係のテキストボックス生成
@@ -62,9 +66,9 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             else if (person && gender === 'Female') viewRelationship.value = '本人-女性'
             else viewRelationship.value = relationship
             viewRelationship.style.position = 'absolute'
-            viewRelationship.style.top = top - 50 + 'px'
-            viewRelationship.style.left = left + 'px'
-            viewRelationship.style.width = width + 'px'
+            viewRelationship.style.top = top * ratio - 50 + 'px'
+            viewRelationship.style.left = left * ratio + 'px'
+            viewRelationship.style.width = width * ratio + 'px'
             obj.appendChild(viewRelationship)
         })
     }

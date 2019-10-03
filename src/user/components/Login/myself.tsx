@@ -42,8 +42,9 @@ const Myself: React.FC<propsType> = (props) => {
 
         const onClick = (e: MouseEvent) => {
             const rect = cvs.getBoundingClientRect()
-            const x = e.clientX - rect.left
-            const y = e.clientY - rect.top
+            const ratio = cvs.width / cvs.clientWidth // client -> canvas 座標変換用
+            const x = (e.clientX - rect.left) * ratio
+            const y = (e.clientY - rect.top) * ratio
             const flag = props.profileData.some((value) => { return value.isMyself === true })
             props.profileData.forEach((element, index) => {
                 if (element.boundingBox.left <= x && x <= (element.boundingBox.left + element.boundingBox.width)

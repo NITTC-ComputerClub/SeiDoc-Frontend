@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const ShowImage = styled.div`
     position: relative;
-    height: 0;
 `
 
 const Canvas = styled.canvas`
@@ -13,9 +12,9 @@ const Canvas = styled.canvas`
 
 const IndicatorWrapper = styled.div`
     position: absolute;
-    top: -150px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
 `
 
 type propsType = {
@@ -25,7 +24,7 @@ type propsType = {
 
 const Picture: React.FC<propsType> = (props) => {
     return (
-        <ShowImage id='showImage' style={{display: props.select ? 'inline' : 'none'}}>
+        <ShowImage id='showImage' style={{display: props.select ? 'block' : 'none'}}>
             <Canvas id='cvs' width='350' height='400' ></Canvas>
             {props.isLoading ? <IndicatorWrapper><Indicator /></IndicatorWrapper> : <p></p>}
         </ShowImage>
