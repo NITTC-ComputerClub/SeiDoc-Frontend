@@ -21,6 +21,7 @@ const CategoryContainer = styled.div`
 `
 
 const Category: React.FC<historyProps> = (props) => {
+    const region = parse(props.location.search).region as string
     const dispatch = useDispatch()
     useEffect(() => {
         const deleteTag = () => dispatch(deleteTagCreator())
@@ -35,7 +36,7 @@ const Category: React.FC<historyProps> = (props) => {
             <CategoryContainer>
                 <SearchBar pushTo="/search" center />
                 <h2>カテゴリー</h2>
-                <CategoryCardsList pushTo="/search" />
+                <CategoryCardsList pushTo="/search" region={region} />
             </CategoryContainer>
             <Footer />
         </Wrapper>
