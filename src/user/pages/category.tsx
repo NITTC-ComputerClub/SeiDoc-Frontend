@@ -8,6 +8,10 @@ import Header from '../components/header'
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 import { Wrapper } from '../../designSystem/Page';
+import { parse } from 'query-string'
+import { RouteComponentProps } from 'react-router'
+
+type historyProps = RouteComponentProps
 
 const CategoryContainer = styled.div`
     padding: 16px;
@@ -16,7 +20,8 @@ const CategoryContainer = styled.div`
     background-color: ${setting.White};
 `
 
-const Category: React.FC = () => {
+const Category: React.FC<historyProps> = (props) => {
+    const region = parse(props.location.search).region as string
     const dispatch = useDispatch()
     useEffect(() => {
         const deleteTag = () => dispatch(deleteTagCreator())
@@ -31,7 +36,7 @@ const Category: React.FC = () => {
             <CategoryContainer>
                 <SearchBar pushTo="/search" center />
                 <h2>カテゴリー</h2>
-                <CategoryCardsList pushTo="/search" />
+                <CategoryCardsList pushTo="/search" region={region} />
             </CategoryContainer>
             <Footer />
         </Wrapper>

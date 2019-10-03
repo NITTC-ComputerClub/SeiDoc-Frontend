@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import SystemCard from './SystemCard'
-import { fireStore, searchLogIndex } from '../../../firebase/firebase';
+import { fireStore, searchLogIndex, systemIndex } from '../../../firebase/firebase';
 import { System, searchLogType, TargetAge } from '../../../types/type';
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
@@ -36,9 +36,6 @@ const compare = (a: rankingType, b: rankingType) => {
         return 1;
     }
 };
-type fireStorePopularSystemType = {
-    ranking: rankingType[];
-};
 
 type rankingType = {
     documentID: string;
@@ -62,7 +59,7 @@ const Recommend: React.FC = () => {
 
     if (recommendData.length === 0) {
         //一度だけfetch
-        fireStore.collection('backup').get()
+        fireStore.collection(systemIndex).get()
             .then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data() as System
@@ -79,10 +76,8 @@ const Recommend: React.FC = () => {
                     fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
                         snapshot.forEach(doc => {
                             const searchLog = doc.data() as searchLogType
-                            // console.log(searchLog.searchWord)
                             if (~data.Detail.indexOf(searchLog.searchWord) || ~data.Name.indexOf(searchLog.searchWord)) {
                                 ranking.count = ranking.count + 1
-                                //   console.log('matched!')
                             }
                         })
                     })

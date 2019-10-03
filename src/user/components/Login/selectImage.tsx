@@ -7,7 +7,8 @@ type resType = {
     FaceDetails: Array<awsResData>
 }
 type propsType = {
-    setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>
+    setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const SelectImage: React.FC<propsType> = (props) => {
@@ -44,7 +45,7 @@ const SelectImage: React.FC<propsType> = (props) => {
                 'ALL'
             ]
         }
-
+        props.setIsLoading(true)
         rekognition.detectFaces(params, (err: string, res: resType) => {
             if (err) {
                 console.log(err)
@@ -59,6 +60,7 @@ const SelectImage: React.FC<propsType> = (props) => {
                 img.onload = () => {
                     /* 専用データの作成 */
                     props.setProfileData(createData(data, img))
+                    props.setIsLoading(false)
                 }
             }
         })
@@ -160,6 +162,13 @@ const SelectImage: React.FC<propsType> = (props) => {
         reader.readAsDataURL(file)
     }
 
+    const returnView = () => {
+        const canvas = document.getElementById('cvs') as HTMLCanvasElement
+        const context = canvas.getContext('2d') as CanvasRenderingContext2D
+        context.clearRect(0, 0, 350, 400)
+        setSelect(false)
+    }
+
     return (
         <div>
             <p>家族写真から家族構成を</p>
@@ -167,7 +176,7 @@ const SelectImage: React.FC<propsType> = (props) => {
             {select ?
                 <div>
                     <button onClick={() => handleRekognition()}>この写真で識別</button>
-                    <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
+                    <button onClick={returnView}>別の写真を選択</button>
                 </div> :
                 <div>
                     <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />

@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Category from './user/pages/category'
 import Search from './user/pages/search'
+import Region from './user/pages/region'
 import AdminInput from './admin/pages/input'
 import Detail from './user/pages/detail'
 import ViewAll from './user/pages/viewAll'
@@ -18,6 +19,7 @@ import AdminTop from './admin/pages/top'
 import AdminCategoryRanking from './admin/pages/categoryRanking'
 import AdminTotalRanking from './admin/pages/totalRanking'
 import CSVDownload from './admin/pages/csvDownload'
+import NotFound from './admin/pages/notFound'
 import './scss/App.scss'
 
 import ML from './user/pages/machineLearning'
@@ -41,6 +43,8 @@ const App: React.FC = () => {
         <Route path='/ml' component={ML} />
         <Route path='/picture' component={Picute} />
         <Route path='/finish' component={Finish} />
+
+        <Route path='/region' component={Region} />
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
@@ -50,6 +54,7 @@ const App: React.FC = () => {
         <Route path='/admin/categoryRanking' component={AdminCategoryRanking} />
         <Route path='/admin/totalRanking' component={AdminTotalRanking} />
         <Route path='/admin/' component={AdminTop} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   )
