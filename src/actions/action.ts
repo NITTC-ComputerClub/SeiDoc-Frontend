@@ -56,15 +56,9 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
     const index = client.initIndex(algoliaSearchIndex)
     dispatch(fetchSystemByAlgoliaSearchCreator.started())
 
-    /* TODO:63行目までの動作いる？*/
-    let searchQuery = ' ';
-    if (query !== undefined) {
-        searchQuery = searchQuery + ' ' + query
-    }
-    console.log('searchQuery:', searchQuery)
     let algoliaSearchData: Array<System>
     index.search({
-        query: searchQuery,
+        query: query ? query: ' ',
     }).then(res => {
         algoliaSearchData = res.hits as Array<System>
         console.log('res.hits', algoliaSearchData)
