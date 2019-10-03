@@ -24,7 +24,6 @@ const SystemList: React.FC<historyProps> = (props) => {
         const alogliaSearch = (query: string, category: string, region: string) => dispatch(fetchSystemByAlgoliaSearch(query, category, region))
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const deleteSystems = () => dispatch(deleteSystemsCreator())
-        console.log(inputValue, tag, region)
         if(tag === undefined && inputValue === undefined && region === undefined){
             deleteSystems()
         }else{

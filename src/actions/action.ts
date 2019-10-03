@@ -22,21 +22,21 @@ export const fetchSystemByCategory = (category: string, region: string) => (disp
                 })
             }).then(() => {
                 console.log(region)
-                if(region !== undefined){
+                if (region !== undefined) {
                     searchData = searchData.filter(system => {
-                        if(system.Location === region){
+                        if (system.Location === region) {
                             return true
-                        }else{
+                        } else {
                             return false
                         }
-                    }).map(system =>  system)
+                    }).map(system => system)
                 }
             }).then(
                 () => {
                     console.log(searchData)
                     dispatch(fetchSystemByCategoryCreator.done({
-                    params: undefined,
-                    result: searchData
+                        params: undefined,
+                        result: searchData
                     }))
                 }
             )
@@ -44,41 +44,35 @@ export const fetchSystemByCategory = (category: string, region: string) => (disp
 
 const getSystemDataByFireStore = async (systems: Array<System>) => {
     const promises: Array<Promise<firebase.firestore.DocumentSnapshot>> = []
-    for(const system of systems) {
+    for (const system of systems) {
         promises.push(fireStore.collection(systemIndex).doc(system.documentID).get())
     }
     return Promise.all(promises)
 }
 
 export const fetchSystemByAlgoliaSearch = (query: string, category: string, region: string) => (dispatch: Dispatch) => {
+    console.log('query=', query, 'category=', category, 'region=', region)
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
     const index = client.initIndex(algoliaSearchIndex)
     dispatch(fetchSystemByAlgoliaSearchCreator.started())
 
-    let searchQuery = ' ';
-    if(query !== undefined){
-        console.log("query:", query)
-        searchQuery = searchQuery + ' ' + query
-    }
-    console.log(searchQuery)
-    let algoliaSearchData :Array<System>
+    let algoliaSearchData: Array<System>
     index.search({
-        query: searchQuery,
+        query: query ? query: ' ',
     }).then(res => {
         algoliaSearchData = res.hits as Array<System>
-        console.log(algoliaSearchData.length)
-        console.log(algoliaSearchData)
-        if(region !== undefined){
+        console.log('res.hits', algoliaSearchData)
+        if (region !== undefined) {
             algoliaSearchData = algoliaSearchData.filter(s => (s.Location === region)).map(s => s)
         }
-        if(category !== undefined){
+        if (category !== undefined) {
             algoliaSearchData = algoliaSearchData.filter(s => s.Category.includes(category)).map(s => s)
         }
-        console.log(algoliaSearchData)
+        console.log('result:', algoliaSearchData)
     }).then(() => {
-        const system : Array<System> = []
+        const system: Array<System> = []
         getSystemDataByFireStore(algoliaSearchData).then(snapshot => {
-            snapshot.forEach(s => 
+            snapshot.forEach(s =>
                 system.push(s.data() as System)
             )
         }).then(() => {

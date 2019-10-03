@@ -9,7 +9,8 @@ interface CategoryCardProps {
 }
 
 interface historyProps extends RouteComponentProps {
-    pushTo: string
+    pushTo: string,
+    region?: string
 }
 
 const getBackgroundColor = (props: CategoryCardProps) => {
@@ -51,7 +52,6 @@ const CategoryCardsList: React.FC<historyProps> = (props) => {
     ]
 
     const tag = parse(props.location.search).tag as string
-    console.log(`tag: ${tag}`)
 
     return (
         <Grid>
@@ -59,10 +59,11 @@ const CategoryCardsList: React.FC<historyProps> = (props) => {
                 <StyledCategoryCard
                     key={category}
                     onClick={() => {
-                        props.history.push(props.pushTo + '?tag=' + category)
-                        
+                        props.region === undefined ?
+                            props.history.push(props.pushTo + '?tag=' + category) :
+                            props.history.push(props.pushTo + '?tag=' + category + '&region=' + props.region)
                     }}
-                    tag={(category===tag)}
+                    tag={(category === tag)}
                 >
                     <img src={"/img/" + category + ".png"} alt={category + "の写真"}></img>
                     <div className="categoryName">
