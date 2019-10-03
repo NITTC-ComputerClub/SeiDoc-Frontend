@@ -160,13 +160,16 @@ const SelectImage: React.FC<propsType> = (props) => {
     const imageShow = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = e.target.files as FileList
         const file: File = fileList[0]
-        const canvas = document.getElementById('cvs') as HTMLCanvasElement
-        const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        const obj = document.getElementById('showImage') as HTMLElement
 
         const reader = new FileReader()
 
         reader.onload = () => {
+            props.setSelect(true)
+
+            const canvas = document.getElementById('cvs') as HTMLCanvasElement
+            const context = canvas.getContext('2d') as CanvasRenderingContext2D
+            const obj = document.getElementById('showImage') as HTMLElement
+
             /* 前回の入力フォームを削除 */
             const inputNode = document.querySelectorAll('input.info')
             if (inputNode.length !== 0) {
@@ -192,7 +195,6 @@ const SelectImage: React.FC<propsType> = (props) => {
                 canvas.height = img.naturalHeight
 
                 context.drawImage(img, 0, 0, canvas.width, canvas.height)  //写真描画
-                props.setSelect(true)
             }
         }
         reader.readAsDataURL(file)
@@ -202,6 +204,7 @@ const SelectImage: React.FC<propsType> = (props) => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
         context.clearRect(0, 0, canvas.width, canvas.height)
+        console.log('false')
         props.setSelect(false)
     }
 

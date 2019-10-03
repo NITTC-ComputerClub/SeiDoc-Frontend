@@ -62,8 +62,6 @@ const PicturePage: React.FC = () => {
                             <h2>新規登録</h2>
                         </div>
                         {getNavigationMessage(isLoadedImg, myself)}
-                        
-                        {/* isLoadedImgじゃなくて(selectImageにある)select使いたい */}
                         {select ?
                             "" :
                             <FamilyImg src="/img/family.png" alt="家族"></FamilyImg>
