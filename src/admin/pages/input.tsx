@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
-import { Redirect } from 'react-router';
 import { fireStore, systemIndex } from '../../firebase/firebase';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { System } from '../../types/type'
