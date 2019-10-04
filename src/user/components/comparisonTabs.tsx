@@ -1,10 +1,19 @@
 import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import SystemList from '../components/systemList'
 import { tabsType } from '../../types/type'
 import '../../../node_modules/react-tabs/style/react-tabs.css'
 
-const ComparisonTabs: React.FC = () => {
-    const [tabs, setTabs] = useState<Array<tabsType>>([{ title: '+', content: <TabsTop /> }])
+type propsType = {
+    region: string
+}
+
+const ComparisonTabs: React.FC<propsType> = (props) => {
+    const region = props.region
+    const [tabs, setTabs] = useState<Array<tabsType>>([
+        { title: region, content: <SystemList /> },
+        { title: '+', content: <TabsTop /> }
+    ])
 
     const addTabs = (index: number) => {
         console.log('selected:', index)
