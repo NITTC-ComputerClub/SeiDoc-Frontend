@@ -1,7 +1,6 @@
 import React from 'react'
 import { AppState } from '../../store';
 import { useSelector } from 'react-redux';
-import { sendData } from '../../types/type';
 import Header from '../components/header';
 import Footer from '../../user/components/footer';
 import styled from 'styled-components';
@@ -10,6 +9,8 @@ import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import { Redirect } from 'react-router';
 import { fireStore, systemIndex } from '../../firebase/firebase';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { System } from '../../types/type'
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -76,7 +77,9 @@ const Textarea = styled.textarea`
     border-radius: 2px;
 `
 
-const Input: React.FC = () => {
+type historyProps = RouteComponentProps
+
+const Input: React.FC<historyProps> = props => {
     let name: string = ''
     let department: string = ''
     let target: string = ''
@@ -87,8 +90,9 @@ const Input: React.FC = () => {
     let targetAge: number = -1
     let sysmethod: string = ''
     let category: string = ''
-    let systemData: sendData
     let region: string = ''
+    let systemData: System
+
 
 
     const user = useSelector((state: AppState) => state.userState)
@@ -136,6 +140,16 @@ const Input: React.FC = () => {
             Detail: detail,
             Method: [sysmethod],
             Category: [category],
+            CreatedAt: Date.now(),
+            UpdatedAt: 2262025600000,
+            isDeleted: false,
+            ExpireAt: 2262025600000,
+            documentID: '-1',
+            totalView: 0,
+            dailyView: 0,
+            monthlyView: 0,
+            weeklyView: [0,0,0,0,0,0,0],
+            ageGroup: [],
             targetFamily: targetFamily,
             targetSex: targetSex,
             targetAge: targetAge
@@ -153,7 +167,11 @@ const Input: React.FC = () => {
                 }
                 fetch('https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec',
                     { mode, method, headers, body })
-                    .then(res => console.log(res))
+                    .then(res => {
+                        console.log(res)
+                        alert("登録が完了しました。")
+                        props.history.push('/admin/')
+                    })
                     .catch(err => console.error(err))
             }
         ).catch(err => console.error(err))
@@ -245,7 +263,7 @@ const Input: React.FC = () => {
         )
 
 }
-export default Input
+export default withRouter<historyProps, React.FC<historyProps>>(Input)
 
 
 

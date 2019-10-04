@@ -9,6 +9,7 @@ import Header from '../components/header'
 
 import "../../scss/top.scss";
 import { Wrapper } from "../../designSystem/Page";
+import LatestSystemList from "../components/Top/latestSystemList";
 
 const Top: React.FC = () => {
   const user = useSelector((state: AppState) => state.userState)
@@ -24,10 +25,9 @@ const Top: React.FC = () => {
             green
             nextLocation="/category"
           >制度名から調べる</SearchButton>
-          {/* TODO: 地域から調べるページへ遷移 */}
           <SearchButton
             blue
-            nextLocation="/"
+            nextLocation="/region"
           >地域から調べる</SearchButton>
         </div>
       </div>
@@ -41,6 +41,8 @@ const Top: React.FC = () => {
         }
         <h2>みんなが見ている制度</h2>
         <PopularSystemList />
+        <h2>あたらしい制度</h2>
+        <LatestSystemList />
       </section>
       <Footer />
     </Wrapper>
