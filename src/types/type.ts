@@ -248,3 +248,8 @@ export type userProfile = {
   gender: string
 }
 
+export type tabsType = {
+  title: string,
+  content: JSX.Element
+}
+
