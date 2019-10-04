@@ -12,6 +12,7 @@ import Login from './user/pages/login'
 import SignUp from './user/pages/userRegistration'
 import Picute from './user/pages/picturePage'
 import Finish from './user/pages/finishPage'
+import Comparison from './user/pages/comparison'
 import AdminSignIn from './admin/pages/signIn'
 import AdminDetail from './admin/pages/detail'
 import AdminSearch from './admin/pages/search'
@@ -43,8 +44,8 @@ const App: React.FC = () => {
         <Route path='/ml' component={ML} />
         <Route path='/picture' component={Picute} />
         <Route path='/finish' component={Finish} />
-
         <Route path='/region' component={Region} />
+        <Route path='/comparison' component={Comparison} />
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
