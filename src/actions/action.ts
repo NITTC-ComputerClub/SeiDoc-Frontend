@@ -42,7 +42,7 @@ export const fetchSystemByCategory = (category: string, region: string) => (disp
             )
 }
 
-const getSystemDataByFireStore = async (systems: Array<System>) => {
+export const getSystemDataByFireStore = async (systems: Array<System>) => {
     const promises: Array<Promise<firebase.firestore.DocumentSnapshot>> = []
     for (const system of systems) {
         promises.push(fireStore.collection(systemIndex).doc(system.documentID).get())

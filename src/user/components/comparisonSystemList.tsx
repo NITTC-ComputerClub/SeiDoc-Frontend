@@ -1,7 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../store'
-import Indicator from './indicator'
 import { withRouter, RouteComponentProps } from 'react-router'
 import "../../scss/systemList.scss"
 import { System } from '../../types/type';
@@ -13,24 +10,21 @@ interface propsType extends RouteComponentProps {
 }
 
 const ComparionSystemList: React.FC<propsType> = (props) => {
-    const loading = useSelector((state: AppState) => state.systemsState.loading)
     console.log('systems:', props.systems)
 
     return (
         <div className="systemList">
-            {loading ? <Indicator /> :
-                <ul>
-                    {
-                        props.systems.map((system: System) => (
-                            <SystemCard
-                                wide
-                                key={system.Name}
-                                system={system}
-                            />
-                        ))
-                    }
-                </ul>
-            }
+            <ul>
+                {
+                    props.systems.map((system: System) => (
+                        <SystemCard
+                            wide
+                            key={system.Name}
+                            system={system}
+                        />
+                    ))
+                }
+            </ul>
         </div>
     )
 }
