@@ -23,7 +23,6 @@ const Menu = styled.div`
 const Myself: React.FC<propsType> = (props) => {
     const clearImage = () => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
-        const context = canvas.getContext('2d') as CanvasRenderingContext2D
         const obj = document.getElementById('showImage') as HTMLElement
 
         // 前回の入力フォームを削除
