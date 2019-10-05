@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import { fireStore, systemIndex } from '../../firebase/firebase'
 import { AppState } from '../../store';
 import { useSelector } from 'react-redux';
@@ -88,14 +88,15 @@ const Input: React.FC<historyProps> = props => {
     let targetFamily: number = 0
     let targetAge: number = 0
     let sysmethod: Array<string> = ['金銭補助']
-    let category: string = ''
+    // let category: string = ''
     let systemData: System
-
+    const [selectionCategory, setSelectionCategory] = useState<string[]>([])
 
     const user = useSelector((state: AppState) => state.userState)
     console.log(user)
 
     const post = () => {
+        setSelectionCategory(selectionCategory)
         systemData = {
             Name: name,
             Location: user.city,
@@ -104,7 +105,7 @@ const Input: React.FC<historyProps> = props => {
             Site: site,
             Detail: detail,
             Method: sysmethod,
-            Category: [category],
+            Category: selectionCategory,
             CreatedAt: Date.now(),
             UpdatedAt: 2262025600000,
             isDeleted: false,
@@ -142,6 +143,17 @@ const Input: React.FC<historyProps> = props => {
         ).catch(err => console.error(err))
     }
 
+    const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const position = selectionCategory.indexOf(e.target.value)
+        if (position === -1) {
+            selectionCategory.push(e.target.value)
+        } else {
+            selectionCategory.splice(position, 1)
+        }
+        setSelectionCategory(selectionCategory)
+        console.log(selectionCategory)
+    }
+
     if (!user.isAdmin) {
         return (
             <Redirect to={'/admin/login'} />
@@ -159,7 +171,7 @@ const Input: React.FC<historyProps> = props => {
                                 <Label>制度名</Label>
                                 <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力" />
                                 <Label>カテゴリ</Label>
-                                <Select onChange={e => { category = e.target.value }}>
+                                {/* <Select onChange={e => { category = e.target.value }}>
                                     <option defaultChecked>カテゴリを選択</option>
                                     <option value="子育て">子育て</option>
                                     <option value="介護">介護</option>
@@ -170,6 +182,19 @@ const Input: React.FC<historyProps> = props => {
                                     <option value="高齢者">高齢者</option>
                                     <option value="その他">その他</option>
                                 </Select>
+        */ }
+                                <input
+                                    type="checkbox"
+                                    value='子育て'
+                                    checked={selectionCategory.find(item => item === '子育て') !== undefined}
+                                    onChange={e => handleCategoryChange(e)}
+                                />子育て
+                                <input
+                                    type="checkbox"
+                                    value='介護'
+                                    checked={selectionCategory.indexOf('介護') !== -1}
+                                    onChange={e => handleCategoryChange(e)}
+                                />介護
                                 <Label>おおまかな制度対象者</Label>
                                 <Select onChange={e => { targetSex = parseInt(e.target.value) }} >
                                     <option value="-1">性別を選択してください</option>
