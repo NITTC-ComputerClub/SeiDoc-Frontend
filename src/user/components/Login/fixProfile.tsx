@@ -6,6 +6,9 @@ import drawProfile from './drawProfile'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { profileDataType, UserState, TargetSex, TargetFamily } from '../../../types/type'
 import { fireStore } from '../../../firebase/firebase'
+import Button from '../../../designSystem/Button'
+import styled from 'styled-components'
+import setting from '../../../designSystem/setting'
 
 type historyProps = RouteComponentProps
 
@@ -13,6 +16,37 @@ type dataType = {
     profileData: Array<profileDataType>,
 }
 type propsType = historyProps & dataType
+
+const SelectBox = styled.div`
+    label {
+        display: block;
+        font-size: ${setting.P1};
+        text-align: left;
+    }
+
+    select {
+        background-color: ${setting.Gray5};
+        box-sizing: border-box;
+        padding: 8px 4px;
+        border-radius: 4px;
+        border: none;
+    }
+`
+
+const FlexBox = styled.div`
+    margin: 0 auto;
+    width: 240px;
+    display: flex;
+`
+
+const Menu = styled.div`
+    display: flex;
+    margin: 32px 32px;
+
+    .right {
+        margin: 0 0 0 auto;
+    }
+`
 
 const FixProfile: React.FC<propsType> = (props) => {
     const userData = useSelector((state: AppState) => state.userState)
@@ -161,27 +195,36 @@ const FixProfile: React.FC<propsType> = (props) => {
 
     return (
         <div>
-            <p>関係</p>
-            <select id='relationship'>
-                <option value='本人-男性'>本人-男性</option>
-                <option value='本人-女性'>本人-女性</option>
-                <option value='夫'>夫</option>
-                <option value='妻'>妻</option>
-                <option value='息子'>息子</option>
-                <option value='娘'>娘</option>
-                <option value='父'>父</option>
-                <option value='母'>母</option>
-            </select>
-            <p>年齢</p>
-            <select id='age'>
-                {ageLoop()}
-            </select>
-            <button onClick={editData}>修正</button>
-            <button onClick={() => {
-                props.history.push('/finish')
-                login(userData)
-                handleFirebaseUpdata()
-            }}>登録完了</button>
+            <FlexBox>
+                <SelectBox style={{margin: '0 auto 0 0'}}>
+                    <label>関係</label>
+                    <select id='relationship'>
+                        <option value='本人-男性'>本人-男性</option>
+                        <option value='本人-女性'>本人-女性</option>
+                        <option value='夫'>夫</option>
+                        <option value='妻'>妻</option>
+                        <option value='息子'>息子</option>
+                        <option value='娘'>娘</option>
+                        <option value='父'>父</option>
+                        <option value='母'>母</option>
+                    </select>
+                </SelectBox>
+                <SelectBox>
+                    <label>年齢</label>
+                    <select id='age'>
+                        {ageLoop()}
+                    </select>
+                    　歳
+                </SelectBox>
+            </FlexBox>
+            <Button wide green onClick={editData}>関係と年齢を修正</Button>
+            <Menu>
+                <Button className="right" blue onClick={() => {
+                    props.history.push('/finish')
+                    login(userData)
+                    handleFirebaseUpdata()
+                }}>次へ</Button>
+            </Menu>
         </div>
     )
 }

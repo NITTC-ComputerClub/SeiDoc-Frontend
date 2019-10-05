@@ -9,7 +9,7 @@ const FinishPage: React.FC = () => {
             <div className="signUpForm">
                 <div className="title">
                     <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
-                    <h2>登録</h2>
+                    <h2>新規登録</h2>
                 </div>
                 <Finish />
             </div>

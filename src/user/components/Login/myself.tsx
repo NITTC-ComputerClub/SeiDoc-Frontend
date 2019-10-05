@@ -27,19 +27,18 @@ const Myself: React.FC<propsType> = (props) => {
         const obj = document.getElementById('showImage') as HTMLElement
 
         // 前回の入力フォームを削除
-        const ageNode = document.querySelectorAll('input.view_age')
+        const ageNode = document.querySelectorAll('input.viewAge')
         if (ageNode.length !== 0) {
             ageNode.forEach((child) => {
                 obj.removeChild(child)
             })
         }
-        const relationshipNode = document.querySelectorAll('input.view_relationship')
+        const relationshipNode = document.querySelectorAll('input.viewRelationship')
         if (relationshipNode.length !== 0) {
             relationshipNode.forEach((child) => {
                 obj.removeChild(child)
             })
         }
-        context.clearRect(0, 0, 350, 400)
 
         props.setProfileData([])
     }

@@ -1,9 +1,17 @@
 import React from 'react'
 import Indicator from '../indicator'
 import styled from 'styled-components';
+import setting from '../../../designSystem/setting';
 
 const ShowImage = styled.div`
     position: relative;
+    margin-top: 48px;
+    
+    .viewAge, .viewRelationship {
+        border: solid 2px ${setting.TextGray};
+        border-radius: 2px;
+        text-align: center;
+    }
 `
 
 const Canvas = styled.canvas`

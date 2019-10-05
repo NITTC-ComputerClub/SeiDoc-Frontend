@@ -1,4 +1,5 @@
 import { profileDataType } from '../../../types/type'
+import setting from '../../../designSystem/setting'
 
 const DrawProfile = (profileData: Array<profileDataType>) => {
     if (profileData.length !== 0) {
@@ -32,12 +33,20 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             const relationship = element.relationship
             const person = element.isMyself
 
+            // 生成するテキストボックス
+            const viewAge = document.createElement('input')
+            const viewRelationship = document.createElement('input')
+
             // 顔に四角を生成 
             if (gender === 'Male') {
                 context.strokeStyle = 'blue'
+                viewAge.style.color = setting.ThemeBlue
+                viewRelationship.style.color = setting.ThemeBlue
             }
             else if (gender === 'Female') {
                 context.strokeStyle = 'red'
+                viewAge.style.color = setting.Red
+                viewRelationship.style.color = setting.Red
             }
             if (person) {
                 context.strokeStyle = 'green'
@@ -45,11 +54,11 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             context.strokeRect(left, top, width, heigh)
 
             // 年齢のテキストボックスを生成 
-            const viewAge = document.createElement('input')
-            viewAge.className = 'view_age' // これでCSS当てられる？
+            viewAge.className = 'viewAge' // これでCSS当てられる？
 
             viewAge.value = age.toString()
             viewAge.style.position = 'absolute'
+            viewAge.readOnly = true
 
             // canvas -> clientへの変換用
             const ratio =  canvas.clientWidth / canvas.width
@@ -60,11 +69,11 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             obj.appendChild(viewAge) //bodyの子ノードリストの末尾にノードを追加
 
             //家族関係のテキストボックス生成
-            const viewRelationship = document.createElement('input')
-            viewRelationship.className = 'view_relationship'
+            viewRelationship.className = 'viewRelationship'
             if (person && gender === 'Male') viewRelationship.value = '本人-男性'
             else if (person && gender === 'Female') viewRelationship.value = '本人-女性'
             else viewRelationship.value = relationship
+            viewRelationship.readOnly = true
             viewRelationship.style.position = 'absolute'
             viewRelationship.style.top = top * ratio - 50 + 'px'
             viewRelationship.style.left = left * ratio + 'px'

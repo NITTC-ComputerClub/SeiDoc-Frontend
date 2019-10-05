@@ -26,18 +26,20 @@ const FamilyImg = styled.img`
     width: 128px;
 `
 
+const Message = styled.p`
+    font-size: ${setting.P1};
+    color: ${setting.ThemeGreen};
+`
+
 const getNavigationMessage = (isLoadedImg: boolean, myself: boolean) => {
     if (isLoadedImg) {
         if (myself) {
             return (
-                <p>自分の顔をタッチしてください</p>
+                <Message>自分の顔をタッチしてください</Message>
             )
         } else {
             return  (
-                <div>
-                    <p>修正したい人物の顔をタッチして</p>
-                    <p>情報を修正してください</p>
-                </div>
+                <Message>修正したい人物の顔をタッチして<br />情報を修正してください</Message>
             )
         }
     } else {
