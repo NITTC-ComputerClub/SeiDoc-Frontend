@@ -186,7 +186,7 @@ const Input: React.FC<historyProps> = props => {
                                 <input
                                     type="checkbox"
                                     value='子育て'
-                                    checked={selectionCategory.find(item => item === '子育て') !== undefined}
+                                    checked={selectionCategory.indexOf('子育て') !== -1}
                                     onChange={e => handleCategoryChange(e)}
                                 />子育て
                                 <input
