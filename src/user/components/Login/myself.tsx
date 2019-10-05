@@ -1,12 +1,24 @@
 import React, { useEffect } from 'react'
 import drawProfile from './drawProfile'
 import { profileDataType } from '../../../types/type'
+import Button from '../../../designSystem/Button'
+import styled from 'styled-components'
 
 type propsType = {
     profileData: Array<profileDataType>,
     setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>,
     setMyself: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+const Menu = styled.div`
+    display: flex;
+    margin: 32px 0;
+    padding: 0 32px;
+
+    .left {
+        margin: 0 0 0 auto;
+    }
+`
 
 const Myself: React.FC<propsType> = (props) => {
     const clearImage = () => {
@@ -76,13 +88,13 @@ const Myself: React.FC<propsType> = (props) => {
     }, [props])
 
     return (
-        <div>
-            <button onClick={clearImage}>戻る</button>
-            <button onClick={() => {
+        <Menu>
+            <Button normal link onClick={clearImage}>戻る</Button>
+            <Button className="left" blue onClick={() => {
                 props.setProfileData(props.profileData)
                 props.setMyself(false)
-            }}>次へ</button>
-        </div>
+            }}>次へ</Button>
+        </Menu>
     )
 }
 
