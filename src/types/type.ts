@@ -253,3 +253,8 @@ export type tabsType = {
   content: JSX.Element
 }
 
+export type tabsDataType = {
+  region: string,
+  systems: Array<System>
+}
+
