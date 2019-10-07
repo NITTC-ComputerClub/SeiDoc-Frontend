@@ -9,6 +9,7 @@ const actionCreator = actionCreatorFactory()
 export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<{}, Array<System>>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
 export const fetchSystemToComparisonCreator = actionCreator.async<{}, Array<TabsState>>('SYSTEM_FETCH_BY_COMPARSION')
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
+export const initComparisonCreator = actionCreator('INIT_COMPARISON')
 
 export const getSystemDataByFireStore = async (systems: Array<System>) => {
     const promises: Array<Promise<firebase.firestore.DocumentSnapshot>> = []
