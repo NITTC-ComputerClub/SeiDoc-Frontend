@@ -91,7 +91,6 @@ const Input: React.FC<historyProps> = props => {
     // let category: string = ''
     let systemData: System
     const [selectionCategory, setSelectionCategory] = useState<string[]>([])
-
     const user = useSelector((state: AppState) => state.userState)
     console.log(user)
 
@@ -144,14 +143,14 @@ const Input: React.FC<historyProps> = props => {
     }
 
     const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const position = selectionCategory.indexOf(e.target.value)
+        const selectionCategoryArray: string[] = selectionCategory.slice()
+        const position = selectionCategoryArray.indexOf(e.target.value)
         if (position === -1) {
-            selectionCategory.push(e.target.value)
+            selectionCategoryArray.push(e.target.value)
         } else {
-            selectionCategory.splice(position, 1)
+            selectionCategoryArray.splice(position, 1)
         }
-        setSelectionCategory(selectionCategory)
-        console.log(selectionCategory)
+        setSelectionCategory(selectionCategoryArray)
     }
 
     if (!user.isAdmin) {
@@ -171,18 +170,6 @@ const Input: React.FC<historyProps> = props => {
                                 <Label>制度名</Label>
                                 <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力" />
                                 <Label>カテゴリ</Label>
-                                {/* <Select onChange={e => { category = e.target.value }}>
-                                    <option defaultChecked>カテゴリを選択</option>
-                                    <option value="子育て">子育て</option>
-                                    <option value="介護">介護</option>
-                                    <option value="建築">建築</option>
-                                    <option value="病気">病気</option>
-                                    <option value="融資">融資</option>
-                                    <option value="地域">地域</option>
-                                    <option value="高齢者">高齢者</option>
-                                    <option value="その他">その他</option>
-                                </Select>
-        */ }
                                 <input
                                     type="checkbox"
                                     value='子育て'
@@ -195,6 +182,42 @@ const Input: React.FC<historyProps> = props => {
                                     checked={selectionCategory.indexOf('介護') !== -1}
                                     onChange={e => handleCategoryChange(e)}
                                 />介護
+                                <input
+                                    type="checkbox"
+                                    value='建築'
+                                    checked={selectionCategory.indexOf('建築') !== -1}
+                                    onChange={e => handleCategoryChange(e)}
+                                />建築
+                                <input
+                                    type="checkbox"
+                                    value='病気'
+                                    checked={selectionCategory.indexOf('病気') !== -1}
+                                    onChange={e => handleCategoryChange(e)}
+                                />病気
+                                <input
+                                    type="checkbox"
+                                    value='融資'
+                                    checked={selectionCategory.indexOf('融資') !== -1}
+                                    onChange={e => handleCategoryChange(e)}
+                                />融資
+                                <input
+                                    type="checkbox"
+                                    value='地域'
+                                    checked={selectionCategory.indexOf('地域') !== -1}
+                                    onChange={e => handleCategoryChange(e)}
+                                />地域
+                                <input
+                                    type="checkbox"
+                                    value='高齢者'
+                                    checked={selectionCategory.indexOf('高齢者') !== -1}
+                                    onChange={e => handleCategoryChange(e)}
+                                />高齢者
+                                <input
+                                    type="checkbox"
+                                    value='その他'
+                                    checked={selectionCategory.indexOf('その他') !== -1}
+                                    onChange={e => handleCategoryChange(e)}
+                                />その他
                                 <Label>おおまかな制度対象者</Label>
                                 <Select onChange={e => { targetSex = parseInt(e.target.value) }} >
                                     <option value="-1">性別を選択してください</option>
