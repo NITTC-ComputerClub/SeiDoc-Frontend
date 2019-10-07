@@ -11,10 +11,9 @@ const initialState: Array<TabsState> = []
 
 export const ComparisonReducer = reducerWithInitialState(initialState)
     .case(fetchSystemToComparisonCreator.started, (state) => {
-        console.log('CH', [...state])
         return [...state]
     })
-    .case(fetchSystemToComparisonCreator.done, (state: any, fetchData: any) => {
-        console.log('CH', [...state, fetchData.result])
-        return [...state, fetchData.result]
+    .case(fetchSystemToComparisonCreator.done, (state: Array<TabsState>, fetchData: any) => {
+        console.log('CH', [...state].concat(fetchData.result))
+        return state.concat(fetchData.result)
     })
