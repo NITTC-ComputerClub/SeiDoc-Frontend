@@ -109,9 +109,19 @@ const SearchBar: React.FC<historyProps> = (props) => {
     }
     const searchHandler = () => {
         collectSearchLog(inputValue);
-        let query = '?value=' + inputValue
-        if (tag !== '') query = query + '&tag=' + tag
-        if (region !== undefined) query = query + '&region=' + region
+        let query = ''
+        if (inputValue !== '') {
+            query = '?value=' + inputValue
+            if (tag !== '') query = query + '&tag=' + tag
+            if (region !== undefined) query = query + '&region=' + region
+        }
+        else {
+            if (tag !== '' && region !== undefined) query = '?tag=' + tag + '&region=' + region
+            else {
+                if (tag !== '') query = '?tag=' + tag
+                if (region !== undefined) query = '?region=' + region
+            }
+        }
         props.history.push(props.pushTo + query)
     }
     return (
