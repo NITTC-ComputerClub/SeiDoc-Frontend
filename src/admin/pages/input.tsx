@@ -290,6 +290,8 @@ const Input: React.FC<historyProps> = props => {
                                         onChange={e => handleTargetFamilyChange(e)}
                                     />介護
                                 </div>
+                                {console.log(selectionCategory)}
+                                {console.log(selectionTargetFamily)}
                                 <Select onChange={e => { targetAge = parseInt(e.target.value) }}>
                                     <option value="-1">対象を選択してください</option>
                                     <option value="0">乳児</option>
