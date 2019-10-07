@@ -84,13 +84,15 @@ const Input: React.FC<historyProps> = props => {
     let target: string = ''
     let site: string = ''
     let detail: string = ''
-    let targetSex: number = 0
-    let targetFamily: number = 0
+    // let targetSex: number = 0
+    // let targetFamily: number = 0
     let targetAge: number = 0
     let sysmethod: Array<string> = ['金銭補助']
     // let category: string = ''
     let systemData: System
     const [selectionCategory, setSelectionCategory] = useState<string[]>([])
+    const [selectionTargetFamily, setSelectionTargetFamily] = useState<number[]>([])
+    const [targetSex, setTargetSex] = useState<number>(0)
     const user = useSelector((state: AppState) => state.userState)
     console.log(user)
 
@@ -113,9 +115,9 @@ const Input: React.FC<historyProps> = props => {
             totalView: 0,
             dailyView: 0,
             monthlyView: 0,
-            weeklyView: [0,0,0,0,0,0,0],
+            weeklyView: [0, 0, 0, 0, 0, 0, 0],
             ageGroup: [],
-            targetFamily: targetFamily,
+            targetFamily: selectionTargetFamily,
             targetSex: targetSex,
             targetAge: targetAge
         }
@@ -151,6 +153,17 @@ const Input: React.FC<historyProps> = props => {
             selectionCategoryArray.splice(position, 1)
         }
         setSelectionCategory(selectionCategoryArray)
+    }
+
+    const handleTargetFamilyChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const selectionTargetFamilyArray: number[] = selectionTargetFamily.slice()
+        const position = selectionTargetFamilyArray.indexOf(parseInt(e.target.value))
+        if (position === -1) {
+            selectionTargetFamilyArray.push(parseInt(e.target.value))
+        } else {
+            selectionTargetFamilyArray.splice(position, 1)
+        }
+        setSelectionTargetFamily(selectionTargetFamilyArray)
     }
 
     if (!user.isAdmin) {
@@ -219,12 +232,64 @@ const Input: React.FC<historyProps> = props => {
                                     onChange={e => handleCategoryChange(e)}
                                 />その他
                                 <Label>おおまかな制度対象者</Label>
-                                <Select onChange={e => { targetSex = parseInt(e.target.value) }} >
-                                    <option value="-1">性別を選択してください</option>
-                                    <option value="0">男性</option>
-                                    <option value="1">女性</option>
-                                    <option value="2">すべて</option>
-                                </Select>
+                                <div>
+                                    <input
+                                        type='radio'
+                                        value="0"
+                                        checked={targetSex === 0}
+                                        onChange={e => setTargetSex(parseInt(e.target.value))}
+                                    />男性
+                                <input
+                                        type='radio'
+                                        value="1"
+                                        checked={targetSex === 1}
+                                        onChange={e => setTargetSex(parseInt(e.target.value))}
+                                    />女性
+                                <input
+                                        type='radio'
+                                        value="2"
+                                        checked={targetSex === 2}
+                                        onChange={e => setTargetSex(parseInt(e.target.value))}
+                                    />すべて
+                                </div>
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        value="0"
+                                        checked={selectionTargetFamily.indexOf(0) !== -1}
+                                        onChange={e => handleTargetFamilyChange(e)}
+                                    />独身
+                                <input
+                                        type="checkbox"
+                                        value="1"
+                                        checked={selectionTargetFamily.indexOf(1) !== -1}
+                                        onChange={e => handleTargetFamilyChange(e)}
+                                    />夫婦
+                                <input
+                                        type="checkbox"
+                                        value="2"
+                                        checked={selectionTargetFamily.indexOf(2) !== -1}
+                                        onChange={e => handleTargetFamilyChange(e)}
+                                    />子持ち
+                                <input
+                                        type="checkbox"
+                                        value="3"
+                                        checked={selectionTargetFamily.indexOf(3) !== -1}
+                                        onChange={e => handleTargetFamilyChange(e)}
+                                    />二世帯
+                                <input
+                                        type="checkbox"
+                                        value="4"
+                                        checked={selectionTargetFamily.indexOf(4) !== -1}
+                                        onChange={e => handleTargetFamilyChange(e)}
+                                    />ひとり親
+                                <input
+                                        type="checkbox"
+                                        value="5"
+                                        checked={selectionTargetFamily.indexOf(5) !== -1}
+                                        onChange={e => handleTargetFamilyChange(e)}
+                                    />介護
+                                </div>
                                 <Select onChange={e => { targetAge = parseInt(e.target.value) }}>
                                     <option value="-1">対象を選択してください</option>
                                     <option value="0">乳児</option>
@@ -242,15 +307,6 @@ const Input: React.FC<historyProps> = props => {
                                     <option value="12">成人</option>
                                     <option value="13">老人</option>
                                     <option value="14">全年齢</option>
-                                </Select>
-                                <Select onChange={e => { targetFamily = parseInt(e.target.value) }}>
-                                    <option value="-1">対象の家庭を選択してください</option>
-                                    <option value="0">独身</option>
-                                    <option value="1">夫婦</option>
-                                    <option value="2">子持ち</option>
-                                    <option value="3">二世帯</option>
-                                    <option value="4">ひとり親</option>
-                                    <option value="5">介護</option>
                                 </Select>
                                 <Label>援助対象者</Label>
                                 <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />

@@ -96,7 +96,7 @@ export type System = {
   dailyView: number;
   ageGroup: ageGroup[];
   targetAge: TargetAge;
-  targetFamily: TargetFamily;
+  targetFamily: TargetFamily[];
   targetSex: TargetSex;
 };
 export enum TargetSex {
