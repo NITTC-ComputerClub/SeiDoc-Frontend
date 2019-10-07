@@ -30,7 +30,7 @@ const ComparisonTabs: React.FC<historyProps> = (props) => {
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const addComparsion = (query: string, category: string, region: string) => dispatch(fetchSystemToComparison(query, category, region))
         regionArray.forEach((region => {
-            addComparsion(category, query, region)
+            addComparsion(query, category, region)
         }))
         category !== undefined && addTag(category)
     }, [dispatch, category, query, props])

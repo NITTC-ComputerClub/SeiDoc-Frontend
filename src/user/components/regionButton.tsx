@@ -24,8 +24,8 @@ const RegionButton: React.FC<historyProps> = (props) => {
     return (
         <div>
             {regionMap.map((region) => (
-                category ?
-                    <button key={region} onClick={() => addComparsion(category, query, region)}>{region}</button> :
+                category !== undefined || query !== undefined ?
+                    <button key={region} onClick={() => addComparsion(query, category, region)}>{region}</button> :
                     <button key={region} onClick={() => props.history.push('./category?region=' + region)}>{region}</button>
             ))}
         </div>
