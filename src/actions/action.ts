@@ -6,42 +6,9 @@ import { systemIndex } from '../firebase/firebase'
 import { System, UserState, TabsState } from '../types/type';
 const actionCreator = actionCreatorFactory()
 
-export const fetchSystemByCategoryCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_CATEGORY')
-export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
-export const fetchSystemToComparisonCreator = actionCreator.async<undefined, Array<TabsState>, undefined>('SYSTEM_FETCH_BY_COMPARSION')
+export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<{}, Array<System>>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
+export const fetchSystemToComparisonCreator = actionCreator.async<{}, Array<TabsState>>('SYSTEM_FETCH_BY_COMPARSION')
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
-
-export const fetchSystemByCategory = (category: string, region: string) => (dispatch: Dispatch) => {
-    dispatch(fetchSystemByCategoryCreator.started())
-    console.log('start fetching System. category:', category)
-    let searchData: Array<System> = []
-    fireStore.collection(systemIndex).where('Category', 'array-contains', category).get()
-        .then(
-            (snapshot) => {
-                snapshot.forEach((doc) => {
-                    searchData.push(doc.data() as System)
-                })
-            }).then(() => {
-                console.log(region)
-                if (region !== undefined) {
-                    searchData = searchData.filter(system => {
-                        if (system.Location === region) {
-                            return true
-                        } else {
-                            return false
-                        }
-                    }).map(system => system)
-                }
-            }).then(
-                () => {
-                    console.log(searchData)
-                    dispatch(fetchSystemByCategoryCreator.done({
-                        params: undefined,
-                        result: searchData
-                    }))
-                }
-            )
-}
 
 export const getSystemDataByFireStore = async (systems: Array<System>) => {
     const promises: Array<Promise<firebase.firestore.DocumentSnapshot>> = []
@@ -55,7 +22,7 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
     console.log('query=', query, 'category=', category, 'region=', region)
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
     const index = client.initIndex(algoliaSearchIndex)
-    dispatch(fetchSystemByAlgoliaSearchCreator.started())
+    dispatch(fetchSystemByAlgoliaSearchCreator.started({ params: {} }))
 
     let algoliaSearchData: Array<System>
     index.search({
@@ -78,7 +45,7 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
             )
         }).then(() => {
             dispatch(fetchSystemByAlgoliaSearchCreator.done({
-                params: undefined,
+                params: {},
                 result: system
             }))
         })
@@ -89,7 +56,7 @@ export const fetchSystemToComparison = (query: string, category: string, region:
     console.log('query=', query, 'category=', category, 'region=', region)
     const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
     const index = client.initIndex(algoliaSearchIndex)
-    dispatch(fetchSystemToComparisonCreator.started())
+    dispatch(fetchSystemToComparisonCreator.started({ params: {} }))
 
     let algoliaSearchData: Array<System>
     index.search({
@@ -113,7 +80,7 @@ export const fetchSystemToComparison = (query: string, category: string, region:
         }).then(() => {
             const newData: Array<TabsState> = [{ region: region, systems: system }]
             dispatch(fetchSystemToComparisonCreator.done({
-                params: undefined,
+                params: {},
                 result: newData
             }))
         })
