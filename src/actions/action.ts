@@ -3,11 +3,12 @@ import algoliasearch from 'algoliasearch';
 import { fireStore, algoliaSearchIndex } from '../firebase/firebase';
 import { Dispatch } from 'redux'
 import { systemIndex } from '../firebase/firebase'
-import { System, UserState } from '../types/type';
+import { System, UserState, TabsState } from '../types/type';
 const actionCreator = actionCreatorFactory()
 
 export const fetchSystemByCategoryCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_CATEGORY')
 export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<undefined, Array<System>, undefined>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
+export const fetchSystemToComparisonCreator = actionCreator.async<undefined, Array<TabsState>, undefined>('SYSTEM_FETCH_BY_COMPARSION')
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
 
 export const fetchSystemByCategory = (category: string, region: string) => (dispatch: Dispatch) => {
@@ -58,7 +59,7 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
 
     let algoliaSearchData: Array<System>
     index.search({
-        query: query ? query: ' ',
+        query: query ? query : ' ',
     }).then(res => {
         algoliaSearchData = res.hits as Array<System>
         console.log('res.hits', algoliaSearchData)
@@ -84,6 +85,40 @@ export const fetchSystemByAlgoliaSearch = (query: string, category: string, regi
     }).catch(err => console.error("error at algoliasearch", err))
 }
 
+export const fetchSystemToComparison = (query: string, category: string, region: string) => (dispatch: Dispatch) => {
+    console.log('query=', query, 'category=', category, 'region=', region)
+    const client = algoliasearch('XW5SXYAQX9', '81fe6c5ab81e766f4ec390f474dde5b9')
+    const index = client.initIndex(algoliaSearchIndex)
+    dispatch(fetchSystemToComparisonCreator.started())
+
+    let algoliaSearchData: Array<System>
+    index.search({
+        query: query ? query : ' ',
+    }).then(res => {
+        algoliaSearchData = res.hits as Array<System>
+        console.log('res.hits', algoliaSearchData)
+        if (region !== undefined) {
+            algoliaSearchData = algoliaSearchData.filter(s => (s.Location === region)).map(s => s)
+        }
+        if (category !== undefined) {
+            algoliaSearchData = algoliaSearchData.filter(s => s.Category.includes(category)).map(s => s)
+        }
+        console.log('result:', algoliaSearchData)
+    }).then(() => {
+        const system: Array<System> = []
+        getSystemDataByFireStore(algoliaSearchData).then(snapshot => {
+            snapshot.forEach(s =>
+                system.push(s.data() as System)
+            )
+        }).then(() => {
+            const newData: Array<TabsState> = [{ region: region, systems: system }]
+            dispatch(fetchSystemToComparisonCreator.done({
+                params: undefined,
+                result: newData
+            }))
+        })
+    }).catch(err => console.error("error at algoliasearch", err))
+}
 
 export const addTagCreator = actionCreator<string>('ADD_TAG')
 export const deleteTagCreator = actionCreator('DELETE_TAG')

@@ -23,7 +23,7 @@ const Search: React.FC<RouteComponentProps> = (props) => {
                 <Tag />
                 <h3>検索結果</h3>
                 {region ?
-                    <ComparisonTabs region={region} /> :
+                    <ComparisonTabs /> :
                     <SystemList />
                 }
             </div>

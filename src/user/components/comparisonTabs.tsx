@@ -1,21 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from '../../store'
+import { getSystemDataByFireStore, addTagCreator, fetchSystemToComparison } from '../../actions/action'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import RegionButton from '../components/regionButton'
 import ComparisonSystemList from '../components/comparisonSystemList'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { parse } from 'query-string'
-import { tabsType, tabsDataType, System } from '../../types/type'
+import { tabsType, TabsState, System } from '../../types/type'
 import algoliasearch from 'algoliasearch'
 import { algoliaSearchIndex } from '../../firebase/firebase'
-import { getSystemDataByFireStore, addTagCreator } from '../../actions/action'
 import '../../../node_modules/react-tabs/style/react-tabs.css'
 
-interface propsType extends RouteComponentProps {
-    region: string
-}
+type historyProps = RouteComponentProps
 
-const ComparisonTabs: React.FC<propsType> = (props) => {
+const ComparisonTabs: React.FC<historyProps> = (props) => {
+    const test = useSelector((state: AppState) => state.tabsState)
+    console.log('CH', test)
+
+    const region = parse(props.location.search).region as string
+    const regionArray = region.split(',')
     const category = parse(props.location.search).tag as string
     const query = parse(props.location.search).value as string
     const dispatch = useDispatch()
@@ -50,13 +54,17 @@ const ComparisonTabs: React.FC<propsType> = (props) => {
         }).catch(err => console.error("error at algoliasearch", err))
     }, [])
 
-    const [tabsData, setTabsData] = useState<Array<tabsDataType>>([])
+    const [tabsData, setTabsData] = useState<Array<TabsState>>([])
     const [tabs, setTabs] = useState<Array<tabsType>>([
         { title: '+', content: <RegionButton category={category} query={query} algoliaSearch={algoliaSearch} /> }
     ])
 
     useEffect(() => {
-        algoliaSearch(category, query, props.region)
+        const addComparsion = (query: string, category: string, region: string) => dispatch(fetchSystemToComparison(query, category, region))
+        regionArray.forEach((region => {
+            addComparsion(category, query, region)
+            algoliaSearch(category, query, region)
+        }))
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         category !== undefined && addTag(category)
     }, [props, algoliaSearch, setTabsData, dispatch, category, query])
@@ -86,4 +94,4 @@ const ComparisonTabs: React.FC<propsType> = (props) => {
     )
 }
 
-export default withRouter<propsType, React.FC<propsType>>(ComparisonTabs)
+export default withRouter<historyProps, React.FC<historyProps>>(ComparisonTabs)
