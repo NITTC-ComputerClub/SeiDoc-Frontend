@@ -130,13 +130,13 @@ const Input: React.FC<historyProps> = props => {
       targetAge: targetAge
     };
     console.log(systemData);
-    if (systemName === '' ||
-      department === '' ||
-      location === '' ||
-      site === '' ||
-      target === '' ||
-      detail === '' ||
-      method === '' ||
+    if (systemName === "" ||
+      department === "" ||
+      location === "" ||
+      site === "" ||
+      target === "" ||
+      detail === "" ||
+      method === "" ||
       selectionCategory.length === 0 ||
       selectionTargetFamily.length === 0 ||
       targetAge === -1) {
