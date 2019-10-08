@@ -34,7 +34,6 @@ const SignUp: React.FC<historyProps> = (props) => {
         userData['birthday'] = birthday
         userData['address'] = address
         userData.isAdmin = false;
-        userData.city = 'None';
         userData.department = 'None';
         userData.family = []
         userData.targetFamily = -1
