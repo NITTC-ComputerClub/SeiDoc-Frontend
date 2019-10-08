@@ -9,7 +9,7 @@ import setting from '../../designSystem/setting';
 import Button from '../../designSystem/Button';
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
-import { System } from '../../types/type'
+import { System, TargetAge, TargetSex, TargetFamily } from '../../types/type';
 
 const Title = styled.h1`
     font-size: ${setting.H1};
@@ -79,36 +79,33 @@ const Textarea = styled.textarea`
 type historyProps = RouteComponentProps
 
 const Input: React.FC<historyProps> = props => {
-    let name: string = ''
-    let department: string = ''
-    let target: string = ''
-    let site: string = ''
-    let detail: string = ''
-    // let targetSex: number = 0
-    // let targetFamily: number = 0
-    let targetAge: number = 0
-    let sysmethod: Array<string> = ['金銭補助']
-    // let category: string = ''
-    let systemData: System
-    const [selectionCategory, setSelectionCategory] = useState<string[]>([])
-    const [selectionTargetFamily, setSelectionTargetFamily] = useState<number[]>([])
-    const [targetSex, setTargetSex] = useState<number>(0)
     const user = useSelector((state: AppState) => state.userState)
-    console.log(user)
+    const [systemName, setSystemName] = useState<string>('');
+    const [department, setDepartment] = useState<string>('');
+    const [location, setLocation] = useState<string>(user.address);
+    const [site, setSite] = useState<string>('');
+    const [detail, setDetail] = useState<string>('');
+    const [target, setTarget] = useState<string>('');
+    const [method, setMethod] = useState<string>('');
+    const [selectionCategory, setSelectionCategory] = useState<string[]>([])
+    const [targetSex, setTargetSex] = useState<number>(0)
+    const [selectionTargetFamily, setSelectionTargetFamily] = useState<number[]>([])
+    const [targetAge, setTargetAge] = useState<TargetAge>(0)
+
 
     const post = () => {
         setSelectionCategory(selectionCategory)
-        systemData = {
-            Name: name,
-            Location: user.city,
+        const systemData : System = {
+            Name: systemName,
+            Location: location,
             Department: department,
             Target: target,
             Site: site,
             Detail: detail,
-            Method: sysmethod,
+            Method: [method],
             Category: selectionCategory,
             CreatedAt: Date.now(),
-            UpdatedAt: 2262025600000,
+            UpdatedAt: Date.now(),
             isDeleted: false,
             ExpireAt: 2262025600000,
             documentID: '-1',
@@ -181,7 +178,7 @@ const Input: React.FC<historyProps> = props => {
                             <Title>新制度登録</Title>
                             <InputWrapper>
                                 <Label>制度名</Label>
-                                <StyledInput type='text' onChange={e => { name = e.target.value }} placeholder="制度名を入力" />
+                                <StyledInput type='text' onChange={e => setSystemName(e.target.value)} placeholder="制度名を入力" />
                                 <Label>カテゴリ</Label>
                                 <input
                                     type="checkbox"
@@ -236,63 +233,63 @@ const Input: React.FC<historyProps> = props => {
                                     <input
                                         type='radio'
                                         value="0"
-                                        checked={targetSex === 0}
+                                        checked={targetSex === TargetSex.male}
                                         onChange={e => setTargetSex(parseInt(e.target.value))}
                                     />男性
                                 <input
                                         type='radio'
                                         value="1"
-                                        checked={targetSex === 1}
+                                        checked={targetSex === TargetSex.female}
                                         onChange={e => setTargetSex(parseInt(e.target.value))}
                                     />女性
                                 <input
                                         type='radio'
                                         value="2"
-                                        checked={targetSex === 2}
+                                        checked={targetSex === TargetSex.other}
                                         onChange={e => setTargetSex(parseInt(e.target.value))}
                                     />すべて
                                 </div>
                                 <div>
                                     <input
                                         type="checkbox"
-                                        value="0"
+                                        value={TargetFamily.独身}
                                         checked={selectionTargetFamily.indexOf(0) !== -1}
                                         onChange={e => handleTargetFamilyChange(e)}
                                     />独身
                                 <input
                                         type="checkbox"
-                                        value="1"
+                                        value={TargetFamily.夫婦}
                                         checked={selectionTargetFamily.indexOf(1) !== -1}
                                         onChange={e => handleTargetFamilyChange(e)}
                                     />夫婦
                                 <input
                                         type="checkbox"
-                                        value="2"
+                                        value={TargetFamily.子持ち}
                                         checked={selectionTargetFamily.indexOf(2) !== -1}
                                         onChange={e => handleTargetFamilyChange(e)}
                                     />子持ち
                                 <input
                                         type="checkbox"
-                                        value="3"
+                                        value={TargetFamily.二世帯}
                                         checked={selectionTargetFamily.indexOf(3) !== -1}
                                         onChange={e => handleTargetFamilyChange(e)}
                                     />二世帯
                                 <input
                                         type="checkbox"
-                                        value="4"
+                                        value={TargetFamily.ひとり親}
                                         checked={selectionTargetFamily.indexOf(4) !== -1}
                                         onChange={e => handleTargetFamilyChange(e)}
                                     />ひとり親
                                 <input
                                         type="checkbox"
-                                        value="5"
+                                        value={TargetFamily.介護}
                                         checked={selectionTargetFamily.indexOf(5) !== -1}
                                         onChange={e => handleTargetFamilyChange(e)}
                                     />介護
                                 </div>
                                 {console.log(selectionCategory)}
                                 {console.log(selectionTargetFamily)}
-                                <Select onChange={e => { targetAge = parseInt(e.target.value) }}>
+                                <Select onChange={e => {setTargetAge(parseInt(e.target.value))}}>
                                     <option value="-1">対象を選択してください</option>
                                     <option value="0">乳児</option>
                                     <option value="1">幼児</option>
@@ -311,17 +308,17 @@ const Input: React.FC<historyProps> = props => {
                                     <option value="14">全年齢</option>
                                 </Select>
                                 <Label>援助対象者</Label>
-                                <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
+                                <StyledInput type='text' onChange={e => setTarget(e.target.value)} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
                                 <Label>援助方法</Label>
-                                <StyledInput type='text' onChange={e => { target = e.target.value }} placeholder="授業料補助など" />
+                                <StyledInput type='text' onChange={e => setMethod(e.target.value)} placeholder="授業料補助など" />
                                 <Label>対象地区</Label>
-                                <StyledInput type='text' defaultValue={user.city} placeholder="対象地区を入力" />
+                                <StyledInput type='text' defaultValue={user.city} onChange={e => setLocation(e.target.value)}placeholder="対象地区を入力" />
                                 <Label>担当部署</Label>
-                                <StyledInput type='text' onChange={e => { department = e.target.value }} placeholder="担当部署を入力" />
+                                <StyledInput type='text' onChange={e => setDepartment(e.target.value)} placeholder="担当部署を入力" />
                                 <Label>詳細</Label>
-                                <Textarea rows={5} placeholder="詳細を入力" onChange={e => { detail = e.target.value }} />
+                                <Textarea rows={5} placeholder="詳細を入力" onChange={e => setDetail(e.target.value)} />
                                 <Label>公式のページ</Label>
-                                <StyledInput placeholder="公式ページURLを入力" type='text' onChange={e => { site = e.target.value }} />
+                                <StyledInput placeholder="公式ページURLを入力" type='text' onChange={e => setSite(e.target.value)} />
                                 <ButtonWrapper>
                                     <Button blue onClick={post}>登録</Button>
                                 </ButtonWrapper>
