@@ -23,7 +23,7 @@ const initialState: DetailState = {
         monthlyView: 0,
         ageGroup: [],
         targetAge:0,
-        targetFamily:0,
+        targetFamily: [],
         targetSex:2
         
     }

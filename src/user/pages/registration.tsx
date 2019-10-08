@@ -23,7 +23,7 @@ const Registration: React.FC = () => {
         weeklyView: [0,0,0,0,0,0,0],
         monthlyView: 0,
         ageGroup: [],
-        targetFamily:0,
+        targetFamily:[],
         targetSex:2,
         targetAge:0
     }

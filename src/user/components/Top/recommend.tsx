@@ -70,9 +70,9 @@ const Recommend: React.FC = () => {
                     if (data.targetSex === user.sex || data.targetSex === 2) {
                         ranking.count = ranking.count + 1
                     }
-                    if (data.targetFamily === user.targetFamily) {
-                        ranking.count = ranking.count + 1
-                    }
+                    // if (data.targetFamily === user.targetFamily) {
+                    //     ranking.count = ranking.count + 1
+                    // }
                     fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
                         snapshot.forEach(doc => {
                             const searchLog = doc.data() as searchLogType
