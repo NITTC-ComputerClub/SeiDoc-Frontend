@@ -248,3 +248,13 @@ export type userProfile = {
   gender: string
 }
 
+export type tabsType = {
+  title: string,
+  content: JSX.Element
+}
+
+export type TabsState = {
+  region: string,
+  systems: Array<System>
+}
+

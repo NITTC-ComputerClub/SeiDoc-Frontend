@@ -20,7 +20,6 @@ const SystemList: React.FC<historyProps> = (props) => {
     const dispatch = useDispatch()
     //データのfetch
     useEffect(() => {
-        //const categorySearch = (category: string, region: string) => dispatch(fetchSystemByCategory(category,region))
         const alogliaSearch = (query: string, category: string, region: string) => dispatch(fetchSystemByAlgoliaSearch(query, category, region))
         const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
         const deleteSystems = () => dispatch(deleteSystemsCreator())

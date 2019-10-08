@@ -3,23 +3,25 @@ import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 
-import {  TagReducer } from './reducers/tagReducer';
-import {  CategoryButtonReducer } from './reducers/systemsReducer'
-import {  DetailReducer } from './reducers/detailReducer'
+import { TagReducer } from './reducers/tagReducer';
+import { CategoryButtonReducer } from './reducers/systemsReducer'
+import { DetailReducer } from './reducers/detailReducer'
 import { LoginReducer } from './reducers/loginReducer'
-import { SystemsState, DetailState, UserState, TagState } from './types/type';
+import { ComparisonReducer } from './reducers/comparisonReducer'
+import { SystemsState, DetailState, UserState, TagState, TabsState } from './types/type';
 
 export type AppState = {
     systemsState: SystemsState
     tagState: TagState
     detailState: DetailState
-    userState: UserState
+    userState: UserState,
+    tabsState: Array<TabsState>
 }
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['userState'], 
+    whitelist: ['userState'],
     blacklist: ['tagState']
 }
 
@@ -29,6 +31,7 @@ const persistedReducer = persistReducer(persistConfig,
         tagState: TagReducer,
         detailState: DetailReducer,
         userState: LoginReducer,
+        tabsState: ComparisonReducer
     }))
 
 const store = createStore(persistedReducer, {}, applyMiddleware(thunk))

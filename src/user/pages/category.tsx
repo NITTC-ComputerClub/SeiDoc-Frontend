@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import SearchBar from '../components/searchBar'
 import CategoryCardsList from '../components/categoryCardsList'
 import { useDispatch } from 'react-redux'
-import { deleteTagCreator, deleteSystemsCreator } from '../../actions/action'
+import { deleteTagCreator, deleteSystemsCreator, initComparisonCreator } from '../../actions/action'
 import Footer from '../components/footer';
 import Header from '../components/header'
 import styled from 'styled-components';
@@ -26,9 +26,11 @@ const Category: React.FC<historyProps> = (props) => {
     useEffect(() => {
         const deleteTag = () => dispatch(deleteTagCreator())
         const deleteSystems = () => dispatch(deleteSystemsCreator())
-        console.log('tag & systems init')
+        const initComparison = () => dispatch(initComparisonCreator())
+        console.log('tag & systems & comparion init')
         deleteTag()
         deleteSystems()
+        initComparison()
     }, [dispatch])
     return (
         <Wrapper>

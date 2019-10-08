@@ -43,7 +43,6 @@ const App: React.FC = () => {
         <Route path='/ml' component={ML} />
         <Route path='/picture' component={Picute} />
         <Route path='/finish' component={Finish} />
-
         <Route path='/region' component={Region} />
         
         <Route path='/admin/login' component={AdminSignIn} />
