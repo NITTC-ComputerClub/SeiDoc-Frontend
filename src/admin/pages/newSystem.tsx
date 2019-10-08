@@ -336,7 +336,7 @@ const Input: React.FC<historyProps> = props => {
                 <Label>対象地区</Label>
                 <StyledInput
                   type="text"
-                  defaultValue={user.city}
+                  defaultValue={user.address}
                   onChange={e => setLocation(e.target.value)}
                   placeholder="対象地区を入力"
                 />

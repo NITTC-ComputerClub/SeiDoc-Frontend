@@ -63,7 +63,6 @@ export type UserState = {
   targetFamily: TargetFamily
   family: Array<FamilyType>;
   isAdmin: boolean;
-  city: string;
   department: string;
   sex: TargetSex;
   searchedWords: string[];
