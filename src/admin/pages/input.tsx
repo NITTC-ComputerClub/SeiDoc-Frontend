@@ -90,7 +90,7 @@ const Input: React.FC<historyProps> = props => {
     const [selectionCategory, setSelectionCategory] = useState<string[]>([])
     const [targetSex, setTargetSex] = useState<number>(0)
     const [selectionTargetFamily, setSelectionTargetFamily] = useState<number[]>([])
-    const [targetAge, setTargetAge] = useState<TargetAge>(0)
+    const [targetAge, setTargetAge] = useState<TargetAge>(-1)
 
     const categoryList: Array<string> = [
         '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
@@ -98,7 +98,7 @@ const Input: React.FC<historyProps> = props => {
 
     const post = () => {
         setSelectionCategory(selectionCategory)
-        const systemData : System = {
+        const systemData: System = {
             Name: systemName,
             Location: location,
             Department: department,
@@ -121,27 +121,40 @@ const Input: React.FC<historyProps> = props => {
             targetSex: targetSex,
             targetAge: targetAge
         }
-        console.log(systemData)
-        const systemCollection = fireStore.collection(systemIndex)
-        systemCollection.add(systemData).then(
-            ref => {
-                console.log('Added document with ID: ', ref.id)
-                const mode = "no-cors"
-                const method = 'POST'
-                const body = JSON.stringify(systemData)
-                const headers = {
-                    'Accept': 'application/json'
+        if (systemName === '' ||
+            department === '' ||
+            location === '' ||
+            site === '' ||
+            target === '' ||
+            detail === '' ||
+            method === '' ||
+            selectionCategory.length === 0 ||
+            selectionTargetFamily.length === 0 ||
+            targetAge === -1) {
+                alert('必須項目が入力されていません')
+        } else {
+            console.log(systemData)
+            const systemCollection = fireStore.collection(systemIndex)
+            systemCollection.add(systemData).then(
+                ref => {
+                    console.log('Added document with ID: ', ref.id)
+                    const mode = "no-cors"
+                    const method = 'POST'
+                    const body = JSON.stringify(systemData)
+                    const headers = {
+                        'Accept': 'application/json'
+                    }
+                    fetch('https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec',
+                        { mode, method, headers, body })
+                        .then(res => {
+                            console.log(res)
+                            alert("登録が完了しました。")
+                            props.history.push('/admin/')
+                        })
+                        .catch(err => console.error(err))
                 }
-                fetch('https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec',
-                    { mode, method, headers, body })
-                    .then(res => {
-                        console.log(res)
-                        alert("登録が完了しました。")
-                        props.history.push('/admin/')
-                    })
-                    .catch(err => console.error(err))
-            }
-        ).catch(err => console.error(err))
+            ).catch(err => console.error(err))
+        }
     }
 
     const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -185,7 +198,7 @@ const Input: React.FC<historyProps> = props => {
                                 <Label>カテゴリ</Label>
                                 {categoryList.map(categoryName =>
                                     <label key={categoryName}>
-                                        <input 
+                                        <input
                                             key={categoryName}
                                             type="checkbox"
                                             value={categoryName}
@@ -255,7 +268,7 @@ const Input: React.FC<historyProps> = props => {
                                 </div>
                                 {/* {console.log(selectionCategory)}
                                 {console.log(selectionTargetFamily)} */}
-                                <Select onChange={e => {setTargetAge(parseInt(e.target.value))}}>
+                                <Select onChange={e => { setTargetAge(parseInt(e.target.value)) }}>
                                     <option value="-1">対象を選択してください</option>
                                     <option value={TargetAge.乳児}>乳児</option>
                                     <option value={TargetAge.幼児}>幼児</option>
@@ -278,7 +291,7 @@ const Input: React.FC<historyProps> = props => {
                                 <Label>援助方法</Label>
                                 <StyledInput type='text' onChange={e => setMethod(e.target.value)} placeholder="授業料補助など" />
                                 <Label>対象地区</Label>
-                                <StyledInput type='text' defaultValue={user.city} onChange={e => setLocation(e.target.value)}placeholder="対象地区を入力" />
+                                <StyledInput type='text' defaultValue={user.city} onChange={e => setLocation(e.target.value)} placeholder="対象地区を入力" />
                                 <Label>担当部署</Label>
                                 <StyledInput type='text' onChange={e => setDepartment(e.target.value)} placeholder="担当部署を入力" />
                                 <Label>詳細</Label>
