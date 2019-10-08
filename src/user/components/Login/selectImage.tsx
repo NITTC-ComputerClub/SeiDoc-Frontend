@@ -2,17 +2,48 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import { awsRekognition, awsResData, profileDataType } from '../../../types/type'
+import styled from 'styled-components'
+import setting from '../../../designSystem/setting'
+import Button from '../../../designSystem/Button'
 
 type resType = {
     FaceDetails: Array<awsResData>
 }
 type propsType = {
     setProfileData: React.Dispatch<React.SetStateAction<Array<profileDataType>>>,
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setSelect: React.Dispatch<React.SetStateAction<boolean>>,
+    select: boolean
 }
 
+const Message = styled.p`
+    color: ${setting.ThemeGreen};
+`
+
+const FileUploadButton = styled.label`
+    background-color: ${setting.ThemeGreen};
+    color: ${setting.White};
+    padding: 8px;
+    margin: 16px 32px;
+    border-radius: 4px;
+    text-align: center;
+    display: block;
+
+    input {
+        display: none;
+    }
+`
+
+const SkipButton = styled(Link)`
+    color: ${setting.TextGray};
+    display: inline-block;
+`
+
+const Menu = styled.div`
+    margin-bottom: 32px;
+`
+
 const SelectImage: React.FC<propsType> = (props) => {
-    const [select, setSelect] = useState<boolean>(false)
     const [readerResult, setReaderResult] = useState<string>('')
 
     const AWS = require('aws-sdk')
@@ -70,15 +101,11 @@ const SelectImage: React.FC<propsType> = (props) => {
     const createData = (data: Array<awsRekognition>, img: HTMLImageElement) => {
         const profileData: Array<profileDataType> = []
 
-        // 拡大・縮小倍率の取得
-        const shrinkW = 350 / img.width
-        const shrinkH = 400 / img.height
-
         data.forEach(element => {
-            const heigh = element.BoundingBox.Height * img.height * shrinkH
-            const left = element.BoundingBox.Left * img.width * shrinkW
-            const top = element.BoundingBox.Top * img.height * shrinkH
-            const width = element.BoundingBox.Width * img.width * shrinkW
+            const heigh = element.BoundingBox.Height * img.height
+            const left = element.BoundingBox.Left * img.width
+            const top = element.BoundingBox.Top * img.height
+            const width = element.BoundingBox.Width * img.width
             const gender = element.Gender.Value
             let age = 0
             if (element.AgeRange.High > 20 && element.AgeRange.Low > 20) {
@@ -129,13 +156,16 @@ const SelectImage: React.FC<propsType> = (props) => {
     const imageShow = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = e.target.files as FileList
         const file: File = fileList[0]
-        const canvas = document.getElementById('cvs') as HTMLCanvasElement
-        const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        const obj = document.getElementById('showImage') as HTMLElement
 
         const reader = new FileReader()
 
         reader.onload = () => {
+            props.setSelect(true)
+
+            const canvas = document.getElementById('cvs') as HTMLCanvasElement
+            const context = canvas.getContext('2d') as CanvasRenderingContext2D
+            const obj = document.getElementById('showImage') as HTMLElement
+
             /* 前回の入力フォームを削除 */
             const inputNode = document.querySelectorAll('input.info')
             if (inputNode.length !== 0) {
@@ -155,8 +185,12 @@ const SelectImage: React.FC<propsType> = (props) => {
             const img = new Image()
             img.src = image
             img.onload = () => {
-                context.drawImage(img, 0, 0, 350, 400)  //写真描画
-                setSelect(true)
+                const height = Math.round((canvas.clientWidth / img.naturalWidth) * img.naturalHeight)
+                canvas.style.height = height + 'px'
+                canvas.width = img.naturalWidth
+                canvas.height = img.naturalHeight
+
+                context.drawImage(img, 0, 0, canvas.width, canvas.height)  //写真描画
             }
         }
         reader.readAsDataURL(file)
@@ -165,23 +199,26 @@ const SelectImage: React.FC<propsType> = (props) => {
     const returnView = () => {
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        context.clearRect(0, 0, 350, 400)
-        setSelect(false)
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        console.log('false')
+        props.setSelect(false)
     }
 
     return (
         <div>
-            <p>家族写真から家族構成を</p>
-            <p>自動で識別します</p>
-            {select ?
-                <div>
-                    <button onClick={() => handleRekognition()}>この写真で識別</button>
-                    <button onClick={returnView}>別の写真を選択</button>
-                </div> :
-                <div>
-                    <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
-                    <Link to='/'>スキップ</Link>
-                </div>
+            <Message>家族写真から家族構成を<br/>自動で識別します</Message>
+            {props.select ?
+                <Menu>
+                    <Button wide blue onClick={() => handleRekognition()}>この写真で識別</Button>
+                    <Button link normal onClick={returnView}>別の写真を選択</Button>
+                </Menu> :
+                <Menu>
+                    <FileUploadButton>
+                        家族写真を選択
+                        <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
+                    </FileUploadButton>
+                    <SkipButton to='/'>スキップ</SkipButton>
+                </Menu>
             }
         </div>
     )

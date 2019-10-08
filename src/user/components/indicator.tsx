@@ -1,13 +1,18 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
-import "../../scss/indicator.scss"
+import styled from 'styled-components'
+
+const StyledIndicator = styled.div`
+    text-align: center;
+    margin: 32px;
+`
 
 const Indicator: React.FC = () => {
     return (
-        <div className="indicator">
+        <StyledIndicator>
             <FontAwesomeIcon icon={faCircleNotch} spin size="6x" />
-        </div>
+        </StyledIndicator>
     )
 }
 export default Indicator

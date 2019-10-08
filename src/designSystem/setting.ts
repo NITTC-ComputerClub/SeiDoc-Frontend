@@ -9,6 +9,7 @@ export default {
 
     White: '#FFFFFF',
     Yellow: '#F2C94C',
+    Red: '#EB5757',
     Orange: '#F2994A',
     Gray3: '#828282',
     Gray5: '#E0E0E0',

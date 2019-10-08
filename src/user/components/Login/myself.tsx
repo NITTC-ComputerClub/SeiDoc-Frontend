@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import drawProfile from './drawProfile'
 import { profileDataType } from '../../../types/type'
+import Button from '../../../designSystem/Button'
+import styled from 'styled-components'
 
 type propsType = {
     profileData: Array<profileDataType>,
@@ -8,26 +10,33 @@ type propsType = {
     setMyself: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+const Menu = styled.div`
+    display: flex;
+    margin: 32px 0;
+    padding: 0 32px;
+
+    .left {
+        margin: 0 0 0 auto;
+    }
+`
+
 const Myself: React.FC<propsType> = (props) => {
     const clearImage = () => {
-        const canvas = document.getElementById('cvs') as HTMLCanvasElement
-        const context = canvas.getContext('2d') as CanvasRenderingContext2D
         const obj = document.getElementById('showImage') as HTMLElement
 
         // 前回の入力フォームを削除
-        const ageNode = document.querySelectorAll('input.view_age')
+        const ageNode = document.querySelectorAll('input.viewAge')
         if (ageNode.length !== 0) {
             ageNode.forEach((child) => {
                 obj.removeChild(child)
             })
         }
-        const relationshipNode = document.querySelectorAll('input.view_relationship')
+        const relationshipNode = document.querySelectorAll('input.viewRelationship')
         if (relationshipNode.length !== 0) {
             relationshipNode.forEach((child) => {
                 obj.removeChild(child)
             })
         }
-        context.clearRect(0, 0, 350, 400)
 
         props.setProfileData([])
     }
@@ -42,8 +51,9 @@ const Myself: React.FC<propsType> = (props) => {
 
         const onClick = (e: MouseEvent) => {
             const rect = cvs.getBoundingClientRect()
-            const x = e.clientX - rect.left
-            const y = e.clientY - rect.top
+            const ratio = cvs.width / cvs.clientWidth // client -> canvas 座標変換用
+            const x = (e.clientX - rect.left) * ratio
+            const y = (e.clientY - rect.top) * ratio
             const flag = props.profileData.some((value) => { return value.isMyself === true })
             props.profileData.forEach((element, index) => {
                 if (element.boundingBox.left <= x && x <= (element.boundingBox.left + element.boundingBox.width)
@@ -75,13 +85,13 @@ const Myself: React.FC<propsType> = (props) => {
     }, [props])
 
     return (
-        <div>
-            <button onClick={clearImage}>戻る</button>
-            <button onClick={() => {
+        <Menu>
+            <Button normal link onClick={clearImage}>戻る</Button>
+            <Button className="left" blue onClick={() => {
                 props.setProfileData(props.profileData)
                 props.setMyself(false)
-            }}>次へ</button>
-        </div>
+            }}>次へ</Button>
+        </Menu>
     )
 }
 
