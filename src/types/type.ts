@@ -1,13 +1,19 @@
-export type validarionType = {
+export type validationType = {
   data: string
   message: string | null
   status: boolean
 }
 
 export type loginDataType = {
-  email: validarionType
-  password: validarionType
+  email: validationType
+  password: validationType
 };
+
+export type signInDataType = {
+  email: validationType
+  password: validationType
+  secondPassword: validationType
+}
 
 export type tmpLoginDataType = {
   email: string,

@@ -7,7 +7,7 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../../scss/signUp.scss'
-import { tmpLoginDataType, locationDataType, birthdayDataType, UserState } from '../../../types/type';
+import { signInDataType, locationDataType, birthdayDataType, UserState } from '../../../types/type';
 import Button from '../../../designSystem/Button';
 
 type historyProps = RouteComponentProps
@@ -16,7 +16,7 @@ const cityData = require('../../../datas/cityData.json')
 const municipalityData = require('../../../datas/municipalityData.json')
 
 const SignUp: React.FC<historyProps> = (props) => {
-    const [loginData, setLoginData] = useState<tmpLoginDataType>({ email: '', password: '' })
+    const [signInData, setSignInData] = useState<signInDataType>({ email: { data: '', message: null, status: false }, password: { data: '', message: null, status: false }, secondPassword: { data: '', message: null, status: false } })
     const [cityArray, setCityArray] = useState<Array<string>>(['選択してください'])
     const [municipalityArray, setMunicipalityArray] = useState<Array<string>>([''])
     const [locationData, setLocationData] = useState<locationDataType>({ prefecture: '', city: '', municipality: '' })
@@ -26,9 +26,9 @@ const SignUp: React.FC<historyProps> = (props) => {
     const login = (data: UserState) => dispatch(loginCreator(data))
 
     const handleSignUp = () => {
-        const email = loginData.email
-        const password = loginData.password
-        
+        const email = signInData.email
+        const password = signInData.password
+
         const birthday = ('000' + birthdayData.year).slice(-4) + '-' + ('0' + birthdayData.month).slice(-2) + '-' + ('0' + birthdayData.date).slice(-2)
         const address = locationData.prefecture + locationData.city + locationData.municipality
         userData['birthday'] = birthday
@@ -38,42 +38,73 @@ const SignUp: React.FC<historyProps> = (props) => {
         userData.family = []
         userData.targetFamily = -1
 
-        if (password.length < 8) {
-            alert('Please enter a password')
-            return
-        }
+        console.log("登録")
 
-        auth.createUserWithEmailAndPassword(email, password).then(res => {
-            const user = res.user as firebase.User
-            userData['userId'] = user.uid
-        }).then(() => {
-            console.log('userData:', userData)
-            login(userData)
-            props.history.push('/picture')
-            handleFirebaseSetUserdata()
-        }).catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
-            if (errorCode === 'auth/weak-password') {
-                alert('The password is too weak.')
-                props.history.push('/signup')
-            } else {
-                alert(errorMessage)
-                props.history.push('/signup')
-            }
-            console.log(error)
-        })
+        // auth.createUserWithEmailAndPassword(email.data, password.data).then(res => {
+        //     const user = res.user as firebase.User
+        //     userData['userId'] = user.uid
+        // }).then(() => {
+        //     console.log('userData:', userData)
+        //     login(userData)
+        //     props.history.push('/picture')
+        //     handleFirebaseSetUserdata()
+        // }).catch((error) => {
+        //     const errorCode = error.code
+        //     const errorMessage = error.message
+        //     if (errorCode === 'auth/weak-password') {
+        //         alert('The password is too weak.')
+        //         props.history.push('/signup')
+        //     } else {
+        //         alert(errorMessage)
+        //         props.history.push('/signup')
+        //     }
+        //     console.log(error)
+        // })
     }
 
 
     const handleLoginDataInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name as 'email' | 'password'
-        loginData[name] = e.target.value
-        setLoginData(Object.assign({}, loginData))
+        const type = e.target.name as 'email' | 'password' | 'secondPassword'
+        switch (type) {
+            case 'email':
+                signInData.email.data = e.target.value
+                if (e.target.validationMessage) {
+                    signInData.email.message = e.target.validationMessage
+                    signInData.email.status = false
+                } else {
+                    signInData.email.message = null
+                    signInData.email.status = true
+                }
+                break
+            case 'password':
+                signInData.password.data = e.target.value
+                if (signInData.password.data.length < 8 || signInData.password.data.length >= 16) {
+                    signInData.password.message = 'パスワードは8文字以上16文字以下にしてください'
+                    signInData.password.status = false
+                } else if (!/^([a-zA-Z0-9])+$/.test(signInData.password.data)) {
+                    signInData.password.message = 'パスワードには半角英数字のみが使用できます'
+                    signInData.password.status = false
+                } else {
+                    signInData.password.message = null
+                    signInData.password.status = true
+                }
+                break
+            case 'secondPassword':
+                signInData.secondPassword.data = e.target.value
+                if (signInData.password.data !== signInData.secondPassword.data) {
+                    signInData.secondPassword.message = 'パスワードと一致していません'
+                    signInData.secondPassword.status = false
+                } else {
+                    signInData.secondPassword.message = null
+                    signInData.secondPassword.status = true
+                }
+                break
+        }
+        setSignInData(Object.assign({}, signInData))
     }
 
     const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-        const name = e.target.name as  'nickName' | 'income'
+        const name = e.target.name as 'nickName' | 'income'
         userData[name] = e.target.value
     }
 
@@ -122,11 +153,16 @@ const SignUp: React.FC<historyProps> = (props) => {
     return (
         <div className="signUp">
             <p>メールアドレス</p>
-            <input type="text" name="email" onChange={e => handleLoginDataInputChange(e)}></input>
+            <input type="email" name="email" value={signInData.email.data} onChange={e => handleLoginDataInputChange(e)} required />
+            <p>{signInData.email.message}</p>
             <p>パスワード</p>
-            <input type="password" name="password" onChange={e => handleLoginDataInputChange(e)}></input>
+            <input type="password" name="password" value={signInData.password.data} onChange={e => handleLoginDataInputChange(e)} required />
+            <p>{signInData.password.message}</p>
+            <p>パスワードの再入力</p>
+            <input type="password" name="secondPassword" value={signInData.secondPassword.data} onChange={e => handleLoginDataInputChange(e)} required />
+            <p>{signInData.secondPassword.message}</p>
             <p>ニックネーム</p>
-            <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)}></input>
+            <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)} required />
             <p>生年月日</p>
             <select className="year" name="year" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1950, 2020)}
@@ -168,11 +204,13 @@ const SignUp: React.FC<historyProps> = (props) => {
                     {municipalityArray.map((municipalityName) => (
                         <option key={municipalityName} value={municipalityName}>{municipalityName}</option>
                     ))}
-            </select>
+                </select>
             }
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <Button blue onClick={() => handleSignUp()}>次へ</Button>
+                <Button blue disabled={!signInData.email.status || !signInData.password.status || !signInData.secondPassword.status} onClick={() => handleSignUp()}>
+                    次へ
+                </Button>
             </div>
         </div>
     )

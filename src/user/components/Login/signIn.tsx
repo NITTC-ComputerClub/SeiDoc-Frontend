@@ -120,7 +120,6 @@ const SignIn: React.FC<historyProps> = (props) => {
                         handleSignIn();
                     }
                 }}
-                onBlur={e => handleInputChange(e)}
                 required
             />
             <p>{loginData.password.message}</p>
