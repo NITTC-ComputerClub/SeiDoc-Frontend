@@ -1,7 +1,18 @@
+export type validarionType = {
+  data: string
+  message: string | null
+  status: boolean
+}
+
 export type loginDataType = {
-  email: string;
-  password: string;
+  email: validarionType
+  password: validarionType
 };
+
+export type tmpLoginDataType = {
+  email: string,
+  password: string
+}
 
 export type adminLoginType = {
   cities: string;
@@ -205,7 +216,7 @@ export type profileDataType = {
   },
   gender: string,
   relationship: string,
-  isMyself :boolean
+  isMyself: boolean
 }
 
 export type sendData = {

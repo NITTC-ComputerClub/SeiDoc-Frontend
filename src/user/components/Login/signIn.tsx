@@ -27,14 +27,14 @@ const StyledDiv = styled.div`
 `
 
 const SignIn: React.FC<historyProps> = (props) => {
-    let [loginData, setLoginData] = useState<loginDataType>({ email: '', password: '' })
+    let [loginData, setLoginData] = useState<loginDataType>({ email: { data: '', message: null, status: false }, password: { data: '', message: null, status: false } })
     let userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
     const handleSignIn = () => {
         const email = loginData.email
         const password = loginData.password
-        auth.signInWithEmailAndPassword(email, password).then(res => {
+        auth.signInWithEmailAndPassword(email.data, password.data).then(res => {
             const user = res.user as firebase.User
             userData['userId'] = user.uid
         }).then(() => {
@@ -68,25 +68,52 @@ const SignIn: React.FC<historyProps> = (props) => {
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name as 'email' | 'password'
-        loginData[name] = e.target.value
+        const type = e.target.name as 'email' | 'password'
+        switch (type) {
+            case 'email':
+                loginData.email.data = e.target.value
+                if (e.target.validationMessage) {
+                    loginData.email.message = e.target.validationMessage
+                    loginData.email.status = false
+                }
+                else {
+                    loginData.email.message = null
+                    loginData.email.status = true
+                }
+                break
+            case 'password':
+                loginData.password.data = e.target.value
+                if (e.target.validationMessage) {
+                    loginData.password.message = e.target.validationMessage
+                    loginData.password.status = false
+                }
+                else {
+                    loginData.password.message = null
+                    loginData.password.status = true
+                }
+                break
+        }
         setLoginData(Object.assign({}, loginData))
     }
 
     return (
         <StyledSignIn>
-            <TextField label="メールアドレス" width="100%" type="text" name="email" value={loginData.email} onChange={e => handleInputChange(e)}/>
-            <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password} 
-                onChange={e => handleInputChange(e)} 
+            <TextField label="メールアドレス" width="100%" type="email" name="email" value={loginData.email.data} onChange={e => handleInputChange(e)} required />
+            <p>{loginData.email.message}</p>
+            <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password.data}
+                onChange={e => handleInputChange(e)}
                 onKeyDown={e => {
                     if (e.keyCode === 13) {
                         handleSignIn();
                     }
                 }}
+                onBlur={e => handleInputChange(e)}
+                required
             />
+            <p>{loginData.password.message}</p>
             <StyledDiv className="lrContents">
                 <Link to='signup'><Button link>登録はこちらから</Button></Link>
-                <Button blue onClick={() => handleSignIn()} >
+                <Button blue disabled={loginData.email.status === false || loginData.password.status === false} onClick={() => handleSignIn()} >
                     ログイン
                 </Button>
             </StyledDiv>

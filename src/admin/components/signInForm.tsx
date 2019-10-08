@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from "react-router";
-import { loginDataType, UserState } from '../../types/type';
+import { tmpLoginDataType, UserState } from '../../types/type';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../store';
 import { loginCreator } from '../../actions/action';
@@ -25,7 +25,7 @@ const StyledDiv = styled.div`
 `
 
 const SignInForm: React.FC<historyProps> = (props) => {
-    let [loginData, setLoginData] = useState<loginDataType>({ email: '', password:''})
+    let [loginData, setLoginData] = useState<tmpLoginDataType>({ email: '', password:''})
     let userData = useSelector((state: AppState) => state.userState);
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))

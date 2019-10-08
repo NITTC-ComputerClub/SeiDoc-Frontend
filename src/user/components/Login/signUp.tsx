@@ -7,7 +7,7 @@ import firebase from 'firebase'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import '../../../scss/signUp.scss'
-import { loginDataType, locationDataType, birthdayDataType, UserState } from '../../../types/type';
+import { tmpLoginDataType, locationDataType, birthdayDataType, UserState } from '../../../types/type';
 import Button from '../../../designSystem/Button';
 
 type historyProps = RouteComponentProps
@@ -16,7 +16,7 @@ const cityData = require('../../../datas/cityData.json')
 const municipalityData = require('../../../datas/municipalityData.json')
 
 const SignUp: React.FC<historyProps> = (props) => {
-    const [loginData, setLoginData] = useState<loginDataType>({ email: '', password: '' })
+    const [loginData, setLoginData] = useState<tmpLoginDataType>({ email: '', password: '' })
     const [cityArray, setCityArray] = useState<Array<string>>(['選択してください'])
     const [municipalityArray, setMunicipalityArray] = useState<Array<string>>([''])
     const [locationData, setLocationData] = useState<locationDataType>({ prefecture: '', city: '', municipality: '' })
