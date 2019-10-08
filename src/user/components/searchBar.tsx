@@ -122,7 +122,9 @@ const SearchBar: React.FC<historyProps> = (props) => {
                 if (region !== undefined) query = '?region=' + region
             }
         }
-        props.history.push(props.pushTo + query)
+        query === '' ?
+            props.history.push('/category') :
+            props.history.push(props.pushTo + query)
     }
     return (
         <StyledSearchBar {...props}>
