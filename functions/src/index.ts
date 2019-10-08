@@ -305,7 +305,7 @@ const aggregate = (day: string) => {
 
 exports.onSystemDeleted = functions.firestore.document(productionSystemIndex + "/{testId}").onDelete((snap,context) => {
   const data = snap.data() as System;
-  index.deleteObject(data.documentID).then(
+  return index.deleteObject(data.documentID).then(
     hits => {
       console.log("object deleted" , hits)
     }
@@ -324,8 +324,8 @@ exports.onSystemCreated = functions.firestore
       .doc(snap.id)
       .update(data)
       .then(() => {
-        data.objectID = snap.id
-        index.addObject(data, (err, res) => {
+        const newData = Object.assign({}, data, {objectID: snap.id})
+        index.addObject(newData, (err, res) => {
           if (err) {
             console.error(err);
           } else {
