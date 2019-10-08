@@ -142,30 +142,29 @@ const Input: React.FC<historyProps> = props => {
       targetAge === -1) {
       alert('必須項目が入力されていません')
     } else {
-      console.log("登録")
-      // const systemCollection = fireStore.collection(systemIndex);
-      // systemCollection
-      //   .add(systemData)
-      //   .then(ref => {
-      //     console.log("Added document with ID: ", ref.id);
-      //     const mode = "no-cors";
-      //     const method = "POST";
-      //     const body = JSON.stringify(systemData);
-      //     const headers = {
-      //       Accept: "application/json"
-      //     };
-      //     fetch(
-      //       "https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec",
-      //       { mode, method, headers, body }
-      //     )
-      //       .then(res => {
-      //         console.log(res);
-      //         alert("登録が完了しました。");
-      //         props.history.push("/admin/");
-      //       })
-      //       .catch(err => console.error(err));
-      //   })
-      //   .catch(err => console.error(err));
+      const systemCollection = fireStore.collection(systemIndex);
+      systemCollection
+        .add(systemData)
+        .then(ref => {
+          console.log("Added document with ID: ", ref.id);
+          const mode = "no-cors";
+          const method = "POST";
+          const body = JSON.stringify(systemData);
+          const headers = {
+            Accept: "application/json"
+          };
+          fetch(
+            "https://script.google.com/macros/s/AKfycbz4hzx40TvDLIl4MGARBmECM1Gpp3kjb_LUEafA81O3SQ3oC2Pk/exec",
+            { mode, method, headers, body }
+          )
+            .then(res => {
+              console.log(res);
+              alert("登録が完了しました。");
+              props.history.push("/admin/");
+            })
+            .catch(err => console.error(err));
+        })
+        .catch(err => console.error(err));
     }
   };
 
