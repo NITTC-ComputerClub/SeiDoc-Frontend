@@ -92,6 +92,9 @@ const Input: React.FC<historyProps> = props => {
     const [selectionTargetFamily, setSelectionTargetFamily] = useState<number[]>([])
     const [targetAge, setTargetAge] = useState<TargetAge>(0)
 
+    const categoryList: Array<string> = [
+        '子育て', '介護', '建築', '病気', '融資', '地域', '高齢者'
+    ]
 
     const post = () => {
         setSelectionCategory(selectionCategory)
@@ -180,71 +183,34 @@ const Input: React.FC<historyProps> = props => {
                                 <Label>制度名</Label>
                                 <StyledInput type='text' onChange={e => setSystemName(e.target.value)} placeholder="制度名を入力" />
                                 <Label>カテゴリ</Label>
-                                <input
-                                    type="checkbox"
-                                    value='子育て'
-                                    checked={selectionCategory.indexOf('子育て') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />子育て
-                                <input
-                                    type="checkbox"
-                                    value='介護'
-                                    checked={selectionCategory.indexOf('介護') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />介護
-                                <input
-                                    type="checkbox"
-                                    value='建築'
-                                    checked={selectionCategory.indexOf('建築') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />建築
-                                <input
-                                    type="checkbox"
-                                    value='病気'
-                                    checked={selectionCategory.indexOf('病気') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />病気
-                                <input
-                                    type="checkbox"
-                                    value='融資'
-                                    checked={selectionCategory.indexOf('融資') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />融資
-                                <input
-                                    type="checkbox"
-                                    value='地域'
-                                    checked={selectionCategory.indexOf('地域') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />地域
-                                <input
-                                    type="checkbox"
-                                    value='高齢者'
-                                    checked={selectionCategory.indexOf('高齢者') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />高齢者
-                                <input
-                                    type="checkbox"
-                                    value='その他'
-                                    checked={selectionCategory.indexOf('その他') !== -1}
-                                    onChange={e => handleCategoryChange(e)}
-                                />その他
+                                {categoryList.map(categoryName =>
+                                    <label>
+                                        <input 
+                                            key={categoryName}
+                                            type="checkbox"
+                                            value={categoryName}
+                                            checked={selectionCategory.indexOf(categoryName) !== -1}
+                                            onChange={e => handleCategoryChange(e)}
+                                        />{categoryName}
+                                    </label>
+                                )}
                                 <Label>おおまかな制度対象者</Label>
                                 <div>
                                     <input
                                         type='radio'
-                                        value="0"
+                                        value={TargetSex.male}
                                         checked={targetSex === TargetSex.male}
                                         onChange={e => setTargetSex(parseInt(e.target.value))}
                                     />男性
                                 <input
                                         type='radio'
-                                        value="1"
+                                        value={TargetSex.female}
                                         checked={targetSex === TargetSex.female}
                                         onChange={e => setTargetSex(parseInt(e.target.value))}
                                     />女性
                                 <input
                                         type='radio'
-                                        value="2"
+                                        value={TargetSex.other}
                                         checked={targetSex === TargetSex.other}
                                         onChange={e => setTargetSex(parseInt(e.target.value))}
                                     />すべて
@@ -291,21 +257,21 @@ const Input: React.FC<historyProps> = props => {
                                 {console.log(selectionTargetFamily)}
                                 <Select onChange={e => {setTargetAge(parseInt(e.target.value))}}>
                                     <option value="-1">対象を選択してください</option>
-                                    <option value="0">乳児</option>
-                                    <option value="1">幼児</option>
-                                    <option value="2">小学生</option>
-                                    <option value="3">小学生以下</option>
-                                    <option value="4">中学生</option>
-                                    <option value="5">小中学生</option>
-                                    <option value="6">中学生以下</option>
-                                    <option value="7">高校生</option>
-                                    <option value="8">高校生以下の就学児童</option>
-                                    <option value="9">18歳未満</option>
-                                    <option value="10">18歳以下</option>
-                                    <option value="11">未成年</option>
-                                    <option value="12">成人</option>
-                                    <option value="13">老人</option>
-                                    <option value="14">全年齢</option>
+                                    <option value={TargetAge.乳児}>乳児</option>
+                                    <option value={TargetAge.幼児}>幼児</option>
+                                    <option value={TargetAge.小学生}>小学生</option>
+                                    <option value={TargetAge.小学生以下}>小学生以下</option>
+                                    <option value={TargetAge.中学生}>中学生</option>
+                                    <option value={TargetAge.小中学生}>小中学生</option>
+                                    <option value={TargetAge.中学生以下}>中学生以下</option>
+                                    <option value={TargetAge.高校生}>高校生</option>
+                                    <option value={TargetAge.高校生以下の就学児童}>高校生以下の就学児童</option>
+                                    <option value={TargetAge.拾八歳未満}>18歳未満</option>
+                                    <option value={TargetAge.拾八歳以下}>18歳以下</option>
+                                    <option value={TargetAge.未成年}>未成年</option>
+                                    <option value={TargetAge.成人}>成人</option>
+                                    <option value={TargetAge.老人}>老人</option>
+                                    <option value={TargetAge.全年齢}>全年齢</option>
                                 </Select>
                                 <Label>援助対象者</Label>
                                 <StyledInput type='text' onChange={e => setTarget(e.target.value)} placeholder="例:高校生以下のお子様をお持ちのひとり親家庭の方" />
