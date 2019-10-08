@@ -184,7 +184,7 @@ const Input: React.FC<historyProps> = props => {
                                 <StyledInput type='text' onChange={e => setSystemName(e.target.value)} placeholder="制度名を入力" />
                                 <Label>カテゴリ</Label>
                                 {categoryList.map(categoryName =>
-                                    <label>
+                                    <label key={categoryName}>
                                         <input 
                                             key={categoryName}
                                             type="checkbox"
