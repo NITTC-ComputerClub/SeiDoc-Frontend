@@ -12,7 +12,7 @@ import Login from './user/pages/login'
 import SignUp from './user/pages/userRegistration'
 import Picute from './user/pages/picturePage'
 import Finish from './user/pages/finishPage'
-import AdminSignIn from './admin/pages/signIn'
+import AdminLogin from './admin/pages/login'
 import AdminDetail from './admin/pages/detail'
 import AdminSearch from './admin/pages/search'
 import AdminTop from './admin/pages/top'
@@ -45,7 +45,7 @@ const App: React.FC = () => {
         <Route path='/finish' component={Finish} />
         <Route path='/region' component={Region} />
         
-        <Route path='/admin/login' component={AdminSignIn} />
+        <Route path='/admin/login' component={AdminLogin} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
         <Route path='/admin/newSystem' component={AdminInput} />
         <Route path='/admin/search' component={AdminSearch} />

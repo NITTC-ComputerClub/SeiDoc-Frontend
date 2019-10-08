@@ -11,7 +11,11 @@ import Button from '../../../designSystem/Button';
 import TextField from '../TextField';
 import styled from 'styled-components';
 
-type historyProps = RouteComponentProps
+type adminProps = {
+    admin?: boolean
+}
+
+type historyProps = RouteComponentProps & adminProps
 
 const StyledSignIn = styled.div`
     padding: 0 32px;
@@ -41,17 +45,26 @@ const SignIn: React.FC<historyProps> = (props) => {
             fireStore.collection('user').doc(userData.userId).get()
                 .then((doc) => {
                     if (doc.exists) {
+                        const tmpUserState = doc.data() as UserState
                         userData = Object.assign({}, userData, {
                             userId: userData.userId
                         }, doc.data())
                         console.log('userData', userData)
                         login(userData)
+                        if (props.admin) {
+                            if (tmpUserState.isAdmin) {
+                                console.log("Welcome, Admin")
+                            } else {
+                                console.log("This user is not admin")
+                                alert('職員用アカウントではありません')
+                            }
+                        }
                     }
                     else {
                         console.log("No such document!");
                     }
                 }).then(() => {
-                    props.history.push('/')
+                    props.admin ? props.history.push('/admin/') : props.history.push('/')
                 }).catch((error) => {
                     console.log(error)
                 })

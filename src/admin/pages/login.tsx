@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
-import SignInForm from '../components/signInForm';
+import SignIn from '../../user/components/Login/signIn'
 import Footer from '../../user/components/footer-pc';
 import "../../scss/login.scss"
 import { Wrapper } from '../../designSystem/Page';
@@ -8,7 +8,7 @@ import { Wrapper } from '../../designSystem/Page';
 
 type historyProps = RouteComponentProps;
 
-const SignIn: React.FC<historyProps> = (props) => {
+const Login: React.FC<historyProps> = (props) => {
     return (
         <Wrapper className="login">
             <div className="loginForm" >
@@ -17,11 +17,11 @@ const SignIn: React.FC<historyProps> = (props) => {
                     <h2>職員用</h2>
                     <h2>ログイン</h2>
                 </div>
-                <SignInForm />
+                <SignIn admin/>
             </div>
             <Footer />
         </Wrapper>
     )
 }
 
-export default withRouter<historyProps, React.FC<historyProps>>(SignIn)
+export default withRouter<historyProps, React.FC<historyProps>>(Login)
