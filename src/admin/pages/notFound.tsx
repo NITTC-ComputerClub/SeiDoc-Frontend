@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, Container, MainContents } from '../../designSystem/Page';
+import { Wrapper, MainContents } from '../../designSystem/Page';
 import AdminHeader from '../components/header';
 import AdminFooter from '../../user/components/footer-pc';
 import UserHeader from '../../user/components/header'
