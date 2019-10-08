@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Category from './user/pages/category'
 import Search from './user/pages/search'
 import Region from './user/pages/region'
-import AdminInput from './admin/pages/input'
+import AdminInput from './admin/pages/newSystem'
 import Detail from './user/pages/detail'
 import ViewAll from './user/pages/viewAll'
 import Top from './user/pages/top'
