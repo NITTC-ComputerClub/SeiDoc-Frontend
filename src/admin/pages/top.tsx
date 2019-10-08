@@ -10,6 +10,12 @@ import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import AdminSearch from '../components/adminSearch';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../store';
+import styled from 'styled-components';
+import setting from '../../designSystem/setting';
+
+const Detail = styled(Link)`
+    color: ${setting.ThemeBlue};
+`
 
 const Top: React.FC = () => {
     const user = useSelector((state: AppState) => state.userState)
@@ -30,7 +36,7 @@ const Top: React.FC = () => {
                     <CategoryCardsList pushTo="/admin/categoryRanking" />
                     <h2>一か月以内によく見られている制度</h2>
                     <PopularSystemList />
-                    <Link to="/admin/totalRanking">> さらに詳しく</Link>
+                    <Detail to="/admin/totalRanking">> さらに詳しく</Detail>
                     <h2>最近の検索ワード</h2>
                     <SearchWords />
                 </MainContents>
