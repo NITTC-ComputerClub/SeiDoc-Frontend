@@ -278,7 +278,7 @@ const Input: React.FC<historyProps> = props => {
                                 <Label>援助方法</Label>
                                 <StyledInput type='text' onChange={e => setMethod(e.target.value)} placeholder="授業料補助など" />
                                 <Label>対象地区</Label>
-                                <StyledInput type='text' defaultValue={user.city} onChange={e => setLocation(e.target.value)}placeholder="対象地区を入力" />
+                                <StyledInput type='text' defaultValue={user.address} onChange={e => setLocation(e.target.value)}placeholder="対象地区を入力" />
                                 <Label>担当部署</Label>
                                 <StyledInput type='text' onChange={e => setDepartment(e.target.value)} placeholder="担当部署を入力" />
                                 <Label>詳細</Label>

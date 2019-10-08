@@ -13,7 +13,6 @@ const initialState: UserState = {
     targetFamily: TargetFamily.不明,
     family: [],
     isAdmin: false,
-    city: '',  
     department: '',
     sex: 2,
     searchedWords: [],
@@ -30,7 +29,6 @@ export const LoginReducer = reducerWithInitialState(initialState)
             income: loginData.income,
             address: loginData.address,
             family: loginData.family,
-            city: loginData.city,
             department: loginData.department,
             targetFamily: loginData.targetFamily,
             isAdmin: loginData.isAdmin
