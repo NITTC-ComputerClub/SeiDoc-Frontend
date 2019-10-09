@@ -3,11 +3,10 @@ import setting from '../../../designSystem/setting'
 
 const DrawProfile = (profileData: Array<profileDataType>) => {
     if (profileData.length !== 0) {
-        console.log('check:', profileData)
         const obj = document.getElementById('showImage') as HTMLElement
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        context.lineWidth = 3  //線の太さ設定
+        context.lineWidth = canvas.width * 0.01  //線の太さ設定
 
         // 前回の入力フォームを削除
         const ageNode = document.querySelectorAll('input.view_age')
@@ -51,6 +50,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             if (person) {
                 context.strokeStyle = 'green'
             }
+
             context.strokeRect(left, top, width, heigh)
 
             // 年齢のテキストボックスを生成 
