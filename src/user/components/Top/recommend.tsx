@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SystemCard from './SystemCard'
 import { fireStore, searchLogIndex, systemIndex } from '../../../firebase/firebase';
-import { System, searchLogType, TargetAge } from '../../../types/type';
+import { System, searchLogType, TargetAge, TargetSex } from '../../../types/type';
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
@@ -64,15 +64,25 @@ const Recommend: React.FC = () => {
                 snapshot.forEach(doc => {
                     const data = doc.data() as System
                     const ranking: rankingType = { documentID: data.documentID, system: data, count: 0 }
+                    // 家族
+                    user.family.forEach(family => {
+                        if(family.category.includes(data.targetAge)){
+                            ranking.count += 1
+                        }
+                        if(data.targetSex === user.sex || data.targetSex === TargetSex.other){
+                            ranking.count += 1
+                        }
+                    })
+                    //自分
                     if (data.targetAge === TargetAge.全年齢) {
-                        ranking.count = ranking.count + 1
+                        ranking.count += 1
                     }
-                    if (data.targetSex === user.sex || data.targetSex === 2) {
-                        ranking.count = ranking.count + 1
+                    if (data.targetSex === user.sex || data.targetSex === TargetSex.other) {
+                        ranking.count += 1
                     }
-                    // if (data.targetFamily === user.targetFamily) {
-                    //     ranking.count = ranking.count + 1
-                    // }
+                    if (data.targetFamily.includes(user.targetFamily)){
+                        ranking.count += 1
+                    }
                     fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
                         snapshot.forEach(doc => {
                             const searchLog = doc.data() as searchLogType
@@ -80,11 +90,9 @@ const Recommend: React.FC = () => {
                                 ranking.count = ranking.count + 1
                             }
                         })
-                    })
-                        .then(() => newRanking.push(ranking))
+                    }).then(() => newRanking.push(ranking))
                         .then(() => {
                             const sortedRanking = newRanking.sort(compare);
-                            //console.log(sortedRanking)
                             setrecommendData(sortedRanking.slice(0, 4))
                         })
                         .catch(err => console.error(err))
