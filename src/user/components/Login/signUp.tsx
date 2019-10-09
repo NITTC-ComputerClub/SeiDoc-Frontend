@@ -43,26 +43,26 @@ const SignUp: React.FC<historyProps> = (props) => {
 
         console.log("登録")
 
-        // auth.createUserWithEmailAndPassword(email.data, password.data).then(res => {
-        //     const user = res.user as firebase.User
-        //     userData['userId'] = user.uid
-        // }).then(() => {
-        //     console.log('userData:', userData)
-        //     login(userData)
-        //     props.history.push('/picture')
-        //     handleFirebaseSetUserdata()
-        // }).catch((error) => {
-        //     const errorCode = error.code
-        //     const errorMessage = error.message
-        //     if (errorCode === 'auth/weak-password') {
-        //         alert('The password is too weak.')
-        //         props.history.push('/signup')
-        //     } else {
-        //         alert(errorMessage)
-        //         props.history.push('/signup')
-        //     }
-        //     console.log(error)
-        // })
+        auth.createUserWithEmailAndPassword(email.data, password.data).then(res => {
+            const user = res.user as firebase.User
+            userData['userId'] = user.uid
+        }).then(() => {
+            console.log('userData:', userData)
+            login(userData)
+            props.history.push('/picture')
+            handleFirebaseSetUserdata()
+        }).catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            if (errorCode === 'auth/weak-password') {
+                alert('The password is too weak.')
+                props.history.push('/signup')
+            } else {
+                alert(errorMessage)
+                props.history.push('/signup')
+            }
+            console.log(error)
+        })
     }
 
 
@@ -108,11 +108,11 @@ const SignUp: React.FC<historyProps> = (props) => {
 
     const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const type = e.target.name as 'nickName' | 'income'
-        switch(type) {
+        switch (type) {
             case 'nickName':
                 setNickName(e.target.value)
                 break
-            case 'income' :
+            case 'income':
                 setIncome(e.target.value)
                 break
         }
@@ -159,6 +159,23 @@ const SignUp: React.FC<historyProps> = (props) => {
         fireStore.collection('user').doc(uid).set(sendData).then(res => {
             console.log('set firebase', uid)
         })
+    }
+
+    const checkValue = () => {
+        if (!signInData.email.status ||
+            !signInData.password.status ||
+            !signInData.secondPassword.status ||
+            !/\S+/.test(nickName) ||
+            birthdayData.date === "" ||
+            birthdayData.month === "" ||
+            birthdayData.year === "" ||
+            income === "" ||
+            locationData.city === "" ||
+            locationData.prefecture === "") {
+            return true
+        } else {
+            return false
+        }
     }
 
     return (
@@ -223,7 +240,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             {locationData.city === "" || locationData.prefecture === "" ? <p>入力必須項目です</p> : <div></div>}
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <Button blue disabled={!signInData.email.status || !signInData.password.status || !signInData.secondPassword.status || !/\S+/.test(nickName) || birthdayData.date === "" || birthdayData.month === "" || birthdayData.year === "" || income === "" || locationData.city === "" || locationData.prefecture === ""} onClick={() => handleSignUp()}>
+                <Button blue disabled={checkValue()} onClick={() => handleSignUp()}>
                     次へ
                 </Button>
             </div>
