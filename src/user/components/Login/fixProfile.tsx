@@ -4,7 +4,7 @@ import { AppState } from '../../../store'
 import { loginCreator } from '../../../actions/action'
 import drawProfile from './drawProfile'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { profileDataType, UserState, TargetSex, TargetFamily } from '../../../types/type'
+import { profileDataType, UserState, TargetSex, TargetFamily, TargetAge } from '../../../types/type'
 import { fireStore } from '../../../firebase/firebase'
 import Button from '../../../designSystem/Button'
 import styled from 'styled-components'
@@ -119,6 +119,50 @@ const FixProfile: React.FC<propsType> = (props) => {
         drawProfile(props.profileData)
     }
 
+    const calcAge = (age: number) => {
+        const category: Array<TargetAge> = []
+        if (0 <= age && age <= 1) {
+            category.push(TargetAge.乳児);
+        }
+        if (1 < age && age <= 6) {
+            category.push(TargetAge.幼児)
+        }
+        if (6 < age && age <= 12) {
+            category.push(TargetAge.小学生);
+            category.push(TargetAge.小中学生);
+        }
+        if (12 < age && age <= 15) {
+            category.push(TargetAge.中学生);
+            category.push(TargetAge.小中学生);
+        }
+        if (15 < age && age <= 18) {
+            category.push(TargetAge.高校生);
+        }
+        if (age <= 12) {
+            category.push(TargetAge.小学生以下);
+        }
+        if (age <= 15) {
+            category.push(TargetAge.中学生以下);
+        }
+        if (age < 18) {
+            category.push(TargetAge.高校生以下の就学児童);
+            category.push(TargetAge.拾八歳以下);
+        } else if (age === 18) {
+            category.push(TargetAge.拾八歳未満);
+            category.push(TargetAge.高校生以下の就学児童);
+        }
+        if (age < 20) {
+            category.push(TargetAge.未成年);
+        }
+        if (20 <= age) {
+            category.push(TargetAge.成人);
+        }
+        if (65 <= age) {
+            category.push(TargetAge.老人);
+        }
+        return category;
+    }
+
     const updateData = () => {
         const husband: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '夫' })
         const wife: boolean = props.profileData.some((value: profileDataType) => { return value.relationship === '妻' })
@@ -152,6 +196,7 @@ const FixProfile: React.FC<propsType> = (props) => {
         }
 
         userData.family = [] //データの初期化
+
         props.profileData.forEach((value) => {
             //家族情報更新
             let sex = TargetSex.other
@@ -164,7 +209,8 @@ const FixProfile: React.FC<propsType> = (props) => {
             userData.family.push({
                 relationship: value.relationship,
                 age: value.age,
-                gender: sex
+                gender: sex,
+                category: calcAge(value.age)
             })
 
             //本人情報更新
@@ -175,7 +221,6 @@ const FixProfile: React.FC<propsType> = (props) => {
     }
 
     const handleFirebaseUpdata = () => {
-        updateData() //データ更新
         console.log('userData:', userData)
         const uid = userData.userId
         const sendData = userData
@@ -196,7 +241,7 @@ const FixProfile: React.FC<propsType> = (props) => {
     return (
         <div>
             <FlexBox>
-                <SelectBox style={{margin: '0 auto 0 0'}}>
+                <SelectBox style={{ margin: '0 auto 0 0' }}>
                     <label>関係</label>
                     <select id='relationship'>
                         <option value='本人-男性'>本人-男性</option>
@@ -214,13 +259,14 @@ const FixProfile: React.FC<propsType> = (props) => {
                     <select id='age'>
                         {ageLoop()}
                     </select>
-                    　歳
+                    歳
                 </SelectBox>
             </FlexBox>
             <Button wide green onClick={editData}>関係と年齢を修正</Button>
             <Menu>
                 <Button className="right" blue onClick={() => {
                     props.history.push('/finish')
+                    updateData() //データ更新
                     login(userData)
                     handleFirebaseUpdata()
                 }}>次へ</Button>
