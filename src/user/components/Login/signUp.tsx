@@ -24,6 +24,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     const userData = useSelector((state: AppState) => state.userState)
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
+    const [nickName, setNickName] = useState<string>('')
 
     const handleSignUp = () => {
         const email = signInData.email
@@ -33,6 +34,7 @@ const SignUp: React.FC<historyProps> = (props) => {
         const address = locationData.prefecture + locationData.city + locationData.municipality
         userData['birthday'] = birthday
         userData['address'] = address
+        userData['nickName'] = nickName
         userData.isAdmin = false;
         userData.department = 'None';
         userData.family = []
@@ -104,8 +106,17 @@ const SignUp: React.FC<historyProps> = (props) => {
     }
 
     const handleUserdataInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-        const name = e.target.name as 'nickName' | 'income'
-        userData[name] = e.target.value
+        const type = e.target.name as 'nickName' | 'income'
+        switch(type) {
+            case 'nickName':
+                setNickName(e.target.value)
+                break
+            case 'income' :
+                userData[type] = e.target.value
+                break
+        }
+        // userData[name] = e.target.value
+        // console.log(userData.nickName.length)
     }
 
     const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -163,6 +174,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             <p>{signInData.secondPassword.message}</p>
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)} required />
+            {/\s/.test(nickName) || nickName.length === 0 ? <p>入力必須項目です</p> : <div></div>}
             <p>生年月日</p>
             <select className="year" name="year" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1950, 2020)}
