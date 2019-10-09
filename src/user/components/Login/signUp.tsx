@@ -174,7 +174,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             <p>{signInData.secondPassword.message}</p>
             <p>ニックネーム</p>
             <input type="text" name="nickName" onChange={e => handleUserdataInputChange(e)} required />
-            {/\s/.test(nickName) || nickName.length === 0 ? <p>入力必須項目です</p> : <div></div>}
+            {!/\S+/.test(nickName) ? <p>入力必須項目です</p> : <div></div>}
             <p>生年月日</p>
             <select className="year" name="year" onChange={e => handleBirthdayChange(e)}>
                 {birthdayInputLoop(1950, 2020)}
@@ -220,7 +220,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             }
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <Button blue disabled={!signInData.email.status || !signInData.password.status || !signInData.secondPassword.status} onClick={() => handleSignUp()}>
+                <Button blue disabled={!signInData.email.status || !signInData.password.status || !signInData.secondPassword.status || !/\S+/.test(nickName)} onClick={() => handleSignUp()}>
                     次へ
                 </Button>
             </div>
