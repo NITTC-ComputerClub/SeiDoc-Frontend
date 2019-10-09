@@ -170,8 +170,10 @@ const SignUp: React.FC<historyProps> = (props) => {
             birthdayData.month === "" ||
             birthdayData.year === "" ||
             income === "" ||
+            locationData.city === "選択してください" ||
             locationData.city === "" ||
-            locationData.prefecture === "") {
+            locationData.prefecture === "" ||
+            (municipalityArray.toString() !== "" && (locationData.municipality === "選択してください" || locationData.municipality === ""))) {
             return true
         } else {
             return false
@@ -219,7 +221,7 @@ const SignUp: React.FC<historyProps> = (props) => {
             {income === "" ? <p>入力必須項目です</p> : <div></div>}
             <p>居住区</p>
             <select className="fullWidth" name="prefecture" onChange={e => handleAddressChange(e)}>
-                <option value="">選択してください</option>
+                <option value="" defaultChecked>選択してください</option>
                 <option value="愛知県">愛知県</option>
                 <option value="岐阜県">岐阜県</option>
                 <option value="三重県">三重県</option>
@@ -237,7 +239,7 @@ const SignUp: React.FC<historyProps> = (props) => {
                     ))}
                 </select>
             }
-            {locationData.city === "" || locationData.prefecture === "" ? <p>入力必須項目です</p> : <div></div>}
+            {locationData.city === "選択してください" || locationData.city === "" || locationData.prefecture === "" || (municipalityArray.toString() !== "" && (locationData.municipality === "選択してください" || locationData.municipality === "")) ? <p>入力必須項目です</p> : <div></div>}
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
                 <Button blue disabled={checkValue()} onClick={() => handleSignUp()}>
