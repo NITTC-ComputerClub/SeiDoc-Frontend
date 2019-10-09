@@ -109,6 +109,14 @@ const SignIn: React.FC<historyProps> = (props) => {
         setLoginData(Object.assign({}, loginData))
     }
 
+    const checkValue = () => {
+        if (!loginData.email.status || !loginData.password.status) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     return (
         <StyledSignIn>
             <TextField label="メールアドレス" width="100%" type="email" name="email" value={loginData.email.data} onChange={e => handleInputChange(e)} required />
@@ -116,7 +124,7 @@ const SignIn: React.FC<historyProps> = (props) => {
             <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password.data}
                 onChange={e => handleInputChange(e)}
                 onKeyDown={e => {
-                    if (e.keyCode === 13) {
+                    if (e.key === "Enter" && !checkValue()) {
                         handleSignIn();
                     }
                 }}
@@ -125,7 +133,7 @@ const SignIn: React.FC<historyProps> = (props) => {
             <p>{loginData.password.message}</p>
             <StyledDiv className="lrContents">
                 <Link to='signup'><Button link>登録はこちらから</Button></Link>
-                <Button blue disabled={loginData.email.status === false || loginData.password.status === false} onClick={() => handleSignIn()} >
+                <Button blue disabled={checkValue()} onClick={() => handleSignIn()} >
                     ログイン
                 </Button>
             </StyledDiv>
