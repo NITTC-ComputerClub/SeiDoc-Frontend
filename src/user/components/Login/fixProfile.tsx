@@ -148,7 +148,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             category.push(TargetAge.高校生以下の就学児童);
             category.push(TargetAge.拾八歳以下);
             category.push(TargetAge.拾八歳未満);
-        }else if (age == 18){
+        }else if (age === 18){
             category.push(TargetAge.拾八歳以下);
             category.push(TargetAge.高校生以下の就学児童);
         }
