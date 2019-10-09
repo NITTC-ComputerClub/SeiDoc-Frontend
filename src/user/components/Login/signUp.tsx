@@ -25,6 +25,7 @@ const SignUp: React.FC<historyProps> = (props) => {
     const dispatch = useDispatch()
     const login = (data: UserState) => dispatch(loginCreator(data))
     const [nickName, setNickName] = useState<string>('')
+    const [income, setIncome] = useState<string>('')
 
     const handleSignUp = () => {
         const email = signInData.email
@@ -112,11 +113,9 @@ const SignUp: React.FC<historyProps> = (props) => {
                 setNickName(e.target.value)
                 break
             case 'income' :
-                userData[type] = e.target.value
+                setIncome(e.target.value)
                 break
         }
-        // userData[name] = e.target.value
-        // console.log(userData.nickName.length)
     }
 
     const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -141,6 +140,7 @@ const SignUp: React.FC<historyProps> = (props) => {
         const name = e.target.name as 'year' | 'month' | 'date'
         birthdayData[name] = e.target.value
         setBirthdayData(Object.assign({}, birthdayData))
+        console.log(birthdayData)
     }
 
     const birthdayInputLoop = (start: number, end: number) => {
@@ -188,6 +188,7 @@ const SignUp: React.FC<historyProps> = (props) => {
                 {birthdayInputLoop(1, 32)}
             </select>
             <span>日</span>
+            {birthdayData.date === "" || birthdayData.month === "" || birthdayData.year === "" ? <p>入力必須項目です</p> : <div></div>}
             <p>年収</p>
             <select className="fullWidth" name="income" onChange={e => handleUserdataInputChange(e)}>
                 <option value="">選択してください</option>
@@ -198,6 +199,7 @@ const SignUp: React.FC<historyProps> = (props) => {
                 <option value="800~1000万円">800~1000万円</option>
                 <option value="1000万円以上">1000万円以上</option>
             </select>
+            {income === "" ? <p>入力必須項目です</p> : <div></div>}
             <p>居住区</p>
             <select className="fullWidth" name="prefecture" onChange={e => handleAddressChange(e)}>
                 <option value="">選択してください</option>
@@ -218,9 +220,10 @@ const SignUp: React.FC<historyProps> = (props) => {
                     ))}
                 </select>
             }
+            {locationData.city === "" || locationData.prefecture === "" ? <p>入力必須項目です</p> : <div></div>}
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <Button blue disabled={!signInData.email.status || !signInData.password.status || !signInData.secondPassword.status || !/\S+/.test(nickName)} onClick={() => handleSignUp()}>
+                <Button blue disabled={!signInData.email.status || !signInData.password.status || !signInData.secondPassword.status || !/\S+/.test(nickName) || birthdayData.date === "" || birthdayData.month === "" || birthdayData.year === "" || income === "" || locationData.city === "" || locationData.prefecture === ""} onClick={() => handleSignUp()}>
                     次へ
                 </Button>
             </div>
