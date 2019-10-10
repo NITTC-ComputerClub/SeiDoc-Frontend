@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateSystemsCreator, addTagCreator } from '../../../actions/action'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 
@@ -27,45 +29,52 @@ const StyledPopularSystemList = styled.div`
   }
 `
 
-const LatestSystemList : React.FC = () => {
-    const [latestSystem, setLatestSystem] = useState<Array<System>>([])
-    
-    const isLoaded = () => {
-        if (latestSystem.length !== 0) {
-        return true;
-        } else {
-        return false;
-        }
-    };
+const LatestSystemList: React.FC = () => {
+  const [latestSystem, setLatestSystem] = useState<Array<System>>([])
+  const dispatch = useDispatch()
+  const updateSystems = (newSystem: Array<System>) => dispatch(updateSystemsCreator(newSystem))
+  const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
 
-    if(latestSystem.length === 0){
-        console.log("fetching")
-        const systems : System[] = []
-        fireStore.collection(systemIndex)
-        .orderBy("CreatedAt","desc").limit(5)
-        .get().then(
-            snapShot => {
-                snapShot.docs.forEach(doc => {
-                    console.log(doc.data())
-                    systems.push(doc.data() as System)
-                });
-            }
-        ).then(
-            () => setLatestSystem(systems)
-        ).catch(err => console.error("fetch failed", err))
+  const isLoaded = () => {
+    if (latestSystem.length !== 0) {
+      return true;
+    } else {
+      return false;
     }
+  };
 
-    return isLoaded() ?(
-        <StyledPopularSystemList>
-        <ul>
-          {latestSystem.map(system => (
-            <SystemCard key={system.Name} system={system} />
-          ))}
-        </ul>
-        <Link to="/moredetails">さらに詳しく</Link>
-      </StyledPopularSystemList>
-    ) : (
-        <Indicator />
+  if (latestSystem.length === 0) {
+    console.log("fetching")
+    const systems: System[] = []
+    fireStore.collection(systemIndex)
+      .orderBy("CreatedAt", "desc").limit(5)
+      .get().then(
+        snapShot => {
+          snapShot.docs.forEach(doc => {
+            console.log(doc.data())
+            systems.push(doc.data() as System)
+          });
+        }
+      ).then(() => {
+        setLatestSystem(systems)
+      }
+      ).catch(err => console.error("fetch failed", err))
+  }
+
+  return isLoaded() ? (
+    <StyledPopularSystemList>
+      <ul>
+        {latestSystem.map(system => (
+          <SystemCard key={system.Name} system={system} />
+        ))}
+      </ul>
+      <Link to="/moredetails" onClick={() => {
+        addTag('あたらしい制度')
+        updateSystems(latestSystem)
+      }}>さらに詳しく</Link>
+    </StyledPopularSystemList>
+  ) : (
+      <Indicator />
     )
 }
 
