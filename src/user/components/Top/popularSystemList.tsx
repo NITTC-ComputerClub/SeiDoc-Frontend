@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateSystemsCreator, addTagCreator } from '../../../actions/action'
 import SystemCard from './SystemCard'
 import { fireStore, popularPageIndex } from '../../../firebase/firebase';
-import { rankingType } from '../../../types/type'
+import { rankingType, System } from '../../../types/type'
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledPopularSystemList = styled.div`
   position: relative;
@@ -48,6 +50,9 @@ type fireStorePopularSystemType = {
 
 const PopularSystemList: React.FC = () => {
   const [rankingData, setRankingData] = useState<rankingType[]>([]);
+  const dispatch = useDispatch()
+  const updateSystems = (newSystem: Array<System>) => dispatch(updateSystemsCreator(newSystem))
+  const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
 
   const isLoaded = () => {
     if (rankingData.length !== 0) {
@@ -77,6 +82,16 @@ const PopularSystemList: React.FC = () => {
         console.error(err);
       });
   }
+  const handleMoreDetail = () => {
+    const systems: Array<System> = []
+    rankingData.forEach((value) => {
+      systems.push(value.system)
+    })
+
+    addTag('みんなが見ている制度')
+    updateSystems(systems)
+  }
+
   return isLoaded() ? (
     <StyledPopularSystemList>
       <ul>
@@ -84,7 +99,7 @@ const PopularSystemList: React.FC = () => {
           <SystemCard key={data.system.Name} system={data.system} />
         ))}
       </ul>
-      <Link to="/moredetails">さらに詳しく</Link>
+      <Link to="/moredetails" onClick={handleMoreDetail}>さらに詳しく</Link>
     </StyledPopularSystemList>
   ) : (
       <Indicator />
