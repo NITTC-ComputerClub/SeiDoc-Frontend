@@ -10,16 +10,25 @@ const Title = styled.h1`
     font-size: ${setting.H1};
 `
 
+const WhiteBoard = styled.div`
+    overflow: hidden;
+    background-color: ${setting.White};
+    padding-bottom: 32px;
+    margin-bottom: 8px;
+`
+
 const Region: React.FC = () => {
     return (
         <Wrapper>
             <Header />
-            <Container>
-                <MainContents>
-                    <h1>地域の選択</h1>
-                </MainContents>
-            </Container>
-            <RegionButton />
+            <WhiteBoard>
+                <Container>
+                    <MainContents>
+                        <Title>地域の選択</Title>
+                    </MainContents>
+                </Container>
+                <RegionButton />
+            </WhiteBoard>
             <Footer />
         </Wrapper>
     )
