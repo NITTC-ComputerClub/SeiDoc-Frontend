@@ -94,29 +94,34 @@ const FixProfile: React.FC<propsType> = (props) => {
         const selectAge = document.getElementById('age') as HTMLSelectElement
         const selectRelationship = document.getElementById('relationship') as HTMLSelectElement
         const value: profileDataType = props.profileData[sequence]
-        value.age = Number(selectAge.value)
-        if (selectRelationship.value === '本人-男性') {
-            value.isMyself = true
-            value.gender = 'Male'
-        }
-        else if (selectRelationship.value === '本人-女性') {
-            value.isMyself = true
-            value.gender = 'Female'
-        }
-        else {
-            value.relationship = selectRelationship.value
-            value.isMyself = false
-            if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '父') {
+
+        if (value !== undefined) {
+            value.age = Number(selectAge.value)
+            if (selectRelationship.value === '本人-男性') {
+                value.isMyself = true
                 value.gender = 'Male'
             }
-            else if (selectRelationship.value === '妻' || selectRelationship.value === '娘' || selectRelationship.value === '母') {
+            else if (selectRelationship.value === '本人-女性') {
+                value.isMyself = true
                 value.gender = 'Female'
             }
+            else {
+                value.relationship = selectRelationship.value
+                value.isMyself = false
+                if (selectRelationship.value === '夫' || selectRelationship.value === '息子' || selectRelationship.value === '父') {
+                    value.gender = 'Male'
+                }
+                else if (selectRelationship.value === '妻' || selectRelationship.value === '娘' || selectRelationship.value === '母') {
+                    value.gender = 'Female'
+                }
+            }
+            console.log('new value:', value)
+            props.profileData.splice(sequence, 1, value)
+            drawProfile(props.profileData)
         }
-
-        console.log('new value:', value)
-        props.profileData.splice(sequence, 1, value)
-        drawProfile(props.profileData)
+        else {
+            alert('修正したい人の顔をタップしてください')
+        }
     }
 
     const calcAge = (age: number) => {
@@ -144,11 +149,11 @@ const FixProfile: React.FC<propsType> = (props) => {
         if (age <= 15) {
             category.push(TargetAge.中学生以下);
         }
-        if(age < 18){
+        if (age < 18) {
             category.push(TargetAge.高校生以下の就学児童);
             category.push(TargetAge.拾八歳以下);
             category.push(TargetAge.拾八歳未満);
-        }else if (age === 18){
+        } else if (age === 18) {
             category.push(TargetAge.拾八歳以下);
             category.push(TargetAge.高校生以下の就学児童);
         }
