@@ -62,7 +62,7 @@ const LatestSystemList : React.FC = () => {
             <SystemCard key={system.Name} system={system} />
           ))}
         </ul>
-        <Link to="/">さらに詳しく</Link>
+        <Link to="/moredetails">さらに詳しく</Link>
       </StyledPopularSystemList>
     ) : (
         <Indicator />
