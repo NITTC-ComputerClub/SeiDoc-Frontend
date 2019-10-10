@@ -30,6 +30,7 @@ const NewSystemForm = styled.div`
   background-color: ${setting.White};
   border-radius: 4px;
   overflow: hidden;
+  box-sizing: border-box;
   margin-top: 32px;
   padding: 32px 16px;
   text-align: center;

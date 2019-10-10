@@ -6,7 +6,7 @@ import Button from "../../designSystem/Button";
 import { fireStore, systemIndex } from "../../firebase/firebase";
 import { System } from "../../types/type";
 import _ from "lodash";
-import { Wrapper, MainContents } from "../../designSystem/Page";
+import { Wrapper, MainContents, Container } from "../../designSystem/Page";
 import setting from "../../designSystem/setting";
 import { Redirect } from "react-router";
 import { useSelector } from "react-redux";
@@ -28,6 +28,7 @@ const Form = styled.div`
   background-color: ${setting.White};
   border-radius: 4px;
   overflow: hidden;
+  box-sizing: border-box;
   margin-top: 32px;
   padding: 32px 16px;
   text-align: center;
@@ -181,9 +182,9 @@ const CSVDownload: React.FC = () => {
   }
   else
     return (
-      <div>
+      <Wrapper>
         <Header />
-        <Wrapper>
+        <Container>
           <MainContents>
             <Form>
               <Title>データ出力</Title>
@@ -267,9 +268,9 @@ const CSVDownload: React.FC = () => {
               </InputWrapper>
             </Form>
           </MainContents>
-          <Footer />
-        </Wrapper>
-      </div>
+        </Container>
+        <Footer />
+      </Wrapper>
     );
 };
 
