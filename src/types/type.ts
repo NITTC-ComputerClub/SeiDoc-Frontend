@@ -15,11 +15,6 @@ export type signInDataType = {
   secondPassword: validationType
 }
 
-export type tmpLoginDataType = {
-  email: string,
-  password: string
-}
-
 export type adminLoginType = {
   cities: string;
   department: string;
