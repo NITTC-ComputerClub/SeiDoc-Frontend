@@ -104,7 +104,7 @@ const SignIn: React.FC<historyProps> = (props) => {
     }
 
     const checkValue = () => {
-        return (loginData.email.status || loginData.password.status)
+        return (loginData.email.status && loginData.password.status)
     }
 
     return (
@@ -123,9 +123,14 @@ const SignIn: React.FC<historyProps> = (props) => {
             <p>{loginData.password.message}</p>
             <StyledDiv className="lrContents">
                 <Link to='signup'><Button link>登録はこちらから</Button></Link>
-                <Button blue disabled={!checkValue()} onClick={() => handleSignIn()} >
-                    ログイン
-                </Button>
+                {checkValue() ? 
+                    <Button blue onClick={() => handleSignIn()} >
+                        ログイン
+                    </Button> : 
+                    <Button gray disabled>
+                        ログイン
+                    </Button>
+                }
             </StyledDiv>
         </StyledSignIn>
     )

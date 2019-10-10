@@ -235,9 +235,14 @@ const SignUp: React.FC<historyProps> = (props) => {
             {locationData.city === "選択してください" || locationData.city === "" || locationData.prefecture === "" || (municipalityArray.toString() !== "" && (locationData.municipality === "選択してください" || locationData.municipality === "")) ? <p>入力必須項目です</p> : <div></div>}
             <div className="lrContents">
                 <Link to='/login'>ログインはこちらから</Link>
-                <Button blue disabled={!checkValue()} onClick={() => handleSignUp()}>
-                    次へ
-                </Button>
+                { checkValue() ?
+                    <Button blue onClick={() => handleSignUp()}>
+                        次へ
+                    </Button> :
+                    <Button gray disabled>
+                        次へ
+                    </Button>
+                }
             </div>
         </div>
     )
