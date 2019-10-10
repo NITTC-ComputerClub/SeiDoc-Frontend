@@ -69,13 +69,7 @@ const SignIn: React.FC<historyProps> = (props) => {
                     console.log(error)
                 })
         }).catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message;
-            if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password')
-            } else {
-                alert(errorMessage)
-            }
+            alert('IDもしくはパスワードが間違っています')
             console.log(error)
         })
     }
