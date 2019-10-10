@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router'
 import Header from '../components/header'
 import Footer from '../../user/components/footer-pc'
@@ -8,10 +8,11 @@ import { Link } from 'react-router-dom'
 import SearchWords from '../components/searchWords'
 import { Container, MainContents, Wrapper } from '../../designSystem/Page';
 import AdminSearch from '../components/adminSearch';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../../store';
 import styled from 'styled-components';
 import setting from '../../designSystem/setting';
+import { deleteTagCreator } from '../../actions/action'
 
 const Detail = styled(Link)`
     color: ${setting.ThemeBlue};
@@ -19,6 +20,14 @@ const Detail = styled(Link)`
 
 const Top: React.FC = () => {
     const user = useSelector((state: AppState) => state.userState)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const deleteTag = () => dispatch(deleteTagCreator())
+        deleteTag()
+        console.log('tag init')
+    },[dispatch])
+
     if (!user.isAdmin) {
         console.log("not Admin")
         return (
