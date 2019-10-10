@@ -8,6 +8,7 @@ const actionCreator = actionCreatorFactory()
 
 export const fetchSystemByAlgoliaSearchCreator = actionCreator.async<{}, Array<System>>('SYSTEM_FETCH_BY_ALGOLIASEARCH')
 export const fetchSystemToComparisonCreator = actionCreator.async<{}, Array<TabsState>>('SYSTEM_FETCH_BY_COMPARSION')
+export const updateSystemsCreator = actionCreator<Array<System>>('UPDATE_SYSTEMS')
 export const deleteSystemsCreator = actionCreator('DELETE_SYSTEMS')
 export const initComparisonCreator = actionCreator('INIT_COMPARISON')
 
