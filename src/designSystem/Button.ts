@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export type ButtonProps = {
     big?: boolean,
     blue?: boolean,
+    gray?: boolean,
     normal?: boolean,
     green?: boolean,
     link?: boolean,
@@ -67,7 +68,7 @@ const getPadding = (props: ButtonProps) => {
 }
 
 const getColor = (props: ButtonProps) => {
-    if (props.blue || props.green)
+    if (props.blue || props.green || props.gray)
         return `color: ${setting.White};`
 
     return `color: ${setting.TextBlack};`
@@ -79,6 +80,9 @@ const getBackgroundColor = (props: ButtonProps) => {
 
     if (props.green)
         return `background-color: ${setting.ThemeGreen};`
+
+    if (props.gray)
+        return `background-color: ${setting.Gray5};`
 
     if (props.link)
         return `background-color: transparent;`
