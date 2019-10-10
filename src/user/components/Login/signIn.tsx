@@ -110,11 +110,7 @@ const SignIn: React.FC<historyProps> = (props) => {
     }
 
     const checkValue = () => {
-        if (!loginData.email.status || !loginData.password.status) {
-            return true
-        } else {
-            return false
-        }
+        return (loginData.email.status || loginData.password.status)
     }
 
     return (
@@ -124,7 +120,7 @@ const SignIn: React.FC<historyProps> = (props) => {
             <TextField label="パスワード" width="100%" type="password" name="password" value={loginData.password.data}
                 onChange={e => handleInputChange(e)}
                 onKeyDown={e => {
-                    if (e.key === "Enter" && !checkValue()) {
+                    if (e.key === "Enter" && checkValue()) {
                         handleSignIn();
                     }
                 }}
@@ -133,7 +129,7 @@ const SignIn: React.FC<historyProps> = (props) => {
             <p>{loginData.password.message}</p>
             <StyledDiv className="lrContents">
                 <Link to='signup'><Button link>登録はこちらから</Button></Link>
-                <Button blue disabled={checkValue()} onClick={() => handleSignIn()} >
+                <Button blue disabled={!checkValue()} onClick={() => handleSignIn()} >
                     ログイン
                 </Button>
             </StyledDiv>
