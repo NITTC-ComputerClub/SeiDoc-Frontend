@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateSystemsCreator, addTagCreator } from '../../../actions/action'
 import SystemCard from './SystemCard'
 import { fireStore, popularPageIndex } from '../../../firebase/firebase';
-import { rankingType } from '../../../types/type'
+import { rankingType, System } from '../../../types/type'
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledPopularSystemList = styled.div`
   position: relative;
@@ -51,33 +53,46 @@ const PopularSystemList: React.FC = () => {
   const [rankingData, setRankingData] = useState<rankingType[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
+  const dispatch = useDispatch()
+  const updateSystems = (newSystem: Array<System>) => dispatch(updateSystemsCreator(newSystem))
+  const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
 
   useEffect(() => {
     fireStore
-    .collection(popularPageIndex)
-    .doc(getNowYMD(count))
-    .get()
-    .then(doc => {
-      if (doc.exists) {
-        const ranking = doc.data() as fireStorePopularSystemType;
-        const sortedRanking = ranking.ranking.sort(compare);
-        if(sortedRanking.length < 3){
-          console.log("cnt:",count,"length:", sortedRanking.length)
-          setCount(count + 1);
-          console.error("No data found " + count + " days ago.\n continue fetching...")
-        }else{
-          console.log("Vaild data found at " + count + " days ago.")
-          setRankingData(sortedRanking.slice(0, 3));
-          setIsLoaded(true);
+      .collection(popularPageIndex)
+      .doc(getNowYMD(count))
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          const ranking = doc.data() as fireStorePopularSystemType;
+          const sortedRanking = ranking.ranking.sort(compare);
+          if (sortedRanking.length < 3) {
+            console.log("cnt:", count, "length:", sortedRanking.length)
+            setCount(count + 1);
+            console.error("No data found " + count + " days ago.\n continue fetching...")
+          } else {
+            console.log("Vaild data found at " + count + " days ago.")
+            setRankingData(sortedRanking.slice(0, 3));
+            setIsLoaded(true);
+          }
+        } else {
+          console.error("fetch failed");
         }
-      } else {
-        console.error("fetch failed");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }, [count]);
+
+  const handleMoreDetail = () => {
+    const systems: Array<System> = []
+    rankingData.forEach((value) => {
+      systems.push(value.system)
+    })
+
+    addTag('みんなが見ている制度')
+    updateSystems(systems)
+  }
 
   return isLoaded ? (
     <StyledPopularSystemList>
@@ -86,7 +101,7 @@ const PopularSystemList: React.FC = () => {
           <SystemCard key={data.system.Name} system={data.system} />
         ))}
       </ul>
-      <Link to="/moredetails">さらに詳しく</Link>
+      <Link to="/moredetails" onClick={handleMoreDetail}>さらに詳しく</Link>
     </StyledPopularSystemList>
   ) : (
       <Indicator />
