@@ -84,7 +84,7 @@ const PopularSystemList: React.FC = () => {
           <SystemCard key={data.system.Name} system={data.system} />
         ))}
       </ul>
-      <Link to="/">さらに詳しく</Link>
+      <Link to="/moredetails">さらに詳しく</Link>
     </StyledPopularSystemList>
   ) : (
       <Indicator />

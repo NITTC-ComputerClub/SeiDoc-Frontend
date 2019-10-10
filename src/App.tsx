@@ -8,6 +8,7 @@ import Detail from './user/pages/detail'
 import ViewAll from './user/pages/viewAll'
 import Top from './user/pages/top'
 import Registration from './user/pages/registration';
+import MoreDetails from './user/pages/moreDetails'
 import Login from './user/pages/login'
 import SignUp from './user/pages/userRegistration'
 import Picute from './user/pages/picturePage'
@@ -44,6 +45,7 @@ const App: React.FC = () => {
         <Route path='/picture' component={Picute} />
         <Route path='/finish' component={Finish} />
         <Route path='/region' component={Region} />
+        <Route path='/moredetails' component={MoreDetails} />
         
         <Route path='/admin/login' component={AdminSignIn} />
         <Route path='/admin/detail/:documentId' component={AdminDetail} />
