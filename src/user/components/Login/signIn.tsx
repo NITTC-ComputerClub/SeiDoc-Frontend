@@ -124,10 +124,10 @@ const SignIn: React.FC<historyProps> = (props) => {
             <StyledDiv className="lrContents">
                 <Link to='signup'><Button link>登録はこちらから</Button></Link>
                 {checkValue() ? 
-                    <Button blue disabled={!checkValue()} onClick={() => handleSignIn()} >
+                    <Button blue onClick={() => handleSignIn()} >
                         ログイン
                     </Button> : 
-                    <Button gray disabled={!checkValue()} onClick={() => handleSignIn()} >
+                    <Button gray disabled>
                         ログイン
                     </Button>
                 }
