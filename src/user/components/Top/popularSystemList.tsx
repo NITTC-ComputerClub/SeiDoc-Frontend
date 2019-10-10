@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SystemCard from './SystemCard'
 import { fireStore, popularPageIndex } from '../../../firebase/firebase';
 import { rankingType } from '../../../types/type'
@@ -26,8 +26,9 @@ const StyledPopularSystemList = styled.div`
   }
 `
 
-const getNowYMD = () => {
+const getNowYMD = (day: number = 0) => {
   const dt = new Date();
+  dt.setDate(dt.getDate() - day)
   const y = dt.getFullYear();
   const m = ("00" + (dt.getMonth() + 1)).slice(-2);
   const d = ("00" + dt.getDate()).slice(-2);
@@ -48,36 +49,37 @@ type fireStorePopularSystemType = {
 
 const PopularSystemList: React.FC = () => {
   const [rankingData, setRankingData] = useState<rankingType[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
 
-  const isLoaded = () => {
-    if (rankingData.length !== 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  if (rankingData.length === 0) {
-    //一度だけfetch
+  useEffect(() => {
     fireStore
-      .collection(popularPageIndex)
-      .doc(getNowYMD())
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          const ranking = doc.data() as fireStorePopularSystemType;
-          const sortedRanking = ranking.ranking.sort(compare);
-          console.log(sortedRanking)
+    .collection(popularPageIndex)
+    .doc(getNowYMD(count))
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        const ranking = doc.data() as fireStorePopularSystemType;
+        const sortedRanking = ranking.ranking.sort(compare);
+        if(sortedRanking.length < 3){
+          console.log("cnt:",count,"length:", sortedRanking.length)
+          setCount(count + 1);
+          console.error("No data found " + count + " days ago.\n continue fetching...")
+        }else{
+          console.log("Vaild data found at " + count + " days ago.")
           setRankingData(sortedRanking.slice(0, 3));
-        } else {
-          console.error("fetch failed");
+          setIsLoaded(true);
         }
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }
-  return isLoaded() ? (
+      } else {
+        console.error("fetch failed");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }, [count]);
+
+  return isLoaded ? (
     <StyledPopularSystemList>
       <ul>
         {rankingData.map(data => (
