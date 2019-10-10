@@ -81,11 +81,8 @@ const SignUp: React.FC<historyProps> = (props) => {
                 break
             case 'password':
                 signInData.password.data = e.target.value
-                if (signInData.password.data.length < 8 || signInData.password.data.length >= 16) {
-                    signInData.password.message = 'パスワードは8文字以上16文字以下にしてください'
-                    signInData.password.status = false
-                } else if (!/^([a-zA-Z0-9])+$/.test(signInData.password.data)) {
-                    signInData.password.message = 'パスワードには半角英数字のみが使用できます'
+                if (signInData.password.data.length < 8) {
+                    signInData.password.message = 'パスワードは8文字以上にしてください'
                     signInData.password.status = false
                 } else {
                     signInData.password.message = null
