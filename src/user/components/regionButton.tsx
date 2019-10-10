@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { fetchSystemToComparison } from '../../actions/action'
+import Button from '../../designSystem/Button'
 
 interface historyProps extends RouteComponentProps {
     category?: string,
@@ -25,8 +26,8 @@ const RegionButton: React.FC<historyProps> = (props) => {
         <div>
             {regionMap.map((region) => (
                 category !== undefined || query !== undefined ?
-                    <button key={region} onClick={() => addComparsion(query, category, region)}>{region}</button> :
-                    <button key={region} onClick={() => props.history.push('./category?region=' + region)}>{region}</button>
+                    <Button blue wide key={region} onClick={() => addComparsion(query, category, region)}>{region}</Button> :
+                    <Button blue wide key={region} onClick={() => props.history.push('./category?region=' + region)}>{region}</Button>
             ))}
         </div>
     )
