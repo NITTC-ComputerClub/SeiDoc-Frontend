@@ -85,11 +85,12 @@ const CSVDownload: React.FC = () => {
       .map(d => {
         return Object.keys(d)
           .map(key => {
-            const query = key as "Name" | "Method" | "Category"; // ヤバイ
-            if (query === "Method" || "Category") {
-              return '"' + JSON.stringify(d[query]) + '"';
-            } else {
-              return d[query];
+            const query = key as  "Method" | "Category"; // ヤバイ
+            const data = d[query] as Array<string>
+            if(data instanceof Array){
+              return data.join('、')
+            }else{
+              return data
             }
           })
           .join(",");
