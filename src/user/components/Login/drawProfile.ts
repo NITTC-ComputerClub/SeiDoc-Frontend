@@ -8,14 +8,21 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
         const context = canvas.getContext('2d') as CanvasRenderingContext2D
         context.lineWidth = canvas.width * 0.01  //線の太さ設定
 
+        /*
+        const image = new Image()
+        image.src = canvas.toDataURL()
+        image.onload = () => {
+            context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        }
+        */
         // 前回の入力フォームを削除
-        const ageNode = document.querySelectorAll('input.view_age')
+        const ageNode = document.querySelectorAll('input.viewAge')
         if (ageNode.length !== 0) {
             ageNode.forEach((child) => {
                 obj.removeChild(child)
             })
         }
-        const relationshipNode = document.querySelectorAll('input.view_relationship')
+        const relationshipNode = document.querySelectorAll('input.viewRelationship')
         if (relationshipNode.length !== 0) {
             relationshipNode.forEach((child) => {
                 obj.removeChild(child)
@@ -61,7 +68,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             viewAge.readOnly = true
 
             // canvas -> clientへの変換用
-            const ratio =  canvas.clientWidth / canvas.width
+            const ratio = canvas.clientWidth / canvas.width
 
             viewAge.style.top = top * ratio - 30 + 'px'
             viewAge.style.left = left * ratio + 'px'
