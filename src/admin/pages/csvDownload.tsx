@@ -3,7 +3,7 @@ import Header from "../components/header";
 import Footer from "../../user/components/footer-pc";
 import styled from "styled-components";
 import Button from "../../designSystem/Button";
-import { fireStore, systemIndex } from "../../firebase/firebase";
+import { fireStore, systemIndex } from '../../firebase/firebase';
 import { System } from '../../types/type';
 import _ from "lodash";
 import { Wrapper, MainContents } from "../../designSystem/Page";
@@ -124,16 +124,14 @@ const CSVDownload: React.FC = () => {
       query.push("Method");
     }
     if(query.length < 1){
-      alert("一つ以上のカテゴリを選択してください。")
+      alert("一つ以上の項目を選択してください。")
       return -1
     }
 
     const pickedData = systemList.map(system => {
       return _.pick(system, query);
     });
-    console.log(pickedData)
     const csv = json2csv(pickedData);
-    console.log(csv);
     const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
     const blob = new Blob([bom, csv], { type: "text/csv" });
     const fileName = "data.csv";
@@ -145,60 +143,28 @@ const CSVDownload: React.FC = () => {
     console.log("CSV出力完了！");
   };
   const handleSubmit = () => {
-    console.log(
-      category,
-      isName,
-      isCategory,
-      isTarget,
-      isDepartment,
-      isDetail,
-      isOfficialURL
-    );
     const systemList: System[] = [];
-    if (category === "すべて") {
-      fireStore
-        .collection(systemIndex)
-        .get()
-        .then(snapshot => {
-          console.log(snapshot.size)
-          snapshot.forEach(doc => {
-            const data = doc.data() as System;
-            if((Object.keys(data).length === 20) && (data.Location === user.address)){
-              systemList.push(doc.data() as System);
-            }
-          });
-        })
-        .then(() => {
-          console.log(systemList.length)
-          if(systemList.length > 1){
-            createCSV(systemList)
-          }else{
-            alert("出力できるデータがありません。")
-          }
-        });
-    } else {
-      fireStore
-        .collection(systemIndex)
-        .where("Category", "array-contains", category)
-        .get()
-        .then(snapshot => {
-          console.log(snapshot.size)
-          snapshot.forEach(doc => {
-            const data = doc.data() as System;
-            if((Object.keys(data).length === 20) && (data.Location === user.address)){
-              systemList.push(doc.data() as System);
-            }
-          });
-        })
-        .then(() => {
-          console.log(systemList.length)
-          if(systemList.length > 1){
-            createCSV(systemList)
-          }else{
-            alert("出力できるデータがありません。")
-          }
-        });
+
+    let getData = fireStore.collection(systemIndex).get()
+    if (category !== "すべて"){
+      getData = fireStore.collection(systemIndex).where("Category", "array-contains", category).get()
     }
+
+    getData.then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data() as System;
+        if((Object.keys(data).length === 20) && (data.Location === user.address)){
+          systemList.push(doc.data() as System);
+        }
+      });
+    })
+    .then(() => {
+      if(systemList.length > 1){
+        createCSV(systemList)
+      }else{
+        alert("出力できるデータがありません。")
+      }
+    });
   };
 
   if (!user.isAdmin) {
@@ -231,6 +197,7 @@ const CSVDownload: React.FC = () => {
                 </div>
                 <div>
                   <SubTitle>データに含める項目</SubTitle>
+                  {/* Name,Category,Target,Department,Detail,Site,Method */}
                   <Checkbox>
                     <label>制度名</label>
                     <input
@@ -256,14 +223,6 @@ const CSVDownload: React.FC = () => {
                     />
                   </Checkbox>
                   <Checkbox>
-                    <label>援助方法</label>
-                    <input
-                      type="checkbox"
-                      checked={isMethod}
-                      onChange={() => setIsMethod(!isMethod)}
-                    />
-                  </Checkbox>
-                  <Checkbox>
                     <label>担当部署</label>
                     <input
                       type="checkbox"
@@ -285,6 +244,14 @@ const CSVDownload: React.FC = () => {
                       type="checkbox"
                       checked={isOfficialURL}
                       onChange={() => setIsOfficialURL(!isOfficialURL)}
+                    />
+                  </Checkbox>
+                  <Checkbox>
+                    <label>援助方法</label>
+                    <input
+                      type="checkbox"
+                      checked={isMethod}
+                      onChange={() => setIsMethod(!isMethod)}
                     />
                   </Checkbox>
                 </div>
