@@ -3,8 +3,8 @@ import Header from "../components/header";
 import Footer from "../../user/components/footer-pc";
 import styled from "styled-components";
 import Button from "../../designSystem/Button";
-import { fireStore, systemIndex } from "../../firebase/firebase";
-import { System } from "../../types/type";
+import { fireStore, systemIndex } from '../../firebase/firebase';
+import { System } from '../../types/type';
 import _ from "lodash";
 import { Wrapper, MainContents, Container } from "../../designSystem/Page";
 import setting from "../../designSystem/setting";
@@ -80,17 +80,17 @@ const CSVDownload: React.FC = () => {
   const [isMethod, setIsMethod] = useState<boolean>(true);
 
   const json2csv = (json: Partial<System>[]) => {
-    console.log(json);
     const header = Object.keys(json[0]).join(",") + "\n";
     const body = json
       .map(d => {
         return Object.keys(d)
           .map(key => {
-            const query = key as "Name" | "Method" | "Category"; // ヤバイ
-            if (query === "Method" || "Category") {
-              return '"' + JSON.stringify(d[query]) + '"';
-            } else {
-              return d[query];
+            const query = key as  "Method" | "Category";
+            const data = d[query] as Array<string>
+            if(data instanceof Array){
+              return data.join('、')
+            }else{
+              return data
             }
           })
           .join(",");
@@ -102,6 +102,7 @@ const CSVDownload: React.FC = () => {
   const createCSV = (systemList: System[]) => {
     console.log("systemList", systemList.length, systemList);
     const query: string[] = [];
+
     if (isName) {
       query.push("Name");
     }
@@ -123,13 +124,15 @@ const CSVDownload: React.FC = () => {
     if (isMethod) {
       query.push("Method");
     }
-    //const data: System[] = [];
+    if(query.length < 1){
+      alert("一つ以上の項目を選択してください。")
+      return -1
+    }
+
     const pickedData = systemList.map(system => {
       return _.pick(system, query);
     });
-
     const csv = json2csv(pickedData);
-    console.log(csv);
     const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
     const blob = new Blob([bom, csv], { type: "text/csv" });
     const fileName = "data.csv";
@@ -141,38 +144,28 @@ const CSVDownload: React.FC = () => {
     console.log("CSV出力完了！");
   };
   const handleSubmit = () => {
-    console.log(
-      category,
-      isName,
-      isCategory,
-      isTarget,
-      isDepartment,
-      isDetail,
-      isOfficialURL
-    );
     const systemList: System[] = [];
-    if (category === "すべて") {
-      fireStore
-        .collection(systemIndex)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            systemList.push(doc.data() as System);
-          });
-        })
-        .then(() => createCSV(systemList));
-    } else {
-      fireStore
-        .collection(systemIndex)
-        .where("Category", "array-contains", category)
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            systemList.push(doc.data() as System);
-          });
-        })
-        .then(() => createCSV(systemList));
+
+    let getData = fireStore.collection(systemIndex).get()
+    if (category !== "すべて"){
+      getData = fireStore.collection(systemIndex).where("Category", "array-contains", category).get()
     }
+
+    getData.then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data() as System;
+        if((Object.keys(data).length === 20) && (data.Location === user.address)){
+          systemList.push(doc.data() as System);
+        }
+      });
+    })
+    .then(() => {
+      if(systemList.length > 1){
+        createCSV(systemList)
+      }else{
+        alert("出力できるデータがありません。")
+      }
+    });
   };
 
   if (!user.isAdmin) {
@@ -205,6 +198,7 @@ const CSVDownload: React.FC = () => {
                 </div>
                 <div>
                   <SubTitle>データに含める項目</SubTitle>
+                  {/* Name,Category,Target,Department,Detail,Site,Method */}
                   <Checkbox>
                     <label>制度名</label>
                     <input
@@ -230,14 +224,6 @@ const CSVDownload: React.FC = () => {
                     />
                   </Checkbox>
                   <Checkbox>
-                    <label>援助方法</label>
-                    <input
-                      type="checkbox"
-                      checked={isMethod}
-                      onChange={() => setIsMethod(!isMethod)}
-                    />
-                  </Checkbox>
-                  <Checkbox>
                     <label>担当部署</label>
                     <input
                       type="checkbox"
@@ -259,6 +245,14 @@ const CSVDownload: React.FC = () => {
                       type="checkbox"
                       checked={isOfficialURL}
                       onChange={() => setIsOfficialURL(!isOfficialURL)}
+                    />
+                  </Checkbox>
+                  <Checkbox>
+                    <label>援助方法</label>
+                    <input
+                      type="checkbox"
+                      checked={isMethod}
+                      onChange={() => setIsMethod(!isMethod)}
                     />
                   </Checkbox>
                 </div>
