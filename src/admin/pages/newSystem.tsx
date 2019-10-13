@@ -115,7 +115,7 @@ const Input: React.FC<historyProps> = props => {
       Department: department,
       Target: target,
       Site: site,
-      Detail: detail,
+      Detail: replace,
       Method: [method],
       Category: selectionCategory,
       CreatedAt: Date.now(),
