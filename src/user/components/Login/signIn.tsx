@@ -122,7 +122,7 @@ const SignIn: React.FC<historyProps> = (props) => {
             />
             <p>{loginData.password.message}</p>
             <StyledDiv className="lrContents">
-                <Link to='signup'><Button link>登録はこちらから</Button></Link>
+                {props.admin ? <div></div> : <Link to='signup'><Button link>登録はこちらから</Button></Link>}
                 {checkValue() ? 
                     <Button blue onClick={() => handleSignIn()} >
                         ログイン
