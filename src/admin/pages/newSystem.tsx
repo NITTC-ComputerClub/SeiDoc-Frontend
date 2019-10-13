@@ -107,6 +107,8 @@ const Input: React.FC<historyProps> = props => {
 
   const post = () => {
     setSelectionCategory(selectionCategory);
+    const replace = detail.replace(/,/g, '、')
+    console.log(replace)
     const systemData: System = {
       Name: systemName,
       Location: location,
