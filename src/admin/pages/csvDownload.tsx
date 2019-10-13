@@ -130,6 +130,10 @@ const CSVDownload: React.FC = () => {
     }
 
     const pickedData = systemList.map(system => {
+      if (isDetail) {
+        const replacedDetail = system.Detail.replace(/,/g, '、')
+        system.Detail = replacedDetail
+      }
       return _.pick(system, query);
     });
     const csv = json2csv(pickedData);

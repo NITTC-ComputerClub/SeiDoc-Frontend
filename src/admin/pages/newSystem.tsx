@@ -107,15 +107,13 @@ const Input: React.FC<historyProps> = props => {
 
   const post = () => {
     setSelectionCategory(selectionCategory);
-    const replacedDetail = detail.replace(/,/g, '')
-    console.log(replacedDetail)
     const systemData: System = {
       Name: systemName,
       Location: location,
       Department: department,
       Target: target,
       Site: site,
-      Detail: replacedDetail,
+      Detail: detail,
       Method: [method],
       Category: selectionCategory,
       CreatedAt: Date.now(),
