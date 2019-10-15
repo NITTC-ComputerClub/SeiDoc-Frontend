@@ -87,6 +87,11 @@ const CSVDownload: React.FC = () => {
           .map(key => {
             const query = key as  "Method" | "Category";
             const data = d[query] as Array<string>
+            let replacedDetail: string = ""
+            if (d.Detail !== undefined) {
+              replacedDetail = d.Detail.replace(/,/g, '、')
+            }
+            d.Detail = replacedDetail
             if(data instanceof Array){
               return data.join('、')
             }else{
