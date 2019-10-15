@@ -8,7 +8,6 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
 
         // 前回の入力フォームを削除
         const rectNode = document.querySelectorAll('canvas.viewRect')
-        console.log('CH', rectNode)
         if (rectNode.length !== 0) {
             rectNode.forEach((child) => {
                 obj.removeChild(child)
