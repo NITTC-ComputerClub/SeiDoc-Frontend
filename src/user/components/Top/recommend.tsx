@@ -5,7 +5,9 @@ import { System, searchLogType, TargetAge, TargetSex } from '../../../types/type
 import Indicator from '../indicator'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateSystemsCreator, addTagCreator } from '../../../actions/action'
+
 import { AppState } from '../../../store';
 
 const StyledRecommend = styled.div`
@@ -45,6 +47,9 @@ type rankingType = {
 const Recommend: React.FC = () => {
     const [recommendData, setrecommendData] = useState<rankingType[]>([]);
     const user = useSelector((state: AppState) => state.userState);
+    const dispatch = useDispatch()
+    const updateSystems = (newSystem: Array<System>) => dispatch(updateSystemsCreator(newSystem))
+    const addTag = (newtag: string) => dispatch(addTagCreator(newtag))
     let newRanking: rankingType[] = []
 
 
@@ -66,10 +71,10 @@ const Recommend: React.FC = () => {
                     const ranking: rankingType = { documentID: data.documentID, system: data, count: 0 }
                     // 家族
                     user.family.forEach(family => {
-                        if(family.category.includes(data.targetAge)){
+                        if (family.category.includes(data.targetAge)) {
                             ranking.count += 1
                         }
-                        if(data.targetSex === user.sex || data.targetSex === TargetSex.other){
+                        if (data.targetSex === user.sex || data.targetSex === TargetSex.other) {
                             ranking.count += 1
                         }
                     })
@@ -80,7 +85,7 @@ const Recommend: React.FC = () => {
                     if (data.targetSex === user.sex || data.targetSex === TargetSex.other) {
                         ranking.count += 1
                     }
-                    if (data.targetFamily.includes(user.targetFamily)){
+                    if (data.targetFamily.includes(user.targetFamily)) {
                         ranking.count += 1
                     }
                     fireStore.collection(searchLogIndex).where("userID", "==", user.userId).get().then(snapshot => {
@@ -102,7 +107,15 @@ const Recommend: React.FC = () => {
                 console.error(err);
             });
     }
-
+    const handleMoreDetail = () => {
+        const systems: Array<System> = []
+        recommendData.forEach((value) => {
+          systems.push(value.system)
+        })
+    
+        addTag('あなたにおすすめの制度')
+        updateSystems(systems)
+      }
 
     return isLoaded() ? (
         <StyledRecommend>
@@ -111,7 +124,7 @@ const Recommend: React.FC = () => {
                     <SystemCard key={data.system.Name} system={data.system} />
                 ))}
             </ul>
-            <Link to="/">さらに詳しく</Link>
+            <Link to="/moredetails" onClick={handleMoreDetail}>さらに詳しく</Link>
         </StyledRecommend>
     ) : (
             <Indicator />

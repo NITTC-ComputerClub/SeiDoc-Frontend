@@ -1,5 +1,5 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { fetchSystemByAlgoliaSearchCreator, deleteSystemsCreator } from '../actions/action'
+import { fetchSystemByAlgoliaSearchCreator, deleteSystemsCreator, updateSystemsCreator } from '../actions/action'
 import { SystemsState } from '../types/type';
 
 const initialState: SystemsState = {
@@ -17,6 +17,12 @@ export const CategoryButtonReducer = reducerWithInitialState(initialState)
     .case(fetchSystemByAlgoliaSearchCreator.done, (state, fetchData) => {
         return Object.assign({}, state, {
             systems: fetchData.result,
+            loading: false
+        })
+    })
+    .case(updateSystemsCreator, (state, fetchData) => {
+        return Object.assign({}, state, {
+            systems: fetchData,
             loading: false
         })
     })
