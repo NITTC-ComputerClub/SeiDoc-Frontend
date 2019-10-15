@@ -87,6 +87,11 @@ const CSVDownload: React.FC = () => {
           .map(key => {
             const query = key as  "Method" | "Category";
             const data = d[query] as Array<string>
+            let replacedDetail: string = ""
+            if (d.Detail !== undefined) {
+              replacedDetail = d.Detail.replace(/,/g, '、')
+            }
+            d.Detail = replacedDetail
             if(data instanceof Array){
               return data.join('、')
             }else{
@@ -130,10 +135,6 @@ const CSVDownload: React.FC = () => {
     }
 
     const pickedData = systemList.map(system => {
-      if (isDetail) {
-        const replacedDetail = system.Detail.replace(/,/g, '、')
-        system.Detail = replacedDetail
-      }
       return _.pick(system, query);
     });
     const csv = json2csv(pickedData);
