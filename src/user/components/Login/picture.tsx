@@ -32,7 +32,7 @@ type propsType = {
 
 const Picture: React.FC<propsType> = (props) => {
     return (
-        <ShowImage id='showImage' style={{display: props.select ? 'block' : 'none'}}>
+        <ShowImage id='showImage' style={{ display: props.select ? 'block' : 'none' }}>
             <Canvas id='cvs' width='350' height='400' ></Canvas>
             {props.isLoading ? <IndicatorWrapper><Indicator /></IndicatorWrapper> : <p></p>}
         </ShowImage>

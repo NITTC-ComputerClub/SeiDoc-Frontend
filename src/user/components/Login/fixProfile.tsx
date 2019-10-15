@@ -61,6 +61,7 @@ const FixProfile: React.FC<propsType> = (props) => {
     }, [props.profileData])
 
     useEffect(() => {
+        const obj = document.getElementById('showImage') as HTMLElement
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
 
         const onClick = (e: MouseEvent) => {
@@ -89,7 +90,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             })
         }
 
-        canvas.addEventListener('click', onClick, false)
+        obj.addEventListener('click', onClick, false)
     }, [props])
 
     const editData = () => {

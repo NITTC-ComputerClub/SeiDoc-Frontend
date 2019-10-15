@@ -5,17 +5,15 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
     if (profileData.length !== 0) {
         const obj = document.getElementById('showImage') as HTMLElement
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
-        const context = canvas.getContext('2d') as CanvasRenderingContext2D
-        context.lineWidth = canvas.width * 0.01  //線の太さ設定
 
-        /*
-        const image = new Image()
-        image.src = canvas.toDataURL()
-        image.onload = () => {
-            context.drawImage(image, 0, 0, canvas.width, canvas.height)
-        }
-        */
         // 前回の入力フォームを削除
+        const rectNode = document.querySelectorAll('canvas.viewRect')
+        console.log('CH', rectNode)
+        if (rectNode.length !== 0) {
+            rectNode.forEach((child) => {
+                obj.removeChild(child)
+            })
+        }
         const ageNode = document.querySelectorAll('input.viewAge')
         if (ageNode.length !== 0) {
             ageNode.forEach((child) => {
@@ -28,6 +26,20 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
                 obj.removeChild(child)
             })
         }
+
+        //rect用canvas生成
+        const cvs = document.createElement('canvas')
+        cvs.id = 'cvsRect'
+        cvs.className = 'viewRect'
+        cvs.style.position = 'absolute'
+        cvs.style.top = '0px'
+        cvs.style.left = '0px'
+        cvs.style.width = '100%'
+        cvs.width = canvas.width
+        cvs.height = canvas.height
+        const context = cvs.getContext('2d') as CanvasRenderingContext2D
+        context.lineWidth = canvas.width * 0.01  //線の太さ設定
+        obj.appendChild(cvs)
 
         profileData.forEach(element => {
             const heigh = element.boundingBox.height
@@ -43,7 +55,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
             const viewAge = document.createElement('input')
             const viewRelationship = document.createElement('input')
 
-            // 顔に四角を生成 
+            // 色データを設定
             if (gender === 'Male') {
                 context.strokeStyle = 'blue'
                 viewAge.style.color = setting.ThemeBlue
@@ -58,6 +70,7 @@ const DrawProfile = (profileData: Array<profileDataType>) => {
                 context.strokeStyle = 'green'
             }
 
+            // 四角を生成
             context.strokeRect(left, top, width, heigh)
 
             // 年齢のテキストボックスを生成 
