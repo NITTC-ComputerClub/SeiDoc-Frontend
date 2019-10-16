@@ -105,6 +105,15 @@ const Input: React.FC<historyProps> = props => {
     "高齢者"
   ];
 
+  const targetFamilyList: Array<string> = [
+    "独身",
+    "夫婦",
+    "子持ち",
+    "二世帯",
+    "ひとり親",
+    "介護"
+  ]
+
   const post = () => {
     setSelectionCategory(selectionCategory);
     const systemData: System = {
