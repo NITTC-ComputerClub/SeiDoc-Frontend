@@ -78,6 +78,7 @@ const Textarea = styled.textarea`
 `;
 
 type historyProps = RouteComponentProps;
+declare type TargetFamilyType = keyof typeof TargetFamily
 
 const Input: React.FC<historyProps> = props => {
   const user = useSelector((state: AppState) => state.userState);
@@ -263,63 +264,21 @@ const Input: React.FC<historyProps> = props => {
                   </label>
                 </div>
                 <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={TargetFamily.独身}
-                      checked={selectionTargetFamily.indexOf(0) !== -1}
-                      onChange={e => handleTargetFamilyChange(e)}
-                    />
-                    独身
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={TargetFamily.夫婦}
-                      checked={selectionTargetFamily.indexOf(1) !== -1}
-                      onChange={e => handleTargetFamilyChange(e)}
-                    />
-                    夫婦
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={TargetFamily.子持ち}
-                      checked={selectionTargetFamily.indexOf(2) !== -1}
-                      onChange={e => handleTargetFamilyChange(e)}
-                    />
-                    子持ち
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={TargetFamily.二世帯}
-                      checked={selectionTargetFamily.indexOf(3) !== -1}
-                      onChange={e => handleTargetFamilyChange(e)}
-                    />
-                    二世帯
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={TargetFamily.ひとり親}
-                      checked={selectionTargetFamily.indexOf(4) !== -1}
-                      onChange={e => handleTargetFamilyChange(e)}
-                    />
-                    ひとり親
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={TargetFamily.介護}
-                      checked={selectionTargetFamily.indexOf(5) !== -1}
-                      onChange={e => handleTargetFamilyChange(e)}
-                    />
-                    介護
-                  </label>
+                  {targetFamilyList.map((targetFamilyName, index) => (
+                    <label key={targetFamilyName}>
+                      <input
+                        key={targetFamilyName}
+                        type="checkbox"
+                        value={TargetFamily[targetFamilyName as TargetFamilyType]}
+                        checked={selectionTargetFamily.indexOf(index) !== -1}
+                        onChange={e => handleTargetFamilyChange(e)}
+                      />
+                      {targetFamilyName}
+                    </label>
+                  ))}
+                  {console.log(selectionTargetFamily)}
                 </div>
-                {/* {console.log(selectionCategory)}
-                                {console.log(selectionTargetFamily)} */}
+
                 <Select
                   onChange={e => {
                     setTargetAge(parseInt(e.target.value));
