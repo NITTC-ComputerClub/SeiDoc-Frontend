@@ -112,7 +112,8 @@ const Input: React.FC<historyProps> = props => {
     "子持ち",
     "二世帯",
     "ひとり親",
-    "介護"
+    "介護",
+    "不明"
   ]
 
   const post = () => {
