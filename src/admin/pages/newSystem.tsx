@@ -276,7 +276,6 @@ const Input: React.FC<historyProps> = props => {
                       {targetFamilyName}
                     </label>
                   ))}
-                  {console.log(selectionTargetFamily)}
                 </div>
 
                 <Select
