@@ -215,7 +215,7 @@ const SelectImage: React.FC<propsType> = (props) => {
                 <Menu>
                     <FileUploadButton>
                         家族写真を選択
-                        <input accept='image/*' multiple type='file' onChange={e => imageShow(e)} />
+                        <input accept='image/*' type='file' onChange={e => imageShow(e)} />
                     </FileUploadButton>
                     <SkipButton to='/'>スキップ</SkipButton>
                 </Menu>
