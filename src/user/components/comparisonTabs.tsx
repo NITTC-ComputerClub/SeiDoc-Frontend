@@ -21,7 +21,7 @@ const ComparisonTabs: React.FC<historyProps> = (props) => {
     const dispatch = useDispatch()
 
     const [tabs, setTabs] = useState<Array<tabsType>>([
-        { title: '+', content: <RegionButton category={category} query={query} /> }
+        { title: '+', content: <RegionButton category={category} query={query} regionList={[]}/> }
     ])
 
     useEffect(() => {
@@ -37,10 +37,12 @@ const ComparisonTabs: React.FC<historyProps> = (props) => {
 
     useEffect(() => {
         const data: Array<tabsType> = []
+        const regionList: Array<string> = []
         tabsState.forEach((value) => {
             data.push({ title: value.region, content: <ComparisonSystemList region={value.region} systems={value.systems} /> })
+            regionList.push(value.region)
         })
-        data.push({ title: '+', content: <RegionButton category={category} query={query} /> })
+        data.push({ title: '+', content: <RegionButton category={category} query={query} regionList={regionList}/> })
         setTabs(data)
     }, [tabsState, category, query])
 
