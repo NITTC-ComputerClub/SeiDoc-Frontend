@@ -46,6 +46,7 @@ const Myself: React.FC<propsType> = (props) => {
     }, [props.profileData])
 
     useEffect(() => {
+        const obj = document.getElementById('showImage') as HTMLElement
         const cvs = document.getElementById('cvs') as HTMLCanvasElement
         let sequence: number
 
@@ -77,10 +78,10 @@ const Myself: React.FC<propsType> = (props) => {
             drawProfile(props.profileData)
         }
 
-        cvs.addEventListener('click', onClick, false)
+        obj.addEventListener('click', onClick, false)
         
         return () => {
-            cvs.removeEventListener('click', onClick, false)
+            obj.removeEventListener('click', onClick, false)
         }
     }, [props])
 

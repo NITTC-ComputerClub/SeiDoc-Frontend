@@ -54,12 +54,14 @@ const FixProfile: React.FC<propsType> = (props) => {
     const login = (data: UserState) => dispatch(loginCreator(data))
 
     const [sequence, setSequence] = useState<number>(-1)
+    const [disable, setDisable] = useState<boolean>(true)
 
     useEffect(() => {
         drawProfile(props.profileData)
     }, [props.profileData])
 
     useEffect(() => {
+        const obj = document.getElementById('showImage') as HTMLElement
         const canvas = document.getElementById('cvs') as HTMLCanvasElement
 
         const onClick = (e: MouseEvent) => {
@@ -80,6 +82,7 @@ const FixProfile: React.FC<propsType> = (props) => {
                             else selectRelationship.selectedIndex = i
                             selectAge.selectedIndex = element.age
                             setSequence(index)
+                            setDisable(false)
                             break
                         }
                     }
@@ -87,7 +90,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             })
         }
 
-        canvas.addEventListener('click', onClick, false)
+        obj.addEventListener('click', onClick, false)
     }, [props])
 
     const editData = () => {
@@ -244,6 +247,12 @@ const FixProfile: React.FC<propsType> = (props) => {
         return items
     }
 
+    const handleRemove = () => {
+        props.profileData.splice(sequence, 1)
+        drawProfile(props.profileData)
+        setDisable(true)
+    }
+
     return (
         <div>
             <FlexBox>
@@ -270,6 +279,7 @@ const FixProfile: React.FC<propsType> = (props) => {
             </FlexBox>
             <Button wide green onClick={editData}>関係と年齢を修正</Button>
             <Menu>
+                <Button blue={!disable} gray={disable} disabled={disable} onClick={handleRemove}>削除</Button>
                 <Button className="right" blue onClick={() => {
                     props.history.push('/finish')
                     updateData() //データ更新
