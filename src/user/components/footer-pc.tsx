@@ -26,16 +26,15 @@ const Wrapper = styled.div`
 `
 
 const StyledLink = styled.div`
-    display: inline-block;
-
     padding: 0 32px;
     position: relative;
+    margin-top: 16px;
     top: -8px;
 
-    p {
-        display: inline-block;
-        margin: 0 8px;
-        font-size: $P3;
+    a {
+        font-size: ${setting.P1};
+        text-decoration: none;
+        color: ${setting.TextGray};
     }
 `
 
@@ -48,10 +47,8 @@ const Footer: React.FC = () => {
                         <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                     </Link>
                 </Wrapper>
-                {/* 今はリンクなし */}
                 <StyledLink>
-                    <p>GitHub</p>
-                    <p>このサイトについて</p>
+                    <a href="https://github.com/NITTC-ComputerClub/SeiDoc">GitHub</a>
                 </StyledLink>
             </Contents>
         </StyledFooter>

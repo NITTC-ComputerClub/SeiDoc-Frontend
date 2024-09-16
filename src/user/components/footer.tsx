@@ -23,11 +23,14 @@ const StyledFooter = styled.footer`
 
     .link {
         text-align: center;
+        margin-top: 16px;
 
-        p {
+        a {
             display: inline-block;
             margin: 0 8px;
-            font-size: ${setting.P3};
+            text-decoration: none;
+            font-size: ${setting.P1};
+            color: ${setting.TextGray}
         }
     }
 `
@@ -40,10 +43,8 @@ const Footer: React.FC = () => {
                     <img src="/img/logo.png" alt="SeiDocのロゴ"></img>
                 </Link>
             </div>
-            {/* TODO: 今はリンクなし */}
             <div className="link">
-                <p>GitHub</p>
-                <p>このサイトについて</p>
+                <a href="https://github.com/NITTC-ComputerClub/SeiDoc">GitHub</a>
             </div>
         </StyledFooter>
     )
